@@ -1,0 +1,17 @@
+{
+  "name": "structura",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "nodemon": "^2.0.2",
+    "pug": "^2.0.4"
+  }
+}
