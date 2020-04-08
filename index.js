@@ -1,11 +1,9 @@
-const port = 5000;
-const server = require("./controllers/index");
-const csvtojson = require("csvtojson");
-server.listen(port, () => {
-  console.log(`Server running at port ${port}`);
-  csvtojson()
-    .fromFile("C:Users/stati/Desktop/US_Accidents_Dec19.csv")
-    .then((csvData) => {
-      console.log(csvData);
-    });
+const http = require("http");
+const port = process.env.PORT || 5001;
+const router = require("./api/index");
+
+const server = http.createServer((req, res) => {
+  router.getRes(req, res);
 });
+
+server.listen(port, () => console.log(`Server listening on port ${port}`));

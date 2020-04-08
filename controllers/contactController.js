@@ -1,12 +1,12 @@
 const url = require("url");
 const staticFileLoader = require("../staticFileLoader/index");
 
-class HomeController {
+class ContactController {
   constructor() {}
 
-  getHomePage(req, res) {
-    console.log(req);
+  getContactPage(req, res) {
+    console.log("Contact");
   }
 }
 
-module.exports = HomeController;
+module.exports = ContactController;
