@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>AVi</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./styles/desktop_style.css" />
+    <link rel="stylesheet" href="./styles/mobile_style.css" />
+    <link rel="stylesheet" href="./styles/landscape_style.css" />
+    <link rel="stylesheet" href="./styles/common_style.css" />
+
+    <meta
+      name="description"
+      content="Instrument Web de vizualizare flexibila a datelor vizand accidentele din SUA"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <script src="./Scripts/counter.js"></script>
+    <script src="./Scripts/info_panel.js"></script>
+    <script src="./Scripts/login_button.js"></script>
+    <script src="./Scripts/top_button.js"></script>
+    <link rel="icon" href="Images/logo1.png" type="image/x-icon" />
+  </head>
+  <body>
+    <!--POP UP LOGIN-->
+    <div class="bg_model">
+      <div class="pop_up">
+        <div class="close">+</div>
+        <div class="pop_up_top">
+          <form action="action_page.php" class="form_log">
+            <h1>Subscribe to our newsletter!</h1>
+            <div class="row_log">
+              <div class="col_log_1">
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  required
+                />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+                <input type="submit" value="Login" />
+              </div>
+              <div class="or_bullet">
+                <span class="or_bullet_text">OR</span>
+              </div>
+              <div class="col_log_2">
+                <div class="row_bottom">
+                  <a href="#" class="button_pop" id="sign_up">Sign up</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="pop_up_sign_up">
+        <div class="close_sign">+</div>
+        <div class="pop_up_top">
+          <form action="action_page.php" class="form_log">
+            <h1>Subscribe to our newsletter!</h1>
+            <div class="row_log">
+              <div class="col_log_1">
+                <input type="text" name="email" placeholder="Email" required />
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  required
+                />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div class="col_log_2">
+                <input type="submit" value="Register" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="body_all" id="main_all">
+      <!--HEADER-->
+      <div class="header">
+        <!--NAV_BAR-->
+        <div class="nav">
+          <div class="logoformobile">
+            <a href="index.html"><img src="Images/logo.png" alt="AVi"/></a>
+          </div>
+          <div class="main_menu">
+            <ul>
+              <li>
+                <a href="index.html" class="logo"
+                  ><img src="Images/logo.png" class="effect3" alt="AVi"
+                /></a>
+              </li>
+              <li>
+                <a class="myButton" href="http://localhost:5001/home">HOME</a>
+              </li>
+              <li>
+                <a class="myButton" href="http://localhost:5001/contact" id="active">CONTACT</a>
+              </li>
+              <li><a href="#" class="myButton" id="button">LOGIN</a></li>
+            </ul>
+          </div>
+          <div class="statistics">
+            <ul>
+              <li class="effect1">
+                <a href="map.html"
+                  ><img
+                    title="Maps"
+                    class="for_img"
+                    src="./Images/Icons/map.png"
+                /></a>
+                <a href="pie.html"
+                  ><img
+                    title="Pie Chart"
+                    class="for_img"
+                    src="./Images/Icons/pie-white.png"
+                /></a>
+                <a href="chart.html"
+                  ><img
+                    title="Chart"
+                    class="for_img"
+                    src="./Images/Icons/bar-chart.png"
+                /></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!--    CONTENT-->
+
+      <div class="content">
+        <div class="contact_content">
+          <div class="contact_font">
+            <img
+              src="./Images/georgiana.jpg"
+              class="contact_img"
+              alt="Georgiana Stativa on facebook"
+            />
+            <ul class="for_ul">
+              <li class="contact_info">Stativa Georgiana</li>
+              <li class="contact_info">
+                <a
+                  href="https://www.facebook.com/camelia.stativa"
+                  target="_blank"
+                >
+                  <img
+                    class="forimg"
+                    src="./Images/Icons/facebook.png"
+                    alt="find Georgiana on: facebook "/></a
+                ><a href="https://www.instagram.com/" target="_blank">
+                  <img
+                    src="./Images/Icons/instagram.png"
+                    class="forimg"
+                    alt=" instagram "
+                  /> </a
+                ><a href="https://ro.linkedin.com/" target="_blank">
+                  <img
+                    src="./Images/Icons/linked_in.png"
+                    class="forimg"
+                    alt=" linked_in"
+                /></a>
+              </li>
+              <li class="contact_info">Email: stativa50@gmail.com</li>
+            </ul>
+          </div>
+          <div class="contact_font">
+            <img
+              src="./Images/ana.jpg"
+              class="contact_img"
+              alt="Ana Maria Zanceanu on facebook"
+            />
+            <ul class="for_ul">
+              <li class="contact_info">Zanceanu Ana-Maria</li>
+              <li class="contact_info">
+                <a
+                  href="https://www.facebook.com/anamaria.zanceanu"
+                  target="_blank"
+                >
+                  <img
+                    class="forimg"
+                    src="./Images/Icons/facebook.png"
+                    alt="find Ana on: facebook "/></a
+                ><a
+                  href="https://www.instagram.com/anamariazanceanu/"
+                  target="_blank"
+                >
+                  <img
+                    class="forimg"
+                    src="./Images/Icons/instagram.png"
+                    alt=" instagram "
+                  /> </a
+                ><a href="https://ro.linkedin.com/" target="_blank">
+                  <img
+                    src="./Images/Icons/linked_in.png"
+                    class="forimg"
+                    alt=" linked_in"
+                /></a>
+              </li>
+              <li class="contact_info">Email: ana.zanceanu@gmail.com</li>
+            </ul>
+          </div>
+          <div class="contact_font">
+            <img
+              src="./Images/adi.jpg"
+              class="contact_img"
+              alt="Adrian Tipa on facebook"
+            />
+            <ul class="for_ul">
+              <li class="contact_info">Tipa Adrian-Ionut</li>
+              <li class="contact_info">
+                <a
+                  href="https://www.facebook.com/adrian.tipa.7"
+                  target="_blank"
+                >
+                  <img
+                    class="forimg"
+                    src="./Images/Icons/facebook.png"
+                    alt="find Adrian on: facebook "/></a
+                ><a href="https://www.instagram.com/" target="_blank">
+                  <img
+                    src="./Images/Icons/instagram.png"
+                    class="forimg"
+                    alt=" instagram "
+                  /> </a
+                ><a href="https://ro.linkedin.com/" target="_blank">
+                  <img
+                    src="./Images/Icons/linked_in.png"
+                    class="forimg"
+                    alt=" linked_in"
+                /></a>
+              </li>
+              <li class="contact_info">Email: adriantipa18@gmail.com</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!--    TOP BUTTON FOR PHONE-->
+
+      <button id="top_button" title="Go to top">Top</button>
+
+      <!--FOOTER-->
+      <div class="footer">
+        <div class="footer_content">
+          <div class="left_footer">
+            <ul>
+              <li class="inline_list">© Copyrights 2019-2020 AVi</li>
+            </ul>
+          </div>
+          <div class="right_footer">
+            <ul>
+              <li class="inline_list">
+                <a href="https://www.facebook.com/" target="_blank">
+                  <img
+                    src="./Images/Icons/facebook-white.png"
+                    class="forimg"
+                    alt="find us on: facebook "
+                /></a>
+              </li>
+              <li class="inline_list">
+                <a href="https://www.instagram.com/" target="_blank">
+                  <img
+                    src="./Images/Icons/instagram-white.png"
+                    class="forimg"
+                    alt=" instagram "
+                  />
+                </a>
+              </li>
+              <li class="inline_list">
+                <a href="https://twitter.com/" target="_blank">
+                  <img
+                    src="./Images/Icons/twitter-white.png"
+                    class="forimg"
+                    alt=" twitter "
+                /></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

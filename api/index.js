@@ -22,10 +22,6 @@ exports.getRes = async (req, res) => {
   req.on("end", async () => {
     body = Buffer.concat(body).toString();
     parsedReq.body = body;
-    if (parsedReq.fullPath === "/") {
-      homeRoute.getRes(parsedReq, res);
-      return;
-    }
     if (
       parsedReq.path.includes(".png") ||
       parsedReq.path.includes(".css") ||
@@ -40,13 +36,14 @@ exports.getRes = async (req, res) => {
         return;
       }
     }
-    if (parsedReq.trimmedPath.indexOf("home") !== -1) {
+    if (parsedReq.path.indexOf("home") !== -1) {
       homeRoute.getRes(parsedReq, res);
       return;
     }
-    if (parsedReq.trimmedPath.indexOf("contact") !== -1)
+
+    if (parsedReq.path.indexOf("contact") !== -1) {
       contactRoute.getRes(parsedReq, res);
-    if (parsedReq.trimmedPath.indexOf("chart") !== -1)
-      chartRoute.getRes(parsedReq, res);
+      return;
+    }
   });
 };
