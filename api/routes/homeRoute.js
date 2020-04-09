@@ -2,7 +2,11 @@ const url = require("url");
 const { homeController } = require("../../controllers/index");
 
 exports.getRes = (req, res) => {
-  const { trimmedPath, method, body } = req;
-  if (trimmedPath.indexOf("api") !== -1 && method === "get")
-    homeController.getHomePage(body, res);
+  const { fullPath, method, body } = req;
+  if (fullPath.endsWith("/") !== -1 && method === "get")
+    try {
+      homeController.getHomePage(req, res);
+    } catch (error) {
+      console.log(error);
+    }
 };

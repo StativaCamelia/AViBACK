@@ -1,11 +1,20 @@
 const url = require("url");
-const staticFileLoader = require("../staticFileLoader/index");
-
+const { User } = require("../models/index");
+const { homePage } = require("../views/index");
 class HomeController {
-  constructor() {}
+  constructor(dataBase) {
+    this.dataBase = dataBase;
+  }
 
-  getHomePage(req, res) {
-    console.log(req);
+  async getHomePage(req, res) {
+    try {
+      const { file, contentType } = await homePage.getPage();
+      res.writeHead(200, contentType);
+      res.write(file);
+      res.end();
+    } catch (erorr) {
+      console.log(erorr);
+    }
   }
 }
 

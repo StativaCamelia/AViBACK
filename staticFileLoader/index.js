@@ -1,5 +1,5 @@
-const fileLoader = require("./staticFileLoader.js");
+const StaticFileLoader = require("./staticFileLoader.js");
 
-const staticFile = new fileLoader();
+const staticFileLoader = new StaticFileLoader();
 
-module.exports = staticFile;
+module.exports = staticFileLoader;

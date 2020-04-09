@@ -1,41 +1,57 @@
-const fs = require("fs");
-const path = require("path");
-const { promisify } = require("util");
+const pathUtils = require("path");
+const fs = require("mz/fs");
 
-module.exports = class fileLoader {
-  constructor(fileName) {}
+class StaticFileLoader {
+  constructor() {}
 
-  readContent(callback, file) {
-    fs.readFile(file, function (err, content) {
-      if (err) return callback(err);
-      callback(null, content);
-    });
+  async getFileContent(file) {
+    try {
+      const data = await fs.readFile(file);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getStaticResource(req) {
+    try {
+      const { path } = req;
+      const filePath = pathUtils.join(__dirname, "public", path);
+      const file = await this.getFileContent(filePath);
+      const contentType = this.getContentType(path);
+
+      return { file, contentType };
+    } catch (error) {
+      return error;
+    }
   }
 
   getContentType(fileName) {
     var contentType;
-    switch (path.extname(fileName)) {
+    switch (pathUtils.extname(fileName)) {
       case ".js":
-        contentType = "text/javascript";
+        contentType = { "Content-Type": "text/javascript" };
         break;
       case ".css":
-        contentType = "text/css";
+        contentType = { "Content-Type": "text/css" };
         break;
       case ".json":
-        contentType = "application/json";
+        contentType = { "Content-Type": "application/json" };
         break;
       case ".png":
-        contentType = "image/png";
+        contentType = { "Content-Type": "image/png" };
         break;
       case ".jpg":
-        contentType = "image/jpg";
+        contentType = { "Content-Type": "image/jpg" };
         break;
       case ".wav":
-        contentType = "audio/wav";
+        contentType = { "Content-Type": "audio/wav" };
         break;
       default:
-        contentType = "text/html";
+        contentType = { "Content-Type": "text/html" };
     }
     return contentType;
   }
-};
+}
+
+module.exports = StaticFileLoader;
