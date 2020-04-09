@@ -22,7 +22,7 @@ class StaticFileLoader {
 
       return { file, contentType };
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 

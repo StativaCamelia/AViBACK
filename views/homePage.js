@@ -2,15 +2,16 @@ const fs = require("mz/fs");
 const path = require("path");
 const staticFileLoader = require("../staticFileLoader/index");
 const pug = require("pug");
-const homePageLocation = path.join(__dirname, "./index.html");
+const homePageLocation = path.join(__dirname, "./content.pug");
 
 class HomePage {
   constructor() {}
 
-  async getPage() {
+  getPage() {
     try {
-      const file = await staticFileLoader.getFileContent(homePageLocation);
-      const contentType = staticFileLoader.getContentType("pug");
+      const compiledFunction = pug.compileFile(homePageLocation);
+      const file = compiledFunction();
+      const contentType = staticFileLoader.getContentType(homePageLocation);
       return { file, contentType };
     } catch (err) {
       return err;

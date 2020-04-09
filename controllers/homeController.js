@@ -6,9 +6,9 @@ class HomeController {
     this.dataBase = dataBase;
   }
 
-  async getHomePage(req, res) {
+  getHomePage(req, res) {
     try {
-      const { file, contentType } = await homePage.getPage();
+      const { file, contentType } = homePage.getPage();
       res.writeHead(200, contentType);
       res.write(file);
       res.end();
