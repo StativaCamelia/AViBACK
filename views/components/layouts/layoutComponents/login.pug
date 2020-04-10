@@ -1,0 +1,28 @@
+.bg_model
+  .pop_up
+    .close +
+    .pop_up_top
+      form.form_log(action='action_page.php')
+        h1 Subscribe to our newsletter!
+        .row_log
+          .col_log_1
+            input(type='text' name='username' placeholder='Username' required='')
+            input(type='password' name='password' placeholder='Password' required='')
+            input(type='submit' value='Login')
+          .or_bullet
+            span.or_bullet_text OR
+          .col_log_2
+            .row_bottom
+              a#sign_up.button_pop(href='#') Sign up
+  .pop_up_sign_up
+    .close_sign +
+    .pop_up_top
+      form.form_log(action='action_page.php')
+        h1 Subscribe to our newsletter!
+        .row_log
+          .col_log_1
+            input(type='text' name='email' placeholder='Email' required='')
+            input(type='text' name='username' placeholder='Username' required='')
+            input(type='password' name='password' placeholder='Password' required='')
+          .col_log_2
+            input(type='submit' value='Register')

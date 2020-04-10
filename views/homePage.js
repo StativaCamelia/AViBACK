@@ -2,7 +2,10 @@ const fs = require("mz/fs");
 const path = require("path");
 const staticFileLoader = require("../staticFileLoader/index");
 const pug = require("pug");
-const homePageLocation = path.join(__dirname, "./content.pug");
+const homePageLocation = path.join(
+  __dirname,
+  "./components/mainPageContent.pug"
+);
 
 class HomePage {
   constructor() {}
@@ -14,6 +17,7 @@ class HomePage {
       const contentType = staticFileLoader.getContentType(homePageLocation);
       return { file, contentType };
     } catch (err) {
+      console.log(err);
       return err;
     }
   }
