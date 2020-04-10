@@ -4,7 +4,7 @@ const staticFileLoader = require("../staticFileLoader/index");
 const pug = require("pug");
 const homePageLocation = path.join(
   __dirname,
-  "./components/mainPageContent.pug"
+  "./components/mapPageContent.pug"
 );
 
 class HomePage {
@@ -21,8 +21,6 @@ class HomePage {
       return err;
     }
   }
-
-  async completePage(req) {}
 }
 
 module.exports = HomePage;
