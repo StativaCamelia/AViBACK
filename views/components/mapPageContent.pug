@@ -1,0 +1,38 @@
+extends ./layouts/layoutStatistici.pug
+block left_content
+    include ./mapComponents/mapSVG.pug
+    #states_pop
+        .left_description
+        .right_description
+            #map
+            script(type='text/javascript').
+                function initMap(lati, lngi) {
+                    lati = 39.86;
+                    lngi = -84.05;
+                    var uluru = {
+                        lat: lati,
+                        lng: lngi
+                    };
+                    var uluru1 = {
+                    lat: 42.79,
+                    lng: -84.1
+                    };
+                    var map = new google.maps.Map(
+                    document.getElementById("map"),
+                    {
+                    zoom: 4,
+                    center: uluru
+                    }
+                    );
+                    var marker = new google.maps.Marker({
+                    position: uluru,
+                    map: map
+                    });
+                    var marker1 = new google.maps.Marker({
+                    position: uluru1,
+                    map: map
+                    });
+                    }
+            script(async='' defer='' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGMRsZ2FtdEy73zYaGm_JK_waMrSc9g0&callback=initMap')
+block right_content
+    include ./filtres.pug

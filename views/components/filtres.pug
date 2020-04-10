@@ -1,0 +1,243 @@
+.filtres
+    form#filters_form.form_filters(action='/action_page.php' method='get')
+        .up_filtres
+            .left_filtres
+                label.label_spatial Spatial Coordinates
+                .select_box
+                    select#country.options(form='filters_form' name='country')
+                        option(selected='' hidden='') State
+                        option#AK_li(value='Alaska') Alaska
+                        option#AZ_li(value='Arizona') Arizona
+                        option#AR_li(value='Arkansas') Arkansas
+                        option#CA_li(value='California') California
+                        option#CO_li(value='Colorado') Colorado
+                        option#CT_li(value='Connecticut') Connecticut
+                        option#DE_li(value='Delaware') Delaware
+                        option#DC_li(value='District of Columbia') District of Columbia
+                        option#FL_li(value='Florida') Florida
+                        option#GA_li(value='Georgia') Georgia
+                        option#HI_li(value='Hawaii') Hawaii
+                        option#ID_li(value='Idaho') Idaho
+                        option#IL_li(value='Illinois') Illinois
+                        option#IN_li(value='Indiana') Indiana
+                        option#IA_li(value='Iowa') Iowa
+                        option#KS_li(value='Kansas') Kansas
+                        option#KY_li(value='Kentucky') Kentucky
+                        option#LA_li(value='Louisiana') Louisiana
+                        option#ME_li(value='Maine') Maine
+                        option#MD_li(value='Maryland') Maryland
+                        option#MA_li(value='Massachusetts') Massachusetts
+                        option#MI_li(value='Michigan') Michigan
+                        option#MN_li(value='Minnesota') Minnesota
+                        option#MS_li(value='Mississippi') Mississippi
+                        option#MT_li(value='Missouri') Missouri
+                        option#MO_li(value='Montana') Montana
+                        option#NE_li(value='Nebraska') Nebraska
+                        option#NV_li(value='Nevada') Nevada
+                        option#NH_li(value='New Hampshire') New Hampshire
+                        option#NJ_li(value='New Jersey') New Jersey
+                        option#NM_li(value='New Mexico') New Mexico
+                        option#NY_li(value='New York') New York
+                        option#NC_li(value='North Carolina') North Carolina
+                        option#ND_li(value='North Dakota') North Dakota
+                        option#OH_li(value='Ohio') Ohio
+                        option#OK_li(value='Oklahoma') Oklahoma
+                        option#OR_li(value='Oregon') Oregon
+                        option#PA_li(value='Pennsylvania') Pennsylvania
+                        option#RI_li(value='Rhode Island') Rhode Island
+                        option#SC_li(value='South Carolina') South Carolina
+                        option#SD_li(value='South Dakota') South Dakota
+                        option#TN_li(value='Tennessee') Tennessee
+                        option#TX_li(value='Texas') Texas
+                        option#UT_li(value='Utah') Utah
+                        option#VT_li(value='Vermont') Vermont
+                        option#VA_li(value='Virginia') Virginia
+                        option#WA_li(value='Washington') Washington
+                        option#WV_li(value='West Virginia') West Virginia
+                        option#WI_li(value='Wisconsin') Wisconsin
+                        option#WY_li(value='Wyoming') Wyoming
+                        option#AS_li(value='American Samoa') American Samoa
+                        option#GU_li(value='Guam') Guam
+                        option#MP_li(value='Northern Mariana Islands') Northern Mariana Islands
+                        option#PR_li(value='Puerto Rico') Puerto Rico
+                .select_box
+                    select#county.options_county(form='filters_form' name='county')
+                        option(value='County' selected='' hidden='') County
+                        option(value='') Autauga
+                        option(value='') Baldwin
+                        option(value='') Barbour
+                        option(value='') Bibb
+                        option(value='') Blount
+                        option(value='') Bullock
+                        option(value='') Butler
+                .select_box
+                    select#City.options_city(form='filters_form' name='City')
+                        option(value='0' selected='' hidden='') City
+                        option(value='') Juneau
+                        option(value='') Sacramento
+                        option(value='') Santa Fe
+                        option(value='') Salt Lake City
+                        option(value='') Olympia
+                .select_box
+                    select#number.options_number(form='filters_form' name='number')
+                        option(value='0' selected='' hidden='') Number
+                        option(value='') 123
+                        option(value='') 234
+                        option(value='') 127
+                        option(value='') 99
+                .select_box
+                    select#Street.options_street(form='filters_form' name='Street')
+                        option(value='0' selected='' hidden='') Street
+                        option(value='Right') Right
+                        option(value='Left') Left
+                .select_box
+                    select#Timezone.options_timezone(form='filters_form' name='Timezone')
+                        option(value='0' selected='' hidden='') Timezone
+                        option(value='US/Eastern') US/Eastern
+                        option(value='US/Pacific') US/Pacific
+                        option(value='US/Central') US/Central
+                        option(value='US/Mountain') US/Mountain
+                .select_box
+                    select#Road_side.options_season(form='filters_form' name='Road_Side')
+                        option(value='0' selected='' hidden='') Road Side
+                        option(value='Right') Right
+                        option(value='Left') Left
+            .right_filters
+                label.label_weather(for='accident_date') Weather Conditions
+                .select_box
+                    select#Weather_Condition.options_weather(form='filters_form' name='Weather_Condition')
+                        option(value='0' selected='' hidden='') Weather
+                        option(value='Rainy') Rainy
+                        option(value='Sunny') Sunny
+                .select_box
+                    select#Wind_Direction.options_weather(form='filters_form' name='Wind_Direction')
+                        option(value='0' selected='' hidden='') Wind direction
+                        option(value='SE') SE
+                        option(value='NW') NW
+                .weather_filtre
+                    label.weather_select_label(for='temperature') Temperature(&deg;C):
+                    input#temperature.weather_select(type='number' name='temperature' form='filters_form' value='0' min='-30' max='40')
+                .weather_filtre
+                    label.weather_select_label(for='wind_chill')
+                        | Wind Chill(F):
+                    input#wind_chill.weather_select(type='number' name='wind_chill' form='filters_form' value='0' min='0' max='100')
+                .weather_filtre
+                    label.weather_select_label(for='wind_chill')
+                        | Wind speed(mph):
+                    input#wind_speed.weather_select(type='number' name='wind_speed' form='filters_form' value='0' min='0' max='100')
+                .weather_filtre
+                    label.weather_select_label(for='humidity')
+                        | Humidity(%):
+                    input#humidity.weather_select(type='number' name='humidity' form='filters_form' value='0' min='0' max='100')
+                .weather_filtre
+                    label.weather_select_label(for='pressure')
+                        | Pressure(in):
+                    input#pressure.weather_select(type='number' name='pressure' form='filters_form' value='0' min='0' max='100')
+                .weather_filtre
+                    label.weather_select_label(for='wind_chill')
+                        | Vissibility(in):
+                    input#vissibility.weather_select(type='number' form='filters_form' name='vissibility' value='0' min='0' max='100')
+            // MIDDLE FILTRES
+        .middle_filtres
+            .road_select_col
+                .road_option
+                    input#amenity.road_event(type='checkbox' name='amenity' form='filters_form' value='amenity')
+                    label.road_event_label(for='amenity') Amenity
+                .road_option
+                    input#bump.road_event(type='checkbox' name='bump' value='bump' form='filters_form')
+                    label.road_event_label(for='bump') Bump
+                .road_option
+                    input#crossing.road_event(type='checkbox' name='crossing' value='crossing' form='filters_form')
+                    label.road_event_label(for='crossing') Crossing
+            .road_select_col
+                .road_option
+                    input#give_away.road_event(type='checkbox' name='give_away' value='give_away' form='filters_form')
+                    label.road_event_label(for='give_away') Give away
+                .road_option
+                    input#junction.road_event(type='checkbox' name='junction' value='junction' form='filters_form')
+                    label.road_event_label(for='junction') Junction
+                .road_option
+                    input#no_exit.road_event(type='checkbox' name='no_exit' value='no_exit' form='filters_form')
+                    label.road_event_label(for='no_exit') No exit
+            .road_select_col
+                .road_option
+                    input#Railway.road_event(type='checkbox' name='Railway' value='Railway' form='filters_form')
+                    label.road_event_label(for='Railway') Railway
+                .road_option
+                    input#Roundabout.road_event(type='checkbox' name='Roundabout' value='Roundabout' form='filters_form')
+                    label.road_event_label(for='Roundabout') Roundabout
+                .road_option
+                    input#Traffic_Calming.road_event(type='checkbox' name='Traffic_Calming' value='Traffic_Calming' form='filters_form')
+                    label.road_event_label(for='Traffic_Calming') Traffic Calming
+            .road_select_col
+                .road_option
+                    input#Stop.road_event(type='checkbox' name='Stop' value='Stop' form='filters_form')
+                    label.road_event_label(for='Stop') Stop
+                .road_option
+                    input#Station.road_event(type='checkbox' name='Station' value='Station' form='filters_form')
+                    label.road_event_label(for='Station') Station
+                .road_option
+                    input#Traffic_Signal.road_event(type='checkbox' name='Traffic_Signal' value='Traffic_Signal' form='filters_form')
+                    label.road_event_label(for='Traffic_Signal') Traffic Signal
+        // -DOWN FILTRES
+        .down_filtres
+            .calendar
+                label.label_calendar(for='accident_date') Accident Date
+                input#accident_date(type='date' name='accident_date' form='filters_form')
+            .slider_container_1
+                label.slider_label(for='severity') Accident severity
+                input#severity.slider(form='filters_form' type='range' name='severity' min='1' max='3' value='2' step='1')
+                ul.slider_options_1
+                    li.minor Minor
+                    li.major Major
+                    li.fatal Fatal
+            .slider_container_2
+                label.slider_label Day/Night:
+                .range_icons
+                img.icons(alt='sun' src='./Images/Icons/sun.png')
+                input#hourIN.slider(form='filters_form' name='Hour' type='range' min='0' max='24' step='1' value='0')
+                output#hourOUT(name='hourOUT')
+                img.icons(alt='moon' src='./Images/Icons/moon.png')
+                ul.slider_options_2
+                    li.minor Day
+                    li.major Night
+            // LAST SET OF FILTERS
+            .last_set_filters
+                .last_set_filters_col
+                    .moon_filters
+                        label.label_moon Sunrise/Sunset
+                        .moon_option
+                            input#sunrise_sunset_day(form='filters_form' type='radio' name='sunrise_sunset' value='day')
+                            label.moon_option_label(for='sunrise_sunset_day') Day
+                        .moon_option
+                            input#sunrise_sunset_night(form='filters_form' type='radio' name='sunrise_sunset' value='night')
+                            label.moon_option_label(for='sunrise_sunset_night') Night
+                .last_set_filters_col
+                    .moon_filters
+                        label.label_moon Civil Twilight
+                        .moon_option
+                            input#civil_twilight_day(type='radio' form='filters_form' name='civil_twilight' value='day')
+                            label.moon_option_label(for='civil_twilight_day') Day
+                        .moon_option
+                            input#civil_twilight_night(type='radio' form='filters_form' name='civil_twilight' value='night')
+                            label.moon_option_label(for='civil_twilight_night') Night
+                .last_set_filters_col
+                    .moon_filters
+                        label.label_moon Nautical Twilight
+                        .moon_option
+                            input#nautical_twilight_day(type='radio' form='filters_form' name='nautical_twilight' value='day')
+                            label.moon_option_label(for='nautical_twilight_day') Day
+                        .moon_option
+                            input#nautical_twilight_night(type='radio' form='filters_form' name='nautical_twilight' value='night')
+                            label.moon_option_label(for='nautical_twilight_night') Night
+                .last_set_filters_col
+                    .moon_filters
+                        label.label_moon(for='astronomical_twilight_day') Astronomical Twilight
+                        .moon_option
+                            input#astronomical_twilight_day(type='radio' form='filters_form' name='astronomical_twilight' value='day')
+                            label.moon_option_label(for='astronomical_twilight_day') Day
+                        .moon_option
+                            input#astronomical_twilight_night(type='radio' form='filters_form' name='astronomical_twilight' value='night')
+                            label.moon_option_label(for='astronomical_twilight_night') Night
+        .submit_button
+            input#submit_button(form='filters_form' type='submit' value='Submit')
