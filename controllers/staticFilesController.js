@@ -4,9 +4,10 @@ class StaticFilesControler {
 
   async getRes(req, res) {
     try {
-      const { file, contentType } = await staticFile.getStaticResource(req);
+      const { success, data } = await staticFile.getStaticResource(req);
+      const { content, contentType } = data;
       res.writeHead(200, contentType);
-      res.write(file);
+      res.write(content);
       res.end();
     } catch (erorr) {
       console.log(erorr);

@@ -16,6 +16,7 @@
     "dotenv": "^8.2.0",
     "generate-schema": "^2.6.0",
     "jsonwebtoken": "^8.5.1",
+    "line-reader": "^0.4.0",
     "mongoose": "^5.9.7",
     "mz": "^2.7.0",
     "nodemon": "^2.0.2",

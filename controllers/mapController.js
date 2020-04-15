@@ -1,13 +1,13 @@
-const { contactPage } = require("../views/index");
+const { mapPage } = require("../views/index");
 
 class ContactController {
   constructor(database) {
     this.database = database;
   }
 
-  getContactPage(req, res) {
+  getMapPage(req, res) {
     try {
-      const { content, contentType } = contactPage.getPage();
+      const { content, contentType } = mapPage.getMapPage();
       return { success: true, data: { content, contentType } };
     } catch (erorr) {
       return { success: false, data: { erorr } };

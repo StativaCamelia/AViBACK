@@ -17,12 +17,12 @@ class StaticFileLoader {
     try {
       const { path } = req;
       const filePath = pathUtils.join(__dirname, "public", path);
-      const file = await this.getFileContent(filePath);
+      const content = await this.getFileContent(filePath);
       const contentType = this.getContentType(path);
 
-      return { file, contentType };
+      return { success: true, data: { content, contentType } };
     } catch (error) {
-      throw error;
+      return { success: false, data: { erorr } };
     }
   }
 

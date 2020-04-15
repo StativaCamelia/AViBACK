@@ -1,19 +1,16 @@
 const path = require("path");
 const staticFileLoader = require("../staticFileLoader/index");
 const pug = require("pug");
-const contactPageLocation = path.join(
-  __dirname,
-  "./components/contactPageContent.pug"
-);
+const mapPageLocation = path.join(__dirname, "./components/mapPageContent.pug");
 
-class ContactPage {
+class MapPage {
   constructor() {}
 
-  getPage() {
+  getMapPage() {
     try {
-      const compiledFunction = pug.compileFile(contactPageLocation);
+      const compiledFunction = pug.compileFile(mapPageLocation);
       const content = compiledFunction();
-      const contentType = staticFileLoader.getContentType(contactPageLocation);
+      const contentType = staticFileLoader.getContentType(mapPageLocation);
       return { content, contentType };
     } catch (err) {
       console.log(err);
@@ -22,4 +19,4 @@ class ContactPage {
   }
 }
 
-module.exports = ContactPage;
+module.exports = MapPage;

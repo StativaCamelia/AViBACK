@@ -4,7 +4,7 @@ const staticFileLoader = require("../staticFileLoader/index");
 const pug = require("pug");
 const homePageLocation = path.join(
   __dirname,
-  "./components/mapPageContent.pug"
+  "./components/mainPageContent.pug"
 );
 
 class HomePage {
@@ -13,9 +13,9 @@ class HomePage {
   getPage() {
     try {
       const compiledFunction = pug.compileFile(homePageLocation);
-      const file = compiledFunction();
+      const content = compiledFunction();
       const contentType = staticFileLoader.getContentType(homePageLocation);
-      return { file, contentType };
+      return { content, contentType };
     } catch (err) {
       console.log(err);
       return err;

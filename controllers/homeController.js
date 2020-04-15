@@ -8,12 +8,10 @@ class HomeController {
 
   getHomePage(req, res) {
     try {
-      const { file, contentType } = homePage.getPage();
-      res.writeHead(200, contentType);
-      res.write(file);
-      res.end();
+      const { content, contentType } = homePage.getPage();
+      return { success: true, data: { content, contentType } };
     } catch (erorr) {
-      console.log(erorr);
+      return { success: false, data: { erorr } };
     }
   }
 }

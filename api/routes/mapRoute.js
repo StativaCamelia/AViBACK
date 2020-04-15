@@ -1,5 +1,4 @@
-const url = require("url");
-const { homeController } = require("../../controllers/index");
+const { mapController } = require("../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
@@ -20,7 +19,7 @@ exports.getRes = (req, res) => {
   const { fullPath, method, body } = req;
   if (fullPath.endsWith("/") && method === "get") {
     try {
-      const { success, data } = homeController.getHomePage(body, res);
+      const { success, data } = mapController.getMapPage(body, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
