@@ -570,7 +570,7 @@
         opacity: 0.2;
     }
 
-    .statistics a.active {
+    .statistics a#active {
         opacity: 0.3;
         text-decoration: none;
     }

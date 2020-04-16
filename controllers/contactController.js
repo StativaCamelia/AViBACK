@@ -7,7 +7,8 @@ class ContactController {
 
   getContactPage(req, res) {
     try {
-      const { content, contentType } = contactPage.getPage();
+      const ids = ['','active','','',''];
+      const { content, contentType } = contactPage.getPage(ids);
       return { success: true, data: { content, contentType } };
     } catch (erorr) {
       return { success: false, data: { erorr } };

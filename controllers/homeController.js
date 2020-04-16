@@ -8,7 +8,8 @@ class HomeController {
 
   getHomePage(req, res) {
     try {
-      const { content, contentType } = homePage.getPage();
+      const ids = ['active','','','',''];
+      const { content, contentType } = homePage.getPage(ids);
       return { success: true, data: { content, contentType } };
     } catch (erorr) {
       return { success: false, data: { erorr } };

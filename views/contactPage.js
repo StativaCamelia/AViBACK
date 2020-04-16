@@ -9,10 +9,10 @@ const contactPageLocation = path.join(
 class ContactPage {
   constructor() {}
 
-  getPage() {
+  getPage(ids) {
     try {
       const compiledFunction = pug.compileFile(contactPageLocation);
-      const content = compiledFunction();
+      const content = compiledFunction({activeIds : JSON.stringify(ids)});
       const contentType = staticFileLoader.getContentType(contactPageLocation);
       return { content, contentType };
     } catch (err) {

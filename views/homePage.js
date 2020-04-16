@@ -9,11 +9,10 @@ const homePageLocation = path.join(
 
 class HomePage {
   constructor() {}
-
-  getPage() {
+  getPage(ids) {
     try {
       const compiledFunction = pug.compileFile(homePageLocation);
-      const content = compiledFunction();
+      const content = compiledFunction({activeIds : JSON.stringify(ids)});
       const contentType = staticFileLoader.getContentType(homePageLocation);
       return { content, contentType };
     } catch (err) {
