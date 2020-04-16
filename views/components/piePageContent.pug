@@ -1,0 +1,18 @@
+extends ./layouts/layoutStatistici.pug
+block left_content
+    .pie
+        .info_pie
+            h1 Generate a pie statistics
+        .content_pie
+            svg(xmlns="http://www.w3.org/2000/svg"
+                id="svg_pie"
+                preserveAspectRatio="xMidYMid meet"
+                x="0"
+                y="0"
+                viewBox="0 0 350 350"
+                width="350"
+                height="350")
+            .legend_pie
+        script(src="./Scripts/pie_chart.js")
+block right_content
+    include ./statisticsComponents/filtres
