@@ -6,114 +6,77 @@
                 .select_box
                     select#country.options(form='filters_form' name='country')
                         option(selected='' hidden='') State
-                        option#AK_li(value='Alaska') Alaska
-                        option#AZ_li(value='Arizona') Arizona
-                        option#AR_li(value='Arkansas') Arkansas
-                        option#CA_li(value='California') California
-                        option#CO_li(value='Colorado') Colorado
-                        option#CT_li(value='Connecticut') Connecticut
-                        option#DE_li(value='Delaware') Delaware
-                        option#DC_li(value='District of Columbia') District of Columbia
-                        option#FL_li(value='Florida') Florida
-                        option#GA_li(value='Georgia') Georgia
-                        option#HI_li(value='Hawaii') Hawaii
-                        option#ID_li(value='Idaho') Idaho
-                        option#IL_li(value='Illinois') Illinois
-                        option#IN_li(value='Indiana') Indiana
-                        option#IA_li(value='Iowa') Iowa
-                        option#KS_li(value='Kansas') Kansas
-                        option#KY_li(value='Kentucky') Kentucky
-                        option#LA_li(value='Louisiana') Louisiana
-                        option#ME_li(value='Maine') Maine
-                        option#MD_li(value='Maryland') Maryland
-                        option#MA_li(value='Massachusetts') Massachusetts
-                        option#MI_li(value='Michigan') Michigan
-                        option#MN_li(value='Minnesota') Minnesota
-                        option#MS_li(value='Mississippi') Mississippi
-                        option#MT_li(value='Missouri') Missouri
-                        option#MO_li(value='Montana') Montana
-                        option#NE_li(value='Nebraska') Nebraska
-                        option#NV_li(value='Nevada') Nevada
-                        option#NH_li(value='New Hampshire') New Hampshire
-                        option#NJ_li(value='New Jersey') New Jersey
-                        option#NM_li(value='New Mexico') New Mexico
-                        option#NY_li(value='New York') New York
-                        option#NC_li(value='North Carolina') North Carolina
-                        option#ND_li(value='North Dakota') North Dakota
-                        option#OH_li(value='Ohio') Ohio
-                        option#OK_li(value='Oklahoma') Oklahoma
-                        option#OR_li(value='Oregon') Oregon
-                        option#PA_li(value='Pennsylvania') Pennsylvania
-                        option#RI_li(value='Rhode Island') Rhode Island
-                        option#SC_li(value='South Carolina') South Carolina
-                        option#SD_li(value='South Dakota') South Dakota
-                        option#TN_li(value='Tennessee') Tennessee
-                        option#TX_li(value='Texas') Texas
-                        option#UT_li(value='Utah') Utah
-                        option#VT_li(value='Vermont') Vermont
-                        option#VA_li(value='Virginia') Virginia
-                        option#WA_li(value='Washington') Washington
-                        option#WV_li(value='West Virginia') West Virginia
-                        option#WI_li(value='Wisconsin') Wisconsin
-                        option#WY_li(value='Wyoming') Wyoming
-                        option#AS_li(value='American Samoa') American Samoa
-                        option#GU_li(value='Guam') Guam
-                        option#MP_li(value='Northern Mariana Islands') Northern Mariana Islands
-                        option#PR_li(value='Puerto Rico') Puerto Rico
+                        - let keyStates = {states}
+                        - let valuesStates = JSON.parse(keyStates.states)
+                        each n in valuesStates
+                            option(id=n.abbr value=n.value)
+                                | #{n.value}
                 .select_box
                     select#county.options_county(form='filters_form' name='county')
                         option(value='County' selected='' hidden='') County
-                        option(value='') Autauga
-                        option(value='') Baldwin
-                        option(value='') Barbour
-                        option(value='') Bibb
-                        option(value='') Blount
-                        option(value='') Bullock
-                        option(value='') Butler
+                        - let keyCounties = {counties}
+                        - let valuesCounties = JSON.parse(keyCounties.counties)
+                        each n in valuesCounties
+                            option(value=n)
+                                | #{n}
                 .select_box
                     select#City.options_city(form='filters_form' name='City')
                         option(value='0' selected='' hidden='') City
-                        option(value='') Juneau
-                        option(value='') Sacramento
-                        option(value='') Santa Fe
-                        option(value='') Salt Lake City
-                        option(value='') Olympia
-                .select_box
-                    select#number.options_number(form='filters_form' name='number')
-                        option(value='0' selected='' hidden='') Number
-                        option(value='') 123
-                        option(value='') 234
-                        option(value='') 127
-                        option(value='') 99
+                        - let keyCities = {cities}
+                        - let valuesCities = JSON.parse(keyCities.cities)
+                        each n in valuesCities
+                            option(value=n)
+                                | #{n}
                 .select_box
                     select#Street.options_street(form='filters_form' name='Street')
                         option(value='0' selected='' hidden='') Street
-                        option(value='Right') Right
-                        option(value='Left') Left
+                        - let keyStreets = {streets}
+                        - let valuesStreets = JSON.parse(keyStreets.streets)
+                        each n in valuesStreets
+                            option(value=n)
+                                | #{n}
+                .select_box
+                    select#number.options_number(form='filters_form' name='number')
+                        option(value='0' selected='' hidden='') Number
+                        - let keyNumbers = {numbers}
+                        - let valuesNumbers = JSON.parse(keyNumbers.numbers)
+                        each n in valuesNumbers
+                            option(value=n)
+                                | #{n}
                 .select_box
                     select#Timezone.options_timezone(form='filters_form' name='Timezone')
                         option(value='0' selected='' hidden='') Timezone
-                        option(value='US/Eastern') US/Eastern
-                        option(value='US/Pacific') US/Pacific
-                        option(value='US/Central') US/Central
-                        option(value='US/Mountain') US/Mountain
+                        - let keyTimezones = {timezones}
+                        - let valuesTimezones = JSON.parse(keyTimezones.timezones)
+                        each n in valuesTimezones
+                            option(value=n)
+                                | #{n}
                 .select_box
                     select#Road_side.options_season(form='filters_form' name='Road_Side')
                         option(value='0' selected='' hidden='') Road Side
-                        option(value='Right') Right
-                        option(value='Left') Left
+                        - let keyRoadSides = {roadSides}
+                        - let valuesRoadSides = JSON.parse(keyRoadSides.roadSides)
+                        each n in valuesRoadSides
+                            option(value=n)
+                                | #{n}
             .right_filters
                 label.label_weather(for='accident_date') Weather Conditions
                 .select_box
                     select#Weather_Condition.options_weather(form='filters_form' name='Weather_Condition')
                         option(value='0' selected='' hidden='') Weather
-                        option(value='Rainy') Rainy
-                        option(value='Sunny') Sunny
+                        - let keyWeather = {weather}
+                        - let valuesWeather = JSON.parse(keyWeather.weather)
+                        each n in valuesWeather
+                            option(value=n)
+                                | #{n}
                 .select_box
                     select#Wind_Direction.options_weather(form='filters_form' name='Wind_Direction')
                         option(value='0' selected='' hidden='') Wind direction
-                        option(value='SE') SE
-                        option(value='NW') NW
+                        - let keyWindDirections = {windDirections}
+                        - let valuesWindDirections = JSON.parse(keyWindDirections.windDirections)
+                        each n in valuesWindDirections
+                            option(value=n)
+                                | #{n}
                 .weather_filtre
                     label.weather_select_label(for='temperature') Temperature(&deg;C):
                     input#temperature.weather_select(type='number' name='temperature' form='filters_form' value='0' min='-30' max='40')
