@@ -1,4 +1,3 @@
-const url = require("url");
 const { contactPage } = require("../views/index");
 
 class ContactController {
@@ -6,14 +5,13 @@ class ContactController {
     this.database = database;
   }
 
-  async getContactPage(req, res) {
+  getContactPage(req, res) {
     try {
-      const { file, contentType } = await contactPage.getPage();
-      res.writeHead(200, contentType);
-      res.write(file);
-      res.end();
+      const ids = ['','active','','',''];
+      const { content, contentType } = contactPage.getPage(ids);
+      return { success: true, data: { content, contentType } };
     } catch (erorr) {
-      console.log(erorr);
+      return { success: false, data: { erorr } };
     }
   }
 }

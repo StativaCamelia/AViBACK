@@ -1,5 +1,10 @@
 const url = require("url");
-const { homeRoute, contactRoute } = require("./routes/index");
+const {
+  homeRoute,
+  contactRoute,
+  adminRoute,
+  mapRoute,
+} = require("./routes/index");
 const { staticFilesController } = require("../controllers/index");
 exports.getRes = async (req, res) => {
   const parsedReq = {};
@@ -21,7 +26,7 @@ exports.getRes = async (req, res) => {
 
   req.on("end", async () => {
     body = Buffer.concat(body).toString();
-    parsedReq.body = body;
+    if (body) parsedReq.body = JSON.parse(body);
     if (
       parsedReq.path.includes(".png") ||
       parsedReq.path.includes(".css") ||
@@ -44,6 +49,15 @@ exports.getRes = async (req, res) => {
     if (parsedReq.path.indexOf("contact") !== -1) {
       contactRoute.getRes(parsedReq, res);
       return;
+    }
+
+    if (parsedReq.path.indexOf("admin") !== -1) {
+      await adminRoute.getRes(parsedReq, res);
+      return;
+    }
+
+    if (parsedReq.path.indexOf("map") !== -1) {
+      await mapRoute.getRes(parsedReq, res);
     }
   });
 };

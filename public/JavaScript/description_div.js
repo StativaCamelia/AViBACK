@@ -49,7 +49,7 @@ var dict_img = {
   WA: "./Images/Flags/Washington.png",
   WV: "./Images/Flags/West_Virginia.png",
   WI: "./Images/Flags/Wisconsin.png",
-  WY: "./Images/Flags/Wyoming.png"
+  WY: "./Images/Flags/Wyoming.png",
 };
 
 var dict_names = {
@@ -107,7 +107,7 @@ var dict_names = {
   AS: "American Samoa",
   GU: "Guam",
   MP: "Northern Mariana Islands",
-  PR: "Puerto Rico"
+  PR: "Puerto Rico",
 };
 
 document.addEventListener("DOMContentLoaded", function showPop(event) {
@@ -119,14 +119,14 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
   var left = pop.childNodes[1];
   var optionsStates = document.querySelectorAll("select>option");
 
-  window.onresize = function(event) {
+  window.onresize = function (event) {
     document.location.reload(true);
   };
 
-  svgStates.forEach(function(el) {
+  svgStates.forEach(function (el) {
     var iconPos = el.getBoundingClientRect();
     if (dim.matches) {
-      el.addEventListener("click", function() {
+      el.addEventListener("click", function () {
         pop.style.display = "flex";
         pop.style.top = window.scrollY + 140 + "px";
         left.innerHTML =
@@ -139,24 +139,24 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
           '"></div>';
       });
 
-      window.addEventListener("scroll", function() {
+      window.addEventListener("scroll", function () {
         pop.style.display = "none";
         pop.style.left = iconPos.right;
         pop.style.top = window.scrollY + iconPos.top + "px";
       });
-      el.addEventListener("mouseenter", function() {
+      el.addEventListener("mouseenter", function () {
         pop.style.display = "none";
         pop.style.left = iconPos.right;
         pop.style.top = window.scrollY + iconPos.top + "px";
       });
     } else {
-      leave.addEventListener("mouseenter", function() {
+      leave.addEventListener("mouseenter", function () {
         pop.style.display = "none";
         pop.style.left = iconPos.right;
         pop.style.top = window.scrollY + iconPos.top + "px";
       });
 
-      el.addEventListener("mouseenter", function() {
+      el.addEventListener("mouseenter", function () {
         pop.style.display = "flex";
         pop.style.left = iconPos.right + "px";
         pop.style.top = window.scrollY + iconPos.top + "px";
@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
       });
 
       var sel = document.querySelector(".options");
-      sel.addEventListener("input", function() {
+      sel.addEventListener("input", function () {
         for (var key in dict_names)
           if (dict_names[key] === this.value) state = key;
         var el = document.getElementById(state);
