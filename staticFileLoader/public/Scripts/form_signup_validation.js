@@ -7,45 +7,84 @@ const smallPassSignup = document.getElementById('err_pass_signup');
 const smallEmailSignup = document.getElementById('err_email_signup');
 let smallSignup;
 
-formSignup.addEventListener('submit',(e) => {
-    e.preventDefault();
-
-    checkInputs();
+email.addEventListener('click', function (ev) {
+    ev.preventDefault();
+    formSignup.addEventListener('click', emailSignHandler);
 });
 
-function checkInputs() {
+usernameSignup.addEventListener('click', function (ev) {
+    ev.preventDefault();
+    formSignup.addEventListener('click', userSignHandler);
+});
+
+passwordSignup.addEventListener('click',function (ev) {
+    ev.preventDefault();
+    formSignup.addEventListener('click', passwordSignHandler);
+});
+
+function emailSignHandler(e) {
+    e.preventDefault();
     const emailValue = email.value.trim();
-    const usernameValue = usernameSignup.value.trim();
-    const passwordValue = passwordSignup.value.trim();
-
-    if(emailValue === ""){
-        setErrorFor(email,"Email cannot be blank!");
-    }else{
-        if(!isEmail(emailValue))
-        {
-            setErrorFor(email,"This is not an email address!");
-        }else{
-            setSuccessFor(email);
-        }
-    }
-
-    if(usernameValue === ""){
-        setErrorFor(usernameSignup,"Username cannot be blank!");
-    }else{
-        setSuccessFor(usernameSignup);
-    }
-
-    if(passwordValue === ""){
-        setErrorFor(passwordSignup,"Password cannot be blank!");
-    }else{
-        if(passwordValue.length < 6)
-        {
-            setErrorFor(passwordSignup,"Password must have at least 6 characters!");
-        }else{
-            setSuccessFor(passwordSignup);
+    console.log('email ' + emailValue)
+    if (e.target !== email) {
+        if (emailValue === "") {
+            setErrorFor(email, "Email cannot be blank!");
+        } else {
+            if(!isEmail(emailValue))
+            {
+                setErrorFor(email,"This is not an email address!");
+            }else{
+                setSuccessFor(email);
+            }
         }
     }
 }
+
+function userSignHandler(e) {
+    e.preventDefault();
+    const usernameValue = usernameSignup.value.trim();
+    console.log('user ' + usernameValue)
+    if(e.target !== usernameSignup){
+        if(usernameValue === ""){
+            setErrorFor(usernameSignup, "Username cannot be blank!");
+        }else{
+            setSuccessFor(usernameSignup);
+        }
+    }
+}
+
+function passwordSignHandler(e) {
+    e.preventDefault();
+    const passwordValue = passwordSignup.value.trim();
+    console.log('pass ' + passwordValue)
+    if (e.target !== passwordSignup) {
+        if (passwordValue === "") {
+            setErrorFor(passwordSignup, "Password cannot be blank!");
+        } else {
+            if (passwordValue.length < 6) {
+                setErrorFor(passwordSignup, "Password must have at least 6 characters!");
+            } else {
+                setSuccessFor(passwordSignup);
+            }
+        }
+    }
+}
+
+document.querySelector('.close_sign').addEventListener('click', function () {
+    formSignup.removeEventListener('click',emailSignHandler);
+    formSignup.removeEventListener('click',userSignHandler);
+    formSignup.removeEventListener('click',passwordSignHandler);
+});
+
+window.addEventListener('click', function (e) {
+    var modal =  document.querySelector('.bg_model');
+
+    if (e.target === modal){
+        formSignup.removeEventListener('click',emailSignHandler);
+        formSignup.removeEventListener('click',userSignHandler);
+        formSignup.removeEventListener('click',passwordSignHandler);
+    }
+});
 
 function setErrorFor(input,message) {
 

@@ -3,35 +3,68 @@ const username = document.getElementById('username');
 const password = document.getElementById('password');
 const smallUser = document.getElementById('err_user_log');
 const smallPass = document.getElementById('err_pass_log');
+const loginButton = document.getElementById('login_button');
 let small;
 
-form.addEventListener('submit',(e) => {
-    e.preventDefault();
-
-    checkInputsForm();
+username.addEventListener('click', function (ev) {
+    ev.preventDefault();
+    form.addEventListener('click', userHandler);
 });
 
-function checkInputsForm() {
+password.addEventListener('click',function (ev) {
+    ev.preventDefault();
+    form.addEventListener('click', passwordHandler);
+});
+
+function userHandler(e) {
+    e.preventDefault();
     const usernameValue = username.value.trim();
-    const passwordValue = password.value.trim();
-
-    if(usernameValue === ""){
-        setFormErrorFor(username,"Username cannot be blank!");
-    }else{
-        setFormSuccessFor(username);
-    }
-
-    if(passwordValue === ""){
-        setFormErrorFor(password,"Password cannot be blank!");
-    }else{
-        if(passwordValue.length < 6)
-        {
-            setFormErrorFor(password,"Password must have at least 6 characters!");
+    if(e.target !== username){
+        if(usernameValue === ""){
+            setFormErrorFor(username, "Username cannot be blank!");
         }else{
-            setFormSuccessFor(password);
+            setFormSuccessFor(username);
         }
     }
 }
+
+function passwordHandler(e) {
+    e.preventDefault();
+    const passwordValue = password.value.trim();
+    if (e.target !== password) {
+        if (passwordValue === "") {
+            setFormErrorFor(password, "Password cannot be blank!");
+        } else {
+            if (passwordValue.length < 6) {
+                setFormErrorFor(password, "Password must have at least 6 characters!");
+            } else {
+                setFormSuccessFor(password);
+            }
+        }
+    }
+}
+
+document.querySelector('.close').addEventListener('click', function () {
+    form.removeEventListener('click',userHandler);
+    form.removeEventListener('click',passwordHandler);
+});
+
+window.addEventListener('click', function (e) {
+    var modal =  document.querySelector('.bg_model');
+
+    if (e.target === modal){
+        form.removeEventListener('click',userHandler);
+        form.removeEventListener('click',passwordHandler);
+    }
+});
+
+loginButton.addEventListener('click',function (ev) {
+    ev.preventDefault();
+    if(username.value === "" && password.value === ""){
+        setFormErrorFor(username, "Username cannot be blank!");
+        setFormErrorFor(password, "Password cannot be blank!");
+    }
+});
 
 function setFormErrorFor(input,message) {
 

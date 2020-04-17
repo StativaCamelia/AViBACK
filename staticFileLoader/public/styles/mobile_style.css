@@ -735,7 +735,7 @@
         display: flex;
         flex-direction: column;
         align-self: auto;
-        width: 30%;
+        width: 100%;
         margin-top: auto;
         margin-bottom: 5%;
         padding: 0px;
@@ -750,7 +750,7 @@
         padding: 0px;
         text-align: center;
         background-color: white;
-        width: 30%;
+        width: 100%;
         height: 20vh;
     }
 
@@ -788,8 +788,8 @@
     .or_bullet {
         transform: translate(0%);
         border: 2px solid #ddd;
-        height: 0.1vh;
-        width: 30vw;
+        height: 0.5vh;
+        width: 100%;
     }
 
     .or_bullet_text {
@@ -800,9 +800,9 @@
         border: 1px solid #ccc;
         border-radius: 50%;
         padding: 1vh 1vh 1vh 1vh;
-        width: 3vw;
-        height: 2vh;
-        font-size: 0.5rem;
+        width: 5vw;
+        height: 3vh;
+        font-size: 0.8rem;
     }
 
     .hide-lg {
