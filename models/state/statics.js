@@ -1,8 +1,37 @@
 module.exports = function (stateSchema) {
-  stateSchema.statics.getAllStates = async function () {
+  stateSchema.statics.getAllStatesViews = async function () {
     try {
-      const states = this.find({});
-      return states;
+      const states = await this.find({});
+      const statesViews = [];
+      for (state of states) {
+        const stateView = {};
+        stateView.id = state.abbreviation;
+        stateView.value = state.name;
+        statesViews.push(stateView);
+      }
+      return statesViews;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  stateSchema.statics.getAllTimezones = async function () {
+    try {
+      const timezones = await this.find({}).distinct("timezone");
+      return timezones;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  stateSchema.statics.getAllStatesNames = async function () {
+    try {
+      const states = await this.find({});
+      const statesNames = [];
+      for (state of states) {
+        statesNames.push(state.name);
+      }
+      return statesNames;
     } catch (error) {
       throw error;
     }

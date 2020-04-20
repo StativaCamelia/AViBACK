@@ -33,8 +33,20 @@ const adminController = new AdminController(
   },
   { filtresController }
 );
-const mapController = new MapController({ Accident });
-const pieController = new PieController({ Accident });
+const mapController = new MapController({
+  Accident,
+  State,
+  County,
+  City,
+  Street,
+});
+const pieController = new PieController({
+  Accident,
+  State,
+  County,
+  City,
+  Street,
+});
 
 module.exports = {
   homeController,

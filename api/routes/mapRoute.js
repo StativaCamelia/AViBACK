@@ -15,11 +15,11 @@ function sendAnswer(success, data, res, statusCode = 200) {
   }
 }
 
-exports.getRes = (req, res) => {
+exports.getRes = async (req, res) => {
   const { fullPath, method, body } = req;
   if (fullPath.endsWith("/") && method === "get") {
     try {
-      const { success, data } = mapController.getMapPage(body, res);
+      const { success, data } = await mapController.getMapPage(body, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
