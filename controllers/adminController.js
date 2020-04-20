@@ -3,16 +3,113 @@ class AdminController {
     this.database = database;
   }
 
+  async createFilterDatabase() {
+    try {
+      const states = await this.database.Accident.getAllStatesEntities();
+      for (let stateData of states) {
+        this.createStateEntity(stateData);
+      }
+      const counties = await this.database.Accident.getAllCountiesEntities();
+      for (let countyData of counties) {
+        this.createCountyEntity(countyData);
+      }
+      const cities = await this.database.Accident.getAllCitiesEntities();
+      for (let cityData of cities) {
+        this.createCityEntity(cityData);
+      }
+      const streets = await this.database.Accident.getAllStreetsEntities();
+      for (let streetData of streets) {
+        this.createStreetEntity(streetData);
+      }
+      const content = "Succes";
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async createCityEntity(payload) {
+    try {
+      const options = {
+        upsert: true,
+        new: true,
+        useFindAndModify: false,
+      };
+      const content = await this.database.City.findOneAndUpdate(
+        { name: payload.name },
+        payload,
+        options
+      );
+
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async createStreetEntity(payload) {
+    try {
+      const options = {
+        upsert: true,
+        new: true,
+        useFindAndModify: false,
+      };
+      const content = await this.database.Street.findOneAndUpdate(
+        { name: payload.name },
+        payload,
+        options
+      );
+
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async createCountyEntity(payload) {
+    try {
+      const options = {
+        upsert: true,
+        new: true,
+        useFindAndModify: false,
+      };
+      const content = await this.database.County.findOneAndUpdate(
+        { name: payload.name },
+        payload,
+        options
+      );
+
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async createStateEntity(payload) {
+    try {
+      const options = {
+        upsert: true,
+        new: true,
+        useFindAndModify: false,
+      };
+      const content = await this.database.State.findOneAndUpdate(
+        { name: payload.name },
+        payload,
+        options
+      );
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
   async addAccident(payload, res) {
     const content = new this.database.Accident(payload);
     try {
       await content.save();
       return { success: true, data: { content } };
     } catch (error) {
-      return {
-        success: false,
-        error: { message: error.message },
-      };
+      return { success: false, data: { error } };
     }
   }
 
@@ -20,8 +117,8 @@ class AdminController {
     try {
       const content = await this.database.Accident.deleteMany({});
       return { success: true, data: { content } };
-    } catch (erorr) {
-      return { success: false, data: { erorr } };
+    } catch (error) {
+      return { success: false, data: { error } };
     }
   }
 
@@ -32,7 +129,7 @@ class AdminController {
     } catch (error) {
       return {
         success: false,
-        error: { message: error.message },
+        data: { error },
       };
     }
   }

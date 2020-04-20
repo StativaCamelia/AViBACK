@@ -7,10 +7,10 @@ function sendAnswer(success, data, res, statusCode = 200) {
     res.write(JSON.stringify(content, null, 2));
     res.end();
   } else {
-    const { erorr } = data;
-    console.log(erorr);
+    const { error } = data;
+    console.log(error);
     res.writeHead(401);
-    res.write("Undefined");
+    res.write(error.message);
     res.end();
   }
 }
@@ -30,6 +30,16 @@ exports.getRes = async (req, res) => {
   } else if (path.endsWith("/addAccident") && method === "post") {
     try {
       const { success, data } = await adminController.deleteAllAccidents(
+        body,
+        res
+      );
+      sendAnswer(success, data, res);
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (path.endsWith("/createFilterDatabase") && method === "get") {
+    try {
+      const { success, data } = await adminController.createFilterDatabase(
         body,
         res
       );
