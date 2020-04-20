@@ -7,7 +7,7 @@
         .row_log
           .col_log_1
             input(type='text' name='username' placeholder='Username' required='')
-            input(type='password' name='password' placeholder='Password' required='')
+            input(type='password' name='password' autocomplete = 'off' placeholder='Password' required='')
             input(type='submit' value='Login')
           .or_bullet
             span.or_bullet_text OR
@@ -21,8 +21,8 @@
         h1 Subscribe to our newsletter!
         .row_log
           .col_log_1
-            input(type='text' name='email' placeholder='Email' required='')
-            input(type='text' name='username' placeholder='Username' required='')
-            input(type='password' name='password' placeholder='Password' required='')
+            input(type='text' name='email' placeholder='Email' autocomplete = 'off' required='')
+            input(type='text' name='username' placeholder='Username' autocomplete='off' required='')
+            input(type='password' name='password' placeholder='Password' autocomplete='off' required='')
           .col_log_2
             input(type='submit' value='Register')

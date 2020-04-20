@@ -4,40 +4,8 @@ block left_content
     #states_pop
         .left_description
         .right_description
-        #map(latitude = '37.49267', longitude = '-121.94409')
-        script.
-            var map;
-            var map_element = document.getElementById('map')
-            var latitude = parseInt(map_element.getAttribute("latitude"),10)
-            var longitude = parseInt(map_element.getAttribute("longitude"),10)
-            console.log(longitude)
-            var uluru = {
-                lat: latitude,
-                lng: longitude,
-            };
-            var superchargers = [
-            {
-                location: 'Fremont',
-                latitude: 37.49267,
-                longitude: -121.94409
-            }
-            ];
-           
-            function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: uluru,
-                zoom: 4
-            });
-
-            superchargers.forEach(function(sc) {
-                var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(sc.latitude, sc.longitude),
-                map: map,
-                });
-            });
-            }
-
-        script(async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGMRsZ2FtdEy73zYaGm_JK_waMrSc9g0&callback=initMap')
-         
+            #map(latitude = 56 longitude = -121)
+            script( src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGMRsZ2FtdEy73zYaGm_JK_waMrSc9g0')
+            
 block right_content
     include ./statisticsComponents/filtres
