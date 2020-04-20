@@ -4,6 +4,7 @@ const ChartController = require("./chartController");
 const StaticFilesController = require("./staticFilesController");
 const AdminController = require("./adminController.js");
 const MapController = require("./mapController");
+const FiltresController = require("./filtresController");
 const PieController = require("./pieController");
 const {
   User,
@@ -18,22 +19,30 @@ const homeController = new HomeController({ User, Accident });
 const contactController = new ContactController({ Accident });
 const chartController = new ChartController();
 const staticFilesController = new StaticFilesController();
-const adminController = new AdminController({
+const filtresController = new FiltresController({
   Accident,
-  User,
   State,
   County,
   City,
   Street,
 });
+const adminController = new AdminController(
+  {
+    Accident,
+    User,
+  },
+  { filtresController }
+);
 const mapController = new MapController({ Accident });
 const pieController = new PieController({ Accident });
+
 module.exports = {
   homeController,
   contactController,
   chartController,
   staticFilesController,
   adminController,
+  filtresController,
   mapController,
   pieController,
 };
