@@ -5,6 +5,7 @@ const passwordSignup = document.getElementById('password_signup');
 const smallUserSignup = document.getElementById('err_user_signup');
 const smallPassSignup = document.getElementById('err_pass_signup');
 const smallEmailSignup = document.getElementById('err_email_signup');
+const registerButton = document.getElementById('register_button');
 let smallSignup;
 
 email.addEventListener('click', function (ev) {
@@ -48,7 +49,11 @@ function userSignHandler(e) {
         if(usernameValue === ""){
             setErrorFor(usernameSignup, "Username cannot be blank!");
         }else{
-            setSuccessFor(usernameSignup);
+            if(usernameValue.length <= 5){
+                setErrorFor(usernameSignup, "Username must have at least 6 characters!");
+            }else{
+                setSuccessFor(usernameSignup);
+            }
         }
     }
 }
@@ -83,6 +88,15 @@ window.addEventListener('click', function (e) {
         formSignup.removeEventListener('click',emailSignHandler);
         formSignup.removeEventListener('click',userSignHandler);
         formSignup.removeEventListener('click',passwordSignHandler);
+    }
+});
+
+registerButton.addEventListener('click',function (ev) {
+    ev.preventDefault();
+    if(email.value === "" && usernameSignup.value === "" && passwordSignup.value === ""){
+        setErrorFor(email,"Email cannot be blank!");
+        setErrorFor(usernameSignup, "Username cannot be blank!");
+        setErrorFor(passwordSignup, "Password cannot be blank!");
     }
 });
 
