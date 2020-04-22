@@ -30,6 +30,19 @@ class StateController {
       return { success: false, data: { error } };
     }
   }
+
+  async getCountiesByState(payload) {
+    try {
+      const { query } = payload;
+      const { state } = query;
+      const content = await this.services.countyController.getCountiesByState(
+        state
+      );
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
 }
 
 module.exports = StateController;

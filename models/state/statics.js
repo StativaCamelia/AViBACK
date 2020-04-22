@@ -26,7 +26,7 @@ module.exports = function (stateSchema) {
 
   stateSchema.statics.getAllStatesNames = async function () {
     try {
-      const states = await this.find({});
+      const states = await this.find({}).lean();
       const statesNames = [];
       for (state of states) {
         statesNames.push(state.name);

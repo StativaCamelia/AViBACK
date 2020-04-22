@@ -25,8 +25,9 @@ const contactController = new ContactController({ Accident });
 const chartController = new ChartController();
 const staticFilesController = new StaticFilesController();
 
-const stateController = new StateController({ State });
 const countyController = new CountyController({ County });
+const stateController = new StateController({ State }, { countyController });
+
 const cityController = new CityController({ City });
 const streetController = new StreetController({ Street });
 

@@ -22,6 +22,17 @@ class CountyController {
       return { success: false, data: { error } };
     }
   }
+
+  async getCountiesByState(state) {
+    try {
+      const query = {};
+      query.state = state;
+      const counties = await this.database.County.findByState(query);
+      return counties;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = CountyController;

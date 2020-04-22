@@ -17,7 +17,7 @@ function sendAnswer(success, data, res, statusCode = 200) {
 
 exports.getRes = async (req, res) => {
   const { path, fullPath, method, body } = req;
-  if (path.endsWith("/deleteAllAccidents") && method === "delete") {
+  if (path.endsWith("/accidents/delete") && method === "delete") {
     try {
       const { success, data } = await adminController.deleteAllAccidents(
         body,
@@ -27,7 +27,7 @@ exports.getRes = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-  } else if (path.endsWith("/addAccident") && method === "post") {
+  } else if (path.endsWith("/accidents/add") && method === "post") {
     try {
       const { success, data } = await adminController.deleteAllAccidents(
         body,
