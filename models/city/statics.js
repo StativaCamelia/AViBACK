@@ -7,4 +7,14 @@ module.exports = function (citySchema) {
       throw error;
     }
   };
+
+  citySchema.statics.findByQuery = async function (payload) {
+    try {
+      const { query } = payload;
+      const counties = await this.find(query).distinct("name");
+      return counties;
+    } catch (error) {
+      throw error;
+    }
+  };
 };

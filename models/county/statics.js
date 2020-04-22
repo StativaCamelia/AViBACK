@@ -8,8 +8,9 @@ module.exports = function (countySchema) {
     }
   };
 
-  countySchema.statics.findByState = async function (query) {
+  countySchema.statics.findByQuery = async function (payload) {
     try {
+      const { query } = payload;
       const counties = await this.find(query).distinct("name");
       return counties;
     } catch (error) {

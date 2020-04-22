@@ -22,6 +22,16 @@ class StreetController {
       return { success: false, data: { error } };
     }
   }
+
+  async getStreetsByQuery(payload) {
+    try {
+      const { query } = payload;
+      const content = await this.database.Street.findByQuery({ query });
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
 }
 
 module.exports = StreetController;

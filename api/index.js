@@ -6,7 +6,11 @@ const {
   mapRoute,
   pieRoute,
   stateRoute,
+  countyRoute,
+  cityRoute,
+  streetRoute,
 } = require("./routes/index");
+
 const { staticFilesController } = require("../controllers/index");
 exports.getRes = async (req, res) => {
   const parsedReq = {};
@@ -62,14 +66,31 @@ exports.getRes = async (req, res) => {
 
     if (parsedReq.path.indexOf("map") !== -1) {
       mapRoute.getRes(parsedReq, res);
+      return;
     }
 
     if (parsedReq.path.indexOf("pie") !== -1) {
       pieRoute.getRes(parsedReq, res);
+      return;
     }
 
-    if (parsedReq.path.indexOf("states") !== -1) {
+    if (parsedReq.path.indexOf("state") !== -1) {
       stateRoute.getRes(parsedReq, res);
+      return;
+    }
+
+    if (parsedReq.path.indexOf("county") !== -1) {
+      countyRoute.getRes(parsedReq, res);
+      return;
+    }
+
+    if (parsedReq.path.indexOf("city") !== -1) {
+      cityRoute.getRes(parsedReq, res);
+      return;
+    }
+    if (parsedReq.path.indexOf("street") !== -1) {
+      streetRoute.getRes(parsedReq, res);
+      return;
     }
   });
 };

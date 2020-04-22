@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const streetSchema = mongoose.Schema({
   name: { type: String },
   city: { type: String },
+  state: { type: String },
+  county: { type: String },
   numbers: [{ type: String }],
 });
 

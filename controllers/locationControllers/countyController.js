@@ -23,14 +23,13 @@ class CountyController {
     }
   }
 
-  async getCountiesByState(state) {
+  async getCountiesByQuery(payload) {
     try {
-      const query = {};
-      query.state = state;
-      const counties = await this.database.County.findByState(query);
-      return counties;
+      const { query } = payload;
+      const content = await this.database.County.findByQuery({ query });
+      return { success: true, data: { content } };
     } catch (error) {
-      throw error;
+      return { success: false, data: { error } };
     }
   }
 }

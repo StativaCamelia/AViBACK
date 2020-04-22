@@ -1,4 +1,4 @@
-const { stateController } = require("../../controllers/index");
+const { countyController } = require("../../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
@@ -17,10 +17,10 @@ function sendAnswer(success, data, res, statusCode = 200) {
 
 exports.getRes = async (req, res) => {
   const { path, fullPath, method, body, queryStringObject: query } = req;
-  if (path.endsWith("/states") && method === "get") {
+  if (path.endsWith("/county") && method === "get") {
     try {
       const payload = { body, query };
-      const { success, data } = await stateController.getCountiesByState(
+      const { success, data } = await countyController.getCountiesByQuery(
         payload
       );
       sendAnswer(success, data, res);
