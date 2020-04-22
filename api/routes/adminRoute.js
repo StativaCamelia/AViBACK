@@ -37,7 +37,7 @@ exports.getRes = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-  } else if (path.endsWith("/createFilterDatabase") && method === "get") {
+  } else if (path.endsWith("/filtres/create") && method === "get") {
     try {
       const { success, data } = await adminController.createFilterDatabase(
         body,

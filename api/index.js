@@ -5,6 +5,7 @@ const {
   adminRoute,
   mapRoute,
   pieRoute,
+  stateRoute,
 } = require("./routes/index");
 const { staticFilesController } = require("../controllers/index");
 exports.getRes = async (req, res) => {
@@ -18,14 +19,16 @@ exports.getRes = async (req, res) => {
     "/";
   parsedReq.method = req.method.toLowerCase();
   parsedReq.headers = req.headers;
-  parsedReq.queryStringObject = parsedReq.parsedUrl.query;
+  parsedReq.queryStringObject = JSON.parse(
+    JSON.stringify(parsedReq.parsedUrl.query)
+  );
 
   let body = [];
   req.on("data", (chunk) => {
     body.push(chunk);
   });
 
-  req.on("end", async () => {
+  req.on("end", () => {
     body = Buffer.concat(body).toString();
     if (body) parsedReq.body = JSON.parse(body);
     if (
@@ -35,7 +38,7 @@ exports.getRes = async (req, res) => {
       parsedReq.path.includes(".jpg")
     ) {
       try {
-        await staticFilesController.getRes(parsedReq, res);
+        staticFilesController.getRes(parsedReq, res);
         return;
       } catch (error) {
         console.log(error);
@@ -53,16 +56,20 @@ exports.getRes = async (req, res) => {
     }
 
     if (parsedReq.path.indexOf("admin") !== -1) {
-      await adminRoute.getRes(parsedReq, res);
+      adminRoute.getRes(parsedReq, res);
       return;
     }
 
     if (parsedReq.path.indexOf("map") !== -1) {
-      await mapRoute.getRes(parsedReq, res);
+      mapRoute.getRes(parsedReq, res);
     }
 
     if (parsedReq.path.indexOf("pie") !== -1) {
-      await pieRoute.getRes(parsedReq, res);
+      pieRoute.getRes(parsedReq, res);
+    }
+
+    if (parsedReq.path.indexOf("states") !== -1) {
+      stateRoute.getRes(parsedReq, res);
     }
   });
 };
