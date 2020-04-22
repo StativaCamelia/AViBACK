@@ -22,7 +22,13 @@ const {
 
 const homeController = new HomeController({ User, Accident });
 const contactController = new ContactController({ Accident });
-const chartController = new ChartController();
+const chartController = new ChartController({
+  Accident,
+  State,
+  County,
+  City,
+  Street,
+});
 const staticFilesController = new StaticFilesController();
 
 const streetController = new StreetController({ Street });

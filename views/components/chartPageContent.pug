@@ -1,0 +1,13 @@
+extends ./layouts/layoutStatistici.pug
+block left_content
+    .div
+         svg( width="700"
+              height="500"
+              viewBox="0 0 900 500"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              id="my_dataviz")
+    script(src="./Scripts/chart.js")
+block right_content
+    include ./statisticsComponents/filtres
+        

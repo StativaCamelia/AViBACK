@@ -1,12 +1,15 @@
 const path = require("path");
 const staticFileLoader = require("../staticFileLoader/index");
 const pug = require("pug");
-const piePageLocation = path.join(__dirname, "./components/piePageContent.pug");
+const chartPageLocation = path.join(
+  __dirname,
+  "./components/chartPageContent.pug"
+);
 
-class PiePage {
+class ChartPage {
   constructor() {}
 
-  getPiePage(
+  getChartPage(
     statesValues,
     countiesValues,
     citiesValues,
@@ -19,7 +22,7 @@ class PiePage {
     ids
   ) {
     try {
-      const compiledFunction = pug.compileFile(piePageLocation);
+      const compiledFunction = pug.compileFile(chartPageLocation);
       const content = compiledFunction({
         states: JSON.stringify(statesValues),
         counties: JSON.stringify(countiesValues),
@@ -32,7 +35,7 @@ class PiePage {
         windDirections: JSON.stringify(windDirectionValues),
         activeIds: JSON.stringify(ids),
       });
-      const contentType = staticFileLoader.getContentType(piePageLocation);
+      const contentType = staticFileLoader.getContentType(chartPageLocation);
       return { content, contentType };
     } catch (err) {
       console.log(err);
@@ -41,4 +44,4 @@ class PiePage {
   }
 }
 
-module.exports = PiePage;
+module.exports = ChartPage;
