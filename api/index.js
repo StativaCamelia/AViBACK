@@ -5,6 +5,7 @@ const {
   adminRoute,
   mapRoute,
   pieRoute,
+  chartRoute,
 } = require("./routes/index");
 const { staticFilesController } = require("../controllers/index");
 exports.getRes = async (req, res) => {
@@ -63,6 +64,10 @@ exports.getRes = async (req, res) => {
 
     if (parsedReq.path.indexOf("pie") !== -1) {
       await pieRoute.getRes(parsedReq, res);
+    }
+
+    if (parsedReq.path.indexOf("chart") !== -1) {
+      await chartRoute.getRes(parsedReq, res);
     }
   });
 };
