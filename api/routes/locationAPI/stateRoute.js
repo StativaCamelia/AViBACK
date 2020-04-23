@@ -17,4 +17,13 @@ function sendAnswer(success, data, res, statusCode = 200) {
 
 exports.getRes = async (req, res) => {
   const { path, fullPath, method, body, queryStringObject: query } = req;
+  if (path.endsWith("/state") && method === "get") {
+    try {
+      const payload = { body, query };
+      const { success, data } = await stateController.getStateByQuery(payload);
+      sendAnswer(success, data, res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };

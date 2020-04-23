@@ -21,23 +21,10 @@ class StateController {
       return { success: false, data: { error } };
     }
   }
-
-  async getStates(payload) {
-    try {
-      const content = await this.database.State.getAllStatesNames();
-      return { success: true, data: { content } };
-    } catch (error) {
-      return { success: false, data: { error } };
-    }
-  }
-
-  async getCountiesByState(payload) {
+  async getStateByQuery(payload) {
     try {
       const { query } = payload;
-      const { state } = query;
-      const content = await this.services.countyController.getCountiesByState(
-        state
-      );
+      const content = await this.database.State.findByQuery({ query });
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };

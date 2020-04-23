@@ -5,6 +5,7 @@ const streetSchema = mongoose.Schema({
   city: { type: String },
   state: { type: String },
   county: { type: String },
+  timezone: { type: String },
   numbers: [{ type: String }],
 });
 

@@ -143,7 +143,6 @@ module.exports = function (accidentSchema) {
       const citiesEntities = [];
       for (county of counties) {
         const cities = await this.find({ County: county }).distinct("City");
-        console.log(state);
         for (city of cities) {
           const cityEntity = {};
           cityEntity.name = city;

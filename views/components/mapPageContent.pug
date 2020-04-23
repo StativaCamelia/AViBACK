@@ -6,6 +6,16 @@ block left_content
         .right_description
             #map(latitude = 56 longitude = -121)
             script( src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGMRsZ2FtdEy73zYaGm_JK_waMrSc9g0')
-            
+    .map-history
+        .history_line
+            #high.cbox
+            p   &gt;500 accidents
+        .history_line
+            #medium.cbox
+            p   250-500 accidents
+        .history_line
+            #low.cbox
+            p  &lt; 250 accidents
+    
 block right_content
     include ./statisticsComponents/filtres

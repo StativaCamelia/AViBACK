@@ -818,8 +818,7 @@
 
     #left_cont{
         display: flex;
-        align-self: auto;
-        flex-direction: row;
+        flex-direction: column;
         width: 60%;
         height: auto;
         margin: 0px;
@@ -1169,6 +1168,23 @@
         font-weight:bold;
         padding:7px 25px;
         text-decoration:none;
+        margin-left: 9.7vw;
+        text-shadow:0px 1px 0px #e1e2ed;
+    }
+
+    #reset_button[type="reset"]{
+        z-index: 0;
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: white;
+        border-radius:15px;
+        text-align: center;
+        cursor:pointer;
+        color:black;
+        font-family:'Bahnschrift SemiBold', 'serif';
+        font-size:13px;
+        font-weight:bold;
+        padding:7px 25px;
+        text-decoration:none;
         margin-left: 10vw;
         text-shadow:0px 1px 0px #e1e2ed;
     }
@@ -1176,9 +1192,15 @@
     .map-history{
         display: flex;
         flex-basis: 10px;
-        flex-direction: column;
-        align-items: flex-start;
-        align-self: flex-end;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    #svg_map {
+        left: 0;
+        margin: 0;
+        width: 100%;
+        height: 50%;
     }
 
     /*TOP BUTTON*/
