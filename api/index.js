@@ -5,6 +5,7 @@ const {
   adminRoute,
   mapRoute,
   pieRoute,
+  chartRoute,
   stateRoute,
   countyRoute,
   cityRoute,
@@ -71,6 +72,11 @@ exports.getRes = async (req, res) => {
 
     if (parsedReq.path.indexOf("pie") !== -1) {
       pieRoute.getRes(parsedReq, res);
+      return;
+    }
+
+    if (parsedReq.path.indexOf("chart") !== -1) {
+      chartRoute.getRes(parsedReq, res);
       return;
     }
 

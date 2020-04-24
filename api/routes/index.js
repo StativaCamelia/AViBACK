@@ -3,6 +3,7 @@ const contactRoute = require("./contactRoute");
 const adminRoute = require("./adminRoute");
 const mapRoute = require("./mapRoute");
 const pieRoute = require("./pieRoute");
+const chartRoute = require("./chartRoute");
 const stateRoute = require("./locationAPI/stateRoute");
 const countyRoute = require("./locationAPI/countyRoute");
 const cityRoute = require("./locationAPI/cityRoute");
@@ -14,6 +15,7 @@ module.exports = {
   adminRoute,
   mapRoute,
   pieRoute,
+  chartRoute,
   stateRoute,
   countyRoute,
   cityRoute,

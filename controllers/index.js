@@ -77,6 +77,7 @@ module.exports = {
   filtresController,
   mapController,
   pieController,
+  chartController,
   stateController,
   countyController,
   streetController,
