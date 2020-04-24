@@ -1,69 +1,54 @@
-// set the dimensions and margins of the graph
-var margin = { top: 10, right: 30, bottom: 30, left: 40 },
-  width = 900 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
+const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+svg.setAttribute("height", `${500}px`);
+svg.setAttribute("width", `${500}px`);
+svg.setAttribute("viewBox", `0 0 500 500`);
 
-// append the svg object to the body of the page
-var svg = d3
-  .select("#my_dataviz")
-  .append("svg")
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+const chartData = new Array(10)
+  .fill(0)
+  .map(() => parseInt(100 * (Math.random() + 1), 10));
 
-// get the data
-d3.csv(
-  "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv",
-  function(data) {
-    // X axis: scale and draw:
-    var x = d3
-      .scaleLinear()
-      .domain([0, 1000]) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
-      .range([0, width]);
-    svg
-      .append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+function generateChart(data) {
+  const barChartElems = [];
 
-    // set the parameters for the histogram
-    var histogram = d3
-      .histogram()
-      .value(function(d) {
-        return d.price;
-      }) // I need to give the vector of value
-      .domain(x.domain()) // then the domain of the graphic
-      .thresholds(x.ticks(70)); // then the numbers of bins
+  const create = (d) => {
+    d.forEach((entry, index) => {
+      const bar = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "rect"
+      );
+      bar.setAttribute("x", index * (500 / data.length));
+      bar.setAttribute("y", 500 - 0);
+      bar.setAttribute("height", `${0}px`);
+      bar.setAttribute("width", `${500 / data.length}px`);
+      bar.setAttribute("style", "transition: 0.5s all;");
+      svg.appendChild(bar);
+      barChartElems.push(bar);
+    });
+  };
 
-    // And apply this function to data to get the bins
-    var bins = histogram(data);
+  const update = (newData) => {
+    if (newData.length > barChartElems.length) {
+      create(newData.filter((e, i) => i > barChartElems.length - 1));
+    }
 
-    // Y axis: scale and draw:
-    var y = d3.scaleLinear().range([height, 0]);
-    y.domain([
-      0,
-      d3.max(bins, function(d) {
-        return d.length;
-      })
-    ]); // d3.hist has to be called before the Y axis obviously
-    svg.append("g").call(d3.axisLeft(y));
+    newData.forEach((newEntry, index) => {
+      if (index > barChartElems.length - 1) return;
 
-    // append the bar rectangles to the svg element
-    svg
-      .selectAll("rect")
-      .data(bins)
-      .enter()
-      .append("rect")
-      .attr("x", 1)
-      .attr("transform", function(d) {
-        return "translate(" + x(d.x0) + "," + y(d.length) + ")";
-      })
-      .attr("width", function(d) {
-        return x(d.x1) - x(d.x0) - 1;
-      })
-      .attr("height", function(d) {
-        return height - y(d.length);
-      })
-      .style("fill", "grey");
-  }
-);
+      const bar = barChartElems[index];
+      bar.setAttribute("x", index * (500 / newData.length));
+      bar.setAttribute("width", `${500 / newData.length}px`);
+
+      setTimeout(() => {
+        bar.setAttribute("y", 500 - newEntry);
+        bar.setAttribute("height", `${newEntry}px`);
+      }, 100 * index);
+    });
+  };
+  create(data);
+  update(data);
+  return update;
+}
+
+document.getElementById("root").appendChild(svg);
+
+const updateChart = generateChart(chartData);

@@ -731,7 +731,7 @@
         color: #041F60;
     }
 
-    input[type=reset]:hover{
+    input[type=reset]:hover {
         background-color: #B1D4E0;
         color: #041F60;
     }
@@ -889,6 +889,12 @@
         margin: 0px;
         align-self: center;
         /*padding: 10px 5px;*/
+    }
+
+    rect {
+        fill: lightblue;
+        stroke-width: 1px;
+        stroke: #fff;
     }
 
     /*PIE*/
