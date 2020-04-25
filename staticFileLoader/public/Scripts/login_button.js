@@ -79,6 +79,7 @@ function resetFormLogin(){
     password.className='';
     smallUser.querySelector("small").innerText='';
     smallPass.querySelector("small").innerText='';
+    document.getElementById('login_response').innerText = '';
 }
 
 function resetFormSignup(){
