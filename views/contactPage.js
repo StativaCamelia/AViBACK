@@ -12,7 +12,7 @@ class ContactPage {
   getPage(ids) {
     try {
       const compiledFunction = pug.compileFile(contactPageLocation);
-      const content = compiledFunction({activeIds : JSON.stringify(ids)});
+      const content = compiledFunction({ activeIds: JSON.stringify(ids) });
       const contentType = staticFileLoader.getContentType(contactPageLocation);
       return { content, contentType };
     } catch (err) {

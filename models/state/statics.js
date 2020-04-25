@@ -26,12 +26,22 @@ module.exports = function (stateSchema) {
 
   stateSchema.statics.getAllStatesNames = async function () {
     try {
-      const states = await this.find({});
+      const states = await this.find({}).lean();
       const statesNames = [];
       for (state of states) {
         statesNames.push(state.name);
       }
       return statesNames;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  stateSchema.statics.findByQuery = async function (payload) {
+    try {
+      const { query } = payload;
+      const counties = await this.find(query).distinct("name");
+      return counties;
     } catch (error) {
       throw error;
     }

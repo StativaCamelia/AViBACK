@@ -111,7 +111,7 @@ module.exports = function (accidentSchema) {
         for (county of counties) {
           const countyEntity = {};
           countyEntity.name = county;
-          countyEntity.state = state;
+          countyEntity.state = nameDictionary[state];
           countiesEntities.push(countyEntity);
         }
       }
@@ -147,6 +147,7 @@ module.exports = function (accidentSchema) {
           const cityEntity = {};
           cityEntity.name = city;
           cityEntity.county = county;
+          cityEntity.state = state;
           citiesEntities.push(cityEntity);
         }
       }

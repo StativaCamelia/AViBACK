@@ -4,7 +4,7 @@
             .left_filtres
                 label.label_spatial Spatial Coordinates
                 .select_box
-                    select#country.options(form='filters_form' name='country')
+                    select#state.options(form='filters_form' name='country')
                         option(selected='' hidden='') State
                         - let keyStates = {states}
                         - let valuesStates = JSON.parse(keyStates.states)
@@ -20,7 +20,7 @@
                             option(value=n)
                                 | #{n}
                 .select_box
-                    select#City.options_city(form='filters_form' name='City')
+                    select#city.options_city(form='filters_form' name='City')
                         option(value='0' selected='' hidden='') City
                         - let keyCities = {cities}
                         - let valuesCities = JSON.parse(keyCities.cities)
@@ -28,7 +28,7 @@
                             option(value=n)
                                 | #{n}
                 .select_box
-                    select#Street.options_street(form='filters_form' name='Street')
+                    select#street.options_street(form='filters_form' name='Street')
                         option(value='0' selected='' hidden='') Street
                         - let keyStreets = {streets}
                         - let valuesStreets = JSON.parse(keyStreets.streets)
@@ -44,7 +44,7 @@
                             option(value=n)
                                 | #{n}
                 .select_box
-                    select#Timezone.options_timezone(form='filters_form' name='Timezone')
+                    select#timezone.options_timezone(form='filters_form' name='Timezone')
                         option(value='0' selected='' hidden='') Timezone
                         - let keyTimezones = {timezones}
                         - let valuesTimezones = JSON.parse(keyTimezones.timezones)
@@ -52,7 +52,7 @@
                             option(value=n)
                                 | #{n}
                 .select_box
-                    select#Road_side.options_season(form='filters_form' name='Road_Side')
+                    select#road_side.options_season(form='filters_form' name='Road_Side')
                         option(value='0' selected='' hidden='') Road Side
                         - let keyRoadSides = {roadSides}
                         - let valuesRoadSides = JSON.parse(keyRoadSides.roadSides)
@@ -203,4 +203,6 @@
                             input#astronomical_twilight_night(type='radio' form='filters_form' name='astronomical_twilight' value='night')
                             label.moon_option_label(for='astronomical_twilight_night') Night
         .submit_button
+            input#reset_button(form='filters_form' type='reset' value='Reset')
             input#submit_button(form='filters_form' type='submit' value='Submit')
+            

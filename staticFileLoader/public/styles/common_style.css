@@ -202,12 +202,7 @@ ul li {
 
 
 /*MAP*/
-#svg_map {
-    left: 0;
-    margin: 0;
-    width: 100vw;
-    height: 75vh;
-}
+
 
 #svg_map>path {
     fill: #84b18f;
@@ -413,6 +408,11 @@ ul li {
 }
 
 #submit_button:hover {
+    background-color: #041F60;
+    color: white;
+}
+
+#reset_button:hover {
     background-color: #041F60;
     color: white;
 }
