@@ -6,6 +6,11 @@ const userSchema = mongoose.Schema({
     required: true,
     min: 10,
   },
+  username: {
+    type: String,
+    required: true,
+    min: 10,
+  },
   password: {
     type: String,
     required: true,

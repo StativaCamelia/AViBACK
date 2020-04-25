@@ -19,7 +19,7 @@ exports.getRes = async (req, res) => {
   const { fullPath, method, body } = req;
   if (fullPath.endsWith("/") && method === "get") {
     try {
-      const { success, data } = await mapController.getMapPage(body, res);
+      const { success, data } = await mapController.getMapPage(req, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

@@ -735,7 +735,7 @@
         display: flex;
         flex-direction: column;
         align-self: auto;
-        width: 30%;
+        width: 100%;
         margin-top: auto;
         margin-bottom: 5%;
         padding: 0px;
@@ -750,7 +750,7 @@
         padding: 0px;
         text-align: center;
         background-color: white;
-        width: 30%;
+        width: 95%;
         height: 20vh;
     }
 
@@ -777,7 +777,7 @@
         height: auto;
     }
 
-    .form_log h1 {
+    .form_log h1,h2 {
         font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
         text-transform: uppercase;
         text-rendering: optimizeLegibility;

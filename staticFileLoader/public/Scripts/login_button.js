@@ -6,13 +6,15 @@ document.addEventListener("DOMContentLoaded", function (event){
     stopSignUp(event);
 });
 
+function loginListener(event) {
+    document.querySelector('.bg_model').style.display = 'flex';
+    document.querySelector('.pop_up').style.display = 'flex';
+    document.getElementById('main_all').style.height = '100vh';
+    document.getElementById('main_all').style.overflow = 'hidden';
+}
+
 function startLogin(event) {
-    document.getElementById('button').addEventListener('click', function () {
-        document.querySelector('.bg_model').style.display = 'flex';
-        document.querySelector('.pop_up').style.display = 'flex';
-        document.getElementById('main_all').style.height = '100vh';
-        document.getElementById('main_all').style.overflow = 'hidden';
-    });
+    document.getElementById('button').addEventListener('click', loginListener);
 }
 
 function stopLogin(event){
@@ -35,7 +37,6 @@ function stopModal(event){
             document.getElementById('main_all').style.height = 'auto';
             document.getElementById('main_all').style.overflow = 'auto';
             resetFormLogin();
-
             resetFormSignup();
         }else{
             if (e.target === modalNews) {
@@ -78,8 +79,6 @@ function resetFormLogin(){
     password.className='';
     smallUser.querySelector("small").innerText='';
     smallPass.querySelector("small").innerText='';
-
-
 }
 
 function resetFormSignup(){
@@ -98,4 +97,5 @@ function resetFormSignup(){
     smallEmailSignup.querySelector("small").innerText='';
     smallUserSignup.querySelector("small").innerText='';
     smallPassSignup.querySelector("small").innerText='';
+    document.getElementById('register_response').innerText = '';
 }

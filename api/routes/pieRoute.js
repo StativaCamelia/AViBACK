@@ -19,7 +19,7 @@ exports.getRes = async (req, res) => {
   const { fullPath, method, body } = req;
   if (fullPath.endsWith("/") && method === "get") {
     try {
-      const { success, data } = await pieController.getPiePage(body, res);
+      const { success, data } = await pieController.getPiePage(req, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

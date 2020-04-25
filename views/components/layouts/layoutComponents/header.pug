@@ -2,7 +2,7 @@
     // NAV_BAR
     .nav
       .logoformobile
-        a(href='index.html')
+        a(href='http://localhost:5001/home')
           img(src='Images/logo.png' alt='AVi')
       .main_menu
         - let keyIds = {activeIds}
@@ -21,7 +21,7 @@
           li
             a.myButton(id=contact href='http://localhost:5001/contact') CONTACT
           li
-            a#button.myButton(href='#') LOGIN
+            a.myButton#button
       .statistics
         ul
           li.effect1

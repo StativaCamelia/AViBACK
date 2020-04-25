@@ -5,11 +5,13 @@ const {
   adminRoute,
   mapRoute,
   pieRoute,
+  registerRoute,
+  loginRoute,
+  profileRoute
 } = require("./routes/index");
 const { staticFilesController } = require("../controllers/index");
 exports.getRes = async (req, res) => {
   const parsedReq = {};
-
   parsedReq.parsedUrl = url.parse(req.url, true);
   parsedReq.path = parsedReq.parsedUrl.pathname;
   parsedReq.trimmedPath = parsedReq.path.replace(/^\/+|\/+$/g, "");
@@ -18,12 +20,15 @@ exports.getRes = async (req, res) => {
     "/";
   parsedReq.method = req.method.toLowerCase();
   parsedReq.headers = req.headers;
+  parsedReq.user = req.user;
   parsedReq.queryStringObject = parsedReq.parsedUrl.query;
 
   let body = [];
   req.on("data", (chunk) => {
     body.push(chunk);
   });
+
+  console.log(parsedReq)
 
   req.on("end", async () => {
     body = Buffer.concat(body).toString();
@@ -42,6 +47,7 @@ exports.getRes = async (req, res) => {
         return;
       }
     }
+
     if (parsedReq.path.indexOf("home") !== -1) {
       homeRoute.getRes(parsedReq, res);
       return;
@@ -63,6 +69,18 @@ exports.getRes = async (req, res) => {
 
     if (parsedReq.path.indexOf("pie") !== -1) {
       await pieRoute.getRes(parsedReq, res);
+    }
+
+    if(parsedReq.path.indexOf("register") !== -1){
+      await registerRoute.getRes(parsedReq,res);
+    }
+
+    if(parsedReq.path.indexOf("login") !== -1){
+      await loginRoute.getRes(req,parsedReq,res);
+    }
+
+    if(parsedReq.path.indexOf("profile") !== -1){
+      await profileRoute.getRes(req,parsedReq,res);
     }
   });
 };

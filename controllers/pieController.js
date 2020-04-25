@@ -22,7 +22,7 @@ class PieController {
       const windDirectionValues = await this.database.Accident.find(
         {}
       ).distinct("Wind_Direction");
-      const ids = ["", "", "", "active", ""];
+      const ids = ["", "","", "active", ""];
       const { content, contentType } = piePage.getPiePage(
         statesValues,
         countiesValues,
@@ -33,7 +33,7 @@ class PieController {
         roadSideValues,
         weatherValues,
         windDirectionValues,
-        ids
+        ids,
       );
       return { success: true, data: { content, contentType } };
     } catch (erorr) {

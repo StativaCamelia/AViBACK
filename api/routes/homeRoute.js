@@ -9,7 +9,7 @@ function sendAnswer(success, data, res, statusCode = 200) {
     res.end();
   } else {
     const { erorr } = data;
-    console.log(erorr);
+    //console.log(erorr);
     res.writeHead(401);
     res.write("Undefined");
     res.end();
@@ -20,7 +20,7 @@ exports.getRes = (req, res) => {
   const { fullPath, method, body } = req;
   if (fullPath.endsWith("/") && method === "get") {
     try {
-      const { success, data } = homeController.getHomePage(body, res);
+      const { success, data } = homeController.getHomePage(req, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

@@ -1,22 +1,40 @@
 const bcrypt = require("bcryptjs");
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
-const findByCredentials = async function (email, password) {
-  const user = await this.findOne({ email });
+module.exports = function (schema) {
+  schema.statics.existEmail = async function (email) {
+    let message = '';
 
-  if (!user) {
-    throw new Error("Unable to login");
+      const user = await this.findOne({email: email});
+      if(user){
+        message = 'Email already exists!'
+      }
+    return message;
+  };
+  schema.statics.existUsername = async function (username) {
+    let message = '';
+
+    const user = await this.findOne({username: username});
+    if(user){
+      message = 'Username already exists!'
+    }
+    return message;
+  };
+  schema.statics.existUser = async function (username, password) {
+    let message = '';
+
+    const user = await this.findOne({username: username});
+    if(!user){
+      message = 'Invalid username!';
+    }else{
+      const validPass = await bcrypt.compare(password,user.password);
+      if(!validPass){
+        message = 'Invalid password!'
+      }else{
+        message = jwt.sign({_id: user._id}, process.env.JWT_SECRET);
+      }
+    }
+    return message;
   }
-
-  const isMatch = await bcrypt.compare(password, user.password);
-
-  if (!isMatch) {
-    throw new Error("Unable to login");
-  }
-
-  return user;
-};
-
-module.exports = {
-  // Put them all here
-  findByCredentials,
 };

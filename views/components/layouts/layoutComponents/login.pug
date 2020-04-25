@@ -2,8 +2,9 @@
   .pop_up
     .close +
     .pop_up_top
-      form.form_log(id='form_login' action='action_page.php')
+      form.form_log(id='form_login')
         h1 Subscribe to our newsletter!
+        h2#login_response
         .row_log
           .col_log_1
             input(id='username' type='text' name='username' placeholder='Username')
@@ -18,12 +19,13 @@
             span.or_bullet_text OR
           .col_log_2
             .row_bottom
-              a#sign_up.button_pop(href='#') Sign up
+              a#sign_up.button_pop Sign up
   .pop_up_sign_up
     .close_sign +
     .pop_up_top
-      form.form_log(id='form_signup' action='action_page.php')
+      form.form_log(id='form_signup')
         h1 Subscribe to our newsletter!
+        h2#register_response
         .row_log
           .col_log_1
             input(id='email' type='text' name='email' placeholder='Email')

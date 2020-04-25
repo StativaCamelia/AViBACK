@@ -23,20 +23,35 @@ passwordSignup.addEventListener('click',function (ev) {
     formSignup.addEventListener('click', passwordSignHandler);
 });
 
+function verifEmail(emailValue) {
+    if (emailValue === "") {
+        setErrorFor(email, "Email cannot be blank!");
+    } else {
+        if(!isEmail(emailValue))
+        {
+            setErrorFor(email,"This is not an email address!");
+        }else{
+            setSuccessFor(email);
+        }
+    }
+}
+
 function emailSignHandler(e) {
     e.preventDefault();
     const emailValue = email.value.trim();
-    console.log('email ' + emailValue)
     if (e.target !== email) {
-        if (emailValue === "") {
-            setErrorFor(email, "Email cannot be blank!");
-        } else {
-            if(!isEmail(emailValue))
-            {
-                setErrorFor(email,"This is not an email address!");
-            }else{
-                setSuccessFor(email);
-            }
+        verifEmail(emailValue);
+    }
+}
+
+function verifUsername(usernameValue) {
+    if(usernameValue === ""){
+        setErrorFor(usernameSignup, "Username cannot be blank!");
+    }else{
+        if(usernameValue.length <= 5){
+            setErrorFor(usernameSignup, "Username must have at least 6 characters!");
+        }else{
+            setSuccessFor(usernameSignup);
         }
     }
 }
@@ -44,16 +59,19 @@ function emailSignHandler(e) {
 function userSignHandler(e) {
     e.preventDefault();
     const usernameValue = usernameSignup.value.trim();
-    console.log('user ' + usernameValue)
     if(e.target !== usernameSignup){
-        if(usernameValue === ""){
-            setErrorFor(usernameSignup, "Username cannot be blank!");
-        }else{
-            if(usernameValue.length <= 5){
-                setErrorFor(usernameSignup, "Username must have at least 6 characters!");
-            }else{
-                setSuccessFor(usernameSignup);
-            }
+        verifUsername(usernameValue);
+    }
+}
+
+function verifPassword(passwordValue) {
+    if (passwordValue === "") {
+        setErrorFor(passwordSignup, "Password cannot be blank!");
+    } else {
+        if (passwordValue.length < 6) {
+            setErrorFor(passwordSignup, "Password must have at least 6 characters!");
+        } else {
+            setSuccessFor(passwordSignup);
         }
     }
 }
@@ -61,17 +79,8 @@ function userSignHandler(e) {
 function passwordSignHandler(e) {
     e.preventDefault();
     const passwordValue = passwordSignup.value.trim();
-    console.log('pass ' + passwordValue)
     if (e.target !== passwordSignup) {
-        if (passwordValue === "") {
-            setErrorFor(passwordSignup, "Password cannot be blank!");
-        } else {
-            if (passwordValue.length < 6) {
-                setErrorFor(passwordSignup, "Password must have at least 6 characters!");
-            } else {
-                setSuccessFor(passwordSignup);
-            }
-        }
+        verifPassword(passwordValue);
     }
 }
 
@@ -92,12 +101,26 @@ window.addEventListener('click', function (e) {
 });
 
 registerButton.addEventListener('click',function (ev) {
-    ev.preventDefault();
-    if(email.value === "" && usernameSignup.value === "" && passwordSignup.value === ""){
-        setErrorFor(email,"Email cannot be blank!");
-        setErrorFor(usernameSignup, "Username cannot be blank!");
-        setErrorFor(passwordSignup, "Password cannot be blank!");
-    }
+        ev.preventDefault();
+        verifEmail(email.value);
+        verifUsername(usernameSignup.value);
+        verifPassword(passwordSignup.value);
+
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("post", "http://localhost:5001/register", true);
+        xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+        const values = {
+            email: email.value,
+            username: usernameSignup.value,
+            password: passwordSignup.value
+        };
+        xhttp.send(JSON.stringify(values));
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && (this.status === 200 || this.status === 400)) {
+                document.getElementById('register_response').innerText = this.responseText;
+            }
+        };
+
 });
 
 function setErrorFor(input,message) {

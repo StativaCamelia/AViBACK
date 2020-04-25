@@ -19,7 +19,7 @@ exports.getRes = (req, res) => {
   const { fullPath, method, body } = req;
   if (fullPath.endsWith("/") && method === "get") {
     try {
-      const { success, data } = contactController.getContactPage(body, res);
+      const { success, data } = contactController.getContactPage(req, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

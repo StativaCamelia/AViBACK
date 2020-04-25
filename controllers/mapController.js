@@ -33,7 +33,7 @@ class MapController {
         roadSideValues,
         weatherValues,
         windDirectionValues,
-        ids
+        ids,
       );
       return { success: true, data: { content, contentType } };
     } catch (erorr) {

@@ -777,7 +777,7 @@
         height: auto;
     }
 
-    .form_log h1 {
+    .form_log h1,h2 {
         font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
         text-transform: uppercase;
         text-rendering: optimizeLegibility;

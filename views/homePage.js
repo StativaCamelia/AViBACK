@@ -14,6 +14,7 @@ class HomePage {
       const compiledFunction = pug.compileFile(homePageLocation);
       const content = compiledFunction({activeIds : JSON.stringify(ids)});
       const contentType = staticFileLoader.getContentType(homePageLocation);
+      console.log(content)
       return { content, contentType };
     } catch (err) {
       console.log(err);

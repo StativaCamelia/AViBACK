@@ -6,6 +6,7 @@ const AdminController = require("./adminController.js");
 const MapController = require("./mapController");
 const FiltresController = require("./filtresController");
 const PieController = require("./pieController");
+const ProfileController = require('./profileController');
 const {
   User,
   Accident,
@@ -19,6 +20,7 @@ const homeController = new HomeController({ User, Accident });
 const contactController = new ContactController({ Accident });
 const chartController = new ChartController();
 const staticFilesController = new StaticFilesController();
+const profileController = new ProfileController({User});
 const filtresController = new FiltresController({
   Accident,
   State,
@@ -57,4 +59,5 @@ module.exports = {
   filtresController,
   mapController,
   pieController,
+  profileController,
 };

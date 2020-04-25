@@ -1,15 +1,11 @@
 const mongoose = require("mongoose");
 const schema = require("./schema");
 
-const decorateWithVirtuals = require("./virtuals");
-const statics = require("./statics");
-const methods = require("./methods");
-const decorateWithHooks = require("./hooks");
+const methods = require('./methods');
+methods(schema);
 
-decorateWithVirtuals(schema);
-Object.assign(schema.methods, methods);
-Object.assign(schema.statics, statics);
-decorateWithHooks(schema);
+const statics = require('./statics');
+statics(schema);
 
 const User = mongoose.model("User", schema);
 
