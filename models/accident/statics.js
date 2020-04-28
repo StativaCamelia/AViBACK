@@ -70,15 +70,44 @@ module.exports = function (accidentSchema) {
     try {
       console.log("HEREEEE");
       var number = 0;
-      var currentDate = new Date();
-      var currentMonth = currentDate.getUTCMonth() + 1;
-      var currentDay = currentDate.getUTCDate();
-      this.find().forEach((element) => {
-        var month = element.Start_Time.getUTCMonth() + 1;
-        var day = element.Start_Time.getUTCDate();
-        if (month === currentMonth && day === currentDay) {
-          number++;
-        }
+      // var currentDate = new Date();
+      // var currentMonth = currentDate.getUTCMonth() + 1;
+      // var currentDay = currentDate.getUTCDate();
+      var currentDay = 9;
+      var currentMonth = 1;
+      console.log(
+        "cuurrent day and month :" + currentDay + "day---month" + currentMonth
+      );
+
+      var query = this.find({}).select("Start_Time -_id");
+
+      query.exec(function (err, element) {
+        if (err) return next(err);
+
+        element.forEach((date) => {
+          try {
+            var month = date.Start_Time.getUTCMonth() + 1;
+            var day = date.Start_Time.getUTCDate();
+            if (month == currentMonth && day == currentDay) {
+              number++;
+              console.log(number);
+              // console.log(
+              //   "curr day " +
+              //     currentDay +
+              //     "-" +
+              //     day +
+              //     " day---month" +
+              //     currentMonth +
+              //     "-" +
+              //     month +
+              //     " month"
+              // );
+            }
+            //console.log(month + "-" + day);
+          } catch (error) {
+            console.log("erroare");
+          }
+        });
       });
       return number;
     } catch (error) {
