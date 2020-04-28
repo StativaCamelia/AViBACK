@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function updateCounter(event) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.status == 200) {
-        counter.setAttribute(count, "10");
+        counter.setAttribute("data-target", "10");
       }
     };
     xhttp.open("GET", url, true);
