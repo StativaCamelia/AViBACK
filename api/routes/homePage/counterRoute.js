@@ -22,7 +22,7 @@ exports.getRes = async (req, res) => {
   if (path.endsWith("/counter") && method === "get") {
     try {
       const payload = { body, query };
-      const { success, data } = await counterController.getStateByQuery(
+      const { success, data } = await counterController.getDailyAccidents(
         payload
       );
       sendAnswer(success, data, res);

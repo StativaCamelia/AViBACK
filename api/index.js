@@ -121,7 +121,7 @@ exports.getRes = async (req, res) => {
     }
 
     if (parsedReq.path.indexOf("counter") !== -1) {
-      counterRoute.getRes(req, parsedReq, res);
+      counterRoute.getRes(parsedReq, res);
       return;
     }
   });
