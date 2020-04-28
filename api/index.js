@@ -13,6 +13,7 @@ const {
   countyRoute,
   cityRoute,
   streetRoute,
+  counterRoute,
 } = require("./routes/index");
 
 const { staticFilesController } = require("../controllers/index");
@@ -37,9 +38,7 @@ exports.getRes = async (req, res) => {
     body.push(chunk);
   });
 
-
   req.on("end", () => {
-
     body = Buffer.concat(body).toString();
     if (body) parsedReq.body = JSON.parse(body);
     if (
@@ -106,18 +105,23 @@ exports.getRes = async (req, res) => {
       return;
     }
 
-    if(parsedReq.path.indexOf("register") !== -1){
-      registerRoute.getRes(parsedReq,res);
+    if (parsedReq.path.indexOf("register") !== -1) {
+      registerRoute.getRes(parsedReq, res);
       return;
     }
 
-    if(parsedReq.path.indexOf("login") !== -1){
-      loginRoute.getRes(req,parsedReq,res);
+    if (parsedReq.path.indexOf("login") !== -1) {
+      loginRoute.getRes(req, parsedReq, res);
       return;
     }
 
-    if(parsedReq.path.indexOf("profile") !== -1){
-      profileRoute.getRes(req,parsedReq,res);
+    if (parsedReq.path.indexOf("profile") !== -1) {
+      profileRoute.getRes(req, parsedReq, res);
+      return;
+    }
+
+    if (parsedReq.path.indexOf("counter") !== -1) {
+      counterRoute.getRes(req, parsedReq, res);
       return;
     }
   });
