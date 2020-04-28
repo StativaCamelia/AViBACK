@@ -8,8 +8,7 @@ class CounterController {
 
   async getDailyAccidents() {
     try {
-      const number = 10;
-      //await this.database.State.getNumberOfAccidents();
+      const number = await this.database.State.getNumberOfAccidents();
       return { success: true, data: { number } };
     } catch (error) {
       return { success: false, data: { error } };

@@ -4,7 +4,7 @@ const { counterController } = require("../../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
-    const { content } = data;
+    const content = data;
     res.writeHead(200, "Content-type: application/json");
     res.write(JSON.stringify({ content }, null, 2));
     res.end();
@@ -21,10 +21,7 @@ exports.getRes = async (req, res) => {
   const { path, fullPath, method, body, queryStringObject: query } = req;
   if (path.endsWith("/counter") && method === "get") {
     try {
-      const payload = { body, query };
-      const { success, data } = await counterController.getDailyAccidents(
-        payload
-      );
+      const { success, data } = await counterController.getDailyAccidents();
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
