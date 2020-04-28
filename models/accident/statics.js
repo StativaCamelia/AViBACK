@@ -66,6 +66,25 @@ module.exports = function (accidentSchema) {
     }
   };
 
+  accidentSchema.statics.getNumberOfAccidents = async function () {
+    try {
+      console.log("HEREEEE");
+      var number = 0;
+      var currentDate = new Date();
+      var currentMonth = currentDate.getUTCMonth() + 1;
+      var currentDay = currentDate.getUTCDate();
+      this.find().forEach((element) => {
+        var month = element.Start_Time.getUTCMonth() + 1;
+        var day = element.Start_Time.getUTCDate();
+        if (month === currentMonth && day === currentDay) {
+          number++;
+        }
+      });
+      return number;
+    } catch (error) {
+      throw error;
+    }
+  };
   accidentSchema.statics.getAllStatesEntities = async function () {
     try {
       const statesName = await this.find({}).distinct("State");

@@ -22,6 +22,7 @@ exports.getRes = async (req, res) => {
   if (path.endsWith("/counter") && method === "get") {
     try {
       const { success, data } = await counterController.getDailyAccidents();
+      console.log(data);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

@@ -9,7 +9,6 @@ function sendAnswer(success, data, res, statusCode = 200) {
     res.end();
   } else {
     const { erorr } = data;
-    //console.log(erorr);
     res.writeHead(401);
     res.write("Undefined");
     res.end();
