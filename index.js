@@ -6,8 +6,6 @@ const db = require("./databaseCon");
 db();
 
 const server = http.createServer((req, res) => {
-  if(req.url.indexOf('home') !== -1)
-    console.log('aici' + req.headers['auth-token'])
   router.getRes(req, res);
 });
 

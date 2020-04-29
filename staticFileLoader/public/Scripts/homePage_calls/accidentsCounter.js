@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", function updateCounter(event) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        counter.setAttribute("data-target", 10);
+        const { content } = this.responseText;
+        console.log(content.number);
+        counter.setAttribute("data-target", this.responseText);
       }
     };
     url = "counter";

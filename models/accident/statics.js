@@ -68,7 +68,6 @@ module.exports = function (accidentSchema) {
 
   accidentSchema.statics.getNumberOfAccidents = async function () {
     try {
-      console.log("HEREEEE");
       var number = 0;
       // var currentDate = new Date();
       // var currentMonth = currentDate.getUTCMonth() + 1;
@@ -79,35 +78,18 @@ module.exports = function (accidentSchema) {
         "cuurrent day and month :" + currentDay + "day---month" + currentMonth
       );
 
-      var query = this.find({}).select("Start_Time -_id");
+      var query = await this.find({});
 
-      query.exec(function (err, element) {
-        if (err) return next(err);
-
-        element.forEach((date) => {
-          try {
-            var month = date.Start_Time.getUTCMonth() + 1;
-            var day = date.Start_Time.getUTCDate();
-            if (month == currentMonth && day == currentDay) {
-              number++;
-              console.log(number);
-              // console.log(
-              //   "curr day " +
-              //     currentDay +
-              //     "-" +
-              //     day +
-              //     " day---month" +
-              //     currentMonth +
-              //     "-" +
-              //     month +
-              //     " month"
-              // );
-            }
-            //console.log(month + "-" + day);
-          } catch (error) {
-            console.log("erroare");
+      query.forEach((date) => {
+        try {
+          var month = date.Start_Time.getUTCMonth() + 1;
+          var day = date.Start_Time.getUTCDate();
+          if (month == currentMonth && day == currentDay) {
+            number++;
           }
-        });
+        } catch (error) {
+          console.log("eroare");
+        }
       });
       return number;
     } catch (error) {
