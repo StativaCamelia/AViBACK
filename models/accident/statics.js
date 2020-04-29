@@ -92,6 +92,7 @@ module.exports = function (accidentSchema) {
         }
       });
       return number;
+      return 10;
     } catch (error) {
       throw error;
     }
