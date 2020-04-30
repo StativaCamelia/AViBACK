@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("auth-token");
   let xhttp = new XMLHttpRequest();
-  xhttp.open("get", "http://localhost:5001/login", true);
+  xhttp.open("get", "http://localhost:5001/user/login", true);
   xhttp.setRequestHeader("auth-token", token ? token : "");
   xhttp.send();
   xhttp.onreadystatechange = function () {

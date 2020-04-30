@@ -3,8 +3,6 @@ const contactRoute = require("./contactRoute");
 const adminRoute = require("./adminRoute");
 const mapRoute = require("./mapRoute");
 const pieRoute = require("./pieRoute");
-const registerRoute = require("./registerRoute");
-const loginRoute = require("./loginRoute");
 const profileRoute = require("./profileRoute");
 const chartRoute = require("./chartRoute");
 const stateRoute = require("./locationAPI/stateRoute");
@@ -12,6 +10,7 @@ const countyRoute = require("./locationAPI/countyRoute");
 const cityRoute = require("./locationAPI/cityRoute");
 const streetRoute = require("./locationAPI/streetRoute");
 const counterRoute = require("./homePage/counterRoute");
+const userRoute = require("./userRoute");
 
 module.exports = {
   homeRoute,
@@ -19,8 +18,6 @@ module.exports = {
   adminRoute,
   mapRoute,
   pieRoute,
-  registerRoute,
-  loginRoute,
   profileRoute,
   chartRoute,
   stateRoute,
@@ -28,4 +25,5 @@ module.exports = {
   cityRoute,
   streetRoute,
   counterRoute,
+  userRoute,
 };
