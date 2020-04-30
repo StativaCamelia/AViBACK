@@ -1,6 +1,5 @@
 const homeRoute = require("./homeRoute");
 const contactRoute = require("./contactRoute");
-const adminRoute = require("./adminRoute");
 const mapRoute = require("./mapRoute");
 const pieRoute = require("./pieRoute");
 const profileRoute = require("./profileRoute");

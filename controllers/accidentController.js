@@ -26,7 +26,8 @@ class AccidentController {
 
   async updateAccident(payload, res) {
     try {
-      const content = await this.database.Accident.findAndUpdate({});
+      const content = await this.database.Accident.findOneAndUpdate({});
+
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -45,6 +46,43 @@ class AccidentController {
   async getAllAccidents() {
     try {
       const content = await this.database.Accident.find({});
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async updateAccident(payload) {
+    try {
+      const { accidentId, body: newContent } = payload;
+      const content = await this.database.Accident.findOneAndUpdate(
+        {
+          ID: accidentId,
+        },
+        newContent
+      );
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async deleteAccident(payload) {
+    try {
+      const { accidentId } = payload;
+      const content = await this.database.Accident.findOneAndDelete({
+        ID: accidentId,
+      });
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+  async getAccidentsByQuery(payload) {
+    try {
+      const { queryStringObject: query } = payload;
+      console.log(query);
+      const content = await this.database.Accident.find(query).limit(10000);
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };

@@ -17,8 +17,13 @@ function sendAnswer(success, data, res, statusCode = 200) {
 }
 
 exports.getRes = async (req, res) => {
-  const { fullPath, path, method, body } = req;
-  if (path.endsWith("accident/") && method === "delete") {
+  const { fullPath, path, method, body, queryStringObject } = req;
+  //DELETE All Accidents
+  if (
+    path.endsWith("accident") &&
+    method === "delete" &&
+    Object.keys(queryStringObject).length == 0
+  ) {
     try {
       const { success, data } = await accidentController.deleteAllAccidents(
         body,
@@ -28,7 +33,12 @@ exports.getRes = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-  } else if (path.endsWith("accident/") && method === "get") {
+  } //GET All Accidents
+  else if (
+    path.endsWith("accident") &&
+    method === "get" &&
+    Object.keys(queryStringObject).length == 0
+  ) {
     try {
       const { success, data } = await accidentController.getAllAccidents(
         body,
@@ -38,16 +48,44 @@ exports.getRes = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-  } else if (path.endsWith("accident/" && method === "post")) {
+    //POST(Create) Accident
+  } else if (path.endsWith("accident") && method === "post") {
     try {
       const { success, data } = await accidentController.addAccident(body, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
     }
-  } else if (path.endsWith("accident/") && method === "patch") {
+    //PATCH(Update) Accident data by ID (from the original database not our ID)
+  } else if (path.endsWith("accident") && method === "patch") {
     try {
-      const { success, data } = await accidentController.addAccident(body, res);
+      const { accidentId } = queryStringObject;
+      const { success, data } = await accidentController.updateAccident({
+        body,
+        accidentId,
+        res,
+      });
+      sendAnswer(success, data, res);
+    } catch (error) {
+      console.log(error);
+    }
+    //DELETE Accident by ID(from the original database, not our ID)
+  } else if (path.endsWith("accident") && method === "delete") {
+    try {
+      const { accidentId } = queryStringObject;
+      const { success, data } = await accidentController.deleteAccident({
+        accidentId,
+        res,
+      });
+      sendAnswer(success, data, res);
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (path.endsWith("accident") && method === "get") {
+    try {
+      const { success, data } = await accidentController.getAccidentsByQuery({
+        queryStringObject,
+      });
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
