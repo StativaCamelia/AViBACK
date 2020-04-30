@@ -45,5 +45,12 @@ exports.getRes = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
+  } else if (path.endsWith("accident/") && method === "patch") {
+    try {
+      const { success, data } = await accidentController.addAccident(body, res);
+      sendAnswer(success, data, res);
+    } catch (error) {
+      console.log(error);
+    }
   }
 };

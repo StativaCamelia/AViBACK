@@ -24,6 +24,15 @@ class AccidentController {
     }
   }
 
+  async updateAccident(payload, res) {
+    try {
+      const content = await this.database.Accident.findAndUpdate({});
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
   async deleteAllAccidents(req, res) {
     try {
       const content = await this.database.Accident.deleteMany({});
@@ -35,7 +44,7 @@ class AccidentController {
 
   async getAllAccidents() {
     try {
-      const content = await this.database.Accident.find({}).limit(5);
+      const content = await this.database.Accident.find({});
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };

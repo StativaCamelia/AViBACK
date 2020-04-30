@@ -1,5 +1,4 @@
 const User = require("./user/index");
-const userValidaionSchema = require("./user/validator");
 
 const Accident = require("./accident/index");
 const State = require("./state/index");
@@ -13,5 +12,4 @@ module.exports = {
   County,
   City,
   Street,
-  userValidaionSchema,
 };
