@@ -43,11 +43,5 @@ exports.getRes = async (req, res) => {
         }
       }
     }
-  } else {
-    if (fullPath.endsWith("/") && method === "get") {
-      res.writeHead(200);
-      // res.write('ok');
-      res.end();
-    }
   }
 };
