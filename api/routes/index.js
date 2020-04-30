@@ -11,11 +11,11 @@ const cityRoute = require("./locationAPI/cityRoute");
 const streetRoute = require("./locationAPI/streetRoute");
 const counterRoute = require("./homePage/counterRoute");
 const userRoute = require("./userRoute");
-
+const accidentRoute = require("./accidentRoute");
 module.exports = {
   homeRoute,
   contactRoute,
-  adminRoute,
+  accidentRoute,
   mapRoute,
   pieRoute,
   profileRoute,

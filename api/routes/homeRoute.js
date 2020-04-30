@@ -16,8 +16,8 @@ function sendAnswer(success, data, res, statusCode = 200) {
 }
 
 exports.getRes = (req, res) => {
-  const { fullPath, method, body } = req;
-  if (fullPath.endsWith("/") && method === "get") {
+  const { path, method, body } = req;
+  if (path.endsWith("home") && method === "get") {
     try {
       const { success, data } = homeController.getHomePage(req, res);
       sendAnswer(success, data, res);

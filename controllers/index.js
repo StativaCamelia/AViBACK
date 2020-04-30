@@ -2,7 +2,7 @@ const HomeController = require("./homeController.js");
 const ContactController = require("./contactController.js");
 const ChartController = require("./chartController");
 const StaticFilesController = require("./staticFilesController");
-const AdminController = require("./adminController.js");
+const AccidentController = require("./accidentController.js");
 const MapController = require("./mapController");
 const FiltresController = require("./filtresController");
 const CountyController = require("./locationControllers/countyController");
@@ -49,10 +49,9 @@ const filtresController = new FiltresController(
   },
   { stateController, countyController, cityController, streetController }
 );
-const adminController = new AdminController(
+const accidentController = new AccidentController(
   {
     Accident,
-    User,
   },
   { filtresController }
 );
@@ -76,7 +75,7 @@ module.exports = {
   contactController,
   chartController,
   staticFilesController,
-  adminController,
+  accidentController,
   filtresController,
   mapController,
   pieController,

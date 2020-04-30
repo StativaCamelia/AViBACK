@@ -19,7 +19,7 @@ function sendAnswer(success, data, res, statusCode = 200) {
 }
 
 exports.getRes = async (req, res) => {
-  const { path, method, body } = req;
+  const { fullPath, path, method, body } = req;
   if (path.endsWith("/login") && method === "post") {
     let user = new User({
       username: body.username,
@@ -129,11 +129,9 @@ exports.getRes = async (req, res) => {
         }
       }
     }
-  } else {
-    if (path.endsWith("/register") && method === "get") {
-      res.writeHead(200);
-      // res.write('ok');
-      res.end();
-    }
+  } else if (path.endsWith("/register") && method === "get") {
+    res.writeHead(200);
+    // res.write('ok');
+    res.end();
   }
 };

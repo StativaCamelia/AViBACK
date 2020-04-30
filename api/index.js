@@ -3,7 +3,7 @@ const {
   userRoute,
   homeRoute,
   contactRoute,
-  adminRoute,
+  accidentRoute,
   mapRoute,
   pieRoute,
   profileRoute,
@@ -22,8 +22,7 @@ exports.getRes = async (req, res) => {
   parsedReq.path = parsedReq.parsedUrl.pathname;
   parsedReq.trimmedPath = parsedReq.path.replace(/^\/+|\/+$/g, "");
   parsedReq.fullPath =
-    parsedReq.trimmedPath.substring(0, parsedReq.trimmedPath.indexOf("/")) +
-    "/";
+    parsedReq.trimmedPath.substring(0, parsedReq.path.indexOf("/")) + "/";
   parsedReq.method = req.method.toLowerCase();
   parsedReq.headers = req.headers;
   parsedReq.user = req.user;
@@ -65,8 +64,8 @@ exports.getRes = async (req, res) => {
       return;
     }
 
-    if (parsedReq.path.indexOf("admin") !== -1) {
-      adminRoute.getRes(parsedReq, res);
+    if (parsedReq.path.indexOf("accident") !== -1) {
+      accidentRoute.getRes(parsedReq, res);
       return;
     }
 
