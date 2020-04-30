@@ -9,7 +9,6 @@ module.exports = function(schema){
 
   schema.methods.validateUserRegister = function () {
     let message = '';
-    console.log(this);
     const user = this;
     if(user.email === '' || user.username === '' || user.password === ''){
       message = 'Blank field(s)!';
@@ -52,7 +51,6 @@ module.exports = function(schema){
   };
   schema.methods.validateUserLogin = function () {
     let message = '';
-    console.log(this);
     const user = this;
     if(user.username === '' || user.password === ''){
       message = 'Blank field(s)!';

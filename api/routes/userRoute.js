@@ -10,8 +10,6 @@ function sendAnswer(success, data, res, statusCode = 200) {
     res.end();
   } else {
     const { error } = data;
-    console.log(error);
-    console.log(error);
     res.writeHead(401);
     res.write(error.message);
     res.end();
