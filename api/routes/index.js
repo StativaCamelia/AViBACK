@@ -12,6 +12,7 @@ const streetRoute = require("./locationAPI/streetRoute");
 const counterRoute = require("./homePage/counterRoute");
 const userRoute = require("./userRoute");
 const accidentRoute = require("./accidentRoute");
+const filtersRoute = require("./filtersRoute");
 module.exports = {
   homeRoute,
   contactRoute,
@@ -26,4 +27,5 @@ module.exports = {
   streetRoute,
   counterRoute,
   userRoute,
+  filtersRoute
 };

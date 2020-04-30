@@ -1,11 +1,11 @@
 .filtres
-    form#filters_form.form_filters(action='/action_page.php' method='get')
+    form#filters_form.form_filters
         .up_filtres
             .left_filtres
                 label.label_spatial Spatial Coordinates
                 .select_box
                     select#state.options(form='filters_form' name='country')
-                        option(selected='' hidden='') State
+                        option(value='state' selected='' hidden='') State
                         - let keyStates = {states}
                         - let valuesStates = JSON.parse(keyStates.states)
                         each n in valuesStates
@@ -13,7 +13,7 @@
                                 | #{n.value}
                 .select_box
                     select#county.options_county(form='filters_form' name='county')
-                        option(value='County' selected='' hidden='') County
+                        option(value='county' selected='' hidden='') County
                         - let keyCounties = {counties}
                         - let valuesCounties = JSON.parse(keyCounties.counties)
                         each n in valuesCounties
@@ -21,7 +21,7 @@
                                 | #{n}
                 .select_box
                     select#city.options_city(form='filters_form' name='City')
-                        option(value='0' selected='' hidden='') City
+                        option(value='city' selected='' hidden='') City
                         - let keyCities = {cities}
                         - let valuesCities = JSON.parse(keyCities.cities)
                         each n in valuesCities
@@ -29,7 +29,7 @@
                                 | #{n}
                 .select_box
                     select#street.options_street(form='filters_form' name='Street')
-                        option(value='0' selected='' hidden='') Street
+                        option(value='street' selected='' hidden='') Street
                         - let keyStreets = {streets}
                         - let valuesStreets = JSON.parse(keyStreets.streets)
                         each n in valuesStreets
@@ -37,7 +37,7 @@
                                 | #{n}
                 .select_box
                     select#number.options_number(form='filters_form' name='number')
-                        option(value='0' selected='' hidden='') Number
+                        option(value='number' selected='' hidden='') Number
                         - let keyNumbers = {numbers}
                         - let valuesNumbers = JSON.parse(keyNumbers.numbers)
                         each n in valuesNumbers
@@ -45,7 +45,7 @@
                                 | #{n}
                 .select_box
                     select#timezone.options_timezone(form='filters_form' name='Timezone')
-                        option(value='0' selected='' hidden='') Timezone
+                        option(value='timezone' selected='' hidden='') Timezone
                         - let keyTimezones = {timezones}
                         - let valuesTimezones = JSON.parse(keyTimezones.timezones)
                         each n in valuesTimezones
@@ -53,7 +53,7 @@
                                 | #{n}
                 .select_box
                     select#road_side.options_season(form='filters_form' name='Road_Side')
-                        option(value='0' selected='' hidden='') Road Side
+                        option(value='' selected='' hidden='') Road Side
                         - let keyRoadSides = {roadSides}
                         - let valuesRoadSides = JSON.parse(keyRoadSides.roadSides)
                         each n in valuesRoadSides
@@ -63,7 +63,7 @@
                 label.label_weather(for='accident_date') Weather Conditions
                 .select_box
                     select#Weather_Condition.options_weather(form='filters_form' name='Weather_Condition')
-                        option(value='0' selected='' hidden='') Weather
+                        option(value='' selected='' hidden='') Weather
                         - let keyWeather = {weather}
                         - let valuesWeather = JSON.parse(keyWeather.weather)
                         each n in valuesWeather
@@ -71,76 +71,76 @@
                                 | #{n}
                 .select_box
                     select#Wind_Direction.options_weather(form='filters_form' name='Wind_Direction')
-                        option(value='0' selected='' hidden='') Wind direction
+                        option(value='' selected='' hidden='') Wind direction
                         - let keyWindDirections = {windDirections}
                         - let valuesWindDirections = JSON.parse(keyWindDirections.windDirections)
                         each n in valuesWindDirections
                             option(value=n)
                                 | #{n}
                 .weather_filtre
-                    label.weather_select_label(for='temperature') Temperature(&deg;C):
-                    input#temperature.weather_select(type='number' name='temperature' form='filters_form' value='0' min='-30' max='40')
+                    label.weather_select_label(for='temperature') Temperature:
+                    input#temperature.weather_select(type='number' name='temperature' form='filters_form' value='' min='-30' max='40' placeholder="°C")
                 .weather_filtre
                     label.weather_select_label(for='wind_chill')
-                        | Wind Chill(F):
-                    input#wind_chill.weather_select(type='number' name='wind_chill' form='filters_form' value='0' min='0' max='100')
+                        | Wind Chill:
+                    input#wind_chill.weather_select(type='number' name='wind_chill' form='filters_form' value='' min='0' max='100' placeholder="F")
                 .weather_filtre
                     label.weather_select_label(for='wind_chill')
-                        | Wind speed(mph):
-                    input#wind_speed.weather_select(type='number' name='wind_speed' form='filters_form' value='0' min='0' max='100')
+                        | Wind speed:
+                    input#wind_speed.weather_select(type='number' name='wind_speed' form='filters_form' value='' min='0' max='100' placeholder="mph")
                 .weather_filtre
                     label.weather_select_label(for='humidity')
-                        | Humidity(%):
-                    input#humidity.weather_select(type='number' name='humidity' form='filters_form' value='0' min='0' max='100')
+                        | Humidity:
+                    input#humidity.weather_select(type='number' name='humidity' form='filters_form' value='' min='0' max='100' placeholder="%")
                 .weather_filtre
                     label.weather_select_label(for='pressure')
-                        | Pressure(in):
-                    input#pressure.weather_select(type='number' name='pressure' form='filters_form' value='0' min='0' max='100')
+                        | Pressure:
+                    input#pressure.weather_select(type='number' name='pressure' form='filters_form' value='' min='0' max='100' placeholder="in")
                 .weather_filtre
                     label.weather_select_label(for='wind_chill')
-                        | Vissibility(in):
-                    input#vissibility.weather_select(type='number' form='filters_form' name='vissibility' value='0' min='0' max='100')
+                        | Visibility:
+                    input#visibility.weather_select(type='number' form='filters_form' name='visibility' value='' min='0' max='100' placeholder="in")
             // MIDDLE FILTRES
         .middle_filtres
             .road_select_col
                 .road_option
-                    input#amenity.road_event(type='checkbox' name='amenity' form='filters_form' value='amenity')
+                    input#amenity.road_event(type='checkbox' name='amenity' form='filters_form')
                     label.road_event_label(for='amenity') Amenity
                 .road_option
-                    input#bump.road_event(type='checkbox' name='bump' value='bump' form='filters_form')
+                    input#bump.road_event(type='checkbox' name='bump' form='filters_form')
                     label.road_event_label(for='bump') Bump
                 .road_option
-                    input#crossing.road_event(type='checkbox' name='crossing' value='crossing' form='filters_form')
+                    input#crossing.road_event(type='checkbox' name='crossing' form='filters_form')
                     label.road_event_label(for='crossing') Crossing
             .road_select_col
                 .road_option
-                    input#give_away.road_event(type='checkbox' name='give_away' value='give_away' form='filters_form')
-                    label.road_event_label(for='give_away') Give away
+                    input#give_way.road_event(type='checkbox' name='give_way' form='filters_form')
+                    label.road_event_label(for='give_way') Give way
                 .road_option
-                    input#junction.road_event(type='checkbox' name='junction' value='junction' form='filters_form')
+                    input#junction.road_event(type='checkbox' name='junction' form='filters_form')
                     label.road_event_label(for='junction') Junction
                 .road_option
-                    input#no_exit.road_event(type='checkbox' name='no_exit' value='no_exit' form='filters_form')
+                    input#no_exit.road_event(type='checkbox' name='no_exit' form='filters_form')
                     label.road_event_label(for='no_exit') No exit
             .road_select_col
                 .road_option
-                    input#Railway.road_event(type='checkbox' name='Railway' value='Railway' form='filters_form')
+                    input#Railway.road_event(type='checkbox' name='Railway' form='filters_form')
                     label.road_event_label(for='Railway') Railway
                 .road_option
-                    input#Roundabout.road_event(type='checkbox' name='Roundabout' value='Roundabout' form='filters_form')
+                    input#Roundabout.road_event(type='checkbox' name='Roundabout' form='filters_form')
                     label.road_event_label(for='Roundabout') Roundabout
                 .road_option
-                    input#Traffic_Calming.road_event(type='checkbox' name='Traffic_Calming' value='Traffic_Calming' form='filters_form')
+                    input#Traffic_Calming.road_event(type='checkbox' name='Traffic_Calming' form='filters_form')
                     label.road_event_label(for='Traffic_Calming') Traffic Calming
             .road_select_col
                 .road_option
-                    input#Stop.road_event(type='checkbox' name='Stop' value='Stop' form='filters_form')
+                    input#Stop.road_event(type='checkbox' name='Stop' form='filters_form')
                     label.road_event_label(for='Stop') Stop
                 .road_option
-                    input#Station.road_event(type='checkbox' name='Station' value='Station' form='filters_form')
+                    input#Station.road_event(type='checkbox' name='Station' form='filters_form')
                     label.road_event_label(for='Station') Station
                 .road_option
-                    input#Traffic_Signal.road_event(type='checkbox' name='Traffic_Signal' value='Traffic_Signal' form='filters_form')
+                    input#Traffic_Signal.road_event(type='checkbox' name='Traffic_Signal' form='filters_form')
                     label.road_event_label(for='Traffic_Signal') Traffic Signal
         // -DOWN FILTRES
         .down_filtres
@@ -170,37 +170,37 @@
                     .moon_filters
                         label.label_moon Sunrise/Sunset
                         .moon_option
-                            input#sunrise_sunset_day(form='filters_form' type='radio' name='sunrise_sunset' value='day')
+                            input#sunrise_sunset_day(form='filters_form' type='radio' name='sunrise_sunset')
                             label.moon_option_label(for='sunrise_sunset_day') Day
                         .moon_option
-                            input#sunrise_sunset_night(form='filters_form' type='radio' name='sunrise_sunset' value='night')
+                            input#sunrise_sunset_night(form='filters_form' type='radio' name='sunrise_sunset')
                             label.moon_option_label(for='sunrise_sunset_night') Night
                 .last_set_filters_col
                     .moon_filters
                         label.label_moon Civil Twilight
                         .moon_option
-                            input#civil_twilight_day(type='radio' form='filters_form' name='civil_twilight' value='day')
+                            input#civil_twilight_day(type='radio' form='filters_form' name='civil_twilight')
                             label.moon_option_label(for='civil_twilight_day') Day
                         .moon_option
-                            input#civil_twilight_night(type='radio' form='filters_form' name='civil_twilight' value='night')
+                            input#civil_twilight_night(type='radio' form='filters_form' name='civil_twilight')
                             label.moon_option_label(for='civil_twilight_night') Night
                 .last_set_filters_col
                     .moon_filters
                         label.label_moon Nautical Twilight
                         .moon_option
-                            input#nautical_twilight_day(type='radio' form='filters_form' name='nautical_twilight' value='day')
+                            input#nautical_twilight_day(type='radio' form='filters_form' name='nautical_twilight')
                             label.moon_option_label(for='nautical_twilight_day') Day
                         .moon_option
-                            input#nautical_twilight_night(type='radio' form='filters_form' name='nautical_twilight' value='night')
+                            input#nautical_twilight_night(type='radio' form='filters_form' name='nautical_twilight')
                             label.moon_option_label(for='nautical_twilight_night') Night
                 .last_set_filters_col
                     .moon_filters
                         label.label_moon(for='astronomical_twilight_day') Astronomical Twilight
                         .moon_option
-                            input#astronomical_twilight_day(type='radio' form='filters_form' name='astronomical_twilight' value='day')
+                            input#astronomical_twilight_day(type='radio' form='filters_form' name='astronomical_twilight')
                             label.moon_option_label(for='astronomical_twilight_day') Day
                         .moon_option
-                            input#astronomical_twilight_night(type='radio' form='filters_form' name='astronomical_twilight' value='night')
+                            input#astronomical_twilight_night(type='radio' form='filters_form' name='astronomical_twilight')
                             label.moon_option_label(for='astronomical_twilight_night') Night
         .submit_button
             input#reset_button(form='filters_form' type='reset' value='Reset')

@@ -24,8 +24,8 @@ function sendAnswer(statusCode,contentType,content,res,handler) {
   }
 }
 
-exports.getRes = async (req, res) => {
-  const { fullPath, path, method, body } = req;
+exports.getRes = async (req, parsedReq, res) => {
+  const { path, method } = parsedReq;
   if (path.endsWith("/login") && method === "post") {
     try{
       const {statusCode,contentType,content} = await userController.handlerPostLogin(req,res);

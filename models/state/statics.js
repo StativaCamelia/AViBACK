@@ -46,4 +46,13 @@ module.exports = function (stateSchema) {
       throw error;
     }
   };
+
+  stateSchema.statics.getAbbrByName = async function (name) {
+    try{
+      const state = await this.findOne({name: name});
+      return state.abbreviation;
+    }catch (error) {
+      throw error;
+    }
+  }
 };

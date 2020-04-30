@@ -13,6 +13,7 @@ const {
   cityRoute,
   streetRoute,
   counterRoute,
+  filtersRoute
 } = require("./routes/index");
 
 const { staticFilesController } = require("../controllers/index");
@@ -26,7 +27,7 @@ exports.getRes = async (req, res) => {
   parsedReq.method = req.method.toLowerCase();
   parsedReq.headers = req.headers;
   parsedReq.user = req.user;
-  parsedReq.queryStringObject = parsedReq.parsedUrl.query;
+  //parsedReq.queryStringObject = parsedReq.parsedUrl.query;
   parsedReq.queryStringObject = JSON.parse(
     JSON.stringify(parsedReq.parsedUrl.query)
   );
@@ -104,7 +105,7 @@ exports.getRes = async (req, res) => {
     }
 
     if (parsedReq.path.indexOf("user") !== -1) {
-      userRoute.getRes(parsedReq, res);
+      userRoute.getRes(req, parsedReq, res);
       return;
     }
 
@@ -115,6 +116,11 @@ exports.getRes = async (req, res) => {
 
     if (parsedReq.path.indexOf("counter") !== -1) {
       counterRoute.getRes(parsedReq, res);
+      return;
+    }
+
+    if(parsedReq.path.indexOf("filters") !== -1){
+      filtersRoute.getRes(parsedReq,res);
       return;
     }
   });
