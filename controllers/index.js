@@ -12,6 +12,7 @@ const StateController = require("./locationControllers/stateController");
 const PieController = require("./pieController");
 const ProfileController = require("./profileController");
 const CounterController = require("./homePage/counterController");
+const UserController = require("./userController");
 
 const {
   User,
@@ -38,6 +39,7 @@ const cityController = new CityController({ City });
 const countyController = new CountyController({ County });
 const stateController = new StateController({ State });
 const counterController = new CounterController({ Accident });
+const userController = new UserController({ User });
 
 const filtresController = new FiltresController(
   {
@@ -86,4 +88,5 @@ module.exports = {
   streetController,
   cityController,
   counterController,
+  userController,
 };
