@@ -1,5 +1,4 @@
 const User = require("./user/index");
-
 const Accident = require("./accident/index");
 const State = require("./state/index");
 const County = require("./county/index");
