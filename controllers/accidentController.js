@@ -1,4 +1,4 @@
-class AdminController {
+class AccidentController {
   constructor(database, service) {
     this.database = database;
     this.service = service;
@@ -33,17 +33,14 @@ class AdminController {
     }
   }
 
-  async deleteAllUsers() {
+  async getAllAccidents() {
     try {
-      const content = await this.database.User.deleteMany({});
+      const content = await this.database.Accident.find({}).limit(5);
       return { success: true, data: { content } };
     } catch (error) {
-      return {
-        success: false,
-        data: { error },
-      };
+      return { success: false, data: { error } };
     }
   }
 }
 
-module.exports = AdminController;
+module.exports = AccidentController;

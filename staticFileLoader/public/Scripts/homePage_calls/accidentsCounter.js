@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function updateCounter(event) {
   var counter = document.querySelector(".counter_numbers p");
 
+  var i = 0;
   function counterInc(value = 10) {
     const count = document.querySelector(".counter_numbers p");
     const target = count.getAttribute("data-target");

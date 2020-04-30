@@ -25,7 +25,7 @@ function sendAnswer(statusCode,contentType,content,res,handler) {
 }
 
 exports.getRes = async (req, res) => {
-  const { path, method, body } = req;
+  const { fullPath, path, method, body } = req;
   if (path.endsWith("/login") && method === "post") {
     try{
       const {statusCode,contentType,content} = await userController.handlerPostLogin(req,res);
@@ -44,10 +44,10 @@ exports.getRes = async (req, res) => {
     }
   }
   if (path.endsWith("/register") && method === "post") {
-    try{
-      const {statusCode,contentType,content} = await userController.handlerPostRegister(req,res);
-      sendAnswer(statusCode,contentType,content,res,"register");
-    }catch (error) {
+    try {
+      const {statusCode, contentType, content} = await userController.handlerPostRegister(req, res);
+      sendAnswer(statusCode, contentType, content, res, "register");
+    } catch (error) {
       console.log(error);
     }
   }
