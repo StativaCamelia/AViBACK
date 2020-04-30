@@ -2,7 +2,7 @@ var i = 0;
 var stop;
 var speed;
 var ind;
-document.addEventListener("DOMContentLoaded", function counterInc(event) {
+document.addEventListener("DOMContentLoaded", function counterInc(event,number = ) {
   const count = document.querySelector(".counter_numbers p");
   const target = count.getAttribute("data-target");
   console.log(target);
@@ -12,5 +12,6 @@ document.addEventListener("DOMContentLoaded", function counterInc(event) {
     if (i <= target) {
       counterInc();
     }
-  }, 1);
+    
+  }, 3);
 });

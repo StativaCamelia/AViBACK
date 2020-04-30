@@ -1,12 +1,11 @@
 const url = require("url");
 const {
+  userRoute,
   homeRoute,
   contactRoute,
   adminRoute,
   mapRoute,
   pieRoute,
-  registerRoute,
-  loginRoute,
   profileRoute,
   chartRoute,
   stateRoute,
@@ -105,13 +104,8 @@ exports.getRes = async (req, res) => {
       return;
     }
 
-    if (parsedReq.path.indexOf("register") !== -1) {
-      registerRoute.getRes(parsedReq, res);
-      return;
-    }
-
-    if (parsedReq.path.indexOf("login") !== -1) {
-      loginRoute.getRes(req, parsedReq, res);
+    if (parsedReq.path.indexOf("user") !== -1) {
+      userRoute.getRes(parsedReq, res);
       return;
     }
 
