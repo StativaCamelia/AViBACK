@@ -11,6 +11,7 @@ class StateController {
         new: true,
         useFindAndModify: false,
       };
+
       const content = await this.database.State.findOneAndUpdate(
         { name: payload.name },
         payload,

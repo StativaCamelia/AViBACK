@@ -54,12 +54,19 @@ class AccidentController {
 
   async updateAccident(payload) {
     try {
+      const options = {
+        upsert: true,
+        new: true,
+        useFindAndModify: false,
+      };
       const { accidentId, body: newContent } = payload;
+      console.log(newContent);
       const content = await this.database.Accident.findOneAndUpdate(
         {
           ID: accidentId,
         },
-        newContent
+        { newContent },
+        options
       );
       return { success: true, data: { content } };
     } catch (error) {
@@ -81,7 +88,6 @@ class AccidentController {
   async getAccidentsByQuery(payload) {
     try {
       const { queryStringObject: query } = payload;
-      console.log(query);
       const content = await this.database.Accident.find(query).limit(10000);
       return { success: true, data: { content } };
     } catch (error) {

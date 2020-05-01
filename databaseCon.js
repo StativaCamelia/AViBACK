@@ -9,6 +9,7 @@ const startConnection = async function () {
       useCreateIndex: true,
       useFindAndModify: false,
     });
+
     console.log("Succesful connection to database");
   } catch (error) {
     console.log(error);

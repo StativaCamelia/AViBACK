@@ -88,7 +88,7 @@ module.exports = function (accidentSchema) {
             number++;
           }
         } catch (error) {
-          console.log("eroare");
+          console.log(error);
         }
       });
       return number;

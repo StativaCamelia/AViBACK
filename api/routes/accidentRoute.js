@@ -34,7 +34,14 @@ exports.getRes = async (req, res) => {
       console.log(error);
     }
   } //GET All Accidents
-  else if (
+  else if (path.endsWith("filtres") && method === "get") {
+    try {
+      const { success, data } = await accidentController.createFilterDatabase();
+      sendAnswer(success, data, res);
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (
     path.endsWith("accident") &&
     method === "get" &&
     Object.keys(queryStringObject).length == 0
