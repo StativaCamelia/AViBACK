@@ -48,7 +48,7 @@ exports.getRes = async (req, parsedReq, res) => {
         statusCode,
         contentType,
         content,
-      } = await userController.handlerPostLogin(req, res);
+      } = await userController.handlerPostLogin(parsedReq, res);
       sendAnswer(statusCode, contentType, content, res, "loginPost");
     } catch (error) {
       console.log(error);
@@ -73,7 +73,7 @@ exports.getRes = async (req, parsedReq, res) => {
         statusCode,
         contentType,
         content,
-      } = await userController.handlerPostRegister(req, res);
+      } = await userController.handlerPostRegister(parsedReq, res);
       sendAnswer(statusCode, contentType, content, res, "register");
     } catch (error) {
       console.log(error);

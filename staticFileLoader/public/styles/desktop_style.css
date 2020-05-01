@@ -511,7 +511,7 @@
         text-decoration: none;
         margin-bottom: auto;
         color: #041F60;
-        font-family: Arial;
+        font-family: Novecentosanswide;
         font-size: medium;
     }
 
@@ -612,6 +612,10 @@
         text-shadow: 2px 3px 0 rgba(0, 0, 0, 0.2);
     }
 
+    .info_1 p{
+        font-family: Novecentosanswide;
+    }
+
     /*EFECTE ZONA UNU INFO*/
     .effects {
         display: flex;
@@ -675,7 +679,6 @@
     .topics {
         width: 100%;
         font-size: large;
-        font-family: "Times New Roman", Times, serif;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -722,7 +725,18 @@
         align-self: auto;
         color: #041F60;
         border-radius: 8px;
+        transition: all 0.2s ease;
+        text-align: center;
+        padding: 2vh 1vw 0 1vw;
     }
+
+    .topic1>h2,
+    .topic2>h2,
+    .topic3>h2{
+        margin: 0;
+        font-family: Novecentosanswide;
+    }
+
 
     .topic1>p,
     .topic2>p,
@@ -734,12 +748,20 @@
     .topic2:hover>p,
     .topic3:hover>p {
         display: block;
+        margin-top: 5vh;
+        font-family: Novecentosanswide;
     }
 
-    .topic1,
-    .topic2,
-    .topic3 {
-        transition: all 0.2s ease;
+    .topic1:hover>h2,
+    .topic2:hover>h2,
+    .topic3:hover>h2{
+        display: none;
+    }
+
+    .topic1:hover>i,
+    .topic2:hover>i,
+    .topic3:hover>i{
+        display: none;
     }
 
     .topic1:hover,
@@ -749,6 +771,8 @@
         background-position: 100% 100%;
         color: white;
     }
+
+
 
     /*END ZONA DOI INFO*/
 
@@ -935,7 +959,6 @@
 
     /*PIE*/
 
-
     #container {
         margin-top: 10vh;
         display: flex;
@@ -1107,6 +1130,7 @@
         height: auto;
         display: flex;
         flex-direction: column;
+        font-weight: bold;
     }
 
     .up_filtres {
@@ -1143,14 +1167,14 @@
     .label_moon {
         text-align: center;
         align-self: center;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
         font-size: 0.75rem;
     }
 
 
     .weather_select_label {
         flex-grow: 1;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
         font-size: 0.75rem;
     }
 
@@ -1163,7 +1187,7 @@
         width: 16%;
         border-radius: 3px;
         color: black;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
         padding: 12px;
     }
 
@@ -1202,7 +1226,7 @@
     .moon_option_label {
         flex-grow: 1;
         text-align: center;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
         font-size: 0.75rem;
     }
 
@@ -1213,7 +1237,7 @@
         overflow: hidden;
         margin: 1vh;
         color: white;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
     }
 
     .select_box>select:hover {
@@ -1227,7 +1251,40 @@
         background-color: #041F60;
         padding: 2px 2px;
         color: white;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
+    }
+
+    .select_criteria {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        align-self: center;
+        margin: 2vh 0 2vh 0;
+    }
+
+    .criteria_select_label{
+        flex-grow: 1;
+        font-family: Novecentosanswide;
+        font-size: 1.1rem;
+        width: 30%;
+        align-self: auto;
+        margin: 0;
+    }
+
+    #pie_criteria {
+        width: 30%;
+        align-self: auto;
+        border-radius: 3px;
+        background-color: #041F60;
+        padding: 2px 2px;
+        color: white;
+        font-family: Novecentosanswide;
+        font-size: 1rem;
+    }
+
+    #pie_criteria:hover {
+        background-color: #B1D4E0;
+        cursor: pointer;
     }
 
     option {
@@ -1236,7 +1293,7 @@
         background-color: #041F60;
         padding: 5px 5px;
         color: white;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
     }
 
     option:hover {
@@ -1310,12 +1367,12 @@
         text-align: center;
         cursor: pointer;
         color: black;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
         font-size: 13px;
         font-weight: bold;
         padding: 7px 25px;
         text-decoration: none;
-        margin-left: 9.7vw;
+        margin-left: 11.8vw;
         text-shadow: 0px 1px 0px #e1e2ed;
     }
 
@@ -1327,12 +1384,12 @@
         text-align: center;
         cursor: pointer;
         color: black;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
         font-size: 13px;
         font-weight: bold;
         padding: 7px 25px;
         text-decoration: none;
-        margin-left: 10vw;
+        margin-left: 12vw;
         text-shadow: 0px 1px 0px #e1e2ed;
     }
 

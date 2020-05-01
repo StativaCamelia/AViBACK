@@ -283,8 +283,8 @@
 
     .info_1 p {
         font-size: 20px;
+        font-family: Novecentosanswide;
     }
-
 
     /*EFECTE PENTRU INFO*/
 
@@ -419,6 +419,103 @@
         border: 4px groove #6c6e4a;
         box-shadow: 5px 10px #888888;
     }
+
+    .topics {
+        width: 100%;
+        font-size: large;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: center;
+
+    }
+
+    .topics_1 {
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        height: auto;
+        margin: 0 0 0 5vw;
+    }
+
+    .topics_1 h1 {
+        font-weight: 100;
+        text-transform: uppercase;
+        color: #0C2D48;
+        font-style: italic;
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 30px;
+        line-height: 54px;
+        text-shadow: 2px 5px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .topics_2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: auto;
+        height: auto;
+        margin: 5vh 10vw 5vh 10vw;
+    }
+
+    .topic1,
+    .topic2,
+    .topic3 {
+        margin: 0.5vh 0 0 0;
+        background-color: #B1D4E0;
+        width: 13vw;
+        height: 45vh;
+        box-shadow: 5px 5px 5px grey;
+        align-self: auto;
+        color: #041F60;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        text-align: center;
+        padding: 2vh 1vw 0 1vw;
+    }
+
+    .topic1>h2,
+    .topic2>h2,
+    .topic3>h2{
+        margin: 0;
+        font-family: Novecentosanswide;
+    }
+
+    .topic1>p,
+    .topic2>p,
+    .topic3>p {
+        display: none;
+    }
+
+    .topic1:hover>p,
+    .topic2:hover>p,
+    .topic3:hover>p {
+        display: block;
+        margin-top: 5vh;
+        font-family: Novecentosanswide;
+    }
+
+    .topic1:hover>h2,
+    .topic2:hover>h2,
+    .topic3:hover>h2{
+        display: none;
+    }
+
+    .topic1:hover>i,
+    .topic2:hover>i,
+    .topic3:hover>i{
+        display: none;
+    }
+
+    .topic1:hover,
+    .topic2:hover,
+    .topic3:hover {
+        background-color: #041F60;
+        background-position: 100% 100%;
+        color: white;
+    }
+
+
 
 
 
@@ -891,6 +988,7 @@
         /*padding: 10px 5px;*/
     }
 
+    /*CHART*/
     rect {
         fill: lightblue;
         stroke-width: 1px;
@@ -988,6 +1086,7 @@
         height: auto;
         display: flex;
         flex-direction: column;
+        font-weight: bold;
     }
 
     .up_filtres {
@@ -1026,13 +1125,13 @@
     .label_moon {
         text-align: center;
         align-self: center;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
         font-size: 0.75rem;
     }
 
     .weather_select_label {
         flex-grow: 1;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
         font-size: 0.75rem;
     }
 
@@ -1045,7 +1144,7 @@
         width: 16%;
         border-radius: 3px;
         color: black;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
         padding: 12px;
     }
 
@@ -1084,7 +1183,7 @@
     .moon_option_label {
         flex-grow: 1;
         text-align: center;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
         font-size: 0.75rem;
     }
 
@@ -1103,7 +1202,7 @@
         align-self: center;
         margin: 1vh 0vw 1vh 1vw;
         color: white;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
     }
 
     .select_box>select:hover {
@@ -1116,16 +1215,49 @@
         background-color: #041F60;
         padding: 5px 5px;
         color: white;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
+    }
+
+    select_criteria {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        align-self: center;
+        margin: 2vh 0 2vh 0;
+    }
+
+    .criteria_select_label{
+        flex-grow: 1;
+        font-family: Novecentosanswide;
+        font-size: 1.1rem;
+        width: 30%;
+        align-self: auto;
+        margin: 0;
+    }
+
+    #pie_criteria {
+        width: 30%;
+        align-self: auto;
+        border-radius: 3px;
+        background-color: #041F60;
+        padding: 2px 2px;
+        color: white;
+        font-family: Novecentosanswide;
+        font-size: 1rem;
+    }
+
+    #pie_criteria:hover {
+        background-color: #B1D4E0;
+        cursor: pointer;
     }
 
     option {
-
+        width: auto;
         border-radius: 3px;
         background-color: #041F60;
         padding: 5px 5px;
         color: white;
-        font-family: 'Bahnschrift SemiBold', 'serif';
+        font-family: Novecentosanswide;
     }
 
     /*CALENDAR*/
@@ -1208,7 +1340,7 @@
         text-align: center;
         cursor: pointer;
         color: black;
-        font-family: Arial;
+        font-family: Novecentosanswide;
         font-size: 13px;
         font-weight: bold;
         padding: 7px 25px;
@@ -1228,7 +1360,7 @@
         text-align: center;
         cursor: pointer;
         color: black;
-        font-family: Arial;
+        font-family: Novecentosanswide;
         font-size: 13px;
         font-weight: bold;
         padding: 7px 25px;
