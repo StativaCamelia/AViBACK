@@ -26,5 +26,5 @@ module.exports = {
   streetRoute,
   counterRoute,
   userRoute,
-  filtersRoute
+  filtersRoute,
 };

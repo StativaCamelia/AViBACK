@@ -1,16 +1,72 @@
 const jwt = require("jsonwebtoken");
-
+const mongoose = require("mongoose");
 class UserController {
   constructor(database) {
     this.database = database;
   }
+  async createUser(data) {
+    const { userId, body: userContent } = data;
+    try {
+      const content = new this.database.User(userContent);
+      await content.save();
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async getUserById(data) {
+    const { userId } = data;
+    try {
+      const content = await this.database.User.findOne({
+        _id: mongoose.Types.ObjectId(userId),
+      });
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async deleteUser(data) {
+    const { userId } = data;
+    try {
+      const content = await this.database.User.findOneAndDelete({
+        _id: mongoose.Types.ObjectId(userId),
+      });
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async verifyAdmin(token) {
+    const { auth_token } = token;
+    try {
+      const user = await this.database.User.findByToken(auth_token);
+      if (user) {
+        if (user.type === "admin") return { success: true };
+        else return { success: false };
+      } else return { success: false };
+    } catch (error) {
+      return { success: false };
+    }
+  }
+
   async updateUser(payload) {
     try {
+      const options = {
+        upsert: true,
+        new: true,
+        useFindAndModify: false,
+      };
       const { userId, body: newContent } = payload;
-
-      const content = await this.database.User.find({
-        username: pufuletipixelati,
-      });
+      const content = await this.database.User.findOneAndUpdate(
+        {
+          _id: mongoose.Types.ObjectId(userId),
+        },
+        newContent,
+        options
+      );
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -114,6 +170,10 @@ class UserController {
         const userObj = {
           token: existedUser,
         };
+        const { username } = body;
+        const user = await this.database.User.findOne({ username: username });
+        user.auth_tokens.push(existedUser);
+        user.save();
         return { statusCode: 200, contentType: "text/html", content: userObj };
       }
     }
@@ -126,12 +186,22 @@ class UserController {
           req.headers["auth-token"],
           process.env.JWT_SECRET
         );
-        req.user = verified;
-        const values = {
-          id: "profile",
-          value: "MY PROFILE",
-          href: "http://localhost:5001/profile",
-        };
+        const token = { auth_token: req.headers["auth-token"] };
+        const isAdmin = await this.verifyAdmin(token);
+        let values = {};
+        if (isAdmin.success) {
+          values = {
+            id: "dashboard",
+            value: "DASHBOARD",
+            href: "http://localhost:5001/dashboard",
+          };
+        } else {
+          values = {
+            id: "profile",
+            value: "MY PROFILE",
+            href: "http://localhost:5001/profile",
+          };
+        }
         return { statusCode: 200, contentType: "text/html", content: values };
       } catch (err) {
         const valuesLog = {

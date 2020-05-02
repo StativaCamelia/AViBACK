@@ -13,7 +13,7 @@ const {
   cityRoute,
   streetRoute,
   counterRoute,
-  filtersRoute
+  filtersRoute,
 } = require("./routes/index");
 
 const { staticFilesController } = require("../controllers/index");
@@ -119,8 +119,8 @@ exports.getRes = async (req, res) => {
       return;
     }
 
-    if(parsedReq.path.indexOf("filters") !== -1){
-      filtersRoute.getRes(parsedReq,res);
+    if (parsedReq.path.indexOf("filters") !== -1) {
+      filtersRoute.getRes(parsedReq, res);
       return;
     }
   });

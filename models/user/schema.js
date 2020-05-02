@@ -16,6 +16,11 @@ const userSchema = mongoose.Schema({
     required: true,
     min: 6,
   },
+  type: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user",
+  },
   criteria: {
     type: String,
     required: false,
@@ -25,6 +30,11 @@ const userSchema = mongoose.Schema({
     type: String,
     required: false,
   },
+  auth_tokens: [
+    {
+      type: String,
+    },
+  ],
 });
 
 module.exports = userSchema;

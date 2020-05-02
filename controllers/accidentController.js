@@ -7,7 +7,6 @@ class AccidentController {
   async createFilterDatabase() {
     try {
       const content = await this.service.filtresController.createFilterDatabase();
-
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -18,16 +17,6 @@ class AccidentController {
     const content = new this.database.Accident(payload);
     try {
       await content.save();
-      return { success: true, data: { content } };
-    } catch (error) {
-      return { success: false, data: { error } };
-    }
-  }
-
-  async updateAccident(payload, res) {
-    try {
-      const content = await this.database.Accident.findOneAndUpdate({});
-
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };

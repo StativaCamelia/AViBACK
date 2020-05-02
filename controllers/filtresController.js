@@ -8,7 +8,6 @@ class FiltresController {
     try {
       const states = await this.database.Accident.getAllStatesEntities();
       for (let stateData of states) {
-      
         this.service.stateController.createStateEntity(stateData);
       }
       const counties = await this.database.Accident.getAllCountiesEntities();
@@ -22,6 +21,7 @@ class FiltresController {
       }
       const cities = await this.database.Accident.getAllCitiesEntities();
       for (let cityData of cities) {
+        console.log(cityData);
         const countyData = await this.database.County.findOne({
           name: cityData.county,
         });

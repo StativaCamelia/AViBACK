@@ -1,4 +1,5 @@
 const { accidentController } = require("../../controllers/index");
+const authorization = require("../middleware/authorization");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
@@ -25,13 +26,20 @@ exports.getRes = async (req, res) => {
     Object.keys(queryStringObject).length == 0
   ) {
     try {
-      const { success, data } = await accidentController.deleteAllAccidents(
-        body,
-        res
-      );
-      sendAnswer(success, data, res);
+      const auth = await authorization.getAuth(req);
+      if (auth.succes) {
+        const { success, data } = await accidentController.deleteAllAccidents();
+        sendAnswer(success, data, res);
+      } else {
+        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+      }
     } catch (error) {
-      console.log(error);
+      sendAnswer(
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
+      );
     }
   } //GET All Accidents
   else if (path.endsWith("filtres") && method === "get") {
@@ -47,55 +55,102 @@ exports.getRes = async (req, res) => {
     Object.keys(queryStringObject).length == 0
   ) {
     try {
-      const { success, data } = await accidentController.getAllAccidents(
-        body,
-        res
-      );
-      sendAnswer(success, data, res);
+      const auth = await authorization.getAuth(req);
+      if (auth.succes) {
+        const { success, data } = await accidentController.getAllAccidents();
+        sendAnswer(success, data, res);
+      } else {
+        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+      }
     } catch (error) {
-      console.log(error);
+      sendAnswer(
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
+      );
     }
     //POST(Create) Accident
   } else if (path.endsWith("accident") && method === "post") {
     try {
-      const { success, data } = await accidentController.addAccident(body, res);
-      sendAnswer(success, data, res);
+      const auth = await authorization.getAuth(req);
+      if (auth.succes) {
+        const { success, data } = await accidentController.addAccident();
+        sendAnswer(success, data, res);
+      } else {
+        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+      }
     } catch (error) {
-      console.log(error);
+      sendAnswer(
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
+      );
     }
     //PATCH(Update) Accident data by ID (from the original database not our ID)
   } else if (path.endsWith("accident") && method === "patch") {
     try {
-      const { accidentId } = queryStringObject;
-      const { success, data } = await accidentController.updateAccident({
-        body,
-        accidentId,
-        res,
-      });
-      sendAnswer(success, data, res);
+      const auth = await authorization.getAuth(req);
+      if (auth.succes) {
+        const { accidentId } = queryStringObject;
+        const { success, data } = await accidentController.updateAccident({
+          body,
+          accidentId,
+          res,
+        });
+        sendAnswer(success, data, res);
+      } else {
+        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+      }
     } catch (error) {
-      console.log(error);
+      sendAnswer(
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
+      );
     }
     //DELETE Accident by ID(from the original database, not our ID)
   } else if (path.endsWith("accident") && method === "delete") {
     try {
-      const { accidentId } = queryStringObject;
-      const { success, data } = await accidentController.deleteAccident({
-        accidentId,
-        res,
-      });
-      sendAnswer(success, data, res);
+      const auth = await authorization.getAuth(req);
+      if (auth.succes) {
+        const { accidentId } = queryStringObject;
+        const { success, data } = await accidentController.deleteAccident({
+          accidentId,
+          res,
+        });
+        sendAnswer(success, data, res);
+      } else {
+        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+      }
     } catch (error) {
-      console.log(error);
+      sendAnswer(
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
+      );
     }
   } else if (path.endsWith("accident") && method === "get") {
     try {
-      const { success, data } = await accidentController.getAccidentsByQuery({
-        queryStringObject,
-      });
-      sendAnswer(success, data, res);
+      const auth = await authorization.getAuth(req);
+      if (auth.succes) {
+        const { success, data } = await accidentController.getAccidentsByQuery({
+          queryStringObject,
+        });
+        sendAnswer(success, data, res);
+      } else {
+        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+      }
     } catch (error) {
-      console.log(error);
+      sendAnswer(
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
+      );
     }
   }
 };

@@ -3,6 +3,15 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 module.exports = function (schema) {
+  schema.statics.findByToken = async function (auth_token) {
+    try {
+      const user = await this.findOne({ auth_tokens: auth_token });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   schema.statics.existEmail = async function (email) {
     let message = "";
 
