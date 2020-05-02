@@ -14,8 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
         profileLog.href = values.href;
       }
       if (this.status === 400) {
-        //token err
-        console.log(this.responseText);
         alert("Authentification error!");
       }
       if (this.status === 200) {

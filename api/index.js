@@ -1,5 +1,6 @@
 const url = require("url");
 const {
+  dashboardRoute,
   userRoute,
   homeRoute,
   contactRoute,
@@ -121,6 +122,11 @@ exports.getRes = async (req, res) => {
 
     if (parsedReq.path.indexOf("filters") !== -1) {
       filtersRoute.getRes(parsedReq, res);
+      return;
+    }
+
+    if (parsedReq.path.indexOf("dashboard") !== -1) {
+      dashboardRoute.getRes(parsedReq, res);
       return;
     }
   });

@@ -12,6 +12,8 @@ const counterRoute = require("./homePage/counterRoute");
 const userRoute = require("./userRoute");
 const accidentRoute = require("./accidentRoute");
 const filtersRoute = require("./filtersRoute");
+const dashboardRoute = require("./dashboardRoute");
+
 module.exports = {
   homeRoute,
   contactRoute,
@@ -27,4 +29,5 @@ module.exports = {
   counterRoute,
   userRoute,
   filtersRoute,
+  dashboardRoute,
 };

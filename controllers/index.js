@@ -12,8 +12,9 @@ const StateController = require("./locationControllers/stateController");
 const PieController = require("./pieController");
 const ProfileController = require("./profileController");
 const CounterController = require("./homePage/counterController");
+const DashboardController = require("./dashboardController");
 const UserController = require("./userController");
-
+const dashboardController = new DashboardController();
 const {
   User,
   Accident,
@@ -88,4 +89,5 @@ module.exports = {
   cityController,
   counterController,
   userController,
+  dashboardController,
 };

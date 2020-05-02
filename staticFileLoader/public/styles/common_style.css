@@ -466,3 +466,38 @@ ul li {
 }
 
 /*END ZONA FILTRE*/
+
+/*Control Panel*/
+.controle_first_div{
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    padding:20px;
+    margin: 2vh;
+    border : solid #041F60;
+}
+a.control_button{
+    display:inline-block;
+    padding:0.5em 3em;
+    border-bottom:0.16em solid #FFFFFF;
+    
+    box-sizing: border-box;
+    text-decoration:none;
+    text-transform:uppercase;
+    font-family:  Novecentosanswide;
+    font-weight:800;
+    color:#041F60;
+    text-align:center;
+    transition: all 0.15s;
+}
+a.control_button:hover{
+    color:#041F60;
+    border-color:#041F60;
+    }
+
+a.control_button:active{
+    color:#041F60;
+    border-color:#041F60;
+    }

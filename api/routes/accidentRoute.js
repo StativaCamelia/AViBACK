@@ -4,8 +4,8 @@ const authorization = require("../middleware/authorization");
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
     const { content } = data;
-    res.writeHead(200);
-    res.write(JSON.stringify(content, null, 2));
+    res.writeHead(200, "Content-type: application/json");
+    res.write(JSON.stringify({ content }, null, 2));
     res.end();
   } else {
     const { error } = data;

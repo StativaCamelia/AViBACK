@@ -34,7 +34,7 @@ class AccidentController {
 
   async getAllAccidents() {
     try {
-      const content = await this.database.Accident.find({});
+      const content = await this.database.Accident.find({}).limit(20);
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };

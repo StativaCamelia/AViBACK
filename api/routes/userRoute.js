@@ -28,8 +28,8 @@ function sendAnswer(statusCode, contentType, content, res, handler) {
 function sendAnswerAPI(success, data, res, statusCode = 401) {
   if (success) {
     const { content } = data;
-    res.writeHead(200);
-    res.write(JSON.stringify(content, null, 2));
+    res.writeHead(200, "Content-type: application/json");
+    res.write(JSON.stringify({ content }, null, 2));
     res.end();
   } else {
     const { error } = data;
@@ -111,6 +111,7 @@ exports.getRes = async (req, parsedReq, res) => {
   ) {
     try {
       const auth = await authorization.getAuth(req);
+
       if (auth.succes) {
         const { success, data } = await userController.getAllUsers();
         sendAnswerAPI(success, data, res);

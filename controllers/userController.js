@@ -85,6 +85,12 @@ class UserController {
   async getAllUsers() {
     try {
       const content = await this.database.User.find({});
+      for (let user of content) {
+        user._id = undefined;
+        user.password = undefined;
+        user._v = undefined;
+        user.auth_tokens = undefined;
+      }
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
