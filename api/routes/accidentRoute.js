@@ -71,11 +71,15 @@ exports.getRes = async (req, res) => {
       );
     }
     //POST(Create) Accident
-  } else if (path.endsWith("accident") && method === "post") {
+  } else if (
+    path.endsWith("accident") &&
+    method === "post" &&
+    Object.keys(queryStringObject).length == 0
+  ) {
     try {
       const auth = await authorization.getAuth(req);
       if (auth.succes) {
-        const { success, data } = await accidentController.addAccident();
+        const { success, data } = await accidentController.addAccident(body);
         sendAnswer(success, data, res);
       } else {
         sendAnswer(auth.succes, auth.data, res, (statusCode = 403));

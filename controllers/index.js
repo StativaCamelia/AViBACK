@@ -56,7 +56,7 @@ const accidentController = new AccidentController(
   {
     Accident,
   },
-  { filtresController }
+  { filtresController, userController }
 );
 const mapController = new MapController({
   Accident,

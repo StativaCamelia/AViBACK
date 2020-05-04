@@ -4,9 +4,13 @@ include ./layoutComponents/headDashboard.pug
 include ./layoutComponents/login.pug
 #main_all.body_all
   include ./layoutComponents/header.pug
-  #container
+  #dash_container
     .controle_first_div
         block controler_first_div
+    .controle_2_div
+        block controle_2_div
+    .controle_3_div
+        block controle_3_div
 
   button#top_button(title='Go to top') Top
   // FOOTER

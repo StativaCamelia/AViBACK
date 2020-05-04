@@ -51,7 +51,6 @@ exports.getRes = async (req, res) => {
         staticFilesController.getRes(parsedReq, res);
         return;
       } catch (error) {
-        console.log(error);
         return;
       }
     }

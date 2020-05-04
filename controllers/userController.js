@@ -1,9 +1,59 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const nodemailer = require("nodemailer");
+
+var transporter = nodemailer.createTransport({
+  service: "gmail",
+  secure: true,
+  auth: {
+    user: "andreiagronom1@gmail.com",
+    pass: "Alfabet1.",
+  },
+});
+
 class UserController {
   constructor(database) {
     this.database = database;
   }
+  async getIntrestedUsers(data) {
+    const { content } = data;
+    const response = await this.getAllUsers();
+    const users = response.data.content;
+    for (let user of users) {
+      for (let field in content) {
+        if (user.criteria != undefined && user.valueOfCriteria != undefined) {
+          if (user.criteria === field)
+            if (user.valueOfCriteria === content[field]) {
+              const objectOfInterest = content[field];
+              const email = user.email;
+              this.sendMail({ field, objectOfInterest, email });
+            }
+        }
+      }
+    }
+  }
+
+  async sendMail(data) {
+    const { email, field, objectOfInterest } = data;
+    var mailOptions = {
+      from: "andreiagronom1@gmail.com",
+      to: email,
+      subject: "AVI: Online services for data visualization",
+      text:
+        "New data was added on a area you are interested in " +
+        field +
+        ":" +
+        objectOfInterest,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+      }
+    });
+  }
+
   async createUser(data) {
     const { userId, body: userContent } = data;
     try {

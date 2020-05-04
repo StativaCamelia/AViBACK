@@ -13,10 +13,11 @@ class AccidentController {
     }
   }
 
-  async addAccident(payload, res) {
+  async addAccident(payload) {
     const content = new this.database.Accident(payload);
     try {
       await content.save();
+      this.service.userController.getIntrestedUsers({ content });
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -67,7 +68,7 @@ class AccidentController {
     try {
       const { accidentId } = payload;
       const content = await this.database.Accident.findOneAndDelete({
-        ID: accidentId,
+        _id: accidentId,
       });
       return { success: true, data: { content } };
     } catch (error) {
