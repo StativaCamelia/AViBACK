@@ -28,10 +28,10 @@ class AccidentController {
     }
   }
 
+  //numarul de accidente in functie de niste criterii grupate pe un criteriu dat de noi(*Georgiana nu uita ca ai sters aia cu map si ai zis ca folosesti asta in schimb)
   async getNumberOfAccidentsByQueryAndGroupBy(query, groupBy) {
     try {
       const { queryStringObject: criteria } = query;
-      const groupBy = "County";
       const aggregatorOpts = [
         {
           $match: criteria,
@@ -42,31 +42,6 @@ class AccidentController {
         {
           $group: {
             _id: "$" + groupBy,
-            count: { $sum: 1 },
-          },
-        },
-      ];
-      const content = await this.database.Accident.aggregate(aggregatorOpts);
-      return { success: true, data: { content } };
-    } catch (error) {
-      return { success: false, data: { error } };
-    }
-  }
-
-  //returneaza numarul de accidente in functie de criterii si de state(pentu colorare mapa)
-  async getNumberOfAccidentsByState(query) {
-    try {
-      const { queryStringObject: criteria } = query;
-      const aggregatorOpts = [
-        {
-          $match: criteria,
-        },
-        {
-          $unwind: "$State",
-        },
-        {
-          $group: {
-            _id: "$State",
             count: { $sum: 1 },
           },
         },
