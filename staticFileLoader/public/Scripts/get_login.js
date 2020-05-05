@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.status === 400) {
         alert("Authentification error!");
       }
-      if (this.status === 200) {
+      if (profileLog.id !== "button") {
         profileLog.removeEventListener("click", loginListener);
       }
     }

@@ -277,7 +277,7 @@ class UserController {
         value: "LOGIN",
         href: "#",
       };
-      return { statusCode: 401, contentType: "text/html", content: valuesLog };
+      return { statusCode: 200, contentType: "text/html", content: valuesLog };
     }
   }
 }
