@@ -68,31 +68,26 @@ module.exports = function (accidentSchema) {
 
   accidentSchema.statics.getNumberOfAccidents = async function () {
     try {
-      var number = 0;
-      // var currentDate = new Date();
-      // var currentMonth = currentDate.getUTCMonth() + 1;
-      // var currentDay = currentDate.getUTCDate();
-      var currentDay = 9;
-      var currentMonth = 1;
-      console.log(
-        "cuurrent day and month :" + currentDay + "day---month" + currentMonth
-      );
+      function formatDate() {
+        var d = new Date(),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate();
 
-      var query = await this.find({});
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
 
-      query.forEach((date) => {
-        try {
-          var month = date.Start_Time.getUTCMonth() + 1;
-          var day = date.Start_Time.getUTCDate();
-          if (month == currentMonth && day == currentDay) {
-            number++;
-          }
-        } catch (error) {
-          console.log(error);
-        }
+        return [month, day].join("-");
+      }
+
+      const currentDate = formatDate();
+      console.log(currentDate);
+      var query = await this.find({
+        Start_Time: {
+          $regex: currentDate,
+        },
       });
-      return number;
-      return 10;
+      //console.log(query.length);
+      return query.length;
     } catch (error) {
       throw error;
     }
@@ -206,6 +201,14 @@ module.exports = function (accidentSchema) {
         }
       }
       return streetsEntities;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  accidentSchema.statics.getAccidentDetails = async function () {
+    try {
+      return "working";
     } catch (error) {
       throw error;
     }

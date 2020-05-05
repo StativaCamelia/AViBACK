@@ -14,6 +14,7 @@ const ProfileController = require("./frontendControllers/profileController");
 const CounterController = require("./homePage/counterController");
 const DashboardController = require("./frontendControllers/dashboardController");
 const UserController = require("./userController");
+const NewsController = require("./homePage/newsController");
 const dashboardController = new DashboardController();
 const {
   User,
@@ -40,6 +41,7 @@ const cityController = new CityController({ City });
 const countyController = new CountyController({ County });
 const stateController = new StateController({ State });
 const counterController = new CounterController({ Accident });
+const newsController = new NewsController({ Accident });
 const userController = new UserController({ User });
 
 const filtresController = new FiltresController(
@@ -91,4 +93,5 @@ module.exports = {
   counterController,
   userController,
   dashboardController,
+  newsController,
 };

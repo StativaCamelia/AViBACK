@@ -1,4 +1,4 @@
-const { counterController } = require("../../../controllers/index");
+const { newsController } = require("../../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
@@ -17,9 +17,9 @@ function sendAnswer(success, data, res, statusCode = 200) {
 
 exports.getRes = async (req, res) => {
   const { path, fullPath, method, body, queryStringObject: query } = req;
-  if (path.endsWith("/counter") && method === "get") {
+  if (path.endsWith("/news") && method === "get") {
     try {
-      const { success, data } = await counterController.getDailyAccidents();
+      const { success, data } = await newsController.getAccidentsDetails();
       console.log(data);
       sendAnswer(success, data, res);
     } catch (error) {
