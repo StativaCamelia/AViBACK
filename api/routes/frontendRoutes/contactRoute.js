@@ -1,4 +1,4 @@
-const { contactController } = require("../../controllers/index");
+const { contactController } = require("../../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {

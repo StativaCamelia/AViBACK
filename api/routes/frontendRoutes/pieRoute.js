@@ -1,5 +1,4 @@
-const url = require("url");
-const { homeController } = require("../../controllers/index");
+const { pieController } = require("../../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
@@ -9,17 +8,18 @@ function sendAnswer(success, data, res, statusCode = 200) {
     res.end();
   } else {
     const { erorr } = data;
+    console.log(erorr);
     res.writeHead(401);
     res.write("Undefined");
     res.end();
   }
 }
 
-exports.getRes = (req, res) => {
-  const { path, method, body } = req;
-  if (path.endsWith("home") && method === "get") {
+exports.getRes = async (req, res) => {
+  const { fullPath, method, body } = req;
+  if (fullPath.endsWith("/") && method === "get") {
     try {
-      const { success, data } = homeController.getHomePage(req, res);
+      const { success, data } = await pieController.getPiePage(req, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

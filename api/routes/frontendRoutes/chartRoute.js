@@ -1,4 +1,4 @@
-const { pieController } = require("../../controllers/index");
+const { chartController } = require("../../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
@@ -19,7 +19,7 @@ exports.getRes = async (req, res) => {
   const { fullPath, method, body } = req;
   if (fullPath.endsWith("/") && method === "get") {
     try {
-      const { success, data } = await pieController.getPiePage(req, res);
+      const { success, data } = await chartController.getChartPage(body, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

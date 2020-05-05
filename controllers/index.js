@@ -1,18 +1,18 @@
-const HomeController = require("./homeController.js");
-const ContactController = require("./contactController.js");
-const ChartController = require("./chartController");
-const StaticFilesController = require("./staticFilesController");
+const HomeController = require("./frontendControllers/homeController.js");
+const ContactController = require("./frontendControllers/contactController.js");
+const ChartController = require("./frontendControllers/chartController");
+const StaticFilesController = require("./frontendControllers/staticFilesController");
 const AccidentController = require("./accidentController.js");
-const MapController = require("./mapController");
+const MapController = require("./frontendControllers/mapController");
 const FiltresController = require("./filtresController");
 const CountyController = require("./locationControllers/countyController");
 const CityController = require("./locationControllers/cityController");
 const StreetController = require("./locationControllers/streetController");
 const StateController = require("./locationControllers/stateController");
-const PieController = require("./pieController");
-const ProfileController = require("./profileController");
+const PieController = require("./frontendControllers/pieController");
+const ProfileController = require("./frontendControllers/profileController");
 const CounterController = require("./homePage/counterController");
-const DashboardController = require("./dashboardController");
+const DashboardController = require("./frontendControllers/dashboardController");
 const UserController = require("./userController");
 const dashboardController = new DashboardController();
 const {
@@ -55,6 +55,7 @@ const filtresController = new FiltresController(
 const accidentController = new AccidentController(
   {
     Accident,
+    State,
   },
   { filtresController, userController }
 );

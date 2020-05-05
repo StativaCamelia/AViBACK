@@ -1,4 +1,4 @@
-const { chartController } = require("../../controllers/index");
+const { dashboardController } = require("../../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
@@ -15,11 +15,11 @@ function sendAnswer(success, data, res, statusCode = 200) {
   }
 }
 
-exports.getRes = async (req, res) => {
+exports.getRes = (req, res) => {
   const { fullPath, method, body } = req;
   if (fullPath.endsWith("/") && method === "get") {
     try {
-      const { success, data } = await chartController.getChartPage(body, res);
+      const { success, data } = dashboardController.getDashboardPage(req, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

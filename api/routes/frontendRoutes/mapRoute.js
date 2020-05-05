@@ -1,4 +1,4 @@
-const { mapController } = require("../../controllers/index");
+const { mapController } = require("../../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {

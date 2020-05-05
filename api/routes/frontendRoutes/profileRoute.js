@@ -1,6 +1,6 @@
 const url = require("url");
-const { profileController } = require("../../controllers/index");
-const verify = require("../../verifyToken");
+const { profileController } = require("../../../controllers/index");
+const verify = require("../../../verifyToken");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {

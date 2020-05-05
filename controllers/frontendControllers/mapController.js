@@ -1,4 +1,4 @@
-const { mapPage } = require("../views/index");
+const { mapPage } = require("../../views/index");
 
 class MapController {
   constructor(database) {

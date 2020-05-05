@@ -1,4 +1,4 @@
-const { dashboardPage } = require("../views/index");
+const { dashboardPage } = require("../../views/index");
 
 class DashboardController {
   constructor(database) {
@@ -7,7 +7,7 @@ class DashboardController {
 
   getDashboardPage(req, res) {
     try {
-      const ids = ["", "", "active", "", ""];
+      const ids = ["", "active", "", "", ""];
       const { content, contentType } = dashboardPage.getPage(ids);
       return { success: true, data: { content, contentType } };
     } catch (erorr) {

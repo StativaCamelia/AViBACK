@@ -1,4 +1,4 @@
-const staticFile = require("../staticFileLoader/index");
+const staticFile = require("../../staticFileLoader/index");
 class StaticFilesControler {
   constructor() {}
 

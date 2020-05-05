@@ -1,4 +1,4 @@
-const { contactPage } = require("../views/index");
+const { contactPage } = require("../../views/index");
 
 class ContactController {
   constructor(database) {

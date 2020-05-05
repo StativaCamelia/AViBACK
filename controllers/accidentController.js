@@ -4,6 +4,7 @@ class AccidentController {
     this.service = service;
   }
 
+  //creeaza baza de date pentru filtre
   async createFilterDatabase() {
     try {
       const content = await this.service.filtresController.createFilterDatabase();
@@ -13,6 +14,71 @@ class AccidentController {
     }
   }
 
+  //Returneaza numarul de accidente care respecta o serie de criterii
+  async getNumberOfAccidentsByCriterias(query) {
+    try {
+      const { queryStringObject: criteria } = query;
+      const content = await this.database.Accident.find(
+        criteria
+      ).countDocuments();
+      console.log(content);
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async getNumberOfAccidentsByQueryAndGroupBy(query, groupBy) {
+    try {
+      const { queryStringObject: criteria } = query;
+      const groupBy = "County";
+      const aggregatorOpts = [
+        {
+          $match: criteria,
+        },
+        {
+          $unwind: "$" + groupBy,
+        },
+        {
+          $group: {
+            _id: "$" + groupBy,
+            count: { $sum: 1 },
+          },
+        },
+      ];
+      const content = await this.database.Accident.aggregate(aggregatorOpts);
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  //returneaza numarul de accidente in functie de criterii si de state(pentu colorare mapa)
+  async getNumberOfAccidentsByState(query) {
+    try {
+      const { queryStringObject: criteria } = query;
+      const aggregatorOpts = [
+        {
+          $match: criteria,
+        },
+        {
+          $unwind: "$State",
+        },
+        {
+          $group: {
+            _id: "$State",
+            count: { $sum: 1 },
+          },
+        },
+      ];
+      const content = await this.database.Accident.aggregate(aggregatorOpts);
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  //adauga un accident in functie de informatiile din body(admin)
   async addAccident(payload) {
     const content = new this.database.Accident(payload);
     try {
@@ -24,6 +90,7 @@ class AccidentController {
     }
   }
 
+  //sterge toate accidentele(admin)
   async deleteAllAccidents(req, res) {
     try {
       const content = await this.database.Accident.deleteMany({});
@@ -33,6 +100,7 @@ class AccidentController {
     }
   }
 
+  //returneaza toate accidentele din baza de date(admin)
   async getAllAccidents() {
     try {
       const content = await this.database.Accident.find({}).limit(20);
@@ -42,6 +110,7 @@ class AccidentController {
     }
   }
 
+  //updateaza datele unui accident cu ajutorul informatiilor primite in body(trebuie pus id-ul accidentului in query string)
   async updateAccident(payload) {
     try {
       const options = {
@@ -64,6 +133,7 @@ class AccidentController {
     }
   }
 
+  //sterge un accident primit in queryString
   async deleteAccident(payload) {
     try {
       const { accidentId } = payload;
@@ -75,10 +145,12 @@ class AccidentController {
       return { success: false, data: { error } };
     }
   }
+
+  //returneaza accidentele(toate informatiile) in functie de datele din query string(ex. State='OH')
   async getAccidentsByQuery(payload) {
     try {
       const { queryStringObject: query } = payload;
-      const content = await this.database.Accident.find(query).limit(10000);
+      const content = await this.database.Accident.find(query);
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };

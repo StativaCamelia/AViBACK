@@ -41,7 +41,8 @@ exports.getRes = async (req, res) => {
         (statusCode = 501)
       );
     }
-  } //GET All Accidents
+  }
+  //GET All Accidents
   else if (path.endsWith("filtres") && method === "get") {
     try {
       const { success, data } = await accidentController.createFilterDatabase();
@@ -141,7 +142,10 @@ exports.getRes = async (req, res) => {
     try {
       const auth = await authorization.getAuth(req);
       if (auth.succes) {
-        const { success, data } = await accidentController.getAccidentsByQuery({
+        const {
+          success,
+          data,
+        } = await accidentController.getNumberOfAccidentsByQueryAndGroupBy({
           queryStringObject,
         });
         sendAnswer(success, data, res);

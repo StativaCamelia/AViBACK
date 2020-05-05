@@ -1,4 +1,4 @@
-const { chartPage } = require("../views/index");
+const { chartPage } = require("../../views/index");
 
 class ChartController {
   constructor(database) {

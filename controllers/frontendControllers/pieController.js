@@ -1,4 +1,4 @@
-const { piePage } = require("../views/index");
+const { piePage } = require("../../views/index");
 fs = require("fs");
 
 class PieController {
