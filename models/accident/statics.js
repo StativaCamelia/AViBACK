@@ -80,7 +80,7 @@ module.exports = function (accidentSchema) {
       }
 
       const currentDate = formatDate();
-      console.log(currentDate);
+      //console.log(currentDate);
       var query = await this.find({
         Start_Time: {
           $regex: currentDate,
@@ -207,21 +207,41 @@ module.exports = function (accidentSchema) {
   };
 
   accidentSchema.statics.getAccidentsCount = async function (filters) {
-    try{
-      let accidents = await this.find(filters);
-      console.log(accidents)
-      return accidents.length;
-    }catch (error) {
-      throw error;
-    }
-  }
-
-  accidentSchema.statics.getAccidentDetails = async function () {
     try {
-      return "working";
+      let accidents = await this.find(filters);
+      console.log(accidents);
+      return accidents.length;
     } catch (error) {
       throw error;
     }
   };
 
+  accidentSchema.statics.getAccidentDetails = async function () {
+    try {
+      const details = await this.find({}, "Description")
+        .select("-_id")
+        .limit(10);
+
+      let response = "<accidents>";
+      let index = 1;
+      let text = '"';
+
+      details.forEach((element) => {
+        response =
+          response +
+          "<accident id= " +
+          text +
+          index +
+          text +
+          ">" +
+          element.Description +
+          "</accident>";
+        index++;
+      });
+      response = response + "</accidents>";
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
 };
