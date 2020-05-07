@@ -35,11 +35,11 @@ module.exports = function (schema) {
 
     const user = await this.findOne({ username: username });
     if (!user) {
-      message = "Invalid username!";
+      message = "Invalid username or password!";
     } else {
       const validPass = await bcrypt.compare(password, user.password);
       if (!validPass) {
-        message = "Invalid password!";
+        message = "Invalid username or password!";
       } else {
         message = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
       }
