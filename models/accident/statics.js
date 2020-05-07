@@ -210,4 +210,14 @@ module.exports = function (accidentSchema) {
       throw error;
     }
   };
+
+  accidentSchema.statics.getAccidentsCount = async function (filters) {
+    try{
+      let accidents = await this.find(filters);
+      console.log(accidents)
+      return accidents.length;
+    }catch (error) {
+      throw error;
+    }
+  }
 };

@@ -67,18 +67,6 @@ class FiltresController {
       throw error;
     }
   }
-
-  async handlerPostRequest(req, res) {
-    const { body } = req;
-    let filtersValues = body;
-    filtersValues.State = await this.database.State.getAbbrByName(
-      filtersValues.State
-    );
-    //inca un statics pt data si ora..pentru a cauta in Start_Time
-    //plus verificare pe data -> anul sa fie intre 2017 si 2019!
-    console.log(filtersValues);
-    return { statusCode: 200, contentType: "text/html", content: "OK" };
-  }
 }
 
 module.exports = FiltresController;

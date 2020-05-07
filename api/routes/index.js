@@ -11,7 +11,6 @@ const streetRoute = require("./locationAPI/streetRoute");
 const counterRoute = require("./homePage/counterRoute");
 const userRoute = require("./userRoute");
 const accidentRoute = require("./accidentRoute");
-const filtersRoute = require("./filtersRoute");
 const dashboardRoute = require("./frontendRoutes/dashboardRoute");
 
 module.exports = {
@@ -28,6 +27,5 @@ module.exports = {
   streetRoute,
   counterRoute,
   userRoute,
-  filtersRoute,
   dashboardRoute,
 };
