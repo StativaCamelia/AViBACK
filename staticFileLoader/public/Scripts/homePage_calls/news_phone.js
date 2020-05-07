@@ -8,12 +8,16 @@ document.addEventListener("DOMContentLoaded", function updateNews(event) {
     if (value == 4) value = 0;
     for (let i = 1; i <= 6; i++) {
       element = document.getElementById("newss" + i);
-      element.innerHTML = x[i + value].firstChild.nodeValue;
+      try {
+        element.innerHTML = x[i + value - 1].firstChild.nodeValue;
+      } catch (error) {}
     }
     setTimeout(function () {
       for (let i = 1; i <= 6; i++) {
         element = document.getElementById("newss" + i);
-        element.innerHTML = x[value + i].firstChild.nodeValue;
+        try {
+          element.innerHTML = x[i + value - 1].firstChild.nodeValue;
+        } catch (error) {}
       }
       value += 1;
       if (value < 10) changeElements();
