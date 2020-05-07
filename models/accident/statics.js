@@ -220,7 +220,7 @@ module.exports = function (accidentSchema) {
     try {
       const details = await this.find({}, "Description")
         .select("-_id")
-        .limit(10);
+        .limit(9);
 
       let response = "<accidents>";
       let index = 1;

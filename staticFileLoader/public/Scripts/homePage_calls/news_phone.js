@@ -5,15 +5,14 @@ document.addEventListener("DOMContentLoaded", function updateNews(event) {
     var xmlDoc = parser.parseFromString(info, "text/xml");
     var x = xmlDoc.getElementsByTagName("accident");
     var element;
-    console.log(x);
     if (value == 4) value = 0;
     for (let i = 1; i <= 6; i++) {
-      element = document.getElementById("news" + i);
+      element = document.getElementById("newss" + i);
       element.innerHTML = x[i + value].firstChild.nodeValue;
     }
     setTimeout(function () {
       for (let i = 1; i <= 6; i++) {
-        element = document.getElementById("news" + i);
+        element = document.getElementById("newss" + i);
         element.innerHTML = x[value + i].firstChild.nodeValue;
       }
       value += 1;
