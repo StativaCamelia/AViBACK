@@ -12,6 +12,7 @@ const counterRoute = require("./homePage/counterRoute");
 const userRoute = require("./userRoute");
 const accidentRoute = require("./accidentRoute");
 const dashboardRoute = require("./frontendRoutes/dashboardRoute");
+const newsRoute = require("./homePage/newsRoute");
 
 module.exports = {
   homeRoute,
@@ -28,4 +29,5 @@ module.exports = {
   counterRoute,
   userRoute,
   dashboardRoute,
+  newsRoute,
 };

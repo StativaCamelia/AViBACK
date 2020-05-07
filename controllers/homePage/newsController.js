@@ -1,12 +1,12 @@
-class CounterController {
+class NewsController {
   constructor(database, services) {
     this.database = database;
     this.services = services;
   }
 
-  async getDailyAccidents() {
+  async getAccidentsDetails() {
     try {
-      const number = await this.database.Accident.getNumberOfAccidents();
+      const number = await this.database.Accident.getAccidentDetails();
       return { success: true, data: { number } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -14,4 +14,4 @@ class CounterController {
   }
 }
 
-module.exports = CounterController;
+module.exports = NewsController;

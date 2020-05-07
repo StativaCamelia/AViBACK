@@ -14,6 +14,7 @@ const {
   cityRoute,
   streetRoute,
   counterRoute,
+  newsRoute,
 } = require("./routes/index");
 
 const { staticFilesController } = require("../controllers/index");
@@ -114,6 +115,11 @@ exports.getRes = async (req, res) => {
 
     if (parsedReq.path.indexOf("counter") !== -1) {
       counterRoute.getRes(parsedReq, res);
+      return;
+    }
+
+    if (parsedReq.path.indexOf("news") !== -1) {
+      newsRoute.getRes(parsedReq, res);
       return;
     }
 

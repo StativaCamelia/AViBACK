@@ -7,12 +7,9 @@ document.addEventListener("DOMContentLoaded", function updateCounter(event) {
     const target = count.getAttribute("data-target");
     setTimeout(function () {
       count.innerHTML = i;
-      i += value;
+      i++;
       if (i < target) {
         counterInc();
-      }
-      if (target - i < 10) {
-        counterInc(target - i);
       }
     }, 4);
   }
