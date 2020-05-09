@@ -28,7 +28,6 @@ function next(req, res) {
 exports.getRes = (req, parsedReq, res) => {
   const { fullPath, method, body } = parsedReq;
   if (fullPath.endsWith("/") && method === "get") {
-    //verify(req,res,next);
     next(req, res);
   } else {
     if (fullPath.endsWith("/") && method === "post") {

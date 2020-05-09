@@ -6,8 +6,8 @@ class NewsController {
 
   async getAccidentsDetails() {
     try {
-      const number = await this.database.Accident.getAccidentDetails();
-      return { success: true, data: { number } };
+      const details = await this.database.Accident.getAccidentDetails();
+      return { success: true, data: { details } };
     } catch (error) {
       return { success: false, data: { error } };
     }

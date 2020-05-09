@@ -20,7 +20,6 @@ exports.getRes = async (req, res) => {
   if (path.endsWith("/news") && method === "get") {
     try {
       const { success, data } = await newsController.getAccidentsDetails();
-      console.log(data);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

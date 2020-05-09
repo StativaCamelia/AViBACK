@@ -16,13 +16,14 @@ function sendAnswer(success, data, res, statusCode = 200) {
 }
 
 exports.getRes = async (req, res) => {
-  const { fullPath, method, body } = req;
+  const { fullPath, method, body, trimmedPath } = req;
   if (fullPath.endsWith("/") && method === "get") {
     try {
-      const { success, data } = await chartController.getChartPage(body, res);
+      const { success, data } = await chartController.getChartPage(req, res);
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
     }
   }
+
 };

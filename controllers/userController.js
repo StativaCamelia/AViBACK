@@ -214,8 +214,7 @@ class UserController {
         user.password
       );
       if (
-        existedUser === "Invalid username!" ||
-        existedUser === "Invalid password!"
+        existedUser === "Invalid username or password!"
       ) {
         return {
           statusCode: 400,
@@ -277,7 +276,7 @@ class UserController {
         value: "LOGIN",
         href: "#",
       };
-      return { statusCode: 401, contentType: "text/html", content: valuesLog };
+      return { statusCode: 200, contentType: "text/html", content: valuesLog };
     }
   }
 }

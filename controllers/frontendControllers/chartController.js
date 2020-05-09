@@ -7,6 +7,27 @@ class ChartController {
 
   async getChartPage(req, res) {
     try {
+      if(Object.keys(req.queryStringObject).length !== 0){
+        let parsedQueryString = req.queryStringObject;
+        if(parsedQueryString.State){
+          parsedQueryString.State = await this.database.State.getAbbrByName(
+              parsedQueryString.State
+          );
+        }
+        if(parsedQueryString.Start_Time){
+          if(parsedQueryString.Start_Time.length > 2){
+            parsedQueryString.Start_Time = parsedQueryString.Start_Time.replace("T"," ");
+          }
+          parsedQueryString.Start_Time = parsedQueryString.Start_Time + ":";
+          parsedQueryString.Start_Time = { "$regex" : parsedQueryString.Start_Time, "$options" : "i" };
+        }
+
+        console.log(parsedQueryString)
+        const countResults = await this.database.Accident.getAccidentsCount(parsedQueryString);
+        console.log(countResults)
+
+      }
+
       const statesValues = await this.database.State.getAllStatesViews();
       const countiesValues = await this.database.County.getAllCountiesViews();
       const citiesValues = await this.database.City.getAllCitiesViews();

@@ -7,14 +7,14 @@ document.addEventListener("DOMContentLoaded", function updateNews(event) {
     var element;
     if (value == 4) value = 0;
     for (let i = 1; i <= 6; i++) {
-      element = document.getElementById("news" + i);
+      element = document.getElementById("newss" + i);
       try {
         element.innerHTML = x[i + value - 1].firstChild.nodeValue;
       } catch (error) {}
     }
     setTimeout(function () {
       for (let i = 1; i <= 6; i++) {
-        element = document.getElementById("news" + i);
+        element = document.getElementById("newss" + i);
         try {
           element.innerHTML = x[i + value - 1].firstChild.nodeValue;
         } catch (error) {}

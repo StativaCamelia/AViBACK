@@ -14,7 +14,6 @@ const {
   cityRoute,
   streetRoute,
   counterRoute,
-  filtersRoute,
   newsRoute,
 } = require("./routes/index");
 
@@ -29,7 +28,6 @@ exports.getRes = async (req, res) => {
   parsedReq.method = req.method.toLowerCase();
   parsedReq.headers = req.headers;
   parsedReq.user = req.user;
-  //parsedReq.queryStringObject = parsedReq.parsedUrl.query;
   parsedReq.queryStringObject = JSON.parse(
     JSON.stringify(parsedReq.parsedUrl.query)
   );
@@ -66,23 +64,23 @@ exports.getRes = async (req, res) => {
       return;
     }
 
-    if (parsedReq.path.indexOf("accident") !== -1) {
-      accidentRoute.getRes(parsedReq, res);
-      return;
-    }
-
-    if (parsedReq.path.indexOf("map") !== -1) {
+    if (parsedReq.path.indexOf("accidents/map") !== -1) {
       mapRoute.getRes(parsedReq, res);
       return;
     }
 
-    if (parsedReq.path.indexOf("pie") !== -1) {
+    if (parsedReq.path.indexOf("accidents/pie") !== -1) {
       pieRoute.getRes(parsedReq, res);
       return;
     }
 
-    if (parsedReq.path.indexOf("chart") !== -1) {
+    if (parsedReq.path.indexOf("accidents/chart") !== -1) {
       chartRoute.getRes(parsedReq, res);
+      return;
+    }
+
+    if (parsedReq.path.indexOf("accident") !== -1) {
+      accidentRoute.getRes(parsedReq, res);
       return;
     }
 
@@ -122,11 +120,6 @@ exports.getRes = async (req, res) => {
 
     if (parsedReq.path.indexOf("news") !== -1) {
       newsRoute.getRes(parsedReq, res);
-      return;
-    }
-
-    if (parsedReq.path.indexOf("filters") !== -1) {
-      filtersRoute.getRes(parsedReq, res);
       return;
     }
 
