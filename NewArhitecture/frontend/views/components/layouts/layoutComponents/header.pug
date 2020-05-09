@@ -1,0 +1,33 @@
+.header
+    // NAV_BAR
+    .nav
+      .logoformobile
+        a(href='http://localhost:5001/home')
+          img(src='Images/logo.png' alt='AVi')
+      .main_menu
+        - let keyIds = {activeIds}
+        - let valuesIds = JSON.parse(keyIds.activeIds)
+        - let home = valuesIds[0]
+        - let contact = valuesIds[1]
+        - let map = valuesIds[2]
+        - let pie = valuesIds[3]
+        - let chart = valuesIds[4]
+        ul
+          li
+            a.logo(href='home')
+              img.effect3(src='Images/logo_renew.png' alt='AVi')
+          li
+            a.myButton(id=home href='http://localhost:5001/home') HOME
+          li
+            a.myButton(id=contact href='http://localhost:5001/contact') CONTACT
+          li
+            a.myButton#button
+      .statistics
+        ul
+          li.effect1
+            a(id=map href='map')
+              img.for_img(title='Maps' src='./Images/Icons/map.png')
+            a(id=pie href='pie')
+              img.for_img(title='Pie Chart' src='./Images/Icons/pie-white.png')
+            a(id=chart href='chart')
+              img.for_img(title='Chart' src='./Images/Icons/bar-chart.png')

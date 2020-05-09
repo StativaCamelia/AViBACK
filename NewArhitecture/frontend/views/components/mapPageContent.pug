@@ -1,0 +1,25 @@
+extends ./layouts/layoutStatistici.pug
+block left_content
+    include ./mapComponents/mapSVG.pug
+    #states_pop
+        .left_description
+        .right_description
+            #map(latitude = 56 longitude = -121)
+            script(src='./Scripts/map_calls/color_level.js')
+            script(src='./Scripts/map_calls/map_script.js')
+            script(src='./Scripts/map_calls/description_div.js')
+            script(src='./Scripts/map_calls/mapping_select_to_map.js')
+            script( src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGMRsZ2FtdEy73zYaGm_JK_waMrSc9g0')
+    .map-history
+        .history_line
+            #high.cbox
+            p   &gt;500 accidents
+        .history_line
+            #medium.cbox
+            p   250-500 accidents
+        .history_line
+            #low.cbox
+            p  &lt; 250 accidents
+    
+block right_content
+    include ./statisticsComponents/filtres

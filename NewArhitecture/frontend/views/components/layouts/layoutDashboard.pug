@@ -1,0 +1,17 @@
+doctype html
+include ./layoutComponents/headDashboard.pug
+// POP UP LOGIN
+include ./layoutComponents/login.pug
+#main_all.body_all
+  include ./layoutComponents/header.pug
+  #dash_container
+    .controle_first_div
+        block controler_first_div
+    .controle_2_div
+        block controle_2_div
+    .controle_3_div
+        block controle_3_div
+
+  button#top_button(title='Go to top') Top
+  // FOOTER
+  include ./layoutComponents/footer.pug

@@ -1,0 +1,135 @@
+extends ./layouts/layoutMain.pug
+
+block content_left
+    .live_counter
+      .counter_numbers
+        p(data-target) 
+      .counter_text
+        p
+          | ACCIDENTS 
+          br
+          | ON THIS DAY
+    // INFO1
+    .info_1_prim
+      .info_1
+        h1 Road Accidents in the U.S.A.
+        p
+          | The United States is one of the busiest countries in terms of
+          | road traffic with nearly 264 million vehicles registered and 218
+          | million drivers holding a valid driving license. The level of
+          | traffic is one of the reasons leading to more traffic accidents:
+          | In 2015, there were some 6.3 million fatal, injury, and property
+          | damage crashes that occurred in the U.S. alone.
+        h2
+          | Accurate statistics about accidents in the last four years
+        .effects
+          .effects_1(title='Charts')
+            svg.chart(viewbox='0 0 500 100')
+              polyline.effect2(fill='none' stroke='#000000' stroke-width='6' points='00,120\
+              20,60\
+              40,80\
+              60,20\
+              80,80\
+              100,80\
+              120,60\
+              140,100\
+              160,90\
+              180,80\
+              200, 110\
+              220, 10\
+              240, 70\
+              260, 100\
+              280, 100\
+              300, 40\
+              320, 0\
+              340, 100\
+              360, 100\
+              380, 120\
+              400, 60\
+              420, 70\
+              440, 80')
+          .effects_2
+            p
+              | We provide statistics on a dataset that has been collected
+              | in real-time, using multiple Traffic APIs. This dataset
+              | contains accident data that are collected from February 2016
+              | to December 2019 for the Contiguous United States.
+            a.read_more_dataset(href='https://smoosavi.org/datasets/us_accidents' target='_blank') Read more about dataset
+block content_right
+  .news
+    p NEWS
+  ul.news_list
+    li#news1.news_type_1
+      span.bullet 1 
+      | News 1
+    li#news2.news_type_2
+      span.bullet 2 
+      | News 2
+    li#news3.news_type_1
+      span.bullet 3 
+      | News 1
+    li#news4.news_type_2
+      span.bullet 4 
+      | News 2
+    li#news5.news_type_1
+      span.bullet 5 
+      | News 1
+    li#news6.news_type_2
+      span.bullet 6 
+      | News 2
+
+block content_right_main_phone
+  .right_main_phone
+    .news_button
+      a#news_pop(href='#') NEWS
+
+block pop_up_news
+  .pop_up_news
+      .inside_news_pop
+        .close_news +
+        .content_news_pop
+          ul.news_list
+            li#newss1.news_type_1
+              span.bullet 1 
+              | News 1
+            li#newss2.news_type_2
+              span.bullet 2 
+              | News 2
+            li#newss3.news_type_1
+              span.bullet 3 
+              | News 1
+            li#newss4.news_type_2
+              span.bullet 4 
+              | News 2
+            li#newss5.news_type_1
+              span.bullet 5 
+              | News 1
+            li#newss6.news_type_2
+              span.bullet 6 
+              | News 2
+
+block content_bottom
+  .info_2_prim
+    .topics
+      .topics_1
+        h1 Taboo Subjects
+      .topics_2
+        .topic1
+          h2 Child Safety
+          p
+            | After spending years protecting your childr
+            | en from all sorts of dangers on the road and off, you now face the prospect of handing them the keys to the family car.
+          i.more_info READ MORE
+        .topic2
+          h2 Teen Driving
+          p
+            | After spending years protecting your children from all sorts of dangers on the road and off, you now face the prospect of handing them the keys to the family car.
+          i.more_info READ MORE
+        .topic3
+          h2 Text and drive
+          p
+            | After spending years protecting your children from all sorts of dangers on the road and off, you now face the prospect of handing them the keys to the family car.
+          i.more_info READ MORE
+
+
+      
