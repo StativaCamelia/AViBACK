@@ -1,4 +1,4 @@
-const axios = require("axios");
+const fetch = require("node-fetch");
 const { chartPage } = require("../views/index");
 
 class ChartController {
@@ -8,21 +8,19 @@ class ChartController {
 
   async getChartPage(req, res) {
     try {
-
-      let statesValues, countiesValues, citiesValues, streetsValues, timezoneValues;
-      await axios({
-        url: "http://localhost:5004/accidents/location",
-        method: "get"
+      let result = await fetch("http://localhost:5004/accidents/location", {
+        method: "get",
       }).then((response) => {
-
-        statesValues = response.data.content.statesValues;
-        countiesValues = response.data.content.countiesValues;
-        citiesValues = response.data.content.citiesValues;
-        streetsValues = response.data.content.streetsValues;
-        timezoneValues = response.data.content.timezoneValues;
+        return response.json();
       }).catch((error) => {
         console.log(error)
       });
+
+      const statesValues = result.content.statesValues;
+      const countiesValues = result.content.countiesValues;
+      const citiesValues = result.content.citiesValues;
+      const streetsValues = result.content.streetsValues;
+      const timezoneValues = result.content.timezoneValues;
 
       // if(Object.keys(req.queryStringObject).length !== 0){
       //   let parsedQueryString = req.queryStringObject;
