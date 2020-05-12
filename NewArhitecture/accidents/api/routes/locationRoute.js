@@ -3,7 +3,12 @@ const { locationController } = require("../../controllers/index");
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
     const { content } = data;
-    res.writeHead(200, "Content-type: application/json");
+    res.writeHead(200, {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
+      "Access-Control-Allow-Headers": "auth-token, Content-Type",
+    });
     res.write(JSON.stringify({ content }, null, 2));
     res.end();
   } else {
@@ -17,7 +22,16 @@ function sendAnswer(success, data, res, statusCode = 200) {
 
 exports.getRes = async (req, res) => {
   const { path, fullPath, method, body, queryStringObject: query } = req;
-
+  if (method === "options") {
+    res.writeHead(200, {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
+      "Access-Control-Request-Headers": "X-PINGOTHER, Content-Type",
+      "Access-Control-Allow-Headers": "auth-token, Content-Type",
+    });
+    res.end();
+    return;
+  }
   if (path.endsWith("/city") && method === "get") {
     try {
       const payload = { body, query };
@@ -65,10 +79,7 @@ exports.getRes = async (req, res) => {
   }
   if (path.endsWith("location") && method === "get") {
     try {
-      const payload = { body, query };
-      const { success, data } = await locationController.getAllLocations(
-        payload
-      );
+      const { success, data } = await locationController.getAllLocations();
       sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

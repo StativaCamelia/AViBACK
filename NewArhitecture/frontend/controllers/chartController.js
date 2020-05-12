@@ -1,13 +1,14 @@
 const axios = require("axios");
-const { mapPage } = require("../views/index");
+const { chartPage } = require("../views/index");
 
-class MapController {
+class ChartController {
   constructor(database) {
     this.database = database;
   }
 
-  async getMapPage(req, res) {
+  async getChartPage(req, res) {
     try {
+
       let statesValues, countiesValues, citiesValues, streetsValues, timezoneValues;
       await axios({
         url: "http://localhost:5004/accidents/location",
@@ -23,33 +24,26 @@ class MapController {
         console.log(error)
       });
 
-      if (Object.keys(req.queryStringObject).length !== 0) {
-        let parsedQueryString = req.queryStringObject;
-        // if (parsedQueryString.State) {
-        //   parsedQueryString.State = await this.database.State.getAbbrByName(
-        //     parsedQueryString.State
-        //   );
-        // }
-        // if (parsedQueryString.Start_Time) {
-        //   if (parsedQueryString.Start_Time.length > 2) {
-        //     parsedQueryString.Start_Time = parsedQueryString.Start_Time.replace(
-        //       "T",
-        //       " "
-        //     );
-        //   }
-        //   parsedQueryString.Start_Time = parsedQueryString.Start_Time + ":";
-        //   parsedQueryString.Start_Time = {
-        //     $regex: parsedQueryString.Start_Time,
-        //     $options: "i",
-        //   };
-        // }
-
-        // console.log(parsedQueryString);
-        // const countResults = await this.database.Accident.getAccidentsCount(
-        //   parsedQueryString
-        // );
-        // console.log(countResults);
-      }
+      // if(Object.keys(req.queryStringObject).length !== 0){
+      //   let parsedQueryString = req.queryStringObject;
+      //   if(parsedQueryString.State){
+      //     parsedQueryString.State = await this.database.State.getAbbrByName(
+      //         parsedQueryString.State
+      //     );
+      //   }
+      //   if(parsedQueryString.Start_Time){
+      //     if(parsedQueryString.Start_Time.length > 2){
+      //       parsedQueryString.Start_Time = parsedQueryString.Start_Time.replace("T"," ");
+      //     }
+      //     parsedQueryString.Start_Time = parsedQueryString.Start_Time + ":";
+      //     parsedQueryString.Start_Time = { "$regex" : parsedQueryString.Start_Time, "$options" : "i" };
+      //   }
+      //
+      //   console.log(parsedQueryString)
+      //   const countResults = await this.database.Accident.getAccidentsCount(parsedQueryString);
+      //   console.log(countResults)
+      //
+      // }
 
 
       let numbersValues = [];
@@ -206,9 +200,8 @@ class MapController {
         "WSW",
         "West",
       ];
-      const ids = ["", "", "active", "", ""];
-
-      const { content, contentType } = mapPage.getMapPage(
+      const ids = ["", "", "", "", "active"];
+      const { content, contentType } = chartPage.getChartPage(
         statesValues,
         countiesValues,
         citiesValues,
@@ -227,4 +220,4 @@ class MapController {
   }
 }
 
-module.exports = MapController;
+module.exports = ChartController;

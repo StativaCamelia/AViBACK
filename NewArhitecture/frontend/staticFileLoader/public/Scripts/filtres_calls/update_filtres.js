@@ -40,11 +40,11 @@ document.addEventListener("DOMContentLoaded", function updateCounties(event) {
     console.log(selection);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
+      if (this.readyState === 4 && this.status === 200) {
         change_options(location_entities[sub_selection], this.responseText);
       }
     };
-    url =
+    url = "http://localhost:5004/accidents/location/" +
       location_entities[sub_selection] +
       "?" +
       location_entities[selection] +
