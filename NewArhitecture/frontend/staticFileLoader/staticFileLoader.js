@@ -17,7 +17,6 @@ class StaticFileLoader {
     try {
       const { path } = req;
       const filePath = pathUtils.join(__dirname, "public", path);
-      console.log(filePath);
       const content = await this.getFileContent(filePath);
       const contentType = this.getContentType(path);
 

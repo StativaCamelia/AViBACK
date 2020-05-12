@@ -17,12 +17,4 @@ function sendAnswer(success, data, res, statusCode = 200) {
 
 exports.getRes = async (req, res) => {
   const { path, fullPath, method, body, queryStringObject: query } = req;
-  if (path.endsWith("/news") && method === "get") {
-    try {
-      const { success, data } = await newsController.getAccidentsDetails();
-      sendAnswer(success, data, res);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 };

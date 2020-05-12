@@ -1,7 +1,3 @@
-const HomeController = require("./frontendControllers/homeController.js");
-const ContactController = require("./frontendControllers/contactController.js");
-const ChartController = require("./frontendControllers/chartController");
-const StaticFilesController = require("./frontendControllers/staticFilesController");
 const AccidentController = require("./accidentController.js");
 const MapController = require("./frontendControllers/mapController");
 const FiltresController = require("./filtresController");
@@ -9,9 +5,6 @@ const CountyController = require("./locationControllers/countyController");
 const CityController = require("./locationControllers/cityController");
 const StreetController = require("./locationControllers/streetController");
 const StateController = require("./locationControllers/stateController");
-const PieController = require("./frontendControllers/pieController");
-const ProfileController = require("./frontendControllers/profileController");
-const CounterController = require("./homePage/counterController");
 const DashboardController = require("./frontendControllers/dashboardController");
 const UserController = require("./userController");
 const NewsController = require("./homePage/newsController");

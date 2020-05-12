@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", function updateCounter(event) {
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         const { content } = JSON.parse(this.responseText);
-        counter.setAttribute("data-target", content.number);
+        counter.setAttribute("data-target", content);
         counterInc();
       }
     };
-    url = "counter";
+    url = "http://localhost:5004/accidents/byDate";
     xhttp.open("GET", url, true);
     xhttp.send();
   }

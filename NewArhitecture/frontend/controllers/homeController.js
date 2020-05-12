@@ -6,7 +6,6 @@ class HomeController {
 
   getHomePage(req, res) {
     try {
-      console.log("Here Home");
       const ids = ["active", "", "", "", ""];
       const { content, contentType } = homePage.getPage(ids);
       return { success: true, data: { content, contentType } };

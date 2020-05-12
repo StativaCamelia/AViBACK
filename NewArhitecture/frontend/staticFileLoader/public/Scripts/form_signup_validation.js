@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded",function () {
+document.addEventListener("DOMContentLoaded", function () {
   const formSignup = document.getElementById("form_signup");
   const email = document.getElementById("email");
   const usernameSignup = document.getElementById("username_signup");
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded",function () {
     verifPassword(passwordSignup.value);
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open("post", "http://localhost:5001/user/register", true);
+    xhttp.open("post", "http://localhost:5003/user/register", true);
     xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
     const values = {
       email: email.value,
@@ -56,9 +56,12 @@ document.addEventListener("DOMContentLoaded",function () {
     };
     xhttp.send(JSON.stringify(values));
     xhttp.onreadystatechange = function () {
-      if (this.readyState === 4 && (this.status === 200 || this.status === 400)) {
+      if (
+        this.readyState === 4 &&
+        (this.status === 200 || this.status === 400)
+      ) {
         document.getElementById(
-            "register_response"
+          "register_response"
         ).innerText = this.responseText;
       }
     };
@@ -97,7 +100,10 @@ document.addEventListener("DOMContentLoaded",function () {
       setErrorFor(usernameSignup, "Username cannot be blank!");
     } else {
       if (usernameValue.length <= 5) {
-        setErrorFor(usernameSignup, "Username must have at least 6 characters!");
+        setErrorFor(
+          usernameSignup,
+          "Username must have at least 6 characters!"
+        );
       } else {
         setSuccessFor(usernameSignup);
       }
@@ -117,7 +123,10 @@ document.addEventListener("DOMContentLoaded",function () {
       setErrorFor(passwordSignup, "Password cannot be blank!");
     } else {
       if (passwordValue.length < 6) {
-        setErrorFor(passwordSignup, "Password must have at least 6 characters!");
+        setErrorFor(
+          passwordSignup,
+          "Password must have at least 6 characters!"
+        );
       } else {
         setSuccessFor(passwordSignup);
       }
@@ -128,7 +137,8 @@ document.addEventListener("DOMContentLoaded",function () {
     if (input === usernameSignup)
       smallSignup = smallUserSignup.querySelector("small");
     else {
-      if (input === email) smallSignup = smallEmailSignup.querySelector("small");
+      if (input === email)
+        smallSignup = smallEmailSignup.querySelector("small");
       else smallSignup = smallPassSignup.querySelector("small");
     }
 

@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded",function () {
+document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("form_login");
   const username = document.getElementById("username");
   const password = document.getElementById("password");
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded",function () {
     verifUsernameLogin(username.value);
     verifPasswordLogin(password.value);
     let xhttp = new XMLHttpRequest();
-    xhttp.open("post", "http://localhost:5001/user/login", true);
+    xhttp.open("post", "http://localhost:5003/user/login", true);
     xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
     const values = {
       username: username.value,
@@ -46,7 +46,9 @@ document.addEventListener("DOMContentLoaded",function () {
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         if (this.status === 400) {
-          document.getElementById("login_response").innerText = this.responseText;
+          document.getElementById(
+            "login_response"
+          ).innerText = this.responseText;
         } else {
           if (this.status === 200) {
             let response = this.responseText;
@@ -119,5 +121,4 @@ document.addEventListener("DOMContentLoaded",function () {
 
     input.className = "success";
   }
-
 });

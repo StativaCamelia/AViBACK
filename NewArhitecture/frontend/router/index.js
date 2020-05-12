@@ -3,7 +3,6 @@ const {
   dashboardRoute,
   homeRoute,
   contactRoute,
-  accidentRoute,
   mapRoute,
   pieRoute,
   profileRoute,
