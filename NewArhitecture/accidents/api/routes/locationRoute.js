@@ -21,7 +21,7 @@ function sendAnswer(success, data, res, statusCode = 200) {
 }
 
 exports.getRes = async (req, res) => {
-  const { path, fullPath, method, body, queryStringObject: query } = req;
+  const { path, method, body, queryStringObject: query } = req;
   if (method === "options") {
     res.writeHead(200, {
       "Access-Control-Allow-Origin": "*",

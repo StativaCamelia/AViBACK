@@ -57,6 +57,8 @@ document.addEventListener("DOMContentLoaded",function () {
         e.preventDefault();
         let filtersValues = {};
         let queryString;
+        //localhost:5001/map?state=....
+        //localhost:5004/accidents?type=map&
         let index = window.location.href.indexOf("?");
         let defaultQuery;
         if(index !== -1){
@@ -280,8 +282,11 @@ document.addEventListener("DOMContentLoaded",function () {
             filtersValues.Pie_Criterion = pieCriteria.value;
             queryString = concatQueryString(defaultQuery,queryString,"Pie_Criterion",pieCriteria.value);
             if(verifFiltersPie(filtersValues) === true){
-                location.href = queryString;//localhost:5001/map/accidents/?
-
+                location.href = queryString;
+                //xhttp get url=querystring
+                //this.responseText...
+                //pie id-ul svg..
+                //map
             }
         }else{
             if(verifFilters(filtersValues) === true){

@@ -23,6 +23,7 @@ class MapController {
         console.log(error)
       });
 
+      //asta vine in accidents...
       if (Object.keys(req.queryStringObject).length !== 0) {
         let parsedQueryString = req.queryStringObject;
         // if (parsedQueryString.State) {

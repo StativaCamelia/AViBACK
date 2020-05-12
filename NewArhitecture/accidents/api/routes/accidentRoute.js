@@ -38,7 +38,7 @@ exports.getRes = async (req, res) => {
   if (
     path.endsWith("accidents") &&
     method === "delete" &&
-    Object.keys(queryStringObject).length == 0
+    Object.keys(queryStringObject).length === 0
   ) {
     try {
       const auth = await authorization.getAuth(req);
