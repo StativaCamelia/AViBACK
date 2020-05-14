@@ -10,47 +10,19 @@ class MapController {
     try {
       let result = await fetch("http://localhost:5004/accidents/location", {
         method: "get",
-      }).then((response) => {
-        return response.json();
-      }).catch((error) => {
-        console.log(error)
-      });
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
       const statesValues = result.content.statesValues;
       const countiesValues = result.content.countiesValues;
       const citiesValues = result.content.citiesValues;
       const streetsValues = result.content.streetsValues;
       const timezoneValues = result.content.timezoneValues;
-
-      //asta vine in accidents...
-     // if (Object.keys(req.queryStringObject).length !== 0) {
-        //let parsedQueryString = req.queryStringObject;
-        // if (parsedQueryString.State) {
-        //   parsedQueryString.State = await this.database.State.getAbbrByName(
-        //     parsedQueryString.State
-        //   );
-        // }
-        // if (parsedQueryString.Start_Time) {
-        //   if (parsedQueryString.Start_Time.length > 2) {
-        //     parsedQueryString.Start_Time = parsedQueryString.Start_Time.replace(
-        //       "T",
-        //       " "
-        //     );
-        //   }
-        //   parsedQueryString.Start_Time = parsedQueryString.Start_Time + ":";
-        //   parsedQueryString.Start_Time = {
-        //     $regex: parsedQueryString.Start_Time,
-        //     $options: "i",
-        //   };
-        // }
-
-        // console.log(parsedQueryString);
-        // const countResults = await this.database.Accident.getAccidentsCount(
-        //   parsedQueryString
-        // );
-        // console.log(countResults);
-      //}
-
       let numbersValues = [];
       for (var i = 0; i < 9997; i = i + 10) {
         numbersValues.push(i.toString());

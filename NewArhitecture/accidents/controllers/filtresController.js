@@ -4,6 +4,36 @@ class FiltresController {
     this.service = service;
   }
 
+  async editFiltres(query) {
+    if (Object.keys(query).length !== 0) {
+      let parsedQueryString = query;
+      if (parsedQueryString.State) {
+        parsedQueryString.State = await this.database.State.getAbbrByName(
+          parsedQueryString.State
+        );
+      }
+      if (parsedQueryString.Start_Time) {
+        if (parsedQueryString.Start_Time.length > 2) {
+          parsedQueryString.Start_Time = parsedQueryString.Start_Time.replace(
+            "T",
+            " "
+          );
+        }
+        parsedQueryString.Start_Time = parsedQueryString.Start_Time + ":";
+        parsedQueryString.Start_Time = {
+          $regex: parsedQueryString.Start_Time,
+          $options: "i",
+        };
+      }
+
+      console.log(parsedQueryString);
+      const countResults = await this.database.Accident.getAccidentsCount(
+        parsedQueryString
+      );
+      return parsedQueryString;
+    }
+  }
+
   async createFilterDatabase() {
     try {
       const states = await this.database.Accident.getAllStatesEntities();

@@ -1,5 +1,5 @@
 const { accidentController } = require("../../controllers/index");
-const authorization = require("../middleware/authorization");
+const { filtresController } = require("../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
   if (success) {
@@ -132,7 +132,6 @@ exports.getRes = async (req, res) => {
     //DELETE Accident by ID(from the original database, not our ID)
   } else if (path.endsWith("accidents") && method === "delete") {
     try {
-      const auth = await authorization.getAuth(req);
       if (auth.succes) {
         const { accidentId } = queryStringObject;
         const { success, data } = await accidentController.deleteAccident({
@@ -153,18 +152,13 @@ exports.getRes = async (req, res) => {
     }
   } else if (path.endsWith("accidents") && method === "get") {
     try {
-      const auth = await authorization.getAuth(req);
-      if (auth.succes) {
-        const {
-          success,
-          data,
-        } = await accidentController.getNumberOfAccidentsByQueryAndGroupBy({
-          queryStringObject,
-        });
-        sendAnswer(success, data, res);
-      } else {
-        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
-      }
+      console.log(queryStringObject);
+      const query = await filtresController.editFiltres(queryStringObject);
+      console.log(query);
+      const { success, data } = await accidentController.getData({
+        query,
+      });
+      sendAnswer(success, data, res);
     } catch (error) {
       sendAnswer(
         false,

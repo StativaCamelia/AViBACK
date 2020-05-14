@@ -4,6 +4,21 @@ class AccidentController {
     this.service = service;
   }
 
+  async getData(query) {
+    try {
+      if (query.Type === "map") {
+        console.log("Fa map");
+      } else if (query.Type === "pie") {
+        console.log("Fa pie");
+      } else if (query.Type === "chart") {
+        console.log("Fa chart");
+      }
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
   async getDailyAccidents() {
     try {
       const content = await this.database.Accident.getNumberOfAccidents();

@@ -1202,7 +1202,7 @@
     .road_select_col {
         display: flex;
         flex-direction: column;
-        width: 35%;
+        width: auto;
         justify-content: center;
         flex-grow: 3;
     }
@@ -1213,6 +1213,7 @@
         flex-direction: row;
         width: 100%;
         align-items: center;
+        margin: 2vh 0 2vh 0;
     }
 
     .road_option,
@@ -1287,6 +1288,12 @@
         cursor: pointer;
     }
 
+    h2#filter_message{
+        font-family: Novecentosanswide;
+        font-size: 1rem;
+        color: red;
+    }
+
     option {
         width: 100%;
         border-radius: 3px;
@@ -1311,6 +1318,7 @@
     .slider_container_1 {
         display: flex;
         flex-direction: column;
+        width: 12vw;
     }
 
     .slider_container_2 {
@@ -1327,12 +1335,12 @@
         list-style-type: none;
         display: flex;
         flex-direction: row;
-        padding-left: 2vw;
+        padding-left: 3vw;
         padding-top: 0px;
     }
 
     .slider_container_1>ul li {
-        width: 10%;
+        width: 15%;
         margin-right: 25%;
         margin-left: 0px;
         font-size: small;
