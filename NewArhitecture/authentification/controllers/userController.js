@@ -21,7 +21,7 @@ class UserController {
     const users = response.data.content;
     for (let user of users) {
       for (let field in content) {
-        if (user.criteria != undefined && user.valueOfCriteria != undefined) {
+        if (user.criteria !== undefined && user.valueOfCriteria !== undefined) {
           if (user.criteria === field)
             if (user.valueOfCriteria === content[field]) {
               const objectOfInterest = content[field];
@@ -177,6 +177,7 @@ class UserController {
           user.password = await user.hashPassword();
           try {
             const savedUser = await user.save();
+            console.log(savedUser)
             message =
               "Succesfully registered! Please sign in and set your profile!";
             return {
@@ -184,9 +185,10 @@ class UserController {
               content: { message },
             };
           } catch (err) {
+            console.log(err)
             message = "Undefined";
             return {
-              statusCode: 400,
+              statusCode: 401,
               content: { message },
             };
           }

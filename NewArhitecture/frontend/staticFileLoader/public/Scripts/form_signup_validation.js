@@ -57,14 +57,17 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.send(JSON.stringify(values));
     xhttp.onreadystatechange = function () {
       if (
-        this.readyState === 4 &&
-        (this.status === 200 || this.status === 400)
+        this.readyState === 4
       ) {
         const response = JSON.parse(this.responseText);
-        console.log(response)
-        document.getElementById(
-          "register_response"
-        ).innerText = response.content.message;
+        if(this.status === 200 || this.status === 400){
+          console.log(response)
+          document.getElementById(
+              "register_response"
+          ).innerText = response.content.message;
+        }else{
+          console.log(response.content.message);
+        }
       }
     };
   });
