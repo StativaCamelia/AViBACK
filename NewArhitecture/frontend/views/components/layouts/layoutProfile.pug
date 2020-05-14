@@ -3,11 +3,8 @@ include ./layoutComponents/headProfile.pug
 #main_all.body_all
   // HEADER
   include ./layoutComponents/header.pug
-  .main
-    .left_main
-      block content_left
-    .right_main
-      block content_right
+  .content
+    block profile_content
   button#top_button(title='Go to top') Top
   // FOOTER
   include ./layoutComponents/footer.pug

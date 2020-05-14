@@ -71,10 +71,10 @@ exports.getRes = async (req, res) => {
       chartRoute.getRes(parsedReq, res);
       return;
     }
-    // if (parsedReq.path.indexOf("profile") !== -1) {
-    //   profileRoute.getRes(req, parsedReq, res);
-    //   return;
-    // }
+    if (parsedReq.path.indexOf("profile") !== -1) {
+      profileRoute.getRes(req, parsedReq, res);
+      return;
+    }
     if (parsedReq.path.indexOf("dashboard") !== -1) {
       dashboardRoute.getRes(parsedReq, res);
       return;
