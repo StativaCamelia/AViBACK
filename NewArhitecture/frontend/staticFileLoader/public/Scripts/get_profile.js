@@ -9,8 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (this.readyState === 4) {
       let profileLog = document.getElementById("button");
       if (this.status === 200 || this.status === 400 || this.status === 401) {
-        const values = JSON.parse(this.responseText);
-        console.log(values.value);
+        const response = JSON.parse(this.responseText);
+        console.log(response)
+        const values = response.content.values;
         profileLog.innerText = values.value;
         profileLog.id = values.id;
         profileLog.href = values.href;

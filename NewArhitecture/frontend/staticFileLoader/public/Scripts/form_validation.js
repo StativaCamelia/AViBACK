@@ -45,15 +45,16 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.send(JSON.stringify(values));
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
+        const response = JSON.parse(this.responseText);
         if (this.status === 400) {
           document.getElementById(
             "login_response"
-          ).innerText = this.responseText;
+          ).innerText = response.content.message;
         } else {
           if (this.status === 200) {
             let response = this.responseText;
             response = JSON.parse(response);
-            localStorage.setItem("auth-token", response.token);
+            localStorage.setItem("auth-token", response.content.userObj.token);
             let locationReq = window.location.href;
             location.href = locationReq.substring(0, locationReq.length - 1);
           }

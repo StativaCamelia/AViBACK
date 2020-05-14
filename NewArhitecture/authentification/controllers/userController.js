@@ -154,44 +154,40 @@ class UserController {
       username: body.username,
       password: body.password,
     });
-    const message = user.validateUserRegister();
+    let message = user.validateUserRegister();
     if (message !== "") {
-      return { statusCode: 400, contentType: "text/html", content: message };
+      return { statusCode: 400, contentType: "text/html", content: { message } };
     } else {
-      const existedEmail = await this.database.User.existEmail(user.email);
-      if (existedEmail) {
+      message = await this.database.User.existEmail(user.email);
+      if (message) {
         return {
           statusCode: 400,
-          contentType: "text/html",
-          content: existedEmail,
+          content: { message },
         };
       } else {
-        const existedUsername = await this.database.User.existUsername(
+        message = await this.database.User.existUsername(
           user.username
         );
-        if (existedUsername) {
+        if (message) {
           return {
             statusCode: 400,
-            contentType: "text/html",
-            content: existedUsername,
+            content: { message },
           };
         } else {
           user.password = await user.hashPassword();
           try {
             const savedUser = await user.save();
-            const registerResponse =
+            message =
               "Succesfully registered! Please sign in and set your profile!";
             return {
               statusCode: 200,
-              contentType: "text/html",
-              content: registerResponse,
+              content: { message },
             };
           } catch (err) {
-            const registerErr = "Undefined";
+            message = "Undefined";
             return {
-              statusCode: 401,
-              contentType: "text/html",
-              content: registerErr,
+              statusCode: 400,
+              content: { message },
             };
           }
         }
@@ -205,34 +201,34 @@ class UserController {
       username: body.username,
       password: body.password,
     });
-    const message = user.validateUserLogin();
+    let message = user.validateUserLogin();
     if (message !== "") {
-      return { statusCode: 400, contentType: "text/html", content: message };
+      return { statusCode: 400, content: { message } };
     } else {
-      const existedUser = await this.database.User.existUser(
+      message = await this.database.User.existUser(
         user.username,
         user.password
       );
-      if (existedUser === "Invalid username or password!") {
+      if (message === "Invalid username or password!") {
         return {
           statusCode: 400,
-          contentType: "text/html",
-          content: existedUser,
+          content: { message },
         };
       } else {
         const userObj = {
-          token: existedUser,
+          token: message,
         };
         const { username } = body;
         const user = await this.database.User.findOne({ username: username });
-        user.auth_tokens.push(existedUser);
+        user.auth_tokens.push(message);
         user.save();
-        return { statusCode: 200, contentType: "text/html", content: userObj };
+        return { statusCode: 200, content: { userObj } };
       }
     }
   }
 
   async handlerGetLogin(req, res) {
+    let values = {};
     if (req.headers["auth-token"]) {
       try {
         const verified = jwt.verify(
@@ -241,7 +237,6 @@ class UserController {
         );
         const token = { auth_token: req.headers["auth-token"] };
         const isAdmin = await this.verifyAdmin(token);
-        let values = {};
         if (isAdmin.success) {
           values = {
             id: "dashboard",
@@ -252,29 +247,28 @@ class UserController {
           values = {
             id: "profile",
             value: "MY PROFILE",
-            href: "http://localhost:5001/profile",
+            href: "http://localhost:5002/profile",
           };
         }
-        return { statusCode: 200, contentType: "text/html", content: values };
+        return { statusCode: 200, content: { values } };
       } catch (err) {
-        const valuesLog = {
+        values = {
           id: "button",
           value: "LOGIN",
           href: "#",
         };
         return {
           statusCode: 400,
-          contentType: "text/html",
-          content: valuesLog,
+          content: { values} ,
         };
       }
     } else {
-      const valuesLog = {
+      values = {
         id: "button",
         value: "LOGIN",
         href: "#",
       };
-      return { statusCode: 200, contentType: "text/html", content: valuesLog };
+      return { statusCode: 200, content: { values } };
     }
   }
 }

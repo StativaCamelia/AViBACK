@@ -8,7 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (this.readyState === 4) {
       let profileLog = document.getElementById("button");
       if (this.status === 200 || this.status === 400 || this.status === 401) {
-        const values = JSON.parse(this.responseText);
+        const response = JSON.parse(this.responseText);
+        const values = response.content.values;
+        console.log(response)
+        console.log(values)
         profileLog.innerText = values.value;
         profileLog.id = values.id;
         profileLog.href = values.href;
@@ -16,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.status === 400) {
         alert("Authentification error!");
       }
-      if (profileLog.id != "button") {
+      if (profileLog.id !== "button") {
         profileLog.removeEventListener("click", loginListener);
       }
     }

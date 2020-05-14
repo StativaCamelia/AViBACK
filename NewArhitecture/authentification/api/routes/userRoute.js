@@ -1,48 +1,48 @@
 const { userController } = require("../../controllers/index");
 const authorization = require("../middleware/authorization");
 
-function sendAnswer(statusCode, contentType, content, res, handler) {
+function sendAnswer(statusCode, content, res, handler) {
   if (handler === "register") {
     res.writeHead(statusCode, {
-      "Content-Type": contentType,
+      "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
       "Access-Control-Allow-Headers": "auth-token, Content-Type",
     });
-    res.write(content);
+    res.write(JSON.stringify({ content }, null, 2));
     res.end();
   }
   if (handler === "loginPost") {
     if (statusCode === 200) {
-      res.setHeader("auth-token", content.token);
+      res.setHeader("auth-token", content.userObj.token);
       res.writeHead(statusCode, {
-        "Content-Type": contentType,
+        "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods":
           "POST, GET, OPTIONS, PATCH, PUT, DELETE",
         "Access-Control-Allow-Headers": "auth-token, Content-Type",
       });
-      res.write(JSON.stringify(content));
+      res.write(JSON.stringify({ content }, null, 2));
     } else {
       res.writeHead(statusCode, {
-        "Content-Type": contentType,
+        "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods":
           "POST, GET, OPTIONS, PATCH, PUT, DELETE",
         "Access-Control-Allow-Headers": "auth-token, Content-Type",
       });
-      res.write(content);
+      res.write(JSON.stringify({ content }, null, 2));
     }
     res.end();
   }
   if (handler === "loginGet") {
     res.writeHead(statusCode, {
-      "Content-Type": contentType,
+      "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
       "Access-Control-Allow-Headers": "auth-token, Content-Type",
     });
-    res.write(JSON.stringify(content));
+    res.write(JSON.stringify({ content }, null, 2));
     res.end();
   }
 }
@@ -78,10 +78,9 @@ exports.getRes = async (req, parsedReq, res) => {
     try {
       const {
         statusCode,
-        contentType,
         content,
       } = await userController.handlerPostLogin(parsedReq, res);
-      sendAnswer(statusCode, contentType, content, res, "loginPost");
+      sendAnswer(statusCode, content, res, "loginPost");
     } catch (error) {
       console.log(error);
     }
@@ -90,10 +89,9 @@ exports.getRes = async (req, parsedReq, res) => {
       try {
         const {
           statusCode,
-          contentType,
           content,
         } = await userController.handlerGetLogin(req, res);
-        sendAnswer(statusCode, contentType, content, res, "loginGet");
+        sendAnswer(statusCode, content, res, "loginGet");
       } catch (error) {
         console.log(error);
       }
@@ -103,10 +101,9 @@ exports.getRes = async (req, parsedReq, res) => {
     try {
       const {
         statusCode,
-        contentType,
         content,
       } = await userController.handlerPostRegister(parsedReq, res);
-      sendAnswer(statusCode, contentType, content, res, "register");
+      sendAnswer(statusCode, content, res, "register");
     } catch (error) {
       console.log(error);
     }
@@ -114,7 +111,7 @@ exports.getRes = async (req, parsedReq, res) => {
   if (
     path.endsWith("/user") &&
     method === "delete" &&
-    Object.keys(queryStringObject).length == 0
+    Object.keys(queryStringObject).length === 0
   ) {
     try {
       const auth = await authorization.getAuth(req);
@@ -140,7 +137,7 @@ exports.getRes = async (req, parsedReq, res) => {
   } else if (
     path.endsWith("user") &&
     method === "get" &&
-    Object.keys(queryStringObject).length == 0
+    Object.keys(queryStringObject).length === 0
   ) {
     try {
       const auth = await authorization.getAuth(req);

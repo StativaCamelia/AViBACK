@@ -60,9 +60,11 @@ document.addEventListener("DOMContentLoaded", function () {
         this.readyState === 4 &&
         (this.status === 200 || this.status === 400)
       ) {
+        const response = JSON.parse(this.responseText);
+        console.log(response)
         document.getElementById(
           "register_response"
-        ).innerText = this.responseText;
+        ).innerText = response.content.message;
       }
     };
   });
