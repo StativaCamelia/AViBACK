@@ -13,7 +13,11 @@ class AccidentController {
       } else if (query.Type === "chart") {
         console.log("Fa chart");
       }
+<<<<<<< HEAD
       let content = "Buna";
+=======
+      const content = "abc"
+>>>>>>> 437f5dba67a96cedced6cb2bfaebb28f218a3ca7
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
