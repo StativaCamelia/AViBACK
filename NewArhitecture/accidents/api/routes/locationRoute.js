@@ -1,24 +1,5 @@
 const { locationController } = require("../../controllers/index");
-
-function sendAnswer(success, data, res, statusCode = 200) {
-  if (success) {
-    const { content } = data;
-    res.writeHead(200, {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
-      "Access-Control-Allow-Headers": "auth-token, Content-Type",
-    });
-    res.write(JSON.stringify({ content }, null, 2));
-    res.end();
-  } else {
-    const { error } = data;
-    console.log(error);
-    res.writeHead(400);
-    res.write(error.message);
-    res.end();
-  }
-}
+const { utils } = require("../../utils/index");
 
 exports.getRes = async (req, res) => {
   const { path, method, body, queryStringObject: query } = req;
@@ -38,7 +19,7 @@ exports.getRes = async (req, res) => {
       const { success, data } = await locationController.getCitiesByQuery(
         payload
       );
-      sendAnswer(success, data, res);
+      utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +31,7 @@ exports.getRes = async (req, res) => {
       const { success, data } = await locationController.getCountiesByQuery(
         payload
       );
-      sendAnswer(success, data, res);
+      utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +42,7 @@ exports.getRes = async (req, res) => {
       const { success, data } = await locationController.getStateByQuery(
         payload
       );
-      sendAnswer(success, data, res);
+      utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +53,7 @@ exports.getRes = async (req, res) => {
       const { success, data } = await locationController.getStreetsByQuery(
         payload
       );
-      sendAnswer(success, data, res);
+      utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
     }
@@ -80,7 +61,7 @@ exports.getRes = async (req, res) => {
   if (path.endsWith("location") && method === "get") {
     try {
       const { success, data } = await locationController.getAllLocations();
-      sendAnswer(success, data, res);
+      utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
     }

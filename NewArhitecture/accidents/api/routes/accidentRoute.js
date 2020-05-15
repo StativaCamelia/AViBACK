@@ -1,30 +1,9 @@
 const { accidentController } = require("../../controllers/index");
 const { filtresController } = require("../../controllers/index");
-
-function sendAnswer(success, data, res, statusCode = 200) {
-  if (success) {
-    const { content } = data;
-    res.writeHead(200, {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
-      "Access-Control-Allow-Headers": "auth-token, Content-Type",
-    });
-    res.write(JSON.stringify({ content }, null, 2));
-    res.end();
-  } else {
-    const { error } = data;
-    console.log(error);
-    console.log(error);
-    res.writeHead(401);
-    res.write(error.message);
-    res.end();
-  }
-}
+const { utils } = require("../../utils/index");
 
 exports.getRes = async (req, res) => {
   const { fullPath, path, method, body, queryStringObject } = req;
-  //DELETE All Accidents
   if (method === "options") {
     res.writeHead(200, {
       "Access-Control-Allow-Origin": "*",
@@ -41,15 +20,14 @@ exports.getRes = async (req, res) => {
     Object.keys(queryStringObject).length === 0
   ) {
     try {
-      const auth = await authorization.getAuth(req);
       if (auth.succes) {
         const { success, data } = await accidentController.deleteAllAccidents();
-        sendAnswer(success, data, res);
+        utils.sendAnswer(success, data, res);
       } else {
-        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+        utils.sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
       }
     } catch (error) {
-      sendAnswer(
+      utils.sendAnswer(
         false,
         { error: { message: "Internal Error" } },
         res,
@@ -59,7 +37,7 @@ exports.getRes = async (req, res) => {
   } else if (path.endsWith("filtres") && method === "get") {
     try {
       const { success, data } = await accidentController.createFilterDatabase();
-      sendAnswer(success, data, res);
+      utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
     }
@@ -69,37 +47,39 @@ exports.getRes = async (req, res) => {
     Object.keys(queryStringObject).length == 0
   ) {
     try {
-      const auth = await authorization.getAuth(req);
+      const auth = {};
+      auth.succes = true;
       if (auth.succes) {
         const { success, data } = await accidentController.getAllAccidents();
-        sendAnswer(success, data, res);
+        utils.sendAnswer(success, data, res);
       } else {
-        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+        utils.sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
       }
     } catch (error) {
-      sendAnswer(
+      utils.sendAnswer(
         false,
         { error: { message: "Internal Error" } },
         res,
         (statusCode = 501)
       );
     }
-    //POST(Create) Accident
   } else if (
     path.endsWith("accidents") &&
     method === "post" &&
     Object.keys(queryStringObject).length == 0
   ) {
+    const auth = {};
+    auth.succes = true;
     try {
-      const auth = await authorization.getAuth(req);
       if (auth.succes) {
         const { success, data } = await accidentController.addAccident(body);
-        sendAnswer(success, data, res, (statusCode = 201));
+        utils.sendAnswer(success, data, res, (statusCode = 201));
       } else {
-        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+        utils.sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
       }
     } catch (error) {
-      sendAnswer(
+      console.log(error);
+      utils.sendAnswer(
         false,
         { error: { message: "Internal Error" } },
         res,
@@ -109,7 +89,8 @@ exports.getRes = async (req, res) => {
     //PATCH(Update) Accident data by ID (from the original database not our ID)
   } else if (path.endsWith("accidents") && method === "patch") {
     try {
-      const auth = await authorization.getAuth(req);
+      const auth = {};
+      auth.succes = true;
       if (auth.succes) {
         const { accidentId } = queryStringObject;
         const { success, data } = await accidentController.updateAccident({
@@ -117,12 +98,12 @@ exports.getRes = async (req, res) => {
           accidentId,
           res,
         });
-        sendAnswer(success, data, res);
+        utils.sendAnswer(success, data, res);
       } else {
-        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+        utils.sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
       }
     } catch (error) {
-      sendAnswer(
+      utils.sendAnswer(
         false,
         { error: { message: "Internal Error" } },
         res,
@@ -132,18 +113,19 @@ exports.getRes = async (req, res) => {
     //DELETE Accident by ID(from the original database, not our ID)
   } else if (path.endsWith("accidents") && method === "delete") {
     try {
-      if (auth.succes) {
+      const auth = utils.getAuthorization(req);
+      if (auth) {
         const { accidentId } = queryStringObject;
         const { success, data } = await accidentController.deleteAccident({
           accidentId,
           res,
         });
-        sendAnswer(success, data, res);
+        utils.sendAnswer(success, data, res);
       } else {
-        sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+        utils.sendAnswer(auth, "unauthorized", res, (statusCode = 403));
       }
     } catch (error) {
-      sendAnswer(
+      utils.sendAnswer(
         false,
         { error: { message: "Internal Error" } },
         res,
@@ -158,9 +140,9 @@ exports.getRes = async (req, res) => {
       const { success, data } = await accidentController.getData({
         query,
       });
-      sendAnswer(success, data, res);
+      utils.sendAnswer(success, data, res);
     } catch (error) {
-      sendAnswer(
+      utils.sendAnswer(
         false,
         { error: { message: "Internal Error" } },
         res,
@@ -171,14 +153,14 @@ exports.getRes = async (req, res) => {
     try {
       const { success, data } = await accidentController.getDailyAccidents();
       console.log(data);
-      sendAnswer(success, data, res);
+      utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
     }
   } else if (path.endsWith("byDetails") && method === "get") {
     try {
       const { success, data } = await accidentController.getAccidentsDetails();
-      sendAnswer(success, data, res);
+      utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
     }
