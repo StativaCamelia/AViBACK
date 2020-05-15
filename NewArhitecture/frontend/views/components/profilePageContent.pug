@@ -1,1 +1,26 @@
 extends ./layouts/layoutProfile.pug
+block profile_content
+    .profile_content
+      div
+        h1 Profile
+      .box
+        div Email:
+        p(email='') random@gmail.com
+      .box
+        div Username:
+        p(username='') random
+      .box_criterii
+        select#criterii
+          option(selected='' hidden='') Criteriu
+          option#state(value='state') State
+          option#county(value='county') County
+          option#city(value='city') City
+          option#timezone(value='timezone') Timezone
+        select#optiune
+          option(selected='' hidden='') Optiune
+          option#option1(value='option1') Option1
+          option#option2(value='option2') Option2
+          option#option3(value='option3') Option3
+          option#option4(value='option4') Option4
+      
+

@@ -6,6 +6,7 @@ function isEmail(email) {
 }
 
 module.exports = function (schema) {
+  const errorMessage = "Incorrect data!";
   schema.methods.validateUserRegister = function () {
     let message = "";
     const user = this;
@@ -17,25 +18,25 @@ module.exports = function (schema) {
         user.username.length < 6 &&
         user.password.length < 6
       ) {
-        message = "Incorrect email, username and password!";
+        message = errorMessage;
       } else {
         if (!isEmail(user.email) && user.username.length < 6) {
-          message = "Incorrect email and username!";
+          message = errorMessage;
         } else {
           if (!isEmail(user.email) && user.password.length < 6) {
-            message = "Incorrect email and password!";
+            message = errorMessage;
           } else {
             if (user.username.length < 6 && user.password.length < 6) {
-              message = "Incorrect username and password!";
+              message = errorMessage;
             } else {
               if (!isEmail(user.email)) {
-                message = "Incorrect email!";
+                message = errorMessage;
               } else {
                 if (user.username.length < 6) {
-                  message = "Incorrect username!";
+                  message = errorMessage;
                 } else {
                   if (user.password.length < 6) {
-                    message = "Incorrect password!";
+                    message = errorMessage;
                   }
                 }
               }

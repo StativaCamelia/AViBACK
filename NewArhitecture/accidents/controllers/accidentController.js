@@ -91,7 +91,7 @@ class AccidentController {
     const content = new this.database.Accident(payload);
     try {
       await content.save();
-      this.service.userController.getIntrestedUsers({ content });
+      //this.service.userController.getIntrestedUsers({ content });
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -130,7 +130,7 @@ class AccidentController {
       console.log(newContent);
       const content = await this.database.Accident.findOneAndUpdate(
         {
-          ID: accidentId,
+          _id: accidentId,
         },
         { newContent },
         options

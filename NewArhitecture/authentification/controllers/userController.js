@@ -89,8 +89,7 @@ class UserController {
     }
   }
 
-  async verifyAdmin(token) {
-    const { auth_token } = token;
+  async verifyAdmin(auth_token) {
     try {
       const user = await this.database.User.findByToken(auth_token);
       if (user) {
@@ -156,7 +155,11 @@ class UserController {
     });
     let message = user.validateUserRegister();
     if (message !== "") {
-      return { statusCode: 400, contentType: "text/html", content: { message } };
+      return {
+        statusCode: 400,
+        contentType: "text/html",
+        content: { message },
+      };
     } else {
       message = await this.database.User.existEmail(user.email);
       if (message) {
@@ -165,9 +168,7 @@ class UserController {
           content: { message },
         };
       } else {
-        message = await this.database.User.existUsername(
-          user.username
-        );
+        message = await this.database.User.existUsername(user.username);
         if (message) {
           return {
             statusCode: 400,
@@ -177,7 +178,7 @@ class UserController {
           user.password = await user.hashPassword();
           try {
             const savedUser = await user.save();
-            console.log(savedUser)
+            console.log(savedUser);
             message =
               "Succesfully registered! Please sign in and set your profile!";
             return {
@@ -185,7 +186,7 @@ class UserController {
               content: { message },
             };
           } catch (err) {
-            console.log(err)
+            console.log(err);
             message = "Undefined";
             return {
               statusCode: 400,
@@ -261,7 +262,7 @@ class UserController {
         };
         return {
           statusCode: 400,
-          content: { values} ,
+          content: { values },
         };
       }
     } else {
@@ -271,6 +272,24 @@ class UserController {
         href: "#",
       };
       return { statusCode: 200, content: { values } };
+    }
+  }
+  async getAuth(auth_token) {
+    try {
+      if (auth_token) {
+        const isAdmin = await this.verifyAdmin({ auth_token });
+        if (isAdmin.success) {
+          return { succes: true };
+        } else
+          return {
+            succes: false,
+            data: { error: { message: "unauthorized" } },
+          };
+      } else {
+        return { succes: false, data: { error: { message: "unauthorized" } } };
+      }
+    } catch (error) {
+      throw error;
     }
   }
 }

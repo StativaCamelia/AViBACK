@@ -1,5 +1,4 @@
 const { userController } = require("../../controllers/index");
-const authorization = require("../middleware/authorization");
 
 function sendAnswer(statusCode, content, res, handler) {
   if (handler === "register") {
@@ -50,7 +49,12 @@ function sendAnswer(statusCode, content, res, handler) {
 function sendAnswerAPI(success, data, res, statusCode = 401) {
   if (success) {
     const { content } = data;
-    res.writeHead(200, "Content-type: application/json");
+    res.writeHead(200, {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
+      "Access-Control-Request-Headers": "X-PINGOTHER, Content-Type",
+      "Access-Control-Allow-Headers": "auth-token, Content-Type",
+    });
     res.write(JSON.stringify({ content }, null, 2));
     res.end();
   } else {
@@ -76,10 +80,10 @@ exports.getRes = async (req, parsedReq, res) => {
   }
   if (path.endsWith("/login") && method === "post") {
     try {
-      const {
-        statusCode,
-        content,
-      } = await userController.handlerPostLogin(parsedReq, res);
+      const { statusCode, content } = await userController.handlerPostLogin(
+        parsedReq,
+        res
+      );
       sendAnswer(statusCode, content, res, "loginPost");
     } catch (error) {
       console.log(error);
@@ -87,10 +91,10 @@ exports.getRes = async (req, parsedReq, res) => {
   } else {
     if (path.endsWith("/login") && method === "get") {
       try {
-        const {
-          statusCode,
-          content,
-        } = await userController.handlerGetLogin(req, res);
+        const { statusCode, content } = await userController.handlerGetLogin(
+          req,
+          res
+        );
         sendAnswer(statusCode, content, res, "loginGet");
       } catch (error) {
         console.log(error);
@@ -99,10 +103,10 @@ exports.getRes = async (req, parsedReq, res) => {
   }
   if (path.endsWith("/register") && method === "post") {
     try {
-      const {
-        statusCode,
-        content,
-      } = await userController.handlerPostRegister(parsedReq, res);
+      const { statusCode, content } = await userController.handlerPostRegister(
+        parsedReq,
+        res
+      );
       sendAnswer(statusCode, content, res, "register");
     } catch (error) {
       console.log(error);
@@ -218,16 +222,31 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  else if (path.endsWith("user") && method === "post")
+  else if (path.endsWith("authorization") && method == "get") {
     try {
-      const auth = await authorization.getAuth(req);
+      const { succes, data } = await userController.getAuth(
+        queryStringObject.token
+      );
+      if (succes === true) sendAnswer(success, data, res, (statusCode = 200));
+      else sendAnswer(success, data, res, (statusCode = 403));
+    } catch (error) {
+      sendAnswerAPI(
+        false,
+        { error: { message: "Internal error" } },
+        res,
+        (statusCode = 501)
+      );
+    }
+  } else if (path.endsWith("user") && method === "post")
+    try {
+      const auth = await userController.getAuth(req);
       if (auth.succes) {
         const { userId } = queryStringObject;
         const { success, data } = await userController.createUser({
           userId,
           body,
         });
-        sendAnswerAPI(success, data, res);
+        sendAnswerAPI(success, data, res, (statusCode = 201));
       } else {
         sendAnswerAPI(auth.succes, auth.data, res, (statusCode = 403));
       }

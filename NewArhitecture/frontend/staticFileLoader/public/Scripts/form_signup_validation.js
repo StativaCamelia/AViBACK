@@ -56,16 +56,13 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     xhttp.send(JSON.stringify(values));
     xhttp.onreadystatechange = function () {
-      if (
-        this.readyState === 4
-      ) {
+      if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
-        if(this.status === 200 || this.status === 400){
-          console.log(response)
-          document.getElementById(
-              "register_response"
-          ).innerText = response.content.message;
-        }else{
+        if (this.status === 200 || this.status === 400) {
+          console.log(response.content.message);
+          document.getElementById("register_response").innerText =
+            response.content.message;
+        } else {
           console.log(response.content.message);
         }
       }
