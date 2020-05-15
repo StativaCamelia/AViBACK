@@ -19,12 +19,18 @@ exports.getRes = async (req, res) => {
     method === "delete" &&
     Object.keys(queryStringObject).length === 0
   ) {
+    const auth = await utils.getAuthorization(req);
     try {
       if (auth.succes) {
         const { success, data } = await accidentController.deleteAllAccidents();
         utils.sendAnswer(success, data, res);
       } else {
-        utils.sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+        utils.sendAnswer(
+          auth,
+          { error: { message: "unauthorized" } },
+          res,
+          (statusCode = 403)
+        );
       }
     } catch (error) {
       utils.sendAnswer(
@@ -68,14 +74,18 @@ exports.getRes = async (req, res) => {
     method === "post" &&
     Object.keys(queryStringObject).length == 0
   ) {
-    const auth = {};
-    auth.succes = true;
+    const auth = await utils.getAuthorization(req);
     try {
       if (auth.succes) {
         const { success, data } = await accidentController.addAccident(body);
         utils.sendAnswer(success, data, res, (statusCode = 201));
       } else {
-        utils.sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+        utils.sendAnswer(
+          auth,
+          { error: { message: "unauthorized" } },
+          res,
+          (statusCode = 403)
+        );
       }
     } catch (error) {
       console.log(error);
@@ -89,9 +99,8 @@ exports.getRes = async (req, res) => {
     //PATCH(Update) Accident data by ID (from the original database not our ID)
   } else if (path.endsWith("accidents") && method === "patch") {
     try {
-      const auth = {};
-      auth.succes = true;
-      if (auth.succes) {
+      const auth = await utils.getAuthorization(req);
+      if (auth) {
         const { accidentId } = queryStringObject;
         const { success, data } = await accidentController.updateAccident({
           body,
@@ -100,7 +109,12 @@ exports.getRes = async (req, res) => {
         });
         utils.sendAnswer(success, data, res);
       } else {
-        utils.sendAnswer(auth.succes, auth.data, res, (statusCode = 403));
+        utils.sendAnswer(
+          auth,
+          { error: { message: "unauthorized" } },
+          res,
+          (statusCode = 403)
+        );
       }
     } catch (error) {
       utils.sendAnswer(
@@ -113,7 +127,7 @@ exports.getRes = async (req, res) => {
     //DELETE Accident by ID(from the original database, not our ID)
   } else if (path.endsWith("accidents") && method === "delete") {
     try {
-      const auth = utils.getAuthorization(req);
+      const auth = await utils.getAuthorization(req);
       if (auth) {
         const { accidentId } = queryStringObject;
         const { success, data } = await accidentController.deleteAccident({
@@ -122,7 +136,12 @@ exports.getRes = async (req, res) => {
         });
         utils.sendAnswer(success, data, res);
       } else {
-        utils.sendAnswer(auth, "unauthorized", res, (statusCode = 403));
+        utils.sendAnswer(
+          auth,
+          { error: { message: "unauthorized" } },
+          res,
+          (statusCode = 403)
+        );
       }
     } catch (error) {
       utils.sendAnswer(
@@ -134,9 +153,7 @@ exports.getRes = async (req, res) => {
     }
   } else if (path.endsWith("accidents") && method === "get") {
     try {
-      console.log(queryStringObject);
       const query = await filtresController.editFiltres(queryStringObject);
-      console.log(query);
       const { success, data } = await accidentController.getData({
         query,
       });
@@ -152,7 +169,6 @@ exports.getRes = async (req, res) => {
   } else if (path.endsWith("byDate") && method === "get") {
     try {
       const { success, data } = await accidentController.getDailyAccidents();
-      console.log(data);
       utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

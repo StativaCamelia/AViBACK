@@ -1,3 +1,5 @@
+const fetch = require("node-fetch");
+
 class Utils {
   constructor() {}
   sendAnswer(success, data, res, statusCode = 200) {
@@ -15,7 +17,6 @@ class Utils {
     } else {
       const { error } = data;
       console.log(error);
-      console.log(error);
       res.writeHead(401);
       res.write(error.message);
       res.end();
@@ -31,7 +32,7 @@ class Utils {
           method: "get",
         }
       );
-      if (result.success === true) return true;
+      if (result.status === 200) return true;
       else return false;
     } catch (error) {
       throw error;

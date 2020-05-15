@@ -227,12 +227,12 @@ exports.getRes = async (req, parsedReq, res) => {
       const { succes, data } = await userController.getAuth(
         queryStringObject.token
       );
-      if (succes === true) sendAnswer(success, data, res, (statusCode = 200));
-      else sendAnswer(success, data, res, (statusCode = 403));
+      if (succes === true) sendAnswerAPI(succes, data, res, (statusCode = 200));
+      else sendAnswerAPI(succes, data, res, (statusCode = 403));
     } catch (error) {
       sendAnswerAPI(
         false,
-        { error: { message: "Internal error" } },
+        { error: { message: error.message } },
         res,
         (statusCode = 501)
       );

@@ -89,18 +89,6 @@ class UserController {
     }
   }
 
-  async verifyAdmin(auth_token) {
-    try {
-      const user = await this.database.User.findByToken(auth_token);
-      if (user) {
-        if (user.type === "admin") return { success: true };
-        else return { success: false };
-      } else return { success: false };
-    } catch (error) {
-      return { success: false };
-    }
-  }
-
   async updateUser(payload) {
     try {
       const options = {
@@ -274,19 +262,32 @@ class UserController {
       return { statusCode: 200, content: { values } };
     }
   }
+  //AUTHORIZATION
+  async verifyAdmin(auth_token) {
+    try {
+      const user = await this.database.User.findByToken(auth_token);
+      if (user) {
+        if (user.type === "admin") return { success: true, data: user };
+        else return { success: false };
+      } else return { success: false };
+    } catch (error) {
+      return { success: false };
+    }
+  }
+
   async getAuth(auth_token) {
     try {
       if (auth_token) {
-        const isAdmin = await this.verifyAdmin({ auth_token });
-        if (isAdmin.success) {
-          return { succes: true };
+        const content = await this.verifyAdmin(auth_token);
+        if (content.success) {
+          return { succes: true, data: { content } };
         } else
           return {
             succes: false,
-            data: { error: { message: "unauthorized" } },
+            data: { error: { message: "Unauthorized" } },
           };
       } else {
-        return { succes: false, data: { error: { message: "unauthorized" } } };
+        return { succes: false, data: { error: { message: "Unauthorized" } } };
       }
     } catch (error) {
       throw error;

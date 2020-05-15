@@ -23,20 +23,6 @@ exports.getRes = async (req, res) => {
   req.on("end", () => {
     body = Buffer.concat(body).toString();
     if (body) parsedReq.body = JSON.parse(body);
-    if (parsedReq.path.indexOf("accidents/map") !== -1) {
-      mapRoute.getRes(parsedReq, res);
-      return;
-    }
-
-    if (parsedReq.path.indexOf("accidents/pie") !== -1) {
-      pieRoute.getRes(parsedReq, res);
-      return;
-    }
-
-    if (parsedReq.path.indexOf("accidents/chart") !== -1) {
-      chartRoute.getRes(parsedReq, res);
-      return;
-    }
 
     if (parsedReq.path.indexOf("accidents/location") !== -1) {
       locationRoute.getRes(parsedReq, res);
