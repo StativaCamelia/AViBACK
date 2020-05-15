@@ -15,8 +15,13 @@ class Utils {
     } else {
       const { error } = data;
       console.log(error);
-      console.log(error);
-      res.writeHead(401);
+      res.writeHead(401, {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods":
+            "POST, GET, OPTIONS, PATCH, PUT, DELETE",
+        "Access-Control-Allow-Headers": "auth-token, Content-Type",
+      });
       res.write(error.message);
       res.end();
     }
