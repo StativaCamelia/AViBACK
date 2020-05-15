@@ -188,7 +188,7 @@ class UserController {
             console.log(err)
             message = "Undefined";
             return {
-              statusCode: 401,
+              statusCode: 400,
               content: { message },
             };
           }
