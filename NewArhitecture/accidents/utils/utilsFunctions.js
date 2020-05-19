@@ -1,35 +1,41 @@
 const fetch = require("node-fetch");
-
+const math = require("mathjs");
 class Utils {
   constructor() {}
+
+  static get corsHeader() {
+    return {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
+      "Access-Control-Allow-Headers": "auth-token, Content-Type",
+    };
+  }
+
   sendAnswer(success, data, res, statusCode = 200) {
     if (success) {
       const { content } = data;
-      res.writeHead(200, {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods":
-          "POST, GET, OPTIONS, PATCH, PUT, DELETE",
-        "Access-Control-Allow-Headers": "auth-token, Content-Type",
-      });
+      res.writeHead(200, Utils.corsHeader);
       res.write(JSON.stringify({ content }, null, 2));
       res.end();
     } else {
       const { error } = data;
       console.log(error);
-<<<<<<< HEAD
-      res.writeHead(401);
-=======
-      res.writeHead(401, {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods":
-            "POST, GET, OPTIONS, PATCH, PUT, DELETE",
-        "Access-Control-Allow-Headers": "auth-token, Content-Type",
-      });
->>>>>>> 437f5dba67a96cedced6cb2bfaebb28f218a3ca7
+      res.writeHead(401, Utils.corsHeader);
       res.write(error.message);
       res.end();
+    }
+  }
+
+  async sendEmail() {
+    try {
+      let result = await fetch("http://localhost:5003/user/send-email", {
+        method: "get",
+      });
+      if (result.status === 200) return true;
+      else return false;
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -47,6 +53,19 @@ class Utils {
     } catch (error) {
       throw error;
     }
+  }
+
+  getBoudaries(content) {
+    let value = content.map((element) => element.count);
+    if (value.length > 0)
+      return {
+        first: [0, math.quantileSeq(value, 0.25)],
+        second: [math.quantileSeq(value, 0.25), math.median(value)],
+        third: [math.median(value), math.quantileSeq(value, 0.75)],
+        fourth: [math.quantileSeq(value, 0.75), math.max(value)],
+      };
+    else
+      return { first: [0, 0], second: [0, 0], third: [0, 0], fourth: [0, 0] };
   }
 }
 

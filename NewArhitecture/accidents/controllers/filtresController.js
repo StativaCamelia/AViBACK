@@ -12,24 +12,18 @@ class FiltresController {
           parsedQueryString.State
         );
       }
-      if (parsedQueryString.Start_Time) {
-        if (parsedQueryString.Start_Time.length > 2) {
-          parsedQueryString.Start_Time = parsedQueryString.Start_Time.replace(
-            "T",
-            " "
-          );
-        }
+      if (parsedQueryString.Start_Time.length > 2) {
+        parsedQueryString.Start_Time = parsedQueryString.Start_Time.replace(
+          "T",
+          " "
+        );
+
         parsedQueryString.Start_Time = parsedQueryString.Start_Time + ":";
         parsedQueryString.Start_Time = {
           $regex: parsedQueryString.Start_Time,
           $options: "i",
         };
       }
-
-      console.log(parsedQueryString);
-      const countResults = await this.database.Accident.getAccidentsCount(
-        parsedQueryString
-      );
       return parsedQueryString;
     }
   }
@@ -51,7 +45,6 @@ class FiltresController {
       }
       const cities = await this.database.Accident.getAllCitiesEntities();
       for (let cityData of cities) {
-        console.log(cityData);
         const countyData = await this.database.County.findOne({
           name: cityData.county,
         });

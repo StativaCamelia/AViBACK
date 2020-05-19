@@ -977,6 +977,34 @@
         margin: 0px;
     }
 
+    #loading {
+        display: flex;
+        padding-top: 2vh;
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        margin: 0px;
+        display: none;
+    }
+
+    #loader{
+        align-self: center;
+        width: 100px;
+        height: 100px;
+        border: 3px solid #B1D4E0;
+        border-radius: 50%;
+        border-top-color: #041F60;
+        animation: spin 1s ease-in-out infinite;
+        -webkit-animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { -webkit-transform: rotate(360deg); }
+      }
+      @-webkit-keyframes spin {
+        to { -webkit-transform: rotate(360deg); }
+      }
+
     #right_cont {
         display: flex;
         height: auto;
@@ -1475,5 +1503,32 @@
         height: 90%;
     }
 
+    #loading {
+        display: flex;
+        width: 60%;
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        margin: 0px;
+        display: none;
+    }
+
+    #loader{
+        align-self: center;
+        width: 100px;
+        height: 100px;
+        border: 3px solid #B1D4E0;
+        border-radius: 50%;
+        border-top-color: #041F60;
+        animation: spin 1s ease-in-out infinite;
+        -webkit-animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { -webkit-transform: rotate(360deg); }
+      }
+      @-webkit-keyframes spin {
+        to { -webkit-transform: rotate(360deg); }
+      }
     /*END POP-MAP*/
 }

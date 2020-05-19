@@ -1,5 +1,6 @@
 extends ./layouts/layoutMap.pug
 block left_content
+    h2 Enter your data an generate a cartogram
     include ./mapComponents/mapSVG.pug
     #states_pop
         .left_description
@@ -12,14 +13,22 @@ block left_content
             script( src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGMRsZ2FtdEy73zYaGm_JK_waMrSc9g0')
     .map-history
         .history_line
-            #high.cbox
-            p   &gt;500 accidents
+            #low.cbox
+            p.low   0-50000 accidents
+        .history_line
+            #medium1.cbox
+            p.medium  50000-100000 accidents
         .history_line
             #medium.cbox
-            p   250-500 accidents
+            p.medium1   100000-200000 accidents
         .history_line
-            #low.cbox
-            p  &lt; 250 accidents
-    
+            #high.cbox
+            p.high   200000-400000 accidents
+        
+        
+        
+block loading
+    h3 Loading...
+    #loader
 block right_content
     include ./statisticsComponents/filtres

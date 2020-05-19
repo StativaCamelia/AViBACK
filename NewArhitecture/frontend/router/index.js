@@ -40,7 +40,6 @@ exports.getRes = async (req, res) => {
       parsedReq.path.includes(".jpg")
     ) {
       try {
-        console.log(parsedReq.path);
         staticFilesController.getRes(parsedReq, res);
         return;
       } catch (error) {
@@ -49,7 +48,6 @@ exports.getRes = async (req, res) => {
     }
 
     if (parsedReq.path.indexOf("home") !== -1) {
-      console.log(parsedReq.path);
       homeRoute.getRes(parsedReq, res);
       return;
     }

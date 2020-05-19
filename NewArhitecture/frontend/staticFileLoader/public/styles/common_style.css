@@ -218,8 +218,12 @@ ul li {
     background-color: #174ea6;
 }
 
+#medium1{
+    background-color: #899cb9;
+}
+
 #low {
-    background-color: #81aaec;
+    background-color: #edeff1;
 }
 
 .high_s {
@@ -230,8 +234,12 @@ ul li {
     fill: #174ea6;
 }
 
+.medium1_s{
+    fill :#899cb9;
+}
+
 .low_s {
-    fill: #81aaec;
+    fill: #edeff1;
 }
 
 .high_s:hover {
@@ -242,8 +250,11 @@ ul li {
     fill: #0f3674;
 }
 
-.low_s:hover {
+.medium1_s:hover {
     fill: #356ec9;
+}
+.low_s:hover {
+    fill: #a4abb6;
 }
 
 #states {
