@@ -69,20 +69,16 @@ exports.getRes = async (req, res) => {
         (statusCode = 501)
       );
     }
-  } else if (
-    path.endsWith("accidents") &&
-    method === "post" &&
-    Object.keys(queryStringObject).length == 0
-  ) {
+  } else if (path.endsWith("accidents") && method === "post") {
     const auth = await utils.getAuthorization(req);
     try {
-      if (auth.succes) {
+      if (auth) {
         const { success, data } = await accidentController.addAccident(body);
         utils.sendAnswer(success, data, res, (statusCode = 201));
       } else {
         utils.sendAnswer(
           auth,
-          { error: { message: "unauthorized" } },
+          { error: { message: "Unauthorized" } },
           res,
           (statusCode = 403)
         );

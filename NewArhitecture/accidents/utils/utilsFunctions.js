@@ -27,16 +27,37 @@ class Utils {
     }
   }
 
-  async sendEmail() {
+  async sendEmail(content) {
+    const { payload: query } = content;
+    delete query._id;
+    delete query._v;
+    let queryString = this.getQueryStringFromObject(query);
     try {
-      let result = await fetch("http://localhost:5003/user/send-email", {
-        method: "get",
-      });
+      let result = await fetch(
+        `http://localhost:5003/user/send-email?${queryString}`,
+        {
+          method: "get",
+        }
+      );
       if (result.status === 200) return true;
       else return false;
     } catch (error) {
       throw error;
     }
+  }
+
+  getQueryStringFromObject(object) {
+    let queryString = "";
+    for (let field in object) {
+      queryString = this.concatQueryString(queryString, field, object[field]);
+    }
+    return queryString.substr(1);
+  }
+
+  concatQueryString(queryString, key, value) {
+    queryString = queryString + "&";
+    queryString = queryString + key + "=" + value;
+    return queryString;
   }
 
   async getAuthorization(req) {

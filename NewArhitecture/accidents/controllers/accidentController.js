@@ -141,7 +141,7 @@ class AccidentController {
     const content = new this.database.Accident(payload);
     try {
       await content.save();
-      utils.sendEmail({ content });
+      await utils.sendEmail({ payload });
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
