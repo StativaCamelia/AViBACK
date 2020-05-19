@@ -4,6 +4,59 @@ class FiltresController {
     this.service = service;
   }
 
+  async editWeather(parsedQueryString) {
+    const weatherValues = [
+      "Temperature(F)",
+      "Wind_Chill(F)",
+      "Wind_Speed(mph)",
+      "Humidity(%)",
+      "Pressure(in)",
+      "Visibility(mi)",
+      "Precipitation(in)",
+    ];
+    const lowerValues = [
+      "Temperature1",
+      "Wind_Chill1",
+      "Wind_Speed1",
+      "Humidity1",
+      "Pressure1",
+      "Visibility1",
+      "Precipitation1",
+    ];
+    const higherValues = [
+      "Temperature2",
+      "Wind_Chill2",
+      "Wind_Speed2",
+      "Humidity2",
+      "Pressure2",
+      "Visibility2",
+      "Precipitation1",
+    ];
+    for (let i = 0; i < lowerValues.length; i++) {
+      if (
+        parsedQueryString[lowerValues[i]] &&
+        parsedQueryString[higherValues[i]]
+      ) {
+        parsedQueryString[weatherValues[i]] = {
+          $gte: parseFloat(parsedQueryString[lowerValues[i]]),
+          $lte: parseFloat(parsedQueryString[higherValues[i]]),
+        };
+        delete parsedQueryString[lowerValues[i]];
+        delete parsedQueryString[higherValues[i]];
+      } else if (parsedQueryString[lowerValues[i]]) {
+        parsedQueryString[weatherValues[i]] = {
+          $gte: parseFloat(parsedQueryString[lowerValues[i]]),
+        };
+        delete parsedQueryString[lowerValues[i]];
+      } else if (parsedQueryString[higherValues[i]]) {
+        parsedQueryString[weatherValues[i]] = {
+          $gte: parseFloat(parsedQueryString[higherValues[i]]),
+        };
+        delete parsedQueryString[higherValues[i]];
+      }
+    }
+    return parsedQueryString;
+  }
   async editFiltres(query) {
     if (Object.keys(query).length !== 0) {
       let parsedQueryString = query;
@@ -24,6 +77,7 @@ class FiltresController {
           $options: "i",
         };
       }
+      parsedQueryString = await this.editWeather(parsedQueryString);
       return parsedQueryString;
     }
   }

@@ -157,6 +157,7 @@ exports.getRes = async (req, res) => {
       const { success, data } = await accidentController.getData(query);
       utils.sendAnswer(success, data, res);
     } catch (error) {
+      console.log(error);
       utils.sendAnswer(
         false,
         { error: { message: "Internal Error" } },

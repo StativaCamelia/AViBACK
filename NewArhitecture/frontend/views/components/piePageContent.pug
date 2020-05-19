@@ -95,28 +95,43 @@ block right_content
                                 option(value=n)
                                     | #{n}
                     .weather_filtre
+                        h5 Interval: 
+                        h5 From
+                        h5 To
+                    .weather_filtre
                         label.weather_select_label(for='temperature') Temperature:
-                        input#temperature.weather_select(type='number' name='temperature' form='filters_form' value='' min='-30' max='40' placeholder="°C")
+                        input#temperature1.weather_select(type='number' name='temperature' form='filters_form' value='' min='-30' max='40' placeholder="°C")
+                        input#temperature2.weather_select(type='number' name='temperature' form='filters_form' value='' min='-30' max='40' placeholder="°C")
                     .weather_filtre
                         label.weather_select_label(for='wind_chill')
                             | Wind chill:
-                        input#wind_chill.weather_select(type='number' name='wind_chill' form='filters_form' value='' min='0' max='100' placeholder="F")
+                        input#wind_chill1.weather_select(type='number' name='wind_chill' form='filters_form' value='' min='0' max='100' placeholder="F")
+                        input#wind_chill2.weather_select(type='number' name='wind_chill' form='filters_form' value='' min='0' max='100' placeholder="F")
                     .weather_filtre
                         label.weather_select_label(for='wind_chill')
                             | Wind speed:
-                        input#wind_speed.weather_select(type='number' name='wind_speed' form='filters_form' value='' min='0' max='100' placeholder="mph")
+                        input#wind_speed1.weather_select(type='number' name='wind_speed' form='filters_form' value='' min='0' max='100' placeholder="mph")
+                        input#wind_speed2.weather_select(type='number' name='wind_speed' form='filters_form' value='' min='0' max='100' placeholder="mph")
                     .weather_filtre
                         label.weather_select_label(for='humidity')
                             | Humidity:
-                        input#humidity.weather_select(type='number' name='humidity' form='filters_form' value='' min='0' max='100' placeholder="%")
+                        input#humidity1.weather_select(type='number' name='humidity' form='filters_form' value='' min='0' max='100' placeholder="%")
+                        input#humidity2.weather_select(type='number' name='humidity' form='filters_form' value='' min='0' max='100' placeholder="%")
                     .weather_filtre
                         label.weather_select_label(for='pressure')
                             | Pressure:
-                        input#pressure.weather_select(type='number' name='pressure' form='filters_form' value='' min='0' max='100' placeholder="in")
+                        input#pressure1.weather_select(type='number' name='pressure' form='filters_form' value='' min='0' max='100' placeholder="in")
+                        input#pressure2.weather_select(type='number' name='pressure' form='filters_form' value='' min='0' max='100' placeholder="in")
                     .weather_filtre
                         label.weather_select_label(for='wind_chill')
                             | Visibility:
-                        input#visibility.weather_select(type='number' form='filters_form' name='visibility' value='' min='0' max='100' placeholder="in")
+                        input#visibility1.weather_select(type='number' form='filters_form' name='visibility' value='' min='0' max='100' placeholder="mi")
+                        input#visibility2.weather_select(type='number' form='filters_form' name='visibility' value='' min='0' max='100' placeholder="mi")
+                    .weather_filtre
+                        label.weather_select_label(for='wind_chill')
+                            | Precipitation:
+                        input#precipitation1.weather_select(type='number' form='filters_form' name='precipitation' value='' min='0' max='100' placeholder="in")
+                        input#precipitation2.weather_select(type='number' form='filters_form' name='precipitation' value='' min='0' max='100' placeholder="in")
                 // MIDDLE FILTRES
             .middle_filtres
                 .road_select_col

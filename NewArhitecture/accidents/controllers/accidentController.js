@@ -73,6 +73,7 @@ class AccidentController {
       delete query["Type"];
       delete query["Start_Time"];
       const aggregatorOpts = [
+        { $sort: { "Temperature(F)": 1 } },
         {
           $match: query,
         },
@@ -86,6 +87,7 @@ class AccidentController {
           },
         },
       ];
+
       const content = await this.database.Accident.aggregate(aggregatorOpts);
       return content;
     } catch (error) {
