@@ -1,3 +1,5 @@
+const { utils } = require("../utils/index");
+
 class AccidentController {
   constructor(database, service) {
     this.database = database;
@@ -8,7 +10,7 @@ class AccidentController {
     try {
       let content;
       if (type === "map") {
-        content = "abc"
+        content = await this.getMapRepresentation(query);
       } else if (type === "pie") {
         console.log("Fa pie");
         content = await this.database.Accident.getAccidentsCount(
@@ -22,6 +24,79 @@ class AccidentController {
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
+    }
+  }
+
+  async getMapRepresentation(query) {
+    try {
+      const locationTypes = [
+        "State",
+        "County",
+        "City",
+        "Street",
+        "Timezone",
+        "Number",
+      ];
+      const hasALocationKey = locationTypes.filter((type) => {
+        return query.hasOwnProperty(type);
+      });
+      let content;
+      if (hasALocationKey.length) {
+        await this.getMapMarkers(query);
+      } else {
+        content = await this.getMapByStates(query);
+      }
+      return content;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getMapMarkers(query) {
+    try {
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getMapByStates(query) {
+    try {
+      const result = await this.getNumberOfAccidentsByQueryAndGroupBy(
+        query,
+        "State"
+      );
+      const boudaries = utils.getBoudaries(result);
+      return { dataset: result, boudaries };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  //numarul de accidente in functie de niste criterii grupate pe un criteriu dat de noi(*Georgiana nu uita ca ai sters aia cu map si ai zis ca folosesti asta in schimb)
+  async getNumberOfAccidentsByQueryAndGroupBy(query, groupBy) {
+    try {
+      delete query["Type"];
+      delete query["Start_Time"];
+      const aggregatorOpts = [
+        { $sort: { "Temperature(F)": 1 } },
+        {
+          $match: query,
+        },
+        {
+          $unwind: "$" + groupBy,
+        },
+        {
+          $group: {
+            _id: "$" + groupBy,
+            count: { $sum: 1 },
+          },
+        },
+      ];
+
+      const content = await this.database.Accident.aggregate(aggregatorOpts);
+      return content;
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -60,32 +135,6 @@ class AccidentController {
       const content = await this.database.Accident.find(
         criteria
       ).countDocuments();
-      console.log(content);
-      return { success: true, data: { content } };
-    } catch (error) {
-      return { success: false, data: { error } };
-    }
-  }
-
-  //numarul de accidente in functie de niste criterii grupate pe un criteriu dat de noi(*Georgiana nu uita ca ai sters aia cu map si ai zis ca folosesti asta in schimb)
-  async getNumberOfAccidentsByQueryAndGroupBy(query, groupBy) {
-    try {
-      const { queryStringObject: criteria } = query;
-      const aggregatorOpts = [
-        {
-          $match: criteria,
-        },
-        {
-          $unwind: "$" + groupBy,
-        },
-        {
-          $group: {
-            _id: "$" + groupBy,
-            count: { $sum: 1 },
-          },
-        },
-      ];
-      const content = await this.database.Accident.aggregate(aggregatorOpts);
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -97,7 +146,7 @@ class AccidentController {
     const content = new this.database.Accident(payload);
     try {
       await content.save();
-      //this.service.userController.getIntrestedUsers({ content });
+      await utils.sendEmail({ payload });
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -133,7 +182,6 @@ class AccidentController {
         useFindAndModify: false,
       };
       const { accidentId, body: newContent } = payload;
-      console.log(newContent);
       const content = await this.database.Accident.findOneAndUpdate(
         {
           _id: accidentId,

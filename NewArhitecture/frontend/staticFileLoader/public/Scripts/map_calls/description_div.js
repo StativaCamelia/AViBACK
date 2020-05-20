@@ -335,7 +335,10 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
           left.innerHTML =
             '<div class = "pop_text"><p>' +
             dict_names[el.getAttribute("id")] +
-            "</p></div>";
+            "</p>";
+          if (el.hasAttribute("count"))
+            left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
+
           left.innerHTML +=
             '<div class = "pop_img"><img src="' +
             dict_img[el.getAttribute("id")] +
@@ -382,7 +385,10 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
           left.innerHTML =
             '<div class = "pop_text"><p>' +
             dict_names[el.getAttribute("id")] +
-            "</p></div>";
+            "</p>";
+          if (el.hasAttribute("count"))
+            left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
+
           left.innerHTML +=
             '<div class = "pop_img"><img src="' +
             dict_img[el.getAttribute("id")] +
@@ -414,7 +420,10 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
           left.innerHTML =
             '<div class = "pop_text"><p>' +
             dict_names[el.getAttribute("id")] +
-            "</p></div>";
+            "</p>";
+          if (el.hasAttribute("count"))
+            left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
+
           left.innerHTML +=
             '<div class = "pop_img"><img src="' +
             dict_img[el.getAttribute("id")] +

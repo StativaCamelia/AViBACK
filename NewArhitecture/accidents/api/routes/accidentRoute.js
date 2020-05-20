@@ -50,7 +50,7 @@ exports.getRes = async (req, res) => {
   } else if (
     path.endsWith("accidents") &&
     method === "get" &&
-    Object.keys(queryStringObject).length == 0
+    Object.keys(queryStringObject).length === 0
   ) {
     try {
       const auth = {};
@@ -69,20 +69,16 @@ exports.getRes = async (req, res) => {
         (statusCode = 501)
       );
     }
-  } else if (
-    path.endsWith("accidents") &&
-    method === "post" &&
-    Object.keys(queryStringObject).length == 0
-  ) {
+  } else if (path.endsWith("accidents") && method === "post") {
     const auth = await utils.getAuthorization(req);
     try {
-      if (auth.succes) {
+      if (auth) {
         const { success, data } = await accidentController.addAccident(body);
         utils.sendAnswer(success, data, res, (statusCode = 201));
       } else {
         utils.sendAnswer(
           auth,
-          { error: { message: "unauthorized" } },
+          { error: { message: "Unauthorized" } },
           res,
           (statusCode = 403)
         );
@@ -157,6 +153,7 @@ exports.getRes = async (req, res) => {
       const { success, data } = await accidentController.getData(query,type,dateObject);
       utils.sendAnswer(success, data, res);
     } catch (error) {
+      console.log(error);
       utils.sendAnswer(
         false,
         { error: { message: "Internal Error" } },

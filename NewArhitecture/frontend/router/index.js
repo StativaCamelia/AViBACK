@@ -7,6 +7,7 @@ const {
   pieRoute,
   profileRoute,
   chartRoute,
+  lineRoute,
 } = require("./routes/index");
 const { staticFilesController } = require("../controllers/index");
 
@@ -40,7 +41,6 @@ exports.getRes = async (req, res) => {
       parsedReq.path.includes(".jpg")
     ) {
       try {
-        console.log(parsedReq.path);
         staticFilesController.getRes(parsedReq, res);
         return;
       } catch (error) {
@@ -49,7 +49,6 @@ exports.getRes = async (req, res) => {
     }
 
     if (parsedReq.path.indexOf("home") !== -1) {
-      console.log(parsedReq.path);
       homeRoute.getRes(parsedReq, res);
       return;
     }
@@ -77,6 +76,10 @@ exports.getRes = async (req, res) => {
     }
     if (parsedReq.path.indexOf("dashboard") !== -1) {
       dashboardRoute.getRes(parsedReq, res);
+      return;
+    }
+    if (parsedReq.path.indexOf("line") !== -1) {
+      lineRoute.getRes(parsedReq, res);
       return;
     }
   });

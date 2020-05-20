@@ -218,6 +218,21 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
+  } else if (path.endsWith("send-email") && method == "get") {
+    try {
+      const { succes, data } = await userController.getIntrestedUsers(
+        queryStringObject
+      );
+      if (succes === true) sendAnswerAPI(succes, data, res, (statusCode = 200));
+      else sendAnswerAPI(succes, data, res, (statusCode = 403));
+    } catch (error) {
+      sendAnswerAPI(
+        false,
+        { error: { message: error.message } },
+        res,
+        (statusCode = 501)
+      );
+    }
   } else if (path.endsWith("user") && method === "post")
     try {
       const auth = await userController.getAuth(req);

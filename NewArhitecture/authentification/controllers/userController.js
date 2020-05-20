@@ -16,7 +16,7 @@ class UserController {
     this.database = database;
   }
   async getIntrestedUsers(data) {
-    const { content } = data;
+    const content = data;
     const response = await this.getAllUsers();
     const users = response.data.content;
     for (let user of users) {

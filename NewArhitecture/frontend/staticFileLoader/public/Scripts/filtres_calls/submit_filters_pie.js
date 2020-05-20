@@ -2,12 +2,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const api = "http://localhost:5004/accidents?";
     const method = "GET";
 
+    function setVisible(selector, visible) {
+        document.querySelector(selector).style.display = visible ? "flex" : "none";
+    }
+
     function send_request(query) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
+            setVisible("#left_cont", false);
+            setVisible("#loading", true);
             if (this.readyState === 4 && this.status === 200) {
                 const { content } = JSON.parse(this.responseText);
-                console.log(content);
+                setVisible("#loading", false);
+                setVisible("#left_cont", true);
             }
         };
         url = api + query;
@@ -25,12 +32,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const roadSide = document.getElementById("road_side");
     const weather = document.getElementById("Weather_Condition");
     const windDirection = document.getElementById("Wind_Direction");
-    const temperature = document.getElementById("temperature");
-    const windChill = document.getElementById("wind_chill");
-    const windSpeed = document.getElementById("wind_speed");
-    const humidity = document.getElementById("humidity");
-    const pressure = document.getElementById("pressure");
-    const visibility = document.getElementById("visibility");
+    const temperature1 = document.getElementById("temperature1");
+    const temperature2 = document.getElementById("temperature2");
+    const windChill1 = document.getElementById("wind_chill1");
+    const windChill2 = document.getElementById("wind_chill2");
+    const windSpeed1 = document.getElementById("wind_speed1");
+    const windSpeed2 = document.getElementById("wind_speed2");
+    const humidity1 = document.getElementById("humidity1");
+    const humidity2 = document.getElementById("humidity2");
+    const pressure1 = document.getElementById("pressure1");
+    const pressure2 = document.getElementById("pressure2");
+    const visibility1 = document.getElementById("visibility1");
+    const visibility2 = document.getElementById("visibility2");
+    const precipitation1 = document.getElementById("precipitation1");
+    const precipitation2 = document.getElementById("precipitation2");
     const amenity = document.getElementById("amenity");
     const bump = document.getElementById("bump");
     const crossing = document.getElementById("crossing");
@@ -62,15 +77,60 @@ document.addEventListener("DOMContentLoaded", function () {
     const astronomicalTwilightNight = document.getElementById(
         "astronomical_twilight_night"
     );
+    const lowerValues = [
+        "Temperature1",
+        "Wind_Chill1",
+        "Wind_Speed1",
+        "Pressure1",
+        "Precipitation1",
+        "Humidity1",
+        "Visibility1",
+    ];
+    const higherValues = [
+        "Temperature2",
+        "Wind_Chill2",
+        "Wind_Speed2",
+        "Pressure2",
+        "Precipitation2",
+        "Humidity2",
+        "Visibility2",
+    ];
+    const weatherNames = [
+        "Temperature",
+        "Wind Chill",
+        "Wind Speed",
+        "Pressure",
+        "Precipitation",
+        "Humidity",
+        "Visibility",
+    ];
+    const lowerValuesComponents = [
+        temperature1,
+        windChill1,
+        windSpeed1,
+        pressure1,
+        precipitation1,
+        humidity1,
+        visibility1,
+    ];
+    const higherValuesComponents = [
+        temperature2,
+        windChill2,
+        windSpeed2,
+        pressure2,
+        precipitation2,
+        humidity2,
+        visibility2,
+    ];
     const submitFilters = document.getElementById("submit_button");
     const resetFilters = document.getElementById("reset_button");
-    const filtersForm = document.getElementById("filters_form");
     const pieCriteria = document.getElementById("pie_criteria");
+    const filtersForm = document.getElementById("filters_form");
     let message = document.getElementById("filter_message");
 
     filtersForm.addEventListener("change", criterionForPie);
     resetFilters.addEventListener("click", function () {
-            deletePieCriteriaNodes();
+        deletePieCriteriaNodes();
     });
 
     submitFilters.addEventListener("click", handlerSubmitFilters);
@@ -126,54 +186,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 queryString,
                 "Wind_Direction",
                 windDirection.value
-            );
-        }
-        if (temperature.value !== "") {
-            filtersValues.Temperature = temperature.value.toString();
-            queryString = concatQueryString(
-                queryString,
-                "Temperature",
-                temperature.value.toString()
-            );
-        }
-        if (windChill.value !== "") {
-            filtersValues.Wind_Chill = windChill.value.toString();
-            queryString = concatQueryString(
-                queryString,
-                "Wind_Chill",
-                windChill.value.toString()
-            );
-        }
-        if (windSpeed.value !== "") {
-            filtersValues.Wind_Speed = windSpeed.value.toString();
-            queryString = concatQueryString(
-                queryString,
-                "Wind_Speed",
-                windSpeed.value.toString()
-            );
-        }
-        if (humidity.value !== "") {
-            filtersValues.Humidity = humidity.value.toString();
-            queryString = concatQueryString(
-                queryString,
-                "Humidity",
-                humidity.value.toString()
-            );
-        }
-        if (pressure.value !== "") {
-            filtersValues.Pressure = pressure.value.toString();
-            queryString = concatQueryString(
-                queryString,
-                "Pressure",
-                pressure.value.toString()
-            );
-        }
-        if (visibility.value !== "") {
-            filtersValues.Visibility = visibility.value.toString();
-            queryString = concatQueryString(
-                queryString,
-                "Visibility",
-                visibility.value.toString()
             );
         }
         if (amenity.checked) {
@@ -344,13 +356,35 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Night"
             );
         }
+        for (let i = 0; i < lowerValuesComponents.length; i++) {
+            if (lowerValuesComponents[i].value !== "") {
+                filtersValues[lowerValues[i]] = lowerValuesComponents[i].value;
+                queryString = concatQueryString(
+                    queryString,
+                    `${lowerValues[i]}`,
+                    lowerValuesComponents[i].value
+                );
+            }
+        }
+        for (let i = 0; i < higherValuesComponents.length; i++) {
+            if (higherValuesComponents[i].value !== "") {
+                filtersValues[higherValues[i]] = higherValuesComponents[i].value;
+                queryString = concatQueryString(
+                    queryString,
+                    `${higherValues[i]}`,
+                    higherValuesComponents[i].value
+                );
+            }
+        }
+
         filtersValues.Pie_Criterion = pieCriteria.value;
         queryString = concatQueryString(
-                queryString,
-                "Pie_Criterion",
-                pieCriteria.value
+            queryString,
+            "Pie_Criterion",
+            pieCriteria.value
         );
-        if (verifFiltersPie(filtersValues) === true) {
+
+        if (verifFilters(filtersValues) === true) {
             send_request(queryString.substring(1));
         }
     }
@@ -396,23 +430,26 @@ document.addEventListener("DOMContentLoaded", function () {
         if (windDirection.value === "") {
             options.push("Wind direction");
         }
-        if (temperature.value === "") {
+        if (temperature1.value === "" && temperature2.value === "") {
             options.push("Temperature");
         }
-        if (windChill.value === "") {
+        if (windChill1.value === "" && windChill2.value === "") {
             options.push("Wind chill");
         }
-        if (windSpeed.value === "") {
+        if (windSpeed1.value === "" && windSpeed2.value === "") {
             options.push("Wind speed");
         }
-        if (humidity.value === "") {
+        if (humidity1.value === "" && humidity2.value === "") {
             options.push("Humidity");
         }
-        if (pressure.value === "") {
+        if (pressure1.value === "" && pressure2.value === "") {
             options.push("Pressure");
         }
-        if (visibility.value === "") {
+        if (visibility1.value === "" && visibility2.value === "") {
             options.push("Visibility");
+        }
+        if (precipitation1.value === "" && precipitation2.value === "") {
+            options.push("Precipitation");
         }
         if (accidentDateStart.value === "" && accidentDateEnd.value === "") {
             options.push("Accident date");
@@ -466,7 +503,41 @@ document.addEventListener("DOMContentLoaded", function () {
         createCriterionOptions(options);
     }
 
-    function verifFiltersPie(filtersValues) {
+    function verifyWeatherFiltres(filtersValues) {
+        for (let i = 0; i < lowerValues.length; i++){
+            console.log(filtersValues[lowerValues[i]])
+            console.log(filtersValues[higherValues[i]])
+            console.log(filtersValues[lowerValues[i]] > filtersValues[higherValues[i]])
+            if (filtersValues[lowerValues[i]] > filtersValues[higherValues[i]]) {
+                message.innerText = `The first value for ${weatherNames[i]} cannot be higher that the second value`;
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function verifyDates(filtersValues) {
+        if(filtersValues.Start_Date_1 > filtersValues.Start_Date_2){
+            message.innerText = "First date must be smaller than second date!";
+            return false;
+        }else{
+            if(filtersValues.Start_Hour_1 > filtersValues.Start_Hour_2){
+                message.innerText = "First hour must be smaller than second hour!";
+                return false;
+            }
+            return true;
+        }
+    }
+
+    function verifyExistCriterion(filtersValues) {
+        if (filtersValues.Pie_Criterion === "criterion") {
+            message.innerText = "You have to select a criterion!";
+            return false;
+        }
+        return true;
+    }
+
+    function verifFilters(filtersValues) {
         let filtersValueLength = Object.keys(filtersValues).length;
         if (
             filtersValueLength === 13 &&
@@ -483,27 +554,15 @@ document.addEventListener("DOMContentLoaded", function () {
             filtersValues.Station === "False" &&
             filtersValues.Traffic_Signal === "False" &&
             filtersValues.Pie_Criterion === "criterion"
-        ) {
+        ){
             message.innerText = "You have to select at least one filter!";
             return false;
-        } else {
-            if (filtersValues.Pie_Criterion === "criterion") {
-                message.innerText = "You have to select a criterion!";
-                return false;
-            } else {
-                if(filtersValues.Start_Date_1 > filtersValues.Start_Date_2){
-                    message.innerText = "First date must be smaller than second date!";
-                    return false;
-                }else{
-                    if(filtersValues.Start_Hour_1 > filtersValues.Start_Hour_2){
-                        message.innerText = "First hour must be smaller than second hour!";
-                        return false;
-                    }else{
-                        message.innerText = "";
-                        return true;
-                    }
-                }
-            }
         }
+        const ok = verifyWeatherFiltres(filtersValues);
+        const okDate = verifyDates(filtersValues);
+        const okCriterion = verifyExistCriterion(filtersValues);
+        console.log(verifyWeatherFiltres(filtersValues));
+        if (ok && okDate && okCriterion) message.innerText = "";
+        return ok && okDate && okCriterion;
     }
 });
