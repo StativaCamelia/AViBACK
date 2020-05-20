@@ -56,6 +56,19 @@ var nameDictionary = {
   PR: "Puerto Rico",
 };
 
+const hourPredicate = (accident,firstHourDate,secondHourDate) => {
+  if(accident.Start_Time.getUTCHours() > firstHourDate.getUTCHours() && accident.Start_Time.getUTCHours() < secondHourDate.getUTCHours()){
+    return true;
+  }else{
+    if(accident.Start_Time.getUTCHours() === firstHourDate.getUTCHours() && accident.Start_Time.getUTCHours() === secondHourDate.getUTCHours()){
+      if(accident.Start_Time.getUTCMinutes() >= firstHourDate.getUTCMinutes() && accident.Start_Time.getUTCMinutes() <= secondHourDate.getUTCMinutes()){
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 module.exports = function (accidentSchema) {
   accidentSchema.statics.getAllStates = async function () {
     try {
@@ -204,9 +217,47 @@ module.exports = function (accidentSchema) {
     }
   };
 
-  accidentSchema.statics.getAccidentsCount = async function (filters) {
+  accidentSchema.statics.getAccidentsCount = async function (filters,dateObject) {
     try {
       let accidents = await this.find(filters);
+      if((dateObject.firstDate && dateObject.secondDate && dateObject.firstHour && dateObject.secondHour) || (dateObject.firstHour && dateObject.secondHour)){
+        const hourOne = dateObject.firstHour.substring(0,2);
+        const minuteOne = dateObject.firstHour.substring(3);
+        let firstHourDate = new Date();
+        firstHourDate.setUTCHours(hourOne,minuteOne);
+
+        const hourTwo = dateObject.secondHour.substring(0,2);
+        const minuteTwo = dateObject.secondHour.substring(3);
+        let secondHourDate = new Date();
+        secondHourDate.setUTCHours(hourTwo,minuteTwo);
+
+        accidents = accidents.filter(accident => hourPredicate(accident,firstHourDate,secondHourDate));
+      }else{
+        if(dateObject.firstHour){
+          const hourOne = dateObject.firstHour.substring(0,2);
+          const minuteOne = dateObject.firstHour.substring(3);
+          let firstHourDate = new Date();
+          firstHourDate.setUTCHours(hourOne,minuteOne);
+
+          let secondHourDate = new Date();
+          secondHourDate.setUTCHours("23","59");
+
+          accidents = accidents.filter(accident => hourPredicate(accident,firstHourDate,secondHourDate));
+        }else{
+          if(secondHour){
+            let firstHourDate = new Date();
+            firstHourDate.setUTCHours("00","00");
+
+            const hourTwo = dateObject.secondHour.substring(0,2);
+            const minuteTwo = dateObject.secondHour.substring(3);
+            let secondHourDate = new Date();
+            secondHourDate.setUTCHours(hourTwo,minuteTwo);
+
+            accidents = accidents.filter(accident => hourPredicate(accident,firstHourDate,secondHourDate));
+          }
+        }
+      }
+      console.log(accidents)
       return accidents.length;
     } catch (error) {
       throw error;

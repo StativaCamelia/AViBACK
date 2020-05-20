@@ -437,7 +437,7 @@ ul li {
     font-size: 1rem;
 }
 
-#accident_date {
+#accident_date_start, #accident_date_end {
     z-index: 0;
     background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
     border: 2px solid black;
@@ -445,13 +445,16 @@ ul li {
     border-radius: 3px;
     padding: 3px 5px;
     background-color: #174ea6;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
 }
 
-#accident_date[type="date"]::-webkit-inner-spin-button {
+#accident_date_start[type="date"]::-webkit-inner-spin-button, #accident_date_end[type="date"]::-webkit-inner-spin-button {
     display: none;
 }
 
-#accident_date[type="date"]::-webkit-calendar-picker-indicator {
+#accident_date_start[type="date"]::-webkit-calendar-picker-indicator, #accident_date_end[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 

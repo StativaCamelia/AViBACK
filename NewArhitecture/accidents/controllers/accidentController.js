@@ -4,20 +4,21 @@ class AccidentController {
     this.service = service;
   }
 
-  async getData(query) {
+  async getData(query,type,dateObject) {
     try {
-      if (query.Type === "map") {
-        console.log("Fa map");
-      } else if (query.Type === "pie") {
+      let content;
+      if (type === "map") {
+        content = "abc"
+      } else if (type === "pie") {
         console.log("Fa pie");
-      } else if (query.Type === "chart") {
+        content = await this.database.Accident.getAccidentsCount(
+            query,dateObject
+        );
+        console.log(content)
+      } else if (type === "chart") {
         console.log("Fa chart");
+        content = "abc"
       }
-<<<<<<< HEAD
-      let content = "Buna";
-=======
-      const content = "abc"
->>>>>>> 437f5dba67a96cedced6cb2bfaebb28f218a3ca7
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };

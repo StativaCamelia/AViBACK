@@ -7,7 +7,7 @@ class ProfileController {
 
   getProfilePage(req, res) {
     try {
-      const ids = ["", "", "active", "", ""];
+      const ids = ["", "", "active", "", "",""];
       const { content, contentType } = profilePage.getPage(ids);
       return { success: true, data: { content, contentType } };
     } catch (erorr) {

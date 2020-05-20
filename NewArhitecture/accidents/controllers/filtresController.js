@@ -7,30 +7,84 @@ class FiltresController {
   async editFiltres(query) {
     if (Object.keys(query).length !== 0) {
       let parsedQueryString = query;
+
+      let dateObject = {};
       if (parsedQueryString.State) {
         parsedQueryString.State = await this.database.State.getAbbrByName(
           parsedQueryString.State
         );
       }
-      if (parsedQueryString.Start_Time) {
-        if (parsedQueryString.Start_Time.length > 2) {
-          parsedQueryString.Start_Time = parsedQueryString.Start_Time.replace(
-            "T",
-            " "
-          );
-        }
-        parsedQueryString.Start_Time = parsedQueryString.Start_Time + ":";
-        parsedQueryString.Start_Time = {
-          $regex: parsedQueryString.Start_Time,
-          $options: "i",
-        };
-      }
 
-      console.log(parsedQueryString);
-      const countResults = await this.database.Accident.getAccidentsCount(
-        parsedQueryString
-      );
-      return parsedQueryString;
+      if(parsedQueryString.FirstDate && parsedQueryString.SecondDate && parsedQueryString.FirstHour && parsedQueryString.SecondHour){
+        const dateOne = new Date(parsedQueryString.FirstDate + "T00:00:00.000Z");
+        const dateTwo = new Date(parsedQueryString.SecondDate + "T23:59:59.000Z");
+
+        parsedQueryString.Start_Time = {
+          $gte : dateOne,
+          $lte : dateTwo
+        };
+
+        dateObject.firstDate = parsedQueryString.FirstDate;
+        dateObject.secondDate = parsedQueryString.SecondDate;
+        dateObject.firstHour = parsedQueryString.FirstHour;
+        dateObject.secondHour = parsedQueryString.SecondHour;
+
+        delete parsedQueryString.FirstDate;
+        delete parsedQueryString.SecondDate;
+        delete parsedQueryString.FirstHour;
+        delete parsedQueryString.SecondHour;
+      }else{
+        if(parsedQueryString.FirstDate && parsedQueryString.SecondDate){
+          const dateOne = new Date(parsedQueryString.FirstDate + "T00:00:00Z");
+          const dateTwo = new Date(parsedQueryString.SecondDate + "T23:59:59Z");
+
+          parsedQueryString.Start_Time = {
+            $gte : dateOne,
+            $lte : dateTwo
+          };
+          delete parsedQueryString.FirstDate;
+          delete parsedQueryString.SecondDate;
+        }else{
+          if(parsedQueryString.FirstHour && parsedQueryString.SecondHour){
+            dateObject.firstHour = parsedQueryString.FirstHour;
+            dateObject.secondHour = parsedQueryString.SecondHour;
+
+            delete parsedQueryString.FirstHour;
+            delete parsedQueryString.SecondHour;
+          }else{
+            if(parsedQueryString.FirstDate){
+              const dateOne = new Date(parsedQueryString.FirstDate + "T00:00:00Z");
+              console.log(dateOne)
+              parsedQueryString.Start_Time = {
+                $gte : dateOne,
+              };
+              delete parsedQueryString.FirstDate;
+            }else{
+              if(parsedQueryString.SecondDate){
+                const dateTwo = new Date(parsedQueryString.SecondDate + "T23:59:59Z");
+
+                parsedQueryString.Start_Time = {
+                  $lte : dateTwo
+                };
+                delete parsedQueryString.SecondDate;
+              }else{
+                if(parsedQueryString.FirstHour){
+                  dateObject.firstHour = parsedQueryString.FirstHour;
+                  delete parsedQueryString.FirstHour;
+                }else{
+                  if(parsedQueryString.SecondHour){
+                    dateObject.secondHour = parsedQueryString.SecondHour;
+                    delete parsedQueryString.SecondHour;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      let type = parsedQueryString.Type;
+      delete parsedQueryString.Type;
+      return {query : parsedQueryString, type: type, dateObject: dateObject};
     }
   }
 

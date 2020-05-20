@@ -77,7 +77,7 @@ block right_content
                                 option(value=n)
                                     | #{n}
                 .right_filters
-                    label.label_weather(for='accident_date') Weather Conditions
+                    label.label_weather(for='Weather_Condition') Weather Conditions
                     .select_box
                         select#Weather_Condition.options_weather(form='filters_form' name='Weather_Condition')
                             option(value='' selected='' hidden='') Weather
@@ -102,7 +102,7 @@ block right_content
                             | Wind chill:
                         input#wind_chill.weather_select(type='number' name='wind_chill' form='filters_form' value='' min='0' max='100' placeholder="F")
                     .weather_filtre
-                        label.weather_select_label(for='wind_chill')
+                        label.weather_select_label(for='wind_speed')
                             | Wind speed:
                         input#wind_speed.weather_select(type='number' name='wind_speed' form='filters_form' value='' min='0' max='100' placeholder="mph")
                     .weather_filtre
@@ -114,7 +114,7 @@ block right_content
                             | Pressure:
                         input#pressure.weather_select(type='number' name='pressure' form='filters_form' value='' min='0' max='100' placeholder="in")
                     .weather_filtre
-                        label.weather_select_label(for='wind_chill')
+                        label.weather_select_label(for='visibility')
                             | Visibility:
                         input#visibility.weather_select(type='number' form='filters_form' name='visibility' value='' min='0' max='100' placeholder="in")
                 // MIDDLE FILTRES
@@ -162,8 +162,18 @@ block right_content
             // -DOWN FILTRES
             .down_filtres
                 .calendar
-                    label.label_calendar(for='accident_date') Accident Date
-                    input#accident_date(type='date' min='2016-02-01' max='2019-12-31' name='accident_date' form='filters_form')
+                    .calendar_text
+                        label.label_calendar Accident date
+                    .calendar_input
+                        input#accident_date_start(type='date' min='2016-02-01' max='2019-12-31' name='accident_date_start' form='filters_form')
+                        p -
+                        input#accident_date_end(type='date' min='2016-02-01' max='2019-12-31' name='accident_date_end' form='filters_form')
+                .slider_container_2
+                    label.slider_label Hour:
+                    .range_icons
+                        input#accident_hour_start(type='time' name='accident_hour_start')
+                        p -
+                        input#accident_hour_end(type='time' name='accident_hour_end')
                 .slider_container_1
                     label.slider_label(for='severity') Accident Severity
                     input#severity.slider(form='filters_form' type='range' name='severity' min='0' max='3' value='0' step='1')
@@ -171,16 +181,6 @@ block right_content
                         li.minor Minor
                         li.major Major
                         li.fatal Fatal
-                .slider_container_2
-                    label.slider_label Hour:
-                    .range_icons
-                        img.icons(alt='sun' src='./Images/Icons/sun.png')
-                        input#hourIN.slider(form='filters_form' name='Hour' type='range' min='0' max='24' step='1' value='0')
-                        output#hourOUT(name='hourOUT')
-                        img.icons(alt='moon' src='./Images/Icons/moon.png')
-                    ul.slider_options_2
-                        li.minor Day
-                        li.major Night
                 // LAST SET OF FILTERS
                 .last_set_filters
                     .last_set_filters_col

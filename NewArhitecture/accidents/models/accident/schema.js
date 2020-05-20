@@ -5,7 +5,7 @@ const accidentSchema = mongoose.Schema({
   Source: { type: String },
   TMC: { type: String },
   Severity: { type: String, enum: [1, 2, 3] },
-  Start_Time: { type: String },
+  Start_Time: { type: Date },
   End_Time: { type: String },
   Start_Lng: { type: String },
   End_Lat: { type: String },

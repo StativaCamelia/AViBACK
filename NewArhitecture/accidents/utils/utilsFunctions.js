@@ -17,9 +17,6 @@ class Utils {
     } else {
       const { error } = data;
       console.log(error);
-<<<<<<< HEAD
-      res.writeHead(401);
-=======
       res.writeHead(401, {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
@@ -27,7 +24,6 @@ class Utils {
             "POST, GET, OPTIONS, PATCH, PUT, DELETE",
         "Access-Control-Allow-Headers": "auth-token, Content-Type",
       });
->>>>>>> 437f5dba67a96cedced6cb2bfaebb28f218a3ca7
       res.write(error.message);
       res.end();
     }

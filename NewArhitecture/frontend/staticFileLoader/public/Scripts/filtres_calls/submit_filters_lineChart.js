@@ -43,9 +43,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const stop = document.getElementById("Stop");
     const station = document.getElementById("Station");
     const trafficSignal = document.getElementById("Traffic_Signal");
-    const accidentDate = document.getElementById("accident_date");
+    const accidentDateStart = document.getElementById("accident_date_start");
+    const accidentDateEnd = document.getElementById("accident_date_end");
     const severity = document.getElementById("severity");
-    const hourIn = document.getElementById("hourIN");
+    const accidentHourStart = document.getElementById("accident_hour_start");
+    const accidentHourEnd = document.getElementById("accident_hour_end");
     const sunriseSunsetDay = document.getElementById("sunrise_sunset_day");
     const sunriseSunsetNight = document.getElementById("sunrise_sunset_night");
     const civilTwilightDay = document.getElementById("civil_twilight_day");
@@ -69,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         let filtersValues = {};
         let queryString = "";
-        let accidentStartTime;
         const pageTypeIndex = window.location.href.lastIndexOf("/");
         const pageType = window.location.href.substring(pageTypeIndex + 1);
 
@@ -251,9 +252,37 @@ document.addEventListener("DOMContentLoaded", function () {
             filtersValues.Traffic_Signal = "False";
             queryString = concatQueryString(queryString, "Traffic_Signal", "False");
         }
-        if (accidentDate.value !== "") {
-            filtersValues.Start_Time = accidentDate.value.toString();
-            accidentStartTime = accidentDate.value.toString();
+        if (accidentDateStart.value !== "") {
+            filtersValues.Start_Date_1 = accidentDateStart.value.toString();
+            queryString = concatQueryString(
+                queryString,
+                "FirstDate",
+                accidentDateStart.value.toString()
+            );
+        }
+        if (accidentDateEnd.value !== "") {
+            filtersValues.Start_Date_2 = accidentDateEnd.value.toString();
+            queryString = concatQueryString(
+                queryString,
+                "SecondDate",
+                accidentDateEnd.value.toString()
+            );
+        }
+        if (accidentHourStart.value !== "") {
+            filtersValues.Start_Hour_1 = accidentHourStart.value.toString();
+            queryString = concatQueryString(
+                queryString,
+                "FirstHour",
+                accidentHourStart.value.toString()
+            );
+        }
+        if (accidentHourEnd.value !== "") {
+            filtersValues.Start_Hour_2 = accidentHourEnd.value.toString();
+            queryString = concatQueryString(
+                queryString,
+                "SecondHour",
+                accidentHourEnd.value.toString()
+            );
         }
         if (severity.value !== "0") {
             filtersValues.Severity = severity.value;
@@ -263,27 +292,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 severity.value.toString()
             );
         }
-        if (hourIn.value !== "0") {
-            let value = hourIn.value.toString();
-            if (value.length === 1) {
-                value = "0" + value;
-            }
-            if (filtersValues.Start_Time) {
-                filtersValues.Start_Time = filtersValues.Start_Time + " " + value + ":";
-            } else {
-                filtersValues.Start_Time = " " + value + ":";
-            }
-            if (accidentStartTime) {
-                accidentStartTime = accidentStartTime + "T" + value;
-            } else {
-                accidentStartTime = value;
-            }
-        }
-        queryString = concatQueryString(
-            queryString,
-            "Start_Time",
-            accidentStartTime
-        );
         if (sunriseSunsetDay.checked) {
             filtersValues.Sunrise_Sunset = "Day";
             queryString = concatQueryString(queryString, "Sunrise_Sunset", "Day");
@@ -359,9 +367,18 @@ document.addEventListener("DOMContentLoaded", function () {
             message.innerText = "You have to select at least one filter!";
             return false;
         } else {
-            message.innerText = "";
-            return true;
+            if(filtersValues.Start_Date_1 > filtersValues.Start_Date_2){
+                message.innerText = "First date must be smaller than second date!";
+                return false;
+            }else{
+                if(filtersValues.Start_Hour_1 > filtersValues.Start_Hour_2){
+                    message.innerText = "First hour must be smaller than second hour!";
+                    return false;
+                }else{
+                    message.innerText = "";
+                    return true;
+                }
+            }
         }
     }
-
 });

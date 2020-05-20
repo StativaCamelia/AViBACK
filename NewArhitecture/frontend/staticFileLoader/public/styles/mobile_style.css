@@ -1186,7 +1186,28 @@
         align-self: center;
         display: flex;
         flex-direction: column;
-        width: 35vw;
+        width: 100%;
+        justify-content: space-between;
+        margin: 1vh 0 1vh 0;
+    }
+
+    .calendar_input{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
+        width: 70%;
+    }
+    .calendar_input p,.range_icons p{
+        font-size: 2rem;
+        margin: 0.3vh 0 0 0;
+    }
+
+    .calendar_text{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
     }
 
     .slider_container_1 {
@@ -1199,15 +1220,29 @@
     .slider_container_2 {
         display: flex;
         flex-direction: column;
-        width: 70vw;
-        align-self: center;
+        width: 100%;
     }
 
     .range_icons {
-        display: inline-flex;
-        width: 70vw;
+        display: flex;
+        flex-direction: row;
+        width: 60%;
+        justify-content: space-between;
         align-self: center;
-        padding-left: 5vw;
+        margin: 1vh 0 1vh 0;
+    }
+
+    #accident_hour_start,#accident_hour_end{
+        z-index: 0;
+        text-align: start;
+        height: 1.5vh;
+        font-size: 0.7rem;
+        box-shadow: 0.5px 0.5px #888888;
+        width: 30%;
+        border-radius: 3px;
+        color: black;
+        font-family: Novecentosanswide;
+        padding: 10px;
     }
 
     .slider_container_1>ul {
@@ -1221,24 +1256,6 @@
     .slider_container_1>ul li {
         width: 14%;
         margin-right: 25%;
-        margin-left: 0px;
-        font-size: small;
-        padding-top: 0ex;
-        margin-top: 0px;
-
-    }
-
-    .slider_container_2>ul {
-        list-style-type: none;
-        display: flex;
-        flex-direction: row;
-        padding-left: 17vw;
-        padding-top: 0px;
-    }
-
-    .slider_container_2>ul li {
-        width: 50%;
-        margin-right: 50%;
         margin-left: 0px;
         font-size: small;
         padding-top: 0ex;

@@ -153,10 +153,8 @@ exports.getRes = async (req, res) => {
     }
   } else if (path.endsWith("accidents") && method === "get") {
     try {
-      const query = await filtresController.editFiltres(queryStringObject);
-      const { success, data } = await accidentController.getData({
-        query,
-      });
+      const {query, type, dateObject} = await filtresController.editFiltres(queryStringObject);
+      const { success, data } = await accidentController.getData(query,type,dateObject);
       utils.sendAnswer(success, data, res);
     } catch (error) {
       utils.sendAnswer(

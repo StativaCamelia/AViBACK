@@ -1,7 +1,7 @@
 const { userController } = require("../../controllers/index");
 
-function sendAnswer(statusCode, content, res, handler) {
-  if (handler === "register") {
+function sendAnswer(success, statusCode, content, res, handler) {
+  if (handler === "register" || handler === "loginGet") {
     res.writeHead(statusCode, {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
@@ -10,39 +10,20 @@ function sendAnswer(statusCode, content, res, handler) {
     });
     res.write(JSON.stringify({ content }, null, 2));
     res.end();
-  }
-  if (handler === "loginPost") {
-    if (statusCode === 200) {
-      res.setHeader("auth-token", content.userObj.token);
+  }else{
+    if (handler === "loginPost") {
+      if (statusCode === 200) {
+        res.setHeader("auth-token", content.userObj.token);
+      }
       res.writeHead(statusCode, {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods":
-          "POST, GET, OPTIONS, PATCH, PUT, DELETE",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
         "Access-Control-Allow-Headers": "auth-token, Content-Type",
       });
       res.write(JSON.stringify({ content }, null, 2));
-    } else {
-      res.writeHead(statusCode, {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods":
-          "POST, GET, OPTIONS, PATCH, PUT, DELETE",
-        "Access-Control-Allow-Headers": "auth-token, Content-Type",
-      });
-      res.write(JSON.stringify({ content }, null, 2));
+      res.end();
     }
-    res.end();
-  }
-  if (handler === "loginGet") {
-    res.writeHead(statusCode, {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
-      "Access-Control-Allow-Headers": "auth-token, Content-Type",
-    });
-    res.write(JSON.stringify({ content }, null, 2));
-    res.end();
   }
 }
 
@@ -80,22 +61,22 @@ exports.getRes = async (req, parsedReq, res) => {
   }
   if (path.endsWith("/login") && method === "post") {
     try {
-      const { statusCode, content } = await userController.handlerPostLogin(
+      const { success, statusCode, content } = await userController.handlerPostLogin(
         parsedReq,
         res
       );
-      sendAnswer(statusCode, content, res, "loginPost");
+      sendAnswer(success, statusCode, content, res, "loginPost");
     } catch (error) {
       console.log(error);
     }
   } else {
     if (path.endsWith("/login") && method === "get") {
       try {
-        const { statusCode, content } = await userController.handlerGetLogin(
+        const { success, statusCode, content } = await userController.handlerGetLogin(
           req,
           res
         );
-        sendAnswer(statusCode, content, res, "loginGet");
+        sendAnswer(success, statusCode, content, res, "loginGet");
       } catch (error) {
         console.log(error);
       }
@@ -103,11 +84,11 @@ exports.getRes = async (req, parsedReq, res) => {
   }
   if (path.endsWith("/register") && method === "post") {
     try {
-      const { statusCode, content } = await userController.handlerPostRegister(
+      const { success, statusCode, content } = await userController.handlerPostRegister(
         parsedReq,
         res
       );
-      sendAnswer(statusCode, content, res, "register");
+      sendAnswer(success, statusCode, content, res, "register");
     } catch (error) {
       console.log(error);
     }
