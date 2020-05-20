@@ -26,7 +26,6 @@ class UserController {
             if (user.valueOfCriteria === content[field]) {
               const objectOfInterest = content[field];
               const email = user.email;
-
               this.sendMail({ field, objectOfInterest, email });
             }
         }
