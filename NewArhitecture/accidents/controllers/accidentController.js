@@ -12,9 +12,7 @@ class AccidentController {
       if (type === "map") {
         content = await this.getMapRepresentation(query);
       } else if (type === "pie") {
-        content = await this.database.Accident.getAccidentsCount(
-            query,infoObject
-        );
+        content = await this.getPieRepresentation(query,infoObject);
         console.log(content)
       } else if (type === "chart") {
         console.log("Fa chart");
@@ -216,6 +214,74 @@ class AccidentController {
     } catch (error) {
       return { success: false, data: { error } };
     }
+  }
+
+  async getPieRepresentation(query,infoObject){
+    try{
+      const criterion = infoObject.pieCriterion;
+      let content = await this.getNumberOfAccidentsByQueryAndGroupBy(query,criterion);
+
+      console.log("aiciii")
+      console.log(content)
+      return content;
+    }catch (error) {
+      throw error;
+    }
+  }
+
+  hourPredicate(accident,firstHourDate,secondHourDate){
+    if(accident.Start_Time.getUTCHours() > firstHourDate.getUTCHours() && accident.Start_Time.getUTCHours() < secondHourDate.getUTCHours()){
+      return true;
+    }else{
+      if(accident.Start_Time.getUTCHours() === firstHourDate.getUTCHours() && accident.Start_Time.getUTCHours() === secondHourDate.getUTCHours()){
+        if(accident.Start_Time.getUTCMinutes() >= firstHourDate.getUTCMinutes() && accident.Start_Time.getUTCMinutes() <= secondHourDate.getUTCMinutes()){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  async filterDataByHour(data,infoObject){
+    let accidents = data;
+    if((infoObject.firstDate && infoObject.secondDate && infoObject.firstHour && infoObject.secondHour) || (infoObject.firstHour && infoObject.secondHour)){
+      const hourOne = infoObject.firstHour.substring(0,2);
+      const minuteOne = infoObject.firstHour.substring(3);
+      let firstHourDate = new Date();
+      firstHourDate.setUTCHours(hourOne,minuteOne);
+
+      const hourTwo = infoObject.secondHour.substring(0,2);
+      const minuteTwo = infoObject.secondHour.substring(3);
+      let secondHourDate = new Date();
+      secondHourDate.setUTCHours(hourTwo,minuteTwo);
+
+      accidents = accidents.filter(accident => this.hourPredicate(accident,firstHourDate,secondHourDate));
+    }else{
+      if(infoObject.firstHour){
+        const hourOne = infoObject.firstHour.substring(0,2);
+        const minuteOne = infoObject.firstHour.substring(3);
+        let firstHourDate = new Date();
+        firstHourDate.setUTCHours(hourOne,minuteOne);
+
+        let secondHourDate = new Date();
+        secondHourDate.setUTCHours("23","59");
+
+        accidents = accidents.filter(accident => this.hourPredicate(accident,firstHourDate,secondHourDate));
+      }else{
+        if(infoObject.secondHour){
+          let firstHourDate = new Date();
+          firstHourDate.setUTCHours("00","00");
+
+          const hourTwo = infoObject.secondHour.substring(0,2);
+          const minuteTwo = infoObject.secondHour.substring(3);
+          let secondHourDate = new Date();
+          secondHourDate.setUTCHours(hourTwo,minuteTwo);
+
+          accidents = accidents.filter(accident => this.hourPredicate(accident,firstHourDate,secondHourDate));
+        }
+      }
+    }
+    return accidents;
   }
 }
 
