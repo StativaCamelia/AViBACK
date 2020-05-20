@@ -6,15 +6,14 @@ class AccidentController {
     this.service = service;
   }
 
-  async getData(query,type,dateObject) {
+  async getData(query,type,infoObject) {
     try {
       let content;
       if (type === "map") {
         content = await this.getMapRepresentation(query);
       } else if (type === "pie") {
-        console.log("Fa pie");
         content = await this.database.Accident.getAccidentsCount(
-            query,dateObject
+            query,infoObject
         );
         console.log(content)
       } else if (type === "chart") {
