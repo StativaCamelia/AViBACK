@@ -5,7 +5,9 @@ const PiePage = require("./piePage");
 const ProfilePage = require("./profilePage");
 const ChartPage = require("./chartPage");
 const DashboardPage = require("./dashboardPage");
+const LinePage = require("./linePage");
 
+const linePage = new LinePage();
 const dashboardPage = new DashboardPage();
 const homePage = new HomePage();
 const contactPage = new ContactPage();
@@ -21,4 +23,5 @@ module.exports = {
   profilePage,
   dashboardPage,
   chartPage,
+  linePage,
 };

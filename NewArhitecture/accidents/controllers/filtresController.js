@@ -50,7 +50,7 @@ class FiltresController {
         delete parsedQueryString[lowerValues[i]];
       } else if (parsedQueryString[higherValues[i]]) {
         parsedQueryString[weatherValues[i]] = {
-          $gte: parseFloat(parsedQueryString[higherValues[i]]),
+          $lte: parseFloat(parsedQueryString[higherValues[i]]),
         };
         delete parsedQueryString[higherValues[i]];
       }

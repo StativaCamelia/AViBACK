@@ -642,7 +642,7 @@
         text-align: center;
     }
 
-    .chart {
+    .chart, .line {
         width: 10vw;
         height: 8vh;
         border-left: 2px dotted #000000;

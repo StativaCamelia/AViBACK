@@ -7,6 +7,7 @@ const {
   pieRoute,
   profileRoute,
   chartRoute,
+  lineRoute,
 } = require("./routes/index");
 const { staticFilesController } = require("../controllers/index");
 
@@ -75,6 +76,10 @@ exports.getRes = async (req, res) => {
     }
     if (parsedReq.path.indexOf("dashboard") !== -1) {
       dashboardRoute.getRes(parsedReq, res);
+      return;
+    }
+    if (parsedReq.path.indexOf("line") !== -1) {
+      lineRoute.getRes(parsedReq, res);
       return;
     }
   });

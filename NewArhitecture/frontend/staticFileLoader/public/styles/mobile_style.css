@@ -315,7 +315,7 @@
         text-align: center;
     }
 
-    .chart {
+    .chart,.line {
         width: 26vw;
         height: 10vh;
         border-left: 2px dotted #000000;
