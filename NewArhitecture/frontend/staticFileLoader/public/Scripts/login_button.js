@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-  startLogin(event);
-  stopLogin(event);
-  stopModal(event);
-  startSignUp(event);
-  stopSignUp(event);
+  startLogin();
+  stopLogin();
+  stopModal();
+  startSignUp();
+  stopSignUp();
 });
 
 function loginListener(event) {

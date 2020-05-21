@@ -177,7 +177,7 @@ class MapController {
         "WSW",
         "West",
       ];
-      const ids = ["", "", "", "active", "",""];
+      const ids = ["", "", "", "active", "","",""];
 
       const { content, contentType } = mapPage.getMapPage(
         statesValues,

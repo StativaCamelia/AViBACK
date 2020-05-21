@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         profileLog.innerText = values.value;
         profileLog.id = values.id;
         profileLog.href = values.href;
+        profileLog.style.display = "inline-block";
       }
       if (this.status === 400) {
         alert("Authentification error!");

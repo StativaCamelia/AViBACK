@@ -60,7 +60,7 @@ class FiltresController {
   async editFiltres(query) {
     if (Object.keys(query).length !== 0) {
       let parsedQueryString = query;
-      let infoObject = {};
+      let criterion;
       if (parsedQueryString.State) {
         parsedQueryString.State = await this.database.State.getAbbrByName(
           parsedQueryString.State
@@ -73,22 +73,15 @@ class FiltresController {
         parsedQueryString.FirstHour &&
         parsedQueryString.SecondHour
       ) {
-        const dateOne = new Date(
-          parsedQueryString.FirstDate + "T00:00:00.000Z"
-        );
-        const dateTwo = new Date(
-          parsedQueryString.SecondDate + "T23:59:59.000Z"
-        );
-
-        parsedQueryString.Start_Time = {
-          $gte: dateOne,
-          $lte: dateTwo,
+        parsedQueryString.Start_Date = {
+          $gte: parsedQueryString.FirstDate,
+          $lte: parsedQueryString.SecondDate,
         };
 
-        infoObject.firstDate = parsedQueryString.FirstDate;
-        infoObject.secondDate = parsedQueryString.SecondDate;
-        infoObject.firstHour = parsedQueryString.FirstHour;
-        infoObject.secondHour = parsedQueryString.SecondHour;
+        parsedQueryString.Start_Hour = {
+          $gte: parsedQueryString.FirstHour,
+          $lte: parsedQueryString.SecondHour,
+        };
 
         delete parsedQueryString.FirstDate;
         delete parsedQueryString.SecondDate;
@@ -96,49 +89,44 @@ class FiltresController {
         delete parsedQueryString.SecondHour;
       } else {
         if (parsedQueryString.FirstDate && parsedQueryString.SecondDate) {
-          const dateOne = new Date(parsedQueryString.FirstDate + "T00:00:00Z");
-          const dateTwo = new Date(parsedQueryString.SecondDate + "T23:59:59Z");
-
-          parsedQueryString.Start_Time = {
-            $gte: dateOne,
-            $lte: dateTwo,
+          parsedQueryString.Start_Date = {
+            $gte: parsedQueryString.FirstDate,
+            $lte: parsedQueryString.SecondDate,
           };
           delete parsedQueryString.FirstDate;
           delete parsedQueryString.SecondDate;
         } else {
           if (parsedQueryString.FirstHour && parsedQueryString.SecondHour) {
-            infoObject.firstHour = parsedQueryString.FirstHour;
-            infoObject.secondHour = parsedQueryString.SecondHour;
+            parsedQueryString.Start_Hour = {
+              $gte: parsedQueryString.FirstHour,
+              $lte: parsedQueryString.SecondHour,
+            };
 
             delete parsedQueryString.FirstHour;
             delete parsedQueryString.SecondHour;
           } else {
             if (parsedQueryString.FirstDate) {
-              const dateOne = new Date(
-                parsedQueryString.FirstDate + "T00:00:00Z"
-              );
-              console.log(dateOne);
-              parsedQueryString.Start_Time = {
-                $gte: dateOne,
+              parsedQueryString.Start_Date = {
+                $gte: parsedQueryString.FirstDate,
               };
               delete parsedQueryString.FirstDate;
             } else {
               if (parsedQueryString.SecondDate) {
-                const dateTwo = new Date(
-                  parsedQueryString.SecondDate + "T23:59:59Z"
-                );
-
-                parsedQueryString.Start_Time = {
-                  $lte: dateTwo,
+                parsedQueryString.Start_Date = {
+                  $lte: parsedQueryString.SecondDate,
                 };
                 delete parsedQueryString.SecondDate;
               } else {
                 if (parsedQueryString.FirstHour) {
-                  infoObject.firstHour = parsedQueryString.FirstHour;
+                  parsedQueryString.Start_Hour = {
+                    $gte: parsedQueryString.FirstHour,
+                  };
                   delete parsedQueryString.FirstHour;
                 } else {
                   if (parsedQueryString.SecondHour) {
-                    infoObject.secondHour = parsedQueryString.SecondHour;
+                    parsedQueryString.Start_Hour = {
+                      $lte: parsedQueryString.SecondHour,
+                    };
                     delete parsedQueryString.SecondHour;
                   }
                 }
@@ -147,8 +135,8 @@ class FiltresController {
           }
         }
       }
-      if(parsedQueryString.Pie_Criterion){
-        infoObject.pieCriterion = parsedQueryString.Pie_Criterion;
+      if (parsedQueryString.Pie_Criterion) {
+        criterion = parsedQueryString.Pie_Criterion;
         delete parsedQueryString.Pie_Criterion;
       }
       let type = parsedQueryString.Type;
@@ -157,8 +145,7 @@ class FiltresController {
       parsedQueryString = await this.editWeather(parsedQueryString);
 
       console.log(parsedQueryString);
-      console.log(infoObject)
-      return { query: parsedQueryString, type: type, infoObject: infoObject };
+      return { query: parsedQueryString, type: type, criterion: criterion };
     }
   }
 

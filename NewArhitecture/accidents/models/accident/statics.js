@@ -217,48 +217,10 @@ module.exports = function (accidentSchema) {
     }
   };
 
-  accidentSchema.statics.getAccidentsCount = async function (filters,infoObject) {
+  accidentSchema.statics.getAccidentsCount = async function (filters) {
     try {
       let accidents = await this.find(filters);
-      if((infoObject.firstDate && infoObject.secondDate && infoObject.firstHour && infoObject.secondHour) || (infoObject.firstHour && infoObject.secondHour)){
-        const hourOne = infoObject.firstHour.substring(0,2);
-        const minuteOne = infoObject.firstHour.substring(3);
-        let firstHourDate = new Date();
-        firstHourDate.setUTCHours(hourOne,minuteOne);
-
-        const hourTwo = infoObject.secondHour.substring(0,2);
-        const minuteTwo = infoObject.secondHour.substring(3);
-        let secondHourDate = new Date();
-        secondHourDate.setUTCHours(hourTwo,minuteTwo);
-
-        accidents = accidents.filter(accident => hourPredicate(accident,firstHourDate,secondHourDate));
-      }else{
-        if(infoObject.firstHour){
-          const hourOne = infoObject.firstHour.substring(0,2);
-          const minuteOne = infoObject.firstHour.substring(3);
-          let firstHourDate = new Date();
-          firstHourDate.setUTCHours(hourOne,minuteOne);
-
-          let secondHourDate = new Date();
-          secondHourDate.setUTCHours("23","59");
-
-          accidents = accidents.filter(accident => hourPredicate(accident,firstHourDate,secondHourDate));
-        }else{
-          if(infoObject.secondHour){
-            let firstHourDate = new Date();
-            firstHourDate.setUTCHours("00","00");
-
-            const hourTwo = infoObject.secondHour.substring(0,2);
-            const minuteTwo = infoObject.secondHour.substring(3);
-            let secondHourDate = new Date();
-            secondHourDate.setUTCHours(hourTwo,minuteTwo);
-
-            accidents = accidents.filter(accident => hourPredicate(accident,firstHourDate,secondHourDate));
-          }
-        }
-      }
-      console.log(accidents)
-      return accidents.length;
+      return accidents;
     } catch (error) {
       throw error;
     }
