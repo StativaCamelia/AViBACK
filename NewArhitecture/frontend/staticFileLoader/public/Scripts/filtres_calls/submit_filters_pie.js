@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const api = "http://localhost:5004/accidents?";
-    const method = "GET";
+  const api = "http://localhost:5004/accidents?";
+  const method = "GET";
 
-    function setVisible(selector, visible) {
-        document.querySelector(selector).style.display = visible ? "flex" : "none";
-    }
+  function setVisible(selector, visible) {
+    document.querySelector(selector).style.display = visible ? "flex" : "none";
+  }
 
     function send_request(query) {
         var xhttp = new XMLHttpRequest();
@@ -24,516 +24,519 @@ document.addEventListener("DOMContentLoaded", function () {
         xhttp.send();
     }
 
-    const state = document.getElementById("state");
-    const county = document.getElementById("county");
-    const city = document.getElementById("city");
-    const street = document.getElementById("street");
-    const number = document.getElementById("number");
-    const timezone = document.getElementById("timezone");
-    const roadSide = document.getElementById("road_side");
-    const weather = document.getElementById("Weather_Condition");
-    const windDirection = document.getElementById("Wind_Direction");
-    const temperature1 = document.getElementById("temperature1");
-    const temperature2 = document.getElementById("temperature2");
-    const windChill1 = document.getElementById("wind_chill1");
-    const windChill2 = document.getElementById("wind_chill2");
-    const windSpeed1 = document.getElementById("wind_speed1");
-    const windSpeed2 = document.getElementById("wind_speed2");
-    const humidity1 = document.getElementById("humidity1");
-    const humidity2 = document.getElementById("humidity2");
-    const pressure1 = document.getElementById("pressure1");
-    const pressure2 = document.getElementById("pressure2");
-    const visibility1 = document.getElementById("visibility1");
-    const visibility2 = document.getElementById("visibility2");
-    const precipitation1 = document.getElementById("precipitation1");
-    const precipitation2 = document.getElementById("precipitation2");
-    const amenity = document.getElementById("amenity");
-    const bump = document.getElementById("bump");
-    const crossing = document.getElementById("crossing");
-    const giveWay = document.getElementById("give_way");
-    const junction = document.getElementById("junction");
-    const noExit = document.getElementById("no_exit");
-    const railway = document.getElementById("Railway");
-    const roundabout = document.getElementById("Roundabout");
-    const trafficCalming = document.getElementById("Traffic_Calming");
-    const stop = document.getElementById("Stop");
-    const station = document.getElementById("Station");
-    const trafficSignal = document.getElementById("Traffic_Signal");
-    const accidentDateStart = document.getElementById("accident_date_start");
-    const accidentDateEnd = document.getElementById("accident_date_end");
-    const severity = document.getElementById("severity");
-    const accidentHourStart = document.getElementById("accident_hour_start");
-    const accidentHourEnd = document.getElementById("accident_hour_end");
-    const sunriseSunsetDay = document.getElementById("sunrise_sunset_day");
-    const sunriseSunsetNight = document.getElementById("sunrise_sunset_night");
-    const civilTwilightDay = document.getElementById("civil_twilight_day");
-    const civilTwilightNight = document.getElementById("civil_twilight_night");
-    const nauticalTwilightDay = document.getElementById("nautical_twilight_day");
-    const nauticalTwilightNight = document.getElementById(
-        "nautical_twilight_night"
-    );
-    const astronomicalTwilightDay = document.getElementById(
-        "astronomical_twilight_day"
-    );
-    const astronomicalTwilightNight = document.getElementById(
-        "astronomical_twilight_night"
-    );
-    const lowerValues = [
-        "Temperature1",
-        "Wind_Chill1",
-        "Wind_Speed1",
-        "Pressure1",
-        "Precipitation1",
-        "Humidity1",
-        "Visibility1",
-    ];
-    const higherValues = [
-        "Temperature2",
-        "Wind_Chill2",
-        "Wind_Speed2",
-        "Pressure2",
-        "Precipitation2",
-        "Humidity2",
-        "Visibility2",
-    ];
-    const weatherNames = [
-        "Temperature",
-        "Wind Chill",
-        "Wind Speed",
-        "Pressure",
-        "Precipitation",
-        "Humidity",
-        "Visibility",
-    ];
-    const lowerValuesComponents = [
-        temperature1,
-        windChill1,
-        windSpeed1,
-        pressure1,
-        precipitation1,
-        humidity1,
-        visibility1,
-    ];
-    const higherValuesComponents = [
-        temperature2,
-        windChill2,
-        windSpeed2,
-        pressure2,
-        precipitation2,
-        humidity2,
-        visibility2,
-    ];
-    const submitFilters = document.getElementById("submit_button");
-    const resetFilters = document.getElementById("reset_button");
-    const pieCriteria = document.getElementById("pie_criteria");
-    const filtersForm = document.getElementById("filters_form");
-    let message = document.getElementById("filter_message");
+  const state = document.getElementById("state");
+  const county = document.getElementById("county");
+  const city = document.getElementById("city");
+  const street = document.getElementById("street");
+  const number = document.getElementById("number");
+  const timezone = document.getElementById("timezone");
+  const roadSide = document.getElementById("road_side");
+  const weather = document.getElementById("Weather_Condition");
+  const windDirection = document.getElementById("Wind_Direction");
+  const temperature1 = document.getElementById("temperature1");
+  const temperature2 = document.getElementById("temperature2");
+  const windChill1 = document.getElementById("wind_chill1");
+  const windChill2 = document.getElementById("wind_chill2");
+  const windSpeed1 = document.getElementById("wind_speed1");
+  const windSpeed2 = document.getElementById("wind_speed2");
+  const humidity1 = document.getElementById("humidity1");
+  const humidity2 = document.getElementById("humidity2");
+  const pressure1 = document.getElementById("pressure1");
+  const pressure2 = document.getElementById("pressure2");
+  const visibility1 = document.getElementById("visibility1");
+  const visibility2 = document.getElementById("visibility2");
+  const precipitation1 = document.getElementById("precipitation1");
+  const precipitation2 = document.getElementById("precipitation2");
+  const amenity = document.getElementById("amenity");
+  const bump = document.getElementById("bump");
+  const crossing = document.getElementById("crossing");
+  const giveWay = document.getElementById("give_way");
+  const junction = document.getElementById("junction");
+  const noExit = document.getElementById("no_exit");
+  const railway = document.getElementById("Railway");
+  const roundabout = document.getElementById("Roundabout");
+  const trafficCalming = document.getElementById("Traffic_Calming");
+  const stop = document.getElementById("Stop");
+  const station = document.getElementById("Station");
+  const trafficSignal = document.getElementById("Traffic_Signal");
+  const accidentDateStart = document.getElementById("accident_date_start");
+  const accidentDateEnd = document.getElementById("accident_date_end");
+  const severity = document.getElementById("severity");
+  const accidentHourStart = document.getElementById("accident_hour_start");
+  const accidentHourEnd = document.getElementById("accident_hour_end");
+  const sunriseSunsetDay = document.getElementById("sunrise_sunset_day");
+  const sunriseSunsetNight = document.getElementById("sunrise_sunset_night");
+  const civilTwilightDay = document.getElementById("civil_twilight_day");
+  const civilTwilightNight = document.getElementById("civil_twilight_night");
+  const nauticalTwilightDay = document.getElementById("nautical_twilight_day");
+  const nauticalTwilightNight = document.getElementById(
+    "nautical_twilight_night"
+  );
+  const astronomicalTwilightDay = document.getElementById(
+    "astronomical_twilight_day"
+  );
+  const astronomicalTwilightNight = document.getElementById(
+    "astronomical_twilight_night"
+  );
+  const lowerValues = [
+    "Temperature1",
+    "Wind_Chill1",
+    "Wind_Speed1",
+    "Pressure1",
+    "Precipitation1",
+    "Humidity1",
+    "Visibility1",
+  ];
+  const higherValues = [
+    "Temperature2",
+    "Wind_Chill2",
+    "Wind_Speed2",
+    "Pressure2",
+    "Precipitation2",
+    "Humidity2",
+    "Visibility2",
+  ];
+  const weatherNames = [
+    "Temperature",
+    "Wind Chill",
+    "Wind Speed",
+    "Pressure",
+    "Precipitation",
+    "Humidity",
+    "Visibility",
+  ];
+  const lowerValuesComponents = [
+    temperature1,
+    windChill1,
+    windSpeed1,
+    pressure1,
+    precipitation1,
+    humidity1,
+    visibility1,
+  ];
+  const higherValuesComponents = [
+    temperature2,
+    windChill2,
+    windSpeed2,
+    pressure2,
+    precipitation2,
+    humidity2,
+    visibility2,
+  ];
+  const submitFilters = document.getElementById("submit_button");
+  const resetFilters = document.getElementById("reset_button");
+  const pieCriteria = document.getElementById("pie_criteria");
+  const filtersForm = document.getElementById("filters_form");
+  let message = document.getElementById("filter_message");
 
-    filtersForm.addEventListener("change", criterionForPie);
-    resetFilters.addEventListener("click", function () {
-        deletePieCriteriaNodes();
-    });
+  filtersForm.addEventListener("change", criterionForPie);
+  resetFilters.addEventListener("click", function () {
+    deletePieCriteriaNodes();
+  });
 
-    submitFilters.addEventListener("click", handlerSubmitFilters);
+  submitFilters.addEventListener("click", handlerSubmitFilters);
 
-    function handlerSubmitFilters(e) {
-        e.preventDefault();
-        let filtersValues = {};
-        let queryString = "";
-        const pageTypeIndex = window.location.href.lastIndexOf("/");
-        const pageType = window.location.href.substring(pageTypeIndex + 1);
+  function handlerSubmitFilters(e) {
+    e.preventDefault();
+    let filtersValues = {};
+    let queryString = "";
+    const pageTypeIndex = window.location.href.lastIndexOf("/");
+    const pageType = window.location.href.substring(pageTypeIndex + 1);
 
-        queryString = concatQueryString(queryString, "Type", pageType);
-        if (state.value !== "state") {
-            filtersValues.State = state.value;
-            queryString = concatQueryString(queryString, "State", state.value);
-        }
-        if (county.value !== "county") {
-            filtersValues.County = county.value;
-            queryString = concatQueryString(queryString, "County", county.value);
-        }
-        if (city.value !== "city") {
-            filtersValues.City = city.value;
-            queryString = concatQueryString(queryString, "City", city.value);
-        }
-        if (street.value !== "street") {
-            filtersValues.Street = street.value;
-            queryString = concatQueryString(queryString, "Street", street.value);
-        }
-        if (number.value !== "number") {
-            filtersValues.Number = number.value;
-            queryString = concatQueryString(queryString, "Number", number.value);
-        }
-        if (timezone.value !== "timezone") {
-            filtersValues.Timezone = timezone.value;
-            queryString = concatQueryString(queryString, "Timezone", timezone.value);
-        }
-        if (roadSide.value !== "") {
-            filtersValues.Side = roadSide.value === "Left" ? "L" : "R";
-            let roadSideValue = roadSide.value === "Left" ? "L" : "R";
-            queryString = concatQueryString(queryString, "Side", roadSideValue);
-        }
-        if (weather.value !== "") {
-            filtersValues.Weather_Condition = weather.value;
-            queryString = concatQueryString(
-                queryString,
-                "Weather_Condition",
-                weather.value
-            );
-        }
-        if (windDirection.value !== "") {
-            filtersValues.Wind_Direction = windDirection.value;
-            queryString = concatQueryString(
-                queryString,
-                "Wind_Direction",
-                windDirection.value
-            );
-        }
-        if (amenity.checked) {
-            filtersValues.Amenity = "True";
-            queryString = concatQueryString(queryString, "Amenity", "True");
-        } else {
-            filtersValues.Amenity = "False";
-            queryString = concatQueryString(queryString, "Amenity", "False");
-        }
-        if (bump.checked) {
-            filtersValues.Bump = "True";
-            queryString = concatQueryString(queryString, "Bump", "True");
-        } else {
-            filtersValues.Bump = "False";
-            queryString = concatQueryString(queryString, "Bump", "False");
-        }
-        if (crossing.checked) {
-            filtersValues.Crossing = "True";
-            queryString = concatQueryString(queryString, "Crossing", "True");
-        } else {
-            filtersValues.Crossing = "False";
-            queryString = concatQueryString(queryString, "Crossing", "False");
-        }
-        if (giveWay.checked) {
-            filtersValues.Give_Way = "True";
-            queryString = concatQueryString(queryString, "Give_Way", "True");
-        } else {
-            filtersValues.Give_Way = "False";
-            queryString = concatQueryString(queryString, "Give_Way", "False");
-        }
-        if (junction.checked) {
-            filtersValues.Junction = "True";
-            queryString = concatQueryString(queryString, "Junction", "True");
-        } else {
-            filtersValues.Junction = "False";
-            queryString = concatQueryString(queryString, "Junction", "False");
-        }
-        if (noExit.checked) {
-            filtersValues.No_Exit = "True";
-            queryString = concatQueryString(queryString, "No_Exit", "True");
-        } else {
-            filtersValues.No_Exit = "False";
-            queryString = concatQueryString(queryString, "No_Exit", "False");
-        }
-        if (railway.checked) {
-            filtersValues.Railway = "True";
-            queryString = concatQueryString(queryString, "Railway", "True");
-        } else {
-            filtersValues.Railway = "False";
-            queryString = concatQueryString(queryString, "Railway", "False");
-        }
-        if (roundabout.checked) {
-            filtersValues.Roundabout = "True";
-            queryString = concatQueryString(queryString, "Roundabout", "True");
-        } else {
-            filtersValues.Roundabout = "False";
-            queryString = concatQueryString(queryString, "Roundabout", "False");
-        }
-        if (trafficCalming.checked) {
-            filtersValues.Traffic_Calming = "True";
-            queryString = concatQueryString(queryString, "Traffic_Calming", "True");
-        } else {
-            filtersValues.Traffic_Calming = "False";
-            queryString = concatQueryString(queryString, "Traffic_Calming", "False");
-        }
-        if (stop.checked) {
-            filtersValues.Stop = "True";
-            queryString = concatQueryString(queryString, "Stop", "True");
-        } else {
-            filtersValues.Stop = "False";
-            queryString = concatQueryString(queryString, "Stop", "False");
-        }
-        if (station.checked) {
-            filtersValues.Station = "True";
-            queryString = concatQueryString(queryString, "Station", "True");
-        } else {
-            filtersValues.Station = "False";
-            queryString = concatQueryString(queryString, "Station", "False");
-        }
-        if (trafficSignal.checked) {
-            filtersValues.Traffic_Signal = "True";
-            queryString = concatQueryString(queryString, "Traffic_Signal", "True");
-        } else {
-            filtersValues.Traffic_Signal = "False";
-            queryString = concatQueryString(queryString, "Traffic_Signal", "False");
-        }
-        if (accidentDateStart.value !== "") {
-            filtersValues.Start_Date_1 = accidentDateStart.value.toString();
-            queryString = concatQueryString(
-                queryString,
-                "FirstDate",
-                accidentDateStart.value.toString()
-            );
-        }
-        if (accidentDateEnd.value !== "") {
-            filtersValues.Start_Date_2 = accidentDateEnd.value.toString();
-            queryString = concatQueryString(
-                queryString,
-                "SecondDate",
-                accidentDateEnd.value.toString()
-            );
-        }
-        if (accidentHourStart.value !== "") {
-            filtersValues.Start_Hour_1 = accidentHourStart.value.toString();
-            queryString = concatQueryString(
-                queryString,
-                "FirstHour",
-                accidentHourStart.value.toString()
-            );
-        }
-        if (accidentHourEnd.value !== "") {
-            filtersValues.Start_Hour_2 = accidentHourEnd.value.toString();
-            queryString = concatQueryString(
-                queryString,
-                "SecondHour",
-                accidentHourEnd.value.toString()
-            );
-        }
-        if (severity.value !== "0") {
-            filtersValues.Severity = severity.value;
-            queryString = concatQueryString(
-                queryString,
-                "Severity",
-                severity.value.toString()
-            );
-        }
-        if (sunriseSunsetDay.checked) {
-            filtersValues.Sunrise_Sunset = "Day";
-            queryString = concatQueryString(queryString, "Sunrise_Sunset", "Day");
-        }
-        if (sunriseSunsetNight.checked) {
-            filtersValues.Sunrise_Sunset = "Night";
-            queryString = concatQueryString(queryString, "Sunrise_Sunset", "Night");
-        }
-        if (civilTwilightDay.checked) {
-            filtersValues.Civil_Twilight = "Day";
-            queryString = concatQueryString(queryString, "Civil_Twilight", "Day");
-        }
-        if (civilTwilightNight.checked) {
-            filtersValues.Civil_Twilight = "Night";
-            queryString = concatQueryString(queryString, "Civil_Twilight", "Night");
-        }
-        if (nauticalTwilightDay.checked) {
-            filtersValues.Nautical_Twilight = "Day";
-            queryString = concatQueryString(queryString, "Nautical_Twilight", "Day");
-        }
-        if (nauticalTwilightNight.checked) {
-            filtersValues.Nautical_Twilight = "Night";
-            queryString = concatQueryString(
-                queryString,
-                "Nautical_Twilight",
-                "Night"
-            );
-        }
-        if (astronomicalTwilightDay.checked) {
-            filtersValues.Astronomical_Twilight = "Day";
-            queryString = concatQueryString(
-                queryString,
-                "Astronomical_Twilight",
-                "Day"
-            );
-        }
-        if (astronomicalTwilightNight.checked) {
-            filtersValues.Astronomical_Twilight = "Night";
-            queryString = concatQueryString(
-                queryString,
-                "Astronomical_Twilight",
-                "Night"
-            );
-        }
-        for (let i = 0; i < lowerValuesComponents.length; i++) {
-            if (lowerValuesComponents[i].value !== "") {
-                filtersValues[lowerValues[i]] = lowerValuesComponents[i].value;
-                queryString = concatQueryString(
-                    queryString,
-                    `${lowerValues[i]}`,
-                    lowerValuesComponents[i].value
-                );
-            }
-        }
-        for (let i = 0; i < higherValuesComponents.length; i++) {
-            if (higherValuesComponents[i].value !== "") {
-                filtersValues[higherValues[i]] = higherValuesComponents[i].value;
-                queryString = concatQueryString(
-                    queryString,
-                    `${higherValues[i]}`,
-                    higherValuesComponents[i].value
-                );
-            }
-        }
-
-        filtersValues.Pie_Criterion = pieCriteria.value;
+    queryString = concatQueryString(queryString, "Type", pageType);
+    if (state.value !== "state") {
+      filtersValues.State = state.value;
+      queryString = concatQueryString(queryString, "State", state.value);
+    }
+    if (county.value !== "county") {
+      filtersValues.County = county.value;
+      queryString = concatQueryString(queryString, "County", county.value);
+    }
+    if (city.value !== "city") {
+      filtersValues.City = city.value;
+      queryString = concatQueryString(queryString, "City", city.value);
+    }
+    if (street.value !== "street") {
+      filtersValues.Street = street.value;
+      queryString = concatQueryString(queryString, "Street", street.value);
+    }
+    if (number.value !== "number") {
+      filtersValues.Number = number.value;
+      queryString = concatQueryString(queryString, "Number", number.value);
+    }
+    if (timezone.value !== "timezone") {
+      filtersValues.Timezone = timezone.value;
+      queryString = concatQueryString(queryString, "Timezone", timezone.value);
+    }
+    if (roadSide.value !== "") {
+      filtersValues.Side = roadSide.value === "Left" ? "L" : "R";
+      let roadSideValue = roadSide.value === "Left" ? "L" : "R";
+      queryString = concatQueryString(queryString, "Side", roadSideValue);
+    }
+    if (weather.value !== "") {
+      filtersValues.Weather_Condition = weather.value;
+      queryString = concatQueryString(
+        queryString,
+        "Weather_Condition",
+        weather.value
+      );
+    }
+    if (windDirection.value !== "") {
+      filtersValues.Wind_Direction = windDirection.value;
+      queryString = concatQueryString(
+        queryString,
+        "Wind_Direction",
+        windDirection.value
+      );
+    }
+    if (amenity.checked) {
+      filtersValues.Amenity = "True";
+      queryString = concatQueryString(queryString, "Amenity", "True");
+    } else {
+      filtersValues.Amenity = "False";
+      queryString = concatQueryString(queryString, "Amenity", "False");
+    }
+    if (bump.checked) {
+      filtersValues.Bump = "True";
+      queryString = concatQueryString(queryString, "Bump", "True");
+    } else {
+      filtersValues.Bump = "False";
+      queryString = concatQueryString(queryString, "Bump", "False");
+    }
+    if (crossing.checked) {
+      filtersValues.Crossing = "True";
+      queryString = concatQueryString(queryString, "Crossing", "True");
+    } else {
+      filtersValues.Crossing = "False";
+      queryString = concatQueryString(queryString, "Crossing", "False");
+    }
+    if (giveWay.checked) {
+      filtersValues.Give_Way = "True";
+      queryString = concatQueryString(queryString, "Give_Way", "True");
+    } else {
+      filtersValues.Give_Way = "False";
+      queryString = concatQueryString(queryString, "Give_Way", "False");
+    }
+    if (junction.checked) {
+      filtersValues.Junction = "True";
+      queryString = concatQueryString(queryString, "Junction", "True");
+    } else {
+      filtersValues.Junction = "False";
+      queryString = concatQueryString(queryString, "Junction", "False");
+    }
+    if (noExit.checked) {
+      filtersValues.No_Exit = "True";
+      queryString = concatQueryString(queryString, "No_Exit", "True");
+    } else {
+      filtersValues.No_Exit = "False";
+      queryString = concatQueryString(queryString, "No_Exit", "False");
+    }
+    if (railway.checked) {
+      filtersValues.Railway = "True";
+      queryString = concatQueryString(queryString, "Railway", "True");
+    } else {
+      filtersValues.Railway = "False";
+      queryString = concatQueryString(queryString, "Railway", "False");
+    }
+    if (roundabout.checked) {
+      filtersValues.Roundabout = "True";
+      queryString = concatQueryString(queryString, "Roundabout", "True");
+    } else {
+      filtersValues.Roundabout = "False";
+      queryString = concatQueryString(queryString, "Roundabout", "False");
+    }
+    if (trafficCalming.checked) {
+      filtersValues.Traffic_Calming = "True";
+      queryString = concatQueryString(queryString, "Traffic_Calming", "True");
+    } else {
+      filtersValues.Traffic_Calming = "False";
+      queryString = concatQueryString(queryString, "Traffic_Calming", "False");
+    }
+    if (stop.checked) {
+      filtersValues.Stop = "True";
+      queryString = concatQueryString(queryString, "Stop", "True");
+    } else {
+      filtersValues.Stop = "False";
+      queryString = concatQueryString(queryString, "Stop", "False");
+    }
+    if (station.checked) {
+      filtersValues.Station = "True";
+      queryString = concatQueryString(queryString, "Station", "True");
+    } else {
+      filtersValues.Station = "False";
+      queryString = concatQueryString(queryString, "Station", "False");
+    }
+    if (trafficSignal.checked) {
+      filtersValues.Traffic_Signal = "True";
+      queryString = concatQueryString(queryString, "Traffic_Signal", "True");
+    } else {
+      filtersValues.Traffic_Signal = "False";
+      queryString = concatQueryString(queryString, "Traffic_Signal", "False");
+    }
+    if (accidentDateStart.value !== "") {
+      filtersValues.Start_Date_1 = accidentDateStart.value.toString();
+      queryString = concatQueryString(
+        queryString,
+        "FirstDate",
+        accidentDateStart.value.toString()
+      );
+    }
+    if (accidentDateEnd.value !== "") {
+      filtersValues.Start_Date_2 = accidentDateEnd.value.toString();
+      queryString = concatQueryString(
+        queryString,
+        "SecondDate",
+        accidentDateEnd.value.toString()
+      );
+    }
+    if (accidentHourStart.value !== "") {
+      filtersValues.Start_Hour_1 = accidentHourStart.value.toString();
+      queryString = concatQueryString(
+        queryString,
+        "FirstHour",
+        accidentHourStart.value.toString()
+      );
+    }
+    if (accidentHourEnd.value !== "") {
+      filtersValues.Start_Hour_2 = accidentHourEnd.value.toString();
+      queryString = concatQueryString(
+        queryString,
+        "SecondHour",
+        accidentHourEnd.value.toString()
+      );
+    }
+    if (severity.value !== "0") {
+      filtersValues.Severity = severity.value;
+      queryString = concatQueryString(
+        queryString,
+        "Severity",
+        severity.value.toString()
+      );
+    }
+    if (sunriseSunsetDay.checked) {
+      filtersValues.Sunrise_Sunset = "Day";
+      queryString = concatQueryString(queryString, "Sunrise_Sunset", "Day");
+    }
+    if (sunriseSunsetNight.checked) {
+      filtersValues.Sunrise_Sunset = "Night";
+      queryString = concatQueryString(queryString, "Sunrise_Sunset", "Night");
+    }
+    if (civilTwilightDay.checked) {
+      filtersValues.Civil_Twilight = "Day";
+      queryString = concatQueryString(queryString, "Civil_Twilight", "Day");
+    }
+    if (civilTwilightNight.checked) {
+      filtersValues.Civil_Twilight = "Night";
+      queryString = concatQueryString(queryString, "Civil_Twilight", "Night");
+    }
+    if (nauticalTwilightDay.checked) {
+      filtersValues.Nautical_Twilight = "Day";
+      queryString = concatQueryString(queryString, "Nautical_Twilight", "Day");
+    }
+    if (nauticalTwilightNight.checked) {
+      filtersValues.Nautical_Twilight = "Night";
+      queryString = concatQueryString(
+        queryString,
+        "Nautical_Twilight",
+        "Night"
+      );
+    }
+    if (astronomicalTwilightDay.checked) {
+      filtersValues.Astronomical_Twilight = "Day";
+      queryString = concatQueryString(
+        queryString,
+        "Astronomical_Twilight",
+        "Day"
+      );
+    }
+    if (astronomicalTwilightNight.checked) {
+      filtersValues.Astronomical_Twilight = "Night";
+      queryString = concatQueryString(
+        queryString,
+        "Astronomical_Twilight",
+        "Night"
+      );
+    }
+    for (let i = 0; i < lowerValuesComponents.length; i++) {
+      if (lowerValuesComponents[i].value !== "") {
+        filtersValues[lowerValues[i]] = lowerValuesComponents[i].value;
         queryString = concatQueryString(
-            queryString,
-            "Pie_Criterion",
-            pieCriteria.value
+          queryString,
+          `${lowerValues[i]}`,
+          lowerValuesComponents[i].value
         );
-
-        if (verifFilters(filtersValues) === true) {
-            send_request(queryString.substring(1));
-        }
+      }
+    }
+    for (let i = 0; i < higherValuesComponents.length; i++) {
+      if (higherValuesComponents[i].value !== "") {
+        filtersValues[higherValues[i]] = higherValuesComponents[i].value;
+        queryString = concatQueryString(
+          queryString,
+          `${higherValues[i]}`,
+          higherValuesComponents[i].value
+        );
+      }
     }
 
-    function concatQueryString(queryString, key, value) {
-        queryString = queryString + "&";
-        queryString = queryString + key + "=" + value;
-        return queryString;
-    }
+    filtersValues.Pie_Criterion = pieCriteria.value;
+    queryString = concatQueryString(
+      queryString,
+      "Pie_Criterion",
+      pieCriteria.value
+    );
 
-    function deletePieCriteriaNodes() {
-        while (pieCriteria.firstChild && pieCriteria.childElementCount > 1) {
-            pieCriteria.removeChild(pieCriteria.lastChild);
-        }
+    if (verifFilters(filtersValues) === true) {
+      send_request(queryString.substring(1));
     }
+  }
 
-    function createCriterionFields() {
-        let options = [];
-        if (state.value === "state") {
-            options.push("State");
-        }
-        if (county.value === "county") {
-            options.push("County");
-        }
-        if (city.value === "city") {
-            options.push("City");
-        }
-        if (street.value === "street") {
-            options.push("Street");
-        }
-        if (number.value === "number") {
-            options.push("Number");
-        }
-        if (timezone.value === "timezone") {
-            options.push("Timezone");
-        }
-        if (roadSide.value === "") {
-            options.push("Road side");
-        }
-        if (weather.value === "") {
-            options.push("Weather");
-        }
-        if (windDirection.value === "") {
-            options.push("Wind direction");
-        }
-        if (temperature1.value === "" && temperature2.value === "") {
-            options.push("Temperature");
-        }
-        if (windChill1.value === "" && windChill2.value === "") {
-            options.push("Wind chill");
-        }
-        if (windSpeed1.value === "" && windSpeed2.value === "") {
-            options.push("Wind speed");
-        }
-        if (humidity1.value === "" && humidity2.value === "") {
-            options.push("Humidity");
-        }
-        if (pressure1.value === "" && pressure2.value === "") {
-            options.push("Pressure");
-        }
-        if (visibility1.value === "" && visibility2.value === "") {
-            options.push("Visibility");
-        }
-        if (precipitation1.value === "" && precipitation2.value === "") {
-            options.push("Precipitation");
-        }
-        if (accidentDateStart.value === "" && accidentDateEnd.value === "") {
-            options.push("Accident date");
-        }
-        if (severity.value === "0") {
-            options.push("Severity");
-        }
-        if (accidentHourStart.value === "" && accidentHourEnd.value === "") {
-            options.push("Hour");
-        }
-        if (
-            sunriseSunsetDay.checked === false &&
-            sunriseSunsetNight.checked === false
-        ) {
-            options.push("Sunrise/Sunset");
-        }
-        if (
-            civilTwilightDay.checked === false &&
-            civilTwilightNight.checked === false
-        ) {
-            options.push("Civil twilight");
-        }
-        if (
-            nauticalTwilightDay.checked === false &&
-            nauticalTwilightNight.checked === false
-        ) {
-            options.push("Nautical twilight");
-        }
-        if (
-            astronomicalTwilightDay.checked === false &&
-            astronomicalTwilightNight.checked === false
-        ) {
-            options.push("Astronomical twilight");
-        }
-        return options;
-    }
+  function concatQueryString(queryString, key, value) {
+    queryString = queryString + "&";
+    queryString = queryString + key + "=" + value;
+    return queryString;
+  }
 
-    function createCriterionOptions(options) {
-        for (i = 0; i < options.length; i++) {
-            let option = document.createElement("option");
-            let opt = options[i];
-            option.value = opt;
-            option.textContent = opt;
-            pieCriteria.appendChild(option);
-        }
+  function deletePieCriteriaNodes() {
+    while (pieCriteria.firstChild && pieCriteria.childElementCount > 1) {
+      pieCriteria.removeChild(pieCriteria.lastChild);
     }
+  }
 
-    function criterionForPie(e) {
-        deletePieCriteriaNodes();
-        let options = createCriterionFields();
-        createCriterionOptions(options);
+  function createCriterionFields() {
+    let options = [];
+    if (state.value === "state") {
+      options.push("State");
     }
+    if (county.value === "county") {
+      options.push("County");
+    }
+    if (city.value === "city") {
+      options.push("City");
+    }
+    if (street.value === "street") {
+      options.push("Street");
+    }
+    if (number.value === "number") {
+      options.push("Number");
+    }
+    if (timezone.value === "timezone") {
+      options.push("Timezone");
+    }
+    if (roadSide.value === "") {
+      options.push("Road side");
+    }
+    if (weather.value === "") {
+      options.push("Weather");
+    }
+    if (windDirection.value === "") {
+      options.push("Wind direction");
+    }
+    if (temperature1.value === "" && temperature2.value === "") {
+      options.push("Temperature");
+    }
+    if (windChill1.value === "" && windChill2.value === "") {
+      options.push("Wind chill");
+    }
+    if (windSpeed1.value === "" && windSpeed2.value === "") {
+      options.push("Wind speed");
+    }
+    if (humidity1.value === "" && humidity2.value === "") {
+      options.push("Humidity");
+    }
+    if (pressure1.value === "" && pressure2.value === "") {
+      options.push("Pressure");
+    }
+    if (visibility1.value === "" && visibility2.value === "") {
+      options.push("Visibility");
+    }
+    if (precipitation1.value === "" && precipitation2.value === "") {
+      options.push("Precipitation");
+    }
+    if (accidentDateStart.value === "" && accidentDateEnd.value === "") {
+      options.push("Accident date");
+    }
+    if (severity.value === "0") {
+      options.push("Severity");
+    }
+    if (accidentHourStart.value === "" && accidentHourEnd.value === "") {
+      options.push("Hour");
+    }
+    if (
+      sunriseSunsetDay.checked === false &&
+      sunriseSunsetNight.checked === false
+    ) {
+      options.push("Sunrise/Sunset");
+    }
+    if (
+      civilTwilightDay.checked === false &&
+      civilTwilightNight.checked === false
+    ) {
+      options.push("Civil twilight");
+    }
+    if (
+      nauticalTwilightDay.checked === false &&
+      nauticalTwilightNight.checked === false
+    ) {
+      options.push("Nautical twilight");
+    }
+    if (
+      astronomicalTwilightDay.checked === false &&
+      astronomicalTwilightNight.checked === false
+    ) {
+      options.push("Astronomical twilight");
+    }
+    return options;
+  }
 
-    function verifyWeatherFiltres(filtersValues) {
-        for (let i = 0; i < lowerValues.length; i++){
-            if (filtersValues[lowerValues[i]] > filtersValues[higherValues[i]]) {
-                message.innerText = `The first value for ${weatherNames[i]} cannot be higher that the second value`;
-                return false;
-            }
-        }
-        return true;
+  function createCriterionOptions(options) {
+    for (i = 0; i < options.length; i++) {
+      let option = document.createElement("option");
+      let opt = options[i];
+      option.value = opt;
+      option.textContent = opt;
+      pieCriteria.appendChild(option);
     }
+  }
 
-    function verifyDates(filtersValues) {
-        if(filtersValues.Start_Date_1 > filtersValues.Start_Date_2){
-            message.innerText = "First date must be smaller than second date!";
-            return false;
-        }else{
-            if(filtersValues.Start_Hour_1 > filtersValues.Start_Hour_2){
-                message.innerText = "First hour must be smaller than second hour!";
-                return false;
-            }
-            return true;
-        }
-    }
+  function criterionForPie(e) {
+    deletePieCriteriaNodes();
+    let options = createCriterionFields();
+    createCriterionOptions(options);
+  }
 
-    function verifyExistCriterion(filtersValues) {
-        if (filtersValues.Pie_Criterion === "criterion") {
-            message.innerText = "You have to select a criterion!";
-            return false;
-        }
-        return true;
+  function verifyWeatherFiltres(filtersValues) {
+    for (let i = 0; i < lowerValues.length; i++) {
+      if (
+        parseFloat(filtersValues[lowerValues[i]]) >
+        parseFloat(filtersValues[higherValues[i]])
+      ) {
+        message.innerText = `The first value for ${weatherNames[i]} cannot be higher that the second value`;
+        return false;
+      }
     }
+    return true;
+  }
+
+  function verifyDates(filtersValues) {
+    if (filtersValues.Start_Date_1 > filtersValues.Start_Date_2) {
+      message.innerText = "First date must be smaller than second date!";
+      return false;
+    } else {
+      if (filtersValues.Start_Hour_1 > filtersValues.Start_Hour_2) {
+        message.innerText = "First hour must be smaller than second hour!";
+        return false;
+      }
+      return true;
+    }
+  }
+
+  function verifyExistCriterion(filtersValues) {
+    if (filtersValues.Pie_Criterion === "criterion") {
+      message.innerText = "You have to select a criterion!";
+      return false;
+    }
+    return true;
+  }
 
     function verifFilters(filtersValues) {
         let filtersValueLength = Object.keys(filtersValues).length;
