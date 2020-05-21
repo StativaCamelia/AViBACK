@@ -1025,7 +1025,7 @@
         align-items: center;
         display: flex;
         flex-direction: column;
-        width: 40%;
+        width: 50%;
     }
 
     .left_filtres {
@@ -1041,6 +1041,10 @@
         flex-basis: fit-content;
         flex-direction: row;
         width: 100%;
+    }
+
+    .weather_filtre p{
+        margin: 0 0.5vw 0 0.5vw;
     }
 
     .label_road,
@@ -1065,7 +1069,7 @@
         height: 0.2vh;
         font-size: x-small;
         box-shadow: 0.5px 0.5px #888888;
-        width: 16%;
+        width: 7%;
         border-radius: 3px;
         color: black;
         font-family: Novecentosanswide;

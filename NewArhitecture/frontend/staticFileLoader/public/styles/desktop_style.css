@@ -1023,7 +1023,7 @@
         flex-direction: column;
         width: auto;
         height: auto;
-        margin: 5vh 5vw 0 0;
+        margin: 0 5vw 0 0;
     }
 
     .info_pie {
@@ -1171,14 +1171,14 @@
     .left_filtres {
         display: flex;
         flex-direction: column;
-        width: 30%;
+        width: 40%;
     }
 
-    .right_filtres {
+    .right_filters {
         align-items: center;
         display: flex;
         flex-direction: column;
-        width: 40%;
+        width: 48%;
     }
 
     .weather_filtre {
@@ -1187,6 +1187,11 @@
         justify-content: space-evenly;
         flex-basis: fit-content;
         flex-direction: row;
+        width: 100%;
+    }
+
+    .weather_filtre p{
+        margin: 0 0.3vw 0 0.3vw;
     }
 
     .label_road,
@@ -1212,7 +1217,7 @@
         height: 0.2vh;
         font-size: x-small;
         box-shadow: 0.5px 0.5px #888888;
-        width: 16%;
+        width: 14%;
         border-radius: 3px;
         color: black;
         font-family: Novecentosanswide;

@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setVisible("#loading", true);
             if (this.readyState === 4 && this.status === 200) {
                 const { content } = JSON.parse(this.responseText);
+                drawPie(content);
                 setVisible("#loading", false);
                 setVisible("#left_cont", true);
             }
@@ -505,9 +506,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function verifyWeatherFiltres(filtersValues) {
         for (let i = 0; i < lowerValues.length; i++){
-            console.log(filtersValues[lowerValues[i]])
-            console.log(filtersValues[higherValues[i]])
-            console.log(filtersValues[lowerValues[i]] > filtersValues[higherValues[i]])
             if (filtersValues[lowerValues[i]] > filtersValues[higherValues[i]]) {
                 message.innerText = `The first value for ${weatherNames[i]} cannot be higher that the second value`;
                 return false;
@@ -561,8 +559,95 @@ document.addEventListener("DOMContentLoaded", function () {
         const ok = verifyWeatherFiltres(filtersValues);
         const okDate = verifyDates(filtersValues);
         const okCriterion = verifyExistCriterion(filtersValues);
-        console.log(verifyWeatherFiltres(filtersValues));
         if (ok && okDate && okCriterion) message.innerText = "";
         return ok && okDate && okCriterion;
+    }
+
+    function deletePieLegend(){
+        let legendPie = document.querySelector(".legend_pie");
+        while (legendPie.firstChild) {
+            legendPie.removeChild(legendPie.lastChild);
+        }
+    }
+
+    function errorMessage(){
+        let errorMessageResult = document.getElementById("error_message_result");
+        errorMessageResult.innerText = "NO DATA FOUND!";
+    }
+
+    function deleteErrorMessage(){
+        let errorMessageResult = document.getElementById("error_message_result");
+        errorMessageResult.innerText = "";
+    }
+
+    function drawPie(dataResponse) {
+        dataResponse.sort(function(a, b){return a.count - b.count});
+
+        let data = [];
+        let info = [];
+        for(let i = 0; i < dataResponse.length; i++){
+            data.push(dataResponse[i].count);
+            info.push(dataResponse[i]._id);
+        }
+
+        if(Object.keys(dataResponse).length === 0){
+            data = [100];
+            errorMessage();
+        }
+
+        let total = 0;
+        data.map(number => total+= number);
+
+        let dataProcents = [];
+        data.map(number => dataProcents.push(number * 100 / total));
+
+        let svgAfter = d3.select("#svg_pie"),
+            widthAfter = svgAfter.attr("width"),
+            heightAfter = svgAfter.attr("height"),
+            radiusAfter = Math.min(widthAfter, heightAfter) / 2,
+            gAfter = svgAfter.append("g").attr("transform", "translate(" + widthAfter/2 + "," + heightAfter/2 + ")");
+
+        const colorAfter = d3.scaleOrdinal(['#394690','#b85137','#ff7f00','#984ea3','#e41a1c','#7CA39D','#FF253E','#1FB8A3','#b5b865','#3baf41','#DEB887','#7FFF00','#A9A9A9','#006400','#8B008B','#8FBC8F','#F08080','#3CB371','#EE82EE','#FFFF00','#FA8072','#8B4513','#BC8F8F','#CD853F','#000080','#48D1CC']);
+
+
+        let pieAfter = d3.pie();
+
+
+        let pathAfter = d3.arc().outerRadius(radiusAfter - 10).innerRadius(0);
+
+        let labelAfter = d3.arc().outerRadius(radiusAfter).innerRadius(radiusAfter - 150);
+
+        let arcsAfter = gAfter.selectAll(".arc").data(pieAfter(dataProcents)).enter().append("g").attr("class","arc");
+
+        arcsAfter.append("path").attr("d",pathAfter).attr("fill",function (d,i) {
+            return colorAfter(i);
+        }).append("title").text(function (d,i) {
+            return dataProcents[i] + "%";
+        });
+
+        deletePieLegend();
+
+        if(Object.keys(dataResponse).length !== 0){
+            deleteErrorMessage();
+
+            let legendAfter = d3.select(".legend_pie");
+            legendAfter.selectAll(".legend_content").data(dataProcents).enter().append("div").attr("class","legend_content");
+
+            let legend_contentAfter = d3.selectAll(".legend_content");
+            legend_contentAfter.append("div").attr("class","legend_color");
+            legend_contentAfter.append("div").attr("class","legend_info");
+
+            let legend_colorAfter = d3.selectAll(".legend_color");
+            legend_colorAfter.data(dataProcents).style("background-color",function (d,i) {
+                return colorAfter(i);
+            });
+
+            let legend_infoAfter = d3.selectAll(".legend_info");
+            legend_infoAfter.data(data).append("text").text(function (d,i) {
+                let number = data[i];
+                let text = info[i];
+                return number + " accidents - " + text;
+            });
+        }
     }
 });

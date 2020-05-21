@@ -604,3 +604,17 @@ a.control_button:active{
     display: flex;
     flex-direction: row;
 }
+
+#button{
+    display: none;
+}
+
+.info_pie h2,#left_cont h2{
+    font-family: Novecentosanswide;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.3rem;
+}
+#left_cont h2{
+    margin-top: 5vh;
+}

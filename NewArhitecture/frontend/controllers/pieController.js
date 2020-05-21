@@ -177,7 +177,7 @@ class PieController {
         "WSW",
         "West",
       ];
-      const ids = ["", "", "", "", "active", ""];
+      const ids = ["", "", "", "", "active", "", ""];
       const { content, contentType } = piePage.getPiePage(
         statesValues,
         countiesValues,
