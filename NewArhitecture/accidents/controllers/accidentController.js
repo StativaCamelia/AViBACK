@@ -53,7 +53,11 @@ class AccidentController {
     try {
       delete query["Types"];
       const marker = await this.database.Accident.find(query).limit(1);
-      return { Start_Lat: marker[0].Start_Lat, Start_Lng: marker[0].Start_Lng };
+      return {
+        Start_Lat: marker[0].Start_Lat,
+        Start_Lng: marker[0].Start_Lng,
+        State: marker[0].State,
+      };
     } catch (error) {
       throw error;
     }

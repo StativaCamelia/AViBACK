@@ -125,145 +125,134 @@ document.addEventListener("DOMContentLoaded", function () {
   const submitFilters = document.getElementById("submit_button");
   let message = document.getElementById("filter_message");
 
+  let filtersValues = {};
+  filtersValues.State = [];
   submitFilters.addEventListener("click", handlerSubmitFilters);
 
-  function handlerSubmitFilters(e) {
+  const addFiltres = document.getElementById("next_button");
+  addFiltres.addEventListener("click", handlerAddFiltres);
+
+  const datasets = [];
+  function handlerAddFiltres(e) {
     e.preventDefault();
-    let filtersValues = {};
+    let dataset = {};
+    let dataString = "";
+    const filtersComponents = [
+      state,
+      county,
+      city,
+      street,
+      number,
+      timezone,
+      roadSide,
+      weather,
+      windDirection,
+    ];
+    const defaultValues = [
+      "state",
+      "county",
+      "city",
+      "street",
+      "number",
+      "timezone",
+      "",
+      "",
+      "",
+    ];
+    const filterDatabase = [
+      "State",
+      "County",
+      "City",
+      "Street",
+      "Number",
+      "Timezone",
+      "Side",
+      "Weather_Condition",
+      "Wind_Direction",
+    ];
+    for (let i = 0; i < filtersComponents.length; i++) {
+      if (filtersComponents[i].value !== defaultValues[i]) {
+        if (filtersComponents[i] === roadSide) {
+          dataset[filterDatabase[i]] = "Left" ? "L" : "R";
+        } else {
+          dataset[filterDatabase[i]] = filtersComponents[i].value;
+        }
+        dataString = concatQueryString(
+          dataString,
+          filterDatabase[i],
+          dataset[filterDatabase[i]]
+        );
+      }
+    }
+    const roadConditions = [
+      amenity,
+      bump,
+      crossing,
+      giveWay,
+      junction,
+      noExit,
+      railway,
+      roundabout,
+      trafficCalming,
+      stop,
+      station,
+      trafficSignal,
+    ];
+    const roadConditionDatabase = [
+      "Amenity",
+      "Bump",
+      "Crossing",
+      "Give_Way",
+      "Juction",
+      "No_Exit",
+      "Railway",
+      "Roundbout",
+      "Traffic_Calming",
+      "Stop",
+      "Station",
+      "Traffic_Signal",
+    ];
+    for (let i = 0; i < roadConditions.length; i++) {
+      roadConditions[i].checked
+        ? (dataset[roadConditionDatabase[i]] = "True")
+        : (dataset[roadConditionDatabase[i]] = "False");
+      dataString = concatQueryString(
+        dataString,
+        roadConditionDatabase[i],
+        dataset[roadConditionDatabase[i]]
+      );
+    }
+
+    for (let i = 0; i < lowerValuesComponents.length; i++) {
+      if (lowerValuesComponents[i].value !== "") {
+        dataset[lowerValues[i]] = lowerValuesComponents[i].value;
+        dataString = concatQueryString(
+          dataString,
+          `${lowerValues[i]}`,
+          lowerValuesComponents[i].value
+        );
+      }
+    }
+    for (let i = 0; i < higherValuesComponents.length; i++) {
+      if (higherValuesComponents[i].value !== "") {
+        dataset[higherValues[i]] = higherValuesComponents[i].value;
+        dataString = concatQueryString(
+          dataString,
+          `${higherValues[i]}`,
+          higherValuesComponents[i].value
+        );
+      }
+    }
+
+    console.log(dataString);
+  }
+
+  function handlerSubmitFilters(e) {
     let queryString = "";
     const pageTypeIndex = window.location.href.lastIndexOf("/");
     const pageType = window.location.href.substring(pageTypeIndex + 1);
 
     queryString = concatQueryString(queryString, "Type", pageType);
-    if (state.value !== "state") {
-      filtersValues.State = state.value;
-      queryString = concatQueryString(queryString, "State", state.value);
-    }
-    if (county.value !== "county") {
-      filtersValues.County = county.value;
-      queryString = concatQueryString(queryString, "County", county.value);
-    }
-    if (city.value !== "city") {
-      filtersValues.City = city.value;
-      queryString = concatQueryString(queryString, "City", city.value);
-    }
-    if (street.value !== "street") {
-      filtersValues.Street = street.value;
-      queryString = concatQueryString(queryString, "Street", street.value);
-    }
-    if (number.value !== "number") {
-      filtersValues.Number = number.value;
-      queryString = concatQueryString(queryString, "Number", number.value);
-    }
-    if (timezone.value !== "timezone") {
-      filtersValues.Timezone = timezone.value;
-      queryString = concatQueryString(queryString, "Timezone", timezone.value);
-    }
-    if (roadSide.value !== "") {
-      filtersValues.Side = roadSide.value === "Left" ? "L" : "R";
-      let roadSideValue = roadSide.value === "Left" ? "L" : "R";
-      queryString = concatQueryString(queryString, "Side", roadSideValue);
-    }
-    if (weather.value !== "") {
-      filtersValues.Weather_Condition = weather.value;
-      queryString = concatQueryString(
-        queryString,
-        "Weather_Condition",
-        weather.value
-      );
-    }
-    if (windDirection.value !== "") {
-      filtersValues.Wind_Direction = windDirection.value;
-      queryString = concatQueryString(
-        queryString,
-        "Wind_Direction",
-        windDirection.value
-      );
-    }
-    if (amenity.checked) {
-      filtersValues.Amenity = "True";
-      queryString = concatQueryString(queryString, "Amenity", "True");
-    } else {
-      filtersValues.Amenity = "False";
-      queryString = concatQueryString(queryString, "Amenity", "False");
-    }
-    if (bump.checked) {
-      filtersValues.Bump = "True";
-      queryString = concatQueryString(queryString, "Bump", "True");
-    } else {
-      filtersValues.Bump = "False";
-      queryString = concatQueryString(queryString, "Bump", "False");
-    }
-    if (crossing.checked) {
-      filtersValues.Crossing = "True";
-      queryString = concatQueryString(queryString, "Crossing", "True");
-    } else {
-      filtersValues.Crossing = "False";
-      queryString = concatQueryString(queryString, "Crossing", "False");
-    }
-    if (giveWay.checked) {
-      filtersValues.Give_Way = "True";
-      queryString = concatQueryString(queryString, "Give_Way", "True");
-    } else {
-      filtersValues.Give_Way = "False";
-      queryString = concatQueryString(queryString, "Give_Way", "False");
-    }
-    if (junction.checked) {
-      filtersValues.Junction = "True";
-      queryString = concatQueryString(queryString, "Junction", "True");
-    } else {
-      filtersValues.Junction = "False";
-      queryString = concatQueryString(queryString, "Junction", "False");
-    }
-    if (noExit.checked) {
-      filtersValues.No_Exit = "True";
-      queryString = concatQueryString(queryString, "No_Exit", "True");
-    } else {
-      filtersValues.No_Exit = "False";
-      queryString = concatQueryString(queryString, "No_Exit", "False");
-    }
-    if (railway.checked) {
-      filtersValues.Railway = "True";
-      queryString = concatQueryString(queryString, "Railway", "True");
-    } else {
-      filtersValues.Railway = "False";
-      queryString = concatQueryString(queryString, "Railway", "False");
-    }
-    if (roundabout.checked) {
-      filtersValues.Roundabout = "True";
-      queryString = concatQueryString(queryString, "Roundabout", "True");
-    } else {
-      filtersValues.Roundabout = "False";
-      queryString = concatQueryString(queryString, "Roundabout", "False");
-    }
-    if (trafficCalming.checked) {
-      filtersValues.Traffic_Calming = "True";
-      queryString = concatQueryString(queryString, "Traffic_Calming", "True");
-    } else {
-      filtersValues.Traffic_Calming = "False";
-      queryString = concatQueryString(queryString, "Traffic_Calming", "False");
-    }
-    if (stop.checked) {
-      filtersValues.Stop = "True";
-      queryString = concatQueryString(queryString, "Stop", "True");
-    } else {
-      filtersValues.Stop = "False";
-      queryString = concatQueryString(queryString, "Stop", "False");
-    }
-    if (station.checked) {
-      filtersValues.Station = "True";
-      queryString = concatQueryString(queryString, "Station", "True");
-    } else {
-      filtersValues.Station = "False";
-      queryString = concatQueryString(queryString, "Station", "False");
-    }
-    if (trafficSignal.checked) {
-      filtersValues.Traffic_Signal = "True";
-      queryString = concatQueryString(queryString, "Traffic_Signal", "True");
-    } else {
-      filtersValues.Traffic_Signal = "False";
-      queryString = concatQueryString(queryString, "Traffic_Signal", "False");
-    }
     if (accidentDateStart.value !== "") {
       filtersValues.Start_Date_1 = accidentDateStart.value.toString();
       queryString = concatQueryString(
@@ -348,26 +337,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "Night"
       );
     }
-    for (let i = 0; i < lowerValuesComponents.length; i++) {
-      if (lowerValuesComponents[i].value !== "") {
-        filtersValues[lowerValues[i]] = lowerValuesComponents[i].value;
-        queryString = concatQueryString(
-          queryString,
-          `${lowerValues[i]}`,
-          lowerValuesComponents[i].value
-        );
-      }
-    }
-    for (let i = 0; i < higherValuesComponents.length; i++) {
-      if (higherValuesComponents[i].value !== "") {
-        filtersValues[higherValues[i]] = higherValuesComponents[i].value;
-        queryString = concatQueryString(
-          queryString,
-          `${higherValues[i]}`,
-          higherValuesComponents[i].value
-        );
-      }
-    }
+
     if (verifFilters(filtersValues) === true) {
       send_request(queryString.substring(1));
     }

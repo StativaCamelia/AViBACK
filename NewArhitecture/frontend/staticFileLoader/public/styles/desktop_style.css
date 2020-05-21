@@ -1433,6 +1433,23 @@
         text-shadow: 0px 1px 0px #e1e2ed;
     }
 
+    #next_button {
+        z-index: 0;
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: white;
+        border-radius: 15px;
+        text-align: center;
+        cursor: pointer;
+        color: black;
+        font-family: Novecentosanswide;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 7px 25px;
+        text-decoration: none;
+        margin-left: 12vw;
+        text-shadow: 0px 1px 0px #e1e2ed;
+    }
+
     #reset_button[type="reset"] {
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;

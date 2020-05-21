@@ -2,6 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const api = "http://localhost:5004/accidents?";
   const method = "GET";
 
+  function up() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
   function setVisible(selector, visible) {
     document.querySelector(selector).style.display = visible ? "flex" : "none";
   }
@@ -13,14 +18,18 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.send();
     setVisible("#left_cont", false);
     setVisible("#loading", true);
+    up();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
         setVisible("#loading", false);
         setVisible("#left_cont", true);
         const { content } = JSON.parse(this.responseText);
-        console.log(content);
-        history(content.boudaries);
-        color_map(content.dataset, content.boudaries);
+        if (!content.Start_Lat && !content.Start_Lng) {
+          history(content.boudaries);
+          color_map(content.dataset, content.boudaries);
+        } else {
+          open_map(content);
+        }
       }
     };
   }
@@ -128,7 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let message = document.getElementById("filter_message");
 
   submitFilters.addEventListener("click", handlerSubmitFilters);
-
   function handlerSubmitFilters(e) {
     e.preventDefault();
     let filtersValues = {};
@@ -418,7 +426,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
     for (let i = 0; i < locations.length; i++) {
       if (filtersValues[locations[i]]) {
-        console.log(filtersValues[i]);
         message.innerText =
           "WARNING: You can only see a Cartomap for the entire USA.";
         return false;
@@ -468,7 +475,34 @@ document.addEventListener("DOMContentLoaded", function () {
       Math.round(boudaries.fourth[0]) + "-" + Math.round(boudaries.fourth[1]);
   }
 
+  function open_map(content) {
+    up();
+    var pop = document.getElementById("states_pop");
+    var map = document.getElementById("map");
+    map.setAttribute("latitude", parseFloat(content.Start_Lat));
+    map.getAttribute("longitude", parseFloat(content.Start_Lng));
+
+    var left = pop.childNodes[0];
+    var el = document.querySelectorAll("#states > #" + content.State)[0];
+    pop.style.display = "flex";
+    pop.style.top = window.scrollY + 140 + "px";
+    left.innerHTML =
+      '<div class = "pop_text"><p>' +
+      dict_names[el.getAttribute("id")] +
+      "</p>";
+    if (el.hasAttribute("count"))
+      left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
+
+    left.innerHTML +=
+      '<div class = "pop_img"><img src="' +
+      dict_img[el.getAttribute("id")] +
+      '"></div>';
+
+    google.maps.event.addDomListener(window, "load", initMap());
+  }
+
   function color_map(content, boudaries) {
+    up();
     var levels = ["high_s", "medium_s", "medium1_s", "low_s"];
     var svgStates = document.querySelectorAll("#states > *");
     svgStates.forEach(function (el) {

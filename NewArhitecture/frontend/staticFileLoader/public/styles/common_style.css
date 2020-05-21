@@ -474,7 +474,7 @@ ul li {
     color: white;
 }
 
-#reset_button:hover {
+#reset_button:hover, #next_button:hover {
     background-color: #041F60;
     color: white;
 }
