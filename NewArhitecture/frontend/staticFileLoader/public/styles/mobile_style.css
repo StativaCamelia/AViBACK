@@ -1081,11 +1081,16 @@
         padding: 12px;
     }
 
-    .down_filtres {
+    .down_filtres, .time_filtres{
         display: flex;
         flex-direction: column;
         width: 100%;
         align-items: center;
+    }
+
+    #line_chart{
+        width :100%!important;
+        height:50%!important;
     }
 
     .road_select_col {

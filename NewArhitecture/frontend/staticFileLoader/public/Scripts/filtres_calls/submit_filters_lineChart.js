@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function send_request(query) {
     var xhttp = new XMLHttpRequest();
+    console.log(query);
     xhttp.onreadystatechange = function () {
       setVisible("#left_cont", false);
       setVisible("#loading", true);
@@ -18,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
     url = api + query;
-    console.log(url);
     xhttp.open(method, url, true);
     xhttp.send();
   }
@@ -133,8 +133,9 @@ document.addEventListener("DOMContentLoaded", function () {
   addFiltres.addEventListener("click", handlerAddFiltres);
 
   const datasets = [];
-  function handlerAddFiltres(e) {
-    e.preventDefault();
+  let numberOfDatasets = 0;
+
+  function collectData() {
     let dataset = {};
     let dataString = "";
     const filtersComponents = [
@@ -147,6 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
       roadSide,
       weather,
       windDirection,
+      severity,
     ];
     const defaultValues = [
       "state",
@@ -158,6 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "",
       "",
       "",
+      "0",
     ];
     const filterDatabase = [
       "State",
@@ -169,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "Side",
       "Weather_Condition",
       "Wind_Direction",
+      "Severity",
     ];
     for (let i = 0; i < filtersComponents.length; i++) {
       if (filtersComponents[i].value !== defaultValues[i]) {
@@ -203,10 +207,10 @@ document.addEventListener("DOMContentLoaded", function () {
       "Bump",
       "Crossing",
       "Give_Way",
-      "Juction",
+      "Junction",
       "No_Exit",
       "Railway",
-      "Roundbout",
+      "Roundabout",
       "Traffic_Calming",
       "Stop",
       "Station",
@@ -244,102 +248,102 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
-    console.log(dataString);
+    const datesComponents = [
+      accidentDateStart,
+      accidentDateEnd,
+      accidentHourStart,
+      accidentHourEnd,
+    ];
+    const datesFields = [
+      "Start_Date_1",
+      "Start_Date_2",
+      "Start_Hour_1",
+      "Start_Hour_2",
+    ];
+    const databaseComponents = [
+      "FirstDate",
+      "SecondDate",
+      "FirstHour",
+      "SecondHour",
+    ];
+    for (let i = 0; i < databaseComponents.length; i++) {
+      if (datesComponents[i].value !== "") {
+        dataset[datesFields[i]] = datesComponents[i].value.toString();
+        dataString = concatQueryString(
+          dataString,
+          databaseComponents[i],
+          dataset[datesFields[i]].toString()
+        );
+      }
+    }
+
+    const astronomicComponents = [
+      sunriseSunsetDay,
+      sunriseSunsetNight,
+      civilTwilightDay,
+      civilTwilightNight,
+      nauticalTwilightDay,
+      nauticalTwilightNight,
+      astronomicalTwilightDay,
+      astronomicalTwilightNight,
+    ];
+    const astronomicDatabase = [
+      "Sunrise_Sunset",
+      "Sunrise_Sunset",
+      "Civil_Twilight",
+      "Civil_Twilight",
+      "Nautical_Twilight",
+      "Nautical_Twilight",
+      "Astronomical_Twilight",
+      "Astronomical_Twilight",
+    ];
+    const astronomicValues = [
+      "Day",
+      "Night",
+      "Day",
+      "Night",
+      "Day",
+      "Night",
+      "Day",
+      "Night",
+    ];
+    for (let i = 0; i < astronomicComponents.length; i++) {
+      if (astronomicComponents[i].checked) {
+        dataset[astronomicDatabase[i]] = astronomicValues[i];
+        dataString = concatQueryString(
+          dataString,
+          astronomicDatabase[i],
+          astronomicValues[i]
+        );
+      }
+    }
+    dataString = dataString.substring(1);
+    return { dataset, dataString };
+  }
+
+  function handlerAddFiltres(e) {
+    e.preventDefault();
+    numberOfDatasets++;
+    const { dataString, dataset } = collectData();
+    if (verifFilters(dataset) === true) {
+      datasets.push({ data: dataString });
+    }
+    document.getElementById("filters_form").reset();
   }
 
   function handlerSubmitFilters(e) {
-    let queryString = "";
+    e.preventDefault();
     const pageTypeIndex = window.location.href.lastIndexOf("/");
     const pageType = window.location.href.substring(pageTypeIndex + 1);
-
+    let queryString = "";
     queryString = concatQueryString(queryString, "Type", pageType);
-    if (accidentDateStart.value !== "") {
-      filtersValues.Start_Date_1 = accidentDateStart.value.toString();
-      queryString = concatQueryString(
-        queryString,
-        "FirstDate",
-        accidentDateStart.value.toString()
-      );
-    }
-    if (accidentDateEnd.value !== "") {
-      filtersValues.Start_Date_2 = accidentDateEnd.value.toString();
-      queryString = concatQueryString(
-        queryString,
-        "SecondDate",
-        accidentDateEnd.value.toString()
-      );
-    }
-    if (accidentHourStart.value !== "") {
-      filtersValues.Start_Hour_1 = accidentHourStart.value.toString();
-      queryString = concatQueryString(
-        queryString,
-        "FirstHour",
-        accidentHourStart.value.toString()
-      );
-    }
-    if (accidentHourEnd.value !== "") {
-      filtersValues.Start_Hour_2 = accidentHourEnd.value.toString();
-      queryString = concatQueryString(
-        queryString,
-        "SecondHour",
-        accidentHourEnd.value.toString()
-      );
-    }
-    if (severity.value !== "0") {
-      filtersValues.Severity = severity.value;
-      queryString = concatQueryString(
-        queryString,
-        "Severity",
-        severity.value.toString()
-      );
-    }
-    if (sunriseSunsetDay.checked) {
-      filtersValues.Sunrise_Sunset = "Day";
-      queryString = concatQueryString(queryString, "Sunrise_Sunset", "Day");
-    }
-    if (sunriseSunsetNight.checked) {
-      filtersValues.Sunrise_Sunset = "Night";
-      queryString = concatQueryString(queryString, "Sunrise_Sunset", "Night");
-    }
-    if (civilTwilightDay.checked) {
-      filtersValues.Civil_Twilight = "Day";
-      queryString = concatQueryString(queryString, "Civil_Twilight", "Day");
-    }
-    if (civilTwilightNight.checked) {
-      filtersValues.Civil_Twilight = "Night";
-      queryString = concatQueryString(queryString, "Civil_Twilight", "Night");
-    }
-    if (nauticalTwilightDay.checked) {
-      filtersValues.Nautical_Twilight = "Day";
-      queryString = concatQueryString(queryString, "Nautical_Twilight", "Day");
-    }
-    if (nauticalTwilightNight.checked) {
-      filtersValues.Nautical_Twilight = "Night";
-      queryString = concatQueryString(
-        queryString,
-        "Nautical_Twilight",
-        "Night"
-      );
-    }
-    if (astronomicalTwilightDay.checked) {
-      filtersValues.Astronomical_Twilight = "Day";
-      queryString = concatQueryString(
-        queryString,
-        "Astronomical_Twilight",
-        "Day"
-      );
-    }
-    if (astronomicalTwilightNight.checked) {
-      filtersValues.Astronomical_Twilight = "Night";
-      queryString = concatQueryString(
-        queryString,
-        "Astronomical_Twilight",
-        "Night"
-      );
-    }
-
-    if (verifFilters(filtersValues) === true) {
-      send_request(queryString.substring(1));
+    if (numberOfDatasets === 0) {
+      let { dataString, dataset } = collectData();
+      if (verifFilters(dataset) === true) {
+        queryString += dataString;
+        console.log(queryString);
+        send_request(queryString);
+      }
     }
   }
 
@@ -377,6 +381,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function verifFilters(filtersValues) {
     let filtersValueLength = Object.keys(filtersValues).length;
+
     if (
       filtersValueLength === 12 &&
       filtersValues.Amenity === "False" &&
@@ -397,7 +402,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const ok = verifyWeatherFiltres(filtersValues);
     const okDate = verifyDates(filtersValues);
-    console.log(verifyWeatherFiltres(filtersValues));
     if (ok && okDate) message.innerText = "";
     return ok && okDate;
   }

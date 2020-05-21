@@ -12,10 +12,12 @@ class AccidentController {
       if (type === "map") {
         content = await this.getMapRepresentation(query);
       } else if (type === "pie") {
-        content = await this.getPieRepresentation(query,criterion);
+        content = await this.getPieRepresentation(query, criterion);
       } else if (type === "chart") {
         console.log("Fa chart");
         content = "abc";
+      } else if (type === "line") {
+        content = await this.getLineRepresentation(query);
       }
       return { success: true, data: { content } };
     } catch (error) {
