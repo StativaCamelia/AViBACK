@@ -6,23 +6,23 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(selector).style.display = visible ? "flex" : "none";
   }
 
-    function send_request(query) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            setVisible("#left_cont", false);
-            setVisible("#loading", true);
-            if (this.readyState === 4 && this.status === 200) {
-                const { content } = JSON.parse(this.responseText);
-                drawPie(content);
-                setVisible("#loading", false);
-                setVisible("#left_cont", true);
-            }
-        };
-        url = api + query;
-        console.log(url);
-        xhttp.open(method, url, true);
-        xhttp.send();
-    }
+  function send_request(query) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      setVisible("#left_cont", false);
+      setVisible("#loading", true);
+      if (this.readyState === 4 && this.status === 200) {
+        const { content } = JSON.parse(this.responseText);
+        generatePie(content);
+        setVisible("#loading", false);
+        setVisible("#left_cont", true);
+      }
+    };
+    url = api + query;
+    console.log(url);
+    xhttp.open(method, url, true);
+    xhttp.send();
+  }
 
   const state = document.getElementById("state");
   const county = document.getElementById("county");
@@ -128,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const pieCriteria = document.getElementById("pie_criteria");
   const filtersForm = document.getElementById("filters_form");
   let message = document.getElementById("filter_message");
+  let criterion;
 
   filtersForm.addEventListener("change", criterionForPie);
   resetFilters.addEventListener("click", function () {
@@ -378,11 +379,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
-    filtersValues.Pie_Criterion = pieCriteria.value;
+    filtersValues.Pie_Criterion = editCriterion(pieCriteria.value);
+    criterion = filtersValues.Pie_Criterion;
     queryString = concatQueryString(
       queryString,
       "Pie_Criterion",
-      pieCriteria.value
+      criterion
     );
 
     if (verifFilters(filtersValues) === true) {
@@ -538,119 +540,221 @@ document.addEventListener("DOMContentLoaded", function () {
     return true;
   }
 
-    function verifFilters(filtersValues) {
-        let filtersValueLength = Object.keys(filtersValues).length;
-        if (
-            filtersValueLength === 13 &&
-            filtersValues.Amenity === "False" &&
-            filtersValues.Bump === "False" &&
-            filtersValues.Crossing === "False" &&
-            filtersValues.Give_Way === "False" &&
-            filtersValues.Junction === "False" &&
-            filtersValues.No_Exit === "False" &&
-            filtersValues.Railway === "False" &&
-            filtersValues.Roundabout === "False" &&
-            filtersValues.Traffic_Calming === "False" &&
-            filtersValues.Stop === "False" &&
-            filtersValues.Station === "False" &&
-            filtersValues.Traffic_Signal === "False" &&
-            filtersValues.Pie_Criterion === "criterion"
-        ){
-            message.innerText = "You have to select at least one filter!";
-            return false;
-        }
-        const ok = verifyWeatherFiltres(filtersValues);
-        const okDate = verifyDates(filtersValues);
-        const okCriterion = verifyExistCriterion(filtersValues);
-        if (ok && okDate && okCriterion) message.innerText = "";
-        return ok && okDate && okCriterion;
+  function verifFilters(filtersValues) {
+    let filtersValueLength = Object.keys(filtersValues).length;
+    if (
+      filtersValueLength === 13 &&
+      filtersValues.Amenity === "False" &&
+      filtersValues.Bump === "False" &&
+      filtersValues.Crossing === "False" &&
+      filtersValues.Give_Way === "False" &&
+      filtersValues.Junction === "False" &&
+      filtersValues.No_Exit === "False" &&
+      filtersValues.Railway === "False" &&
+      filtersValues.Roundabout === "False" &&
+      filtersValues.Traffic_Calming === "False" &&
+      filtersValues.Stop === "False" &&
+      filtersValues.Station === "False" &&
+      filtersValues.Traffic_Signal === "False" &&
+      filtersValues.Pie_Criterion === "criterion"
+    ) {
+      message.innerText = "You have to select at least one filter!";
+      return false;
+    }
+    const ok = verifyWeatherFiltres(filtersValues);
+    const okDate = verifyDates(filtersValues);
+    const okCriterion = verifyExistCriterion(filtersValues);
+    if (ok && okDate && okCriterion) message.innerText = "";
+    return ok && okDate && okCriterion;
+  }
+
+  function editCriterion(criterion) {
+    switch (criterion) {
+      case "Road side":
+        return "Side";
+      case "Weather":
+        return "Weather_Condition";
+      case "Wind direction":
+        return "Wind_Direction";
+      case "Temperature":
+        return "Temperature(F)";
+      case "Wind chill":
+        return "Wind_Chill(F)";
+      case "Wind speed":
+        return "Wind_Speed(mph)";
+      case "Humidity":
+        return "Humidity(%)";
+      case "Pressure":
+        return "Pressure(in)";
+      case "Visibility":
+        return "Visibility(mi)";
+      case "Precipitation":
+        return "Precipitation(in)";
+      case "Accident date":
+        return "Start_Date";
+      case "Hour":
+        return "Start_Hour";
+      case "Sunrise/Sunset":
+        return "Sunrise_Sunset";
+      case "Civil twilight":
+        return "Civil_Twilight";
+      case "Nautical twilight":
+        return "Nautical_Twilight";
+      case "Astronomical twilight":
+        return "Astronomical_Twilight";
+      default:
+        return criterion;
+    }
+  }
+
+  function deletePieLegend() {
+    let legendPie = document.querySelector(".legend_pie");
+    while (legendPie.firstChild) {
+      legendPie.removeChild(legendPie.lastChild);
+    }
+  }
+
+  function errorMessage() {
+    let errorMessageResult = document.getElementById("error_message_result");
+    errorMessageResult.innerText = "NO DATA FOUND!";
+  }
+
+  function deleteErrorMessage() {
+    let errorMessageResult = document.getElementById("error_message_result");
+    errorMessageResult.innerText = "";
+  }
+
+  function generatePieLegend(dataProcents, data, info) {
+    deleteErrorMessage();
+
+    let legendAfter = d3.select(".legend_pie");
+    legendAfter
+      .selectAll(".legend_content")
+      .data(dataProcents)
+      .enter()
+      .append("div")
+      .attr("class", "legend_content");
+
+    let legend_contentAfter = d3.selectAll(".legend_content");
+    legend_contentAfter.append("div").attr("class", "legend_color");
+    legend_contentAfter.append("div").attr("class", "legend_info");
+
+    let legend_colorAfter = d3.selectAll(".legend_color");
+    legend_colorAfter
+      .data(dataProcents)
+      .style("background-color", function (d, i) {
+        return colorAfter(i);
+      });
+
+    let legend_infoAfter = d3.selectAll(".legend_info");
+    legend_infoAfter
+      .data(data)
+      .append("text")
+      .text(function (d, i) {
+        let number = data[i];
+        let text = info[i];
+        return criterion + " " + text + ": " + number + " accidents";
+      });
+  }
+
+  function drawPie(dataProcents) {
+    let svgAfter = d3.select("#svg_pie"),
+      widthAfter = svgAfter.attr("width"),
+      heightAfter = svgAfter.attr("height"),
+      radiusAfter = Math.min(widthAfter, heightAfter) / 2,
+      gAfter = svgAfter
+        .append("g")
+        .attr(
+          "transform",
+          "translate(" + widthAfter / 2 + "," + heightAfter / 2 + ")"
+        );
+
+    let pieAfter = d3.pie();
+
+    let pathAfter = d3
+      .arc()
+      .outerRadius(radiusAfter - 10)
+      .innerRadius(0);
+
+    let arcsAfter = gAfter
+      .selectAll(".arc")
+      .data(pieAfter(dataProcents))
+      .enter()
+      .append("g")
+      .attr("class", "arc");
+
+    arcsAfter
+      .append("path")
+      .attr("d", pathAfter)
+      .attr("fill", function (d, i) {
+        return colorAfter(i);
+      })
+      .append("title")
+      .text(function (d, i) {
+        return dataProcents[i] + "%";
+      });
+  }
+
+  function generatePie(dataResponse) {
+    dataResponse.sort(function (a, b) {
+      return a.count - b.count;
+    });
+    console.log(dataResponse);
+    let data = [];
+    let info = [];
+
+    if (Object.keys(dataResponse).length === 0) {
+      data = [100];
+      errorMessage();
     }
 
-    function deletePieLegend(){
-        let legendPie = document.querySelector(".legend_pie");
-        while (legendPie.firstChild) {
-            legendPie.removeChild(legendPie.lastChild);
-        }
+    for (let i = 0; i < dataResponse.length; i++) {
+      if (dataResponse[i]._id) {
+        data.push(dataResponse[i].count);
+        info.push(dataResponse[i]._id);
+      }
     }
 
-    function errorMessage(){
-        let errorMessageResult = document.getElementById("error_message_result");
-        errorMessageResult.innerText = "NO DATA FOUND!";
+    let total = 0;
+    data.map((number) => (total += number));
+
+    let dataProcents = [];
+    data.map((number) => dataProcents.push((number * 100) / total));
+
+    drawPie(dataProcents);
+    deletePieLegend();
+
+    if (Object.keys(dataResponse).length !== 0) {
+      generatePieLegend(dataProcents, data, info);
     }
+  }
 
-    function deleteErrorMessage(){
-        let errorMessageResult = document.getElementById("error_message_result");
-        errorMessageResult.innerText = "";
-    }
-
-    function drawPie(dataResponse) {
-        dataResponse.sort(function(a, b){return a.count - b.count});
-
-        let data = [];
-        let info = [];
-        for(let i = 0; i < dataResponse.length; i++){
-            data.push(dataResponse[i].count);
-            info.push(dataResponse[i]._id);
-        }
-
-        if(Object.keys(dataResponse).length === 0){
-            data = [100];
-            errorMessage();
-        }
-
-        let total = 0;
-        data.map(number => total+= number);
-
-        let dataProcents = [];
-        data.map(number => dataProcents.push(number * 100 / total));
-
-        let svgAfter = d3.select("#svg_pie"),
-            widthAfter = svgAfter.attr("width"),
-            heightAfter = svgAfter.attr("height"),
-            radiusAfter = Math.min(widthAfter, heightAfter) / 2,
-            gAfter = svgAfter.append("g").attr("transform", "translate(" + widthAfter/2 + "," + heightAfter/2 + ")");
-
-        const colorAfter = d3.scaleOrdinal(['#394690','#b85137','#ff7f00','#984ea3','#e41a1c','#7CA39D','#FF253E','#1FB8A3','#b5b865','#3baf41','#DEB887','#7FFF00','#A9A9A9','#006400','#8B008B','#8FBC8F','#F08080','#3CB371','#EE82EE','#FFFF00','#FA8072','#8B4513','#BC8F8F','#CD853F','#000080','#48D1CC']);
-
-
-        let pieAfter = d3.pie();
-
-
-        let pathAfter = d3.arc().outerRadius(radiusAfter - 10).innerRadius(0);
-
-        let labelAfter = d3.arc().outerRadius(radiusAfter).innerRadius(radiusAfter - 150);
-
-        let arcsAfter = gAfter.selectAll(".arc").data(pieAfter(dataProcents)).enter().append("g").attr("class","arc");
-
-        arcsAfter.append("path").attr("d",pathAfter).attr("fill",function (d,i) {
-            return colorAfter(i);
-        }).append("title").text(function (d,i) {
-            return dataProcents[i] + "%";
-        });
-
-        deletePieLegend();
-
-        if(Object.keys(dataResponse).length !== 0){
-            deleteErrorMessage();
-
-            let legendAfter = d3.select(".legend_pie");
-            legendAfter.selectAll(".legend_content").data(dataProcents).enter().append("div").attr("class","legend_content");
-
-            let legend_contentAfter = d3.selectAll(".legend_content");
-            legend_contentAfter.append("div").attr("class","legend_color");
-            legend_contentAfter.append("div").attr("class","legend_info");
-
-            let legend_colorAfter = d3.selectAll(".legend_color");
-            legend_colorAfter.data(dataProcents).style("background-color",function (d,i) {
-                return colorAfter(i);
-            });
-
-            let legend_infoAfter = d3.selectAll(".legend_info");
-            legend_infoAfter.data(data).append("text").text(function (d,i) {
-                let number = data[i];
-                let text = info[i];
-                return number + " accidents - " + text;
-            });
-        }
-    }
+  const colorAfter = d3.scaleOrdinal([
+    "#394690",
+    "#b85137",
+    "#ff7f00",
+    "#984ea3",
+    "#e41a1c",
+    "#7CA39D",
+    "#FF253E",
+    "#1FB8A3",
+    "#b5b865",
+    "#3baf41",
+    "#DEB887",
+    "#7FFF00",
+    "#A9A9A9",
+    "#006400",
+    "#8B008B",
+    "#8FBC8F",
+    "#F08080",
+    "#3CB371",
+    "#EE82EE",
+    "#FFFF00",
+    "#FA8072",
+    "#8B4513",
+    "#BC8F8F",
+    "#CD853F",
+    "#000080",
+    "#48D1CC",
+  ]);
 });

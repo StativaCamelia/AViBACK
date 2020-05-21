@@ -16,6 +16,7 @@ const accidentSchema = mongoose.Schema({
   Description: { type: String },
   String: { type: String },
   Street: { type: String },
+  Number: {type: String},
   Side: { type: String, enum: ["L", "R"] },
   City: { type: String },
   County: { type: String },

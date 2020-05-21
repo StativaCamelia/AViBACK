@@ -1009,11 +1009,8 @@
     
     #right_cont {
         display: flex;
-        height: auto;
         width: 40%;
-        flex-direction: column;
         justify-content: space-around;
-        align-items: center;
         margin: 3vh;
     }
 
