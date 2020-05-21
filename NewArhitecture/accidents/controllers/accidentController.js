@@ -86,7 +86,7 @@ class AccidentController {
           $match: query,
         },
         {
-          $unwind: "$" + groupBy,
+          $unwind: { path: "$" + groupBy, preserveNullAndEmptyArrays: false },
         },
         {
           $group: {
@@ -221,13 +221,26 @@ class AccidentController {
     }
   }
 
+  async modifyIdForStates(result){
+    let modified = [];
+    for(let i = 0; i < result.length; i++){
+      let id = await this.database.State.getNameByAbbr(result[i]._id);
+      let count = result[i].count;
+      modified.push({_id: id, count: count});
+    }
+    return modified;
+  }
+
   async getPieRepresentation(query, criterion) {
     try {
       let content = await this.getNumberOfAccidentsByQueryAndGroupBy(
         query,
         criterion
       );
-      console.log(content);
+      if(criterion === "State"){
+        content = await this.modifyIdForStates(content);
+      }
+      console.log(content)
       return content;
     } catch (error) {
       throw error;
