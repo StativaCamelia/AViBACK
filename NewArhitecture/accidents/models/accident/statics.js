@@ -217,25 +217,25 @@ module.exports = function (accidentSchema) {
     }
   };
 
-  accidentSchema.statics.getAccidentsCount = async function (filters,dateObject) {
+  accidentSchema.statics.getAccidentsCount = async function (filters,infoObject) {
     try {
       let accidents = await this.find(filters);
-      if((dateObject.firstDate && dateObject.secondDate && dateObject.firstHour && dateObject.secondHour) || (dateObject.firstHour && dateObject.secondHour)){
-        const hourOne = dateObject.firstHour.substring(0,2);
-        const minuteOne = dateObject.firstHour.substring(3);
+      if((infoObject.firstDate && infoObject.secondDate && infoObject.firstHour && infoObject.secondHour) || (infoObject.firstHour && infoObject.secondHour)){
+        const hourOne = infoObject.firstHour.substring(0,2);
+        const minuteOne = infoObject.firstHour.substring(3);
         let firstHourDate = new Date();
         firstHourDate.setUTCHours(hourOne,minuteOne);
 
-        const hourTwo = dateObject.secondHour.substring(0,2);
-        const minuteTwo = dateObject.secondHour.substring(3);
+        const hourTwo = infoObject.secondHour.substring(0,2);
+        const minuteTwo = infoObject.secondHour.substring(3);
         let secondHourDate = new Date();
         secondHourDate.setUTCHours(hourTwo,minuteTwo);
 
         accidents = accidents.filter(accident => hourPredicate(accident,firstHourDate,secondHourDate));
       }else{
-        if(dateObject.firstHour){
-          const hourOne = dateObject.firstHour.substring(0,2);
-          const minuteOne = dateObject.firstHour.substring(3);
+        if(infoObject.firstHour){
+          const hourOne = infoObject.firstHour.substring(0,2);
+          const minuteOne = infoObject.firstHour.substring(3);
           let firstHourDate = new Date();
           firstHourDate.setUTCHours(hourOne,minuteOne);
 
@@ -244,12 +244,12 @@ module.exports = function (accidentSchema) {
 
           accidents = accidents.filter(accident => hourPredicate(accident,firstHourDate,secondHourDate));
         }else{
-          if(secondHour){
+          if(infoObject.secondHour){
             let firstHourDate = new Date();
             firstHourDate.setUTCHours("00","00");
 
-            const hourTwo = dateObject.secondHour.substring(0,2);
-            const minuteTwo = dateObject.secondHour.substring(3);
+            const hourTwo = infoObject.secondHour.substring(0,2);
+            const minuteTwo = infoObject.secondHour.substring(3);
             let secondHourDate = new Date();
             secondHourDate.setUTCHours(hourTwo,minuteTwo);
 
