@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setVisible("#loading", false);
         setVisible("#left_cont", true);
         const { content } = JSON.parse(this.responseText);
+        console.log(content);
         history(content.boudaries);
         color_map(content.dataset, content.boudaries);
       }
@@ -406,6 +407,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function verifyLocation(filtersValues) {
+    const locations = [
+      "State",
+      "County",
+      "City",
+      "Street",
+      "Number",
+      "Temperature",
+    ];
+    for (let i = 0; i < locations.length; i++) {
+      if (filtersValues[locations[i]]) {
+        console.log(filtersValues[i]);
+        message.innerText =
+          "WARNING: You can only see a Cartomap for the entire USA.";
+        return false;
+      }
+    }
+    return true;
+  }
+
   function verifFilters(filtersValues) {
     let filtersValueLength = Object.keys(filtersValues).length;
     if (
@@ -428,8 +449,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const ok = verifyWeatherFiltres(filtersValues);
     const okDate = verifyDates(filtersValues);
-    console.log(verifyWeatherFiltres(filtersValues));
-    if (ok && okDate) message.innerText = "";
+    const okLocation = verifyLocation(filtersValues);
+    if (ok && okDate && okLocation) message.innerText = "";
     return ok && okDate;
   }
 

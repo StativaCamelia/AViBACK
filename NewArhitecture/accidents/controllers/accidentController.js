@@ -39,7 +39,7 @@ class AccidentController {
       });
       let content;
       if (hasALocationKey.length) {
-        await this.getMapMarkers(query);
+        content = await this.getMapMarkers(query);
       } else {
         content = await this.getMapByStates(query);
       }
@@ -51,6 +51,9 @@ class AccidentController {
 
   async getMapMarkers(query) {
     try {
+      delete query["Types"];
+      const marker = await this.database.Accident.find(query).limit(1);
+      return { Start_Lat: marker[0].Start_Lat, Start_Lng: marker[0].Start_Lng };
     } catch (error) {
       throw error;
     }
