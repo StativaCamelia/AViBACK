@@ -382,12 +382,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function verifyWeatherFiltres(filtersValues) {
     for (let i = 0; i < lowerValues.length; i++) {
-      console.log(filtersValues[lowerValues[i]]);
-      console.log(filtersValues[higherValues[i]]);
-      console.log(
-        filtersValues[lowerValues[i]] > filtersValues[higherValues[i]]
-      );
-      if (filtersValues[lowerValues[i]] > filtersValues[higherValues[i]]) {
+      if (
+        parseFloat(filtersValues[lowerValues[i]]) >
+        parseFloat(filtersValues[higherValues[i]])
+      ) {
         message.innerText = `The first value for ${weatherNames[i]} cannot be higher that the second value`;
         return false;
       }

@@ -6,20 +6,17 @@ class AccidentController {
     this.service = service;
   }
 
-  async getData(query,type,dateObject) {
+  async getData(query, type) {
     try {
       let content;
       if (type === "map") {
         content = await this.getMapRepresentation(query);
       } else if (type === "pie") {
         console.log("Fa pie");
-        content = await this.database.Accident.getAccidentsCount(
-            query,dateObject
-        );
-        console.log(content)
+        content = await this.database.Accident.getAccidentsCount(query);
       } else if (type === "chart") {
         console.log("Fa chart");
-        content = "abc"
+        content = "abc";
       }
       return { success: true, data: { content } };
     } catch (error) {
@@ -76,9 +73,8 @@ class AccidentController {
   async getNumberOfAccidentsByQueryAndGroupBy(query, groupBy) {
     try {
       delete query["Type"];
-      delete query["Start_Time"];
-      const aggregatorOpts = [
-        { $sort: { "Temperature(F)": 1 } },
+      let aggregatorOpts;
+      aggregatorOpts = [
         {
           $match: query,
         },
@@ -92,7 +88,6 @@ class AccidentController {
           },
         },
       ];
-
       const content = await this.database.Accident.aggregate(aggregatorOpts);
       return content;
     } catch (error) {
