@@ -95,11 +95,21 @@ class AccidentController {
           },
         },
       ];
-      const content = await this.database.Accident.aggregate(aggregatorOpts);
+      let content = await this.database.Accident.aggregate(aggregatorOpts);
+      content = await this.editResultContent(content);
       return content;
     } catch (error) {
       throw error;
     }
+  }
+
+  async editResultContent(content){
+    for(let i = 0; i < content.length; i++){
+      if(!content[i]._id){
+        content.splice(i,1);
+      }
+    }
+    return content;
   }
 
   async getDailyAccidents() {

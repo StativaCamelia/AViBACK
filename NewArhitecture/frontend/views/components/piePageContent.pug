@@ -241,11 +241,19 @@ block right_content
                             .moon_option
                                 input#astronomical_twilight_night(type='radio' form='filters_form' name='astronomical_twilight')
                                 label.moon_option_label(for='astronomical_twilight_night') Night
-        h2#filter_message
-        .select_criteria
-            h3.criteria_select_label *Criterion for generate pie:
-            select#pie_criteria
-                option(value='criterion' selected='' hidden='') Criterion
-        .submit_button
-            input#reset_button(form='filters_form' type='reset' value='Reset')
-            input#submit_button(form='filters_form' type='submit' value='Submit')
+        #filters_pie_down
+            h2#filter_message
+            .select_criteria
+                h3.criteria_select_label *Criterion for generate pie:
+                select#pie_criteria
+                    option(value='criterion' selected='' hidden='') Criterion
+            .submit_button
+                input#reset_button(form='filters_form' type='reset' value='Reset')
+                input#submit_button(form='filters_form' type='submit' value='Submit')
+        #filters_pie_new
+            h2 Select what you want to see on pie
+            .checkbox_pie
+            .checkboxes_buttons
+                input#back_filters(type='button' value='Back')
+                input#select_all(type='button' value='SelectAll')
+                input#submit_checkboxes(type='submit' value='Submit')

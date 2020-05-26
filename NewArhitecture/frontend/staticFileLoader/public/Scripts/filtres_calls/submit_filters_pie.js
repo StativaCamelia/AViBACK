@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const api = "http://localhost:5004/accidents?";
   const method = "GET";
+  const criterionMoreValues = [ "State", "County", "City", "Street", "Number", "Timezone", "Weather", "Wind direction", "Temperature", "Wind chill", "Wind speed", "Humidity", "Pressure", "Visibility", "Precipitation", "Accident date", "Hour", "Severity"];
 
   function setVisible(selector, visible) {
     document.querySelector(selector).style.display = visible ? "flex" : "none";
@@ -12,10 +13,15 @@ document.addEventListener("DOMContentLoaded", function () {
       setVisible("#left_cont", false);
       setVisible("#loading", true);
       if (this.readyState === 4 && this.status === 200) {
-        const { content } = JSON.parse(this.responseText);
-        generatePie(content);
         setVisible("#loading", false);
         setVisible("#left_cont", true);
+        const { content } = JSON.parse(this.responseText);
+        console.log(content)
+        if(content.length > 2 && criterionMoreValues.indexOf(pieCriteria.value) !== -1){
+          generateValuesList(content);
+        }else{
+          generatePie(content);
+        }
       }
     };
     url = api + query;
@@ -127,18 +133,28 @@ document.addEventListener("DOMContentLoaded", function () {
   const resetFilters = document.getElementById("reset_button");
   const pieCriteria = document.getElementById("pie_criteria");
   const filtersForm = document.getElementById("filters_form");
+  const filtersPieNew = document.getElementById("filters_pie_new");
+  const submitPieButton = document.getElementById("submit_checkboxes");
+  const backPieButton = document.getElementById("back_filters");
+  const selectAllButton = document.getElementById("select_all");
   let message = document.getElementById("filter_message");
+  const filtersPieDown = document.getElementById("filters_pie_down");
+  const checkboxPie = document.querySelector(".checkbox_pie");
   let criterion;
 
   filtersForm.addEventListener("change", criterionForPie);
   resetFilters.addEventListener("click", function () {
     deletePieCriteriaNodes();
+    generatePie([]);
+    let errorMessageResult = document.getElementById("error_message_result");
+    errorMessageResult.innerText = "";
   });
 
   submitFilters.addEventListener("click", handlerSubmitFilters);
 
   function handlerSubmitFilters(e) {
     e.preventDefault();
+    goOnTop();
     let filtersValues = {};
     let queryString = "";
     const pageTypeIndex = window.location.href.lastIndexOf("/");
@@ -491,7 +507,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function createCriterionOptions(options) {
-    for (i = 0; i < options.length; i++) {
+    for (let i = 0; i < options.length; i++) {
       let option = document.createElement("option");
       let opt = options[i];
       option.value = opt;
@@ -566,6 +582,64 @@ document.addEventListener("DOMContentLoaded", function () {
     const okCriterion = verifyExistCriterion(filtersValues);
     if (ok && okDate && okCriterion) message.innerText = "";
     return ok && okDate && okCriterion;
+  }
+
+  function goOnTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  function generateValuesList(content) {
+    filtersForm.style.display = "none";
+    filtersPieNew.style.display = "flex";
+    filtersPieNew.style.flexDirection = "column";
+    filtersPieDown.style.display = "none";
+    const { info, data } = createArraysFromContent(content);
+    for(let i = 0; i < info.length; i++){
+      let div = document.createElement("div");
+      div.className = "checkbox_pie_element";
+      let input = document.createElement("input");
+      input.type = "checkbox";
+      input.name = info[i];
+      input.id = info[i];
+      let label = document.createElement("label");
+      label.htmlFor = info[i];
+      label.innerText = info[i];
+      div.appendChild(input);
+      div.appendChild(label);
+      checkboxPie.appendChild(div);
+    }
+    submitPieButton.addEventListener("click",() => {
+      let newContent = [];
+      let checkboxes = checkboxPie.children;
+      for (let i = 0; i < checkboxes.length; i++) {
+        let input = checkboxes[i].getElementsByTagName("input");
+        let newContentElem = {};
+        if(input[0].checked){
+          newContentElem._id = info[i];
+          newContentElem.count = data[i];
+          newContent.push(newContentElem);
+        }
+      }
+      generatePie(newContent);
+    });
+
+    backPieButton.addEventListener("click",() => {
+      while (checkboxPie.firstChild) {
+        checkboxPie.removeChild(checkboxPie.lastChild);
+      }
+      filtersForm.style.display = "block";
+      filtersPieNew.style.display = "none";
+      filtersPieDown.style.display = "flex";
+    });
+
+    selectAllButton.addEventListener("click",() => {
+      let allCheckboxes = checkboxPie.children;
+      for (let i = 0; i < allCheckboxes.length; i++) {
+        let input = allCheckboxes[i].getElementsByTagName("input");
+        input[0].checked = true;
+      }
+    });
   }
 
   function editCriterion(criterion) {
@@ -653,7 +727,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .text(function (d, i) {
         let number = data[i];
         let text = info[i];
-        return criterion + " " + text + ": " + number + " accidents";
+        return pieCriteria.value + " " + text + ": " + number + " accidents (" + dataProcents[i].toFixed(2) + "%)";
       });
   }
 
@@ -695,24 +769,33 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
+  function createArraysFromContent(content) {
+    let data = [];
+    let info = [];
+    for (let i = 0; i < content.length; i++) {
+      if (content[i]._id) {
+        data.push(content[i].count);
+        info.push(content[i]._id);
+      }
+    }
+    return { data: data, info: info};
+  }
+
   function generatePie(dataResponse) {
+    goOnTop();
     dataResponse.sort(function (a, b) {
       return a.count - b.count;
     });
-    console.log(dataResponse);
     let data = [];
     let info = [];
 
     if (Object.keys(dataResponse).length === 0) {
       data = [100];
       errorMessage();
-    }
-
-    for (let i = 0; i < dataResponse.length; i++) {
-      if (dataResponse[i]._id) {
-        data.push(dataResponse[i].count);
-        info.push(dataResponse[i]._id);
-      }
+    }else{
+      const arraysFromContent = createArraysFromContent(dataResponse);
+      data = arraysFromContent.data;
+      info = arraysFromContent.info;
     }
 
     let total = 0;

@@ -1374,7 +1374,7 @@
         justify-content: center;
     }
 
-    #submit_button[type="submit"] {
+    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"] {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1392,6 +1392,10 @@
         display: flex;
         flex-direction: row;
         margin: 3vw;
+    }
+
+    #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"]{
+        margin: 0;
     }
 
     #next_button {
