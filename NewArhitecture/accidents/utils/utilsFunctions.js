@@ -160,6 +160,8 @@ class Utils {
           return parseInt(a._id) - parseInt(b._id);
         });
     }
+  }
+
   async deleteBlankFieldsAfterGrouping(content) {
     for (let i = 0; i < content.length; i++) {
       if (!content[i]._id) {
@@ -268,10 +270,12 @@ class Utils {
     return days;
   }
 
-  async getDaysOfWeekFromGroupResult(content){
+  async getDaysOfWeekFromGroupResult(content) {
     let days = [];
     for (let i = 0; i < content.length; i++) {
-      let dayId = new Date(content[i]._id).toDateString().substring(0,new Date(content[i]._id).toDateString().indexOf(" "));
+      let dayId = new Date(content[i]._id)
+        .toDateString()
+        .substring(0, new Date(content[i]._id).toDateString().indexOf(" "));
       let dayCount = content[i].count;
       let index = await this.checkExistingElement(days, dayId);
       if (index === -1) {
@@ -281,11 +285,11 @@ class Utils {
       }
     }
     let newDays = [];
-    const daysOfWeek = ["Sun","Mon","Tues","Wed","Thurs","Fri","Sat"];
-    for(let i = 0; i < daysOfWeek.length; i++){
-      for(let j = 0; j < days.length; j++){
-        if(days[j]._id === daysOfWeek[i]){
-          newDays.push({_id: daysOfWeek[i], count: days[j].count});
+    const daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+    for (let i = 0; i < daysOfWeek.length; i++) {
+      for (let j = 0; j < days.length; j++) {
+        if (days[j]._id === daysOfWeek[i]) {
+          newDays.push({ _id: daysOfWeek[i], count: days[j].count });
           break;
         }
       }
@@ -304,17 +308,43 @@ class Utils {
   }
 
   async modifyStartHourResult(content) {
-    const hours = ["00:00:00","01:00:00","02:00:00","03:00:00","04:00:00","05:00:00","06:00:00","07:00:00","08:00:00","09:00:00","10:00:00","11:00:00","12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00","18:00:00","19:00:00","20:00:00","21:00:00","22:00:00","23:00:00"];
+    const hours = [
+      "00:00:00",
+      "01:00:00",
+      "02:00:00",
+      "03:00:00",
+      "04:00:00",
+      "05:00:00",
+      "06:00:00",
+      "07:00:00",
+      "08:00:00",
+      "09:00:00",
+      "10:00:00",
+      "11:00:00",
+      "12:00:00",
+      "13:00:00",
+      "14:00:00",
+      "15:00:00",
+      "16:00:00",
+      "17:00:00",
+      "18:00:00",
+      "19:00:00",
+      "20:00:00",
+      "21:00:00",
+      "22:00:00",
+      "23:00:00",
+    ];
     let newHours = [];
-    for(let i = 0; i < content.length; i++){
-      for(let j = 0; j < hours.length - 1; j ++){
-        if(content[i]._id >= hours[j] && content[i]._id <= hours[j + 1]){
-          let hourId = hours[j].substring(0,5) + "-" + hours[j + 1].substring(0,5);
+    for (let i = 0; i < content.length; i++) {
+      for (let j = 0; j < hours.length - 1; j++) {
+        if (content[i]._id >= hours[j] && content[i]._id <= hours[j + 1]) {
+          let hourId =
+            hours[j].substring(0, 5) + "-" + hours[j + 1].substring(0, 5);
           let hourCount = content[i].count;
-          let index = this.checkExistingElement(newHours,hourId);
-          if(index === -1){
-            newHours.push({_id: hourId, count: hourCount});
-          }else{
+          let index = this.checkExistingElement(newHours, hourId);
+          if (index === -1) {
+            newHours.push({ _id: hourId, count: hourCount });
+          } else {
             newHours[index].count += hourCount;
           }
         }

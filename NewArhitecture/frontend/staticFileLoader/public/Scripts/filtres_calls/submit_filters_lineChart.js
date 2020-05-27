@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
       datasetsSend = [];
       let time_interval = document.querySelector(".time_filtres");
       time_interval.style.display = "flex";
-      document.getElementById("filters_form").reset();
+      filtersForm.reset();
     }
   }
 
@@ -481,7 +481,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let time_interval = document.querySelector(".time_filtres");
       if (type === "Add") {
         time_interval.style.display = "none";
-        document.getElementById("filters_form").reset();
+        filtersForm.reset();
       }
       send_request(queryString.substring(1));
     }
