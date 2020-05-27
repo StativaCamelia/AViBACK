@@ -1,7 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
   const api = "http://localhost:5004/accidents?";
   const method = "GET";
-  const criterionMoreValues = [ "State", "County", "City", "Street", "Number", "Timezone", "Weather", "Wind direction", "Temperature", "Wind chill", "Wind speed", "Humidity", "Pressure", "Visibility", "Precipitation", "Accident date", "Hour", "Severity"];
+  const criterionMoreValues = [
+    "State",
+    "County",
+    "City",
+    "Street",
+    "Number",
+    "Timezone",
+    "Weather",
+    "Wind direction",
+    "Temperature",
+    "Wind chill",
+    "Wind speed",
+    "Humidity",
+    "Pressure",
+    "Visibility",
+    "Precipitation",
+    "Severity",
+    "Hour",
+  ];
 
   function setVisible(selector, visible) {
     document.querySelector(selector).style.display = visible ? "flex" : "none";
@@ -16,18 +34,29 @@ document.addEventListener("DOMContentLoaded", function () {
         setVisible("#loading", false);
         setVisible("#left_cont", true);
         const { content } = JSON.parse(this.responseText);
-        console.log(content)
-        if(content.length > 2 && criterionMoreValues.indexOf(pieCriteria.value) !== -1){
-          generateValuesList(content);
-        }else{
-          generatePie(content);
-        }
+        console.log(content);
+        representResponseData(content);
       }
     };
     url = api + query;
     console.log(url);
     xhttp.open(method, url, true);
     xhttp.send();
+  }
+
+  function representResponseData(content) {
+    if (
+      content.length > 2 &&
+      criterionMoreValues.indexOf(pieCriteria.value) !== -1
+    ) {
+      generateValuesList(content);
+    } else {
+      if (pieCriteria.value === "Accident date") {
+        generateAccidentDateOptions(content);
+      } else {
+        generatePie(content);
+      }
+    }
   }
 
   const state = document.getElementById("state");
@@ -140,6 +169,13 @@ document.addEventListener("DOMContentLoaded", function () {
   let message = document.getElementById("filter_message");
   const filtersPieDown = document.getElementById("filters_pie_down");
   const checkboxPie = document.querySelector(".checkbox_pie");
+  const radioPie = document.querySelector(".radio_pie");
+  const checkboxesButtons = document.querySelector(".checkboxes_buttons");
+  const years = document.getElementById("years");
+  const months = document.getElementById("months");
+  const days = document.getElementById("days");
+  const daysOfWeek = document.getElementById("days_of_week");
+  const allDates = document.getElementById("all_dates");
   let criterion;
 
   filtersForm.addEventListener("change", criterionForPie);
@@ -397,11 +433,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     filtersValues.Pie_Criterion = editCriterion(pieCriteria.value);
     criterion = filtersValues.Pie_Criterion;
-    queryString = concatQueryString(
-      queryString,
-      "Pie_Criterion",
-      criterion
-    );
+    queryString = concatQueryString(queryString, "Pie_Criterion", criterion);
 
     if (verifFilters(filtersValues) === true) {
       send_request(queryString.substring(1));
@@ -589,13 +621,49 @@ document.addEventListener("DOMContentLoaded", function () {
     document.documentElement.scrollTop = 0;
   }
 
-  function generateValuesList(content) {
+  function nextStepFilters() {
     filtersForm.style.display = "none";
+    filtersPieDown.style.display = "none";
     filtersPieNew.style.display = "flex";
     filtersPieNew.style.flexDirection = "column";
-    filtersPieDown.style.display = "none";
+  }
+
+  function generateAccidentDateOptions(content) {
+    nextStepFilters();
+    radioPie.style.display = "flex";
+    radioPie.style.flexDirection = "row";
+    radioPie.style.flexWrap = "wrap";
+    const okButton = document.getElementById("select_radio");
+    okButton.addEventListener("click", () => {
+      if (years.checked) {
+        generateValuesList(content.years, " -year ");
+      } else {
+        if (months.checked) {
+          generateValuesList(content.months, " -month ");
+        } else {
+          if (days.checked) {
+            generateValuesList(content.days, " -day ");
+          } else {
+            if (daysOfWeek.checked) {
+              generateValuesList(content.daysOfWeek, " -day ");
+            } else {
+              if (allDates.checked) {
+                generateValuesList(content.allDates);
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function generateValuesList(content, dateField) {
+    nextStepFilters();
+    checkboxesButtons.style.display = "flex";
+    deleteElementNodes(checkboxPie);
+
     const { info, data } = createArraysFromContent(content);
-    for(let i = 0; i < info.length; i++){
+    for (let i = 0; i < info.length; i++) {
       let div = document.createElement("div");
       div.className = "checkbox_pie_element";
       let input = document.createElement("input");
@@ -609,31 +677,36 @@ document.addEventListener("DOMContentLoaded", function () {
       div.appendChild(label);
       checkboxPie.appendChild(div);
     }
-    submitPieButton.addEventListener("click",() => {
+    submitPieButton.addEventListener("click", () => {
       let newContent = [];
       let checkboxes = checkboxPie.children;
       for (let i = 0; i < checkboxes.length; i++) {
         let input = checkboxes[i].getElementsByTagName("input");
         let newContentElem = {};
-        if(input[0].checked){
+        if (input[0].checked) {
           newContentElem._id = info[i];
           newContentElem.count = data[i];
           newContent.push(newContentElem);
         }
       }
-      generatePie(newContent);
+      generatePie(newContent, dateField);
     });
 
-    backPieButton.addEventListener("click",() => {
-      while (checkboxPie.firstChild) {
-        checkboxPie.removeChild(checkboxPie.lastChild);
-      }
+    backPieButton.addEventListener("click", () => {
+      deleteElementNodes(checkboxPie);
+      years.checked = false;
+      months.checked = false;
+      days.checked = false;
+      daysOfWeek.checked = false;
+      allDates.checked = false;
       filtersForm.style.display = "block";
       filtersPieNew.style.display = "none";
       filtersPieDown.style.display = "flex";
+      checkboxesButtons.style.display = "none";
+      radioPie.style.display = "none";
     });
 
-    selectAllButton.addEventListener("click",() => {
+    selectAllButton.addEventListener("click", () => {
       let allCheckboxes = checkboxPie.children;
       for (let i = 0; i < allCheckboxes.length; i++) {
         let input = allCheckboxes[i].getElementsByTagName("input");
@@ -682,10 +755,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function deletePieLegend() {
-    let legendPie = document.querySelector(".legend_pie");
-    while (legendPie.firstChild) {
-      legendPie.removeChild(legendPie.lastChild);
-    }
+    const legendPie = document.querySelector(".legend_pie");
+    deleteElementNodes(legendPie);
   }
 
   function errorMessage() {
@@ -698,7 +769,7 @@ document.addEventListener("DOMContentLoaded", function () {
     errorMessageResult.innerText = "";
   }
 
-  function generatePieLegend(dataProcents, data, info) {
+  function generatePieLegend(dataProcents, data, info, dateField) {
     deleteErrorMessage();
 
     let legendAfter = d3.select(".legend_pie");
@@ -726,8 +797,18 @@ document.addEventListener("DOMContentLoaded", function () {
       .append("text")
       .text(function (d, i) {
         let number = data[i];
-        let text = info[i];
-        return pieCriteria.value + " " + text + ": " + number + " accidents (" + dataProcents[i].toFixed(2) + "%)";
+        let text1 = info[i];
+        let text2 = dateField ? dateField : " ";
+        return (
+          pieCriteria.value +
+          text2 +
+          text1 +
+          ": " +
+          number +
+          " accidents (" +
+          dataProcents[i].toFixed(2) +
+          "%)"
+        );
       });
   }
 
@@ -778,10 +859,10 @@ document.addEventListener("DOMContentLoaded", function () {
         info.push(content[i]._id);
       }
     }
-    return { data: data, info: info};
+    return { data: data, info: info };
   }
 
-  function generatePie(dataResponse) {
+  function generatePie(dataResponse, dateField) {
     goOnTop();
     dataResponse.sort(function (a, b) {
       return a.count - b.count;
@@ -792,7 +873,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (Object.keys(dataResponse).length === 0) {
       data = [100];
       errorMessage();
-    }else{
+    } else {
       const arraysFromContent = createArraysFromContent(dataResponse);
       data = arraysFromContent.data;
       info = arraysFromContent.info;
@@ -808,7 +889,13 @@ document.addEventListener("DOMContentLoaded", function () {
     deletePieLegend();
 
     if (Object.keys(dataResponse).length !== 0) {
-      generatePieLegend(dataProcents, data, info);
+      generatePieLegend(dataProcents, data, info, dateField);
+    }
+  }
+
+  function deleteElementNodes(element) {
+    while (element.firstChild) {
+      element.removeChild(element.lastChild);
     }
   }
 

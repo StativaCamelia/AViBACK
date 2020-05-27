@@ -14,7 +14,7 @@
         height: auto;
         width: auto;
         margin-bottom: 8vh;
-        margin-top: 16vh;
+        margin-top: 22vh;
         align-self: center;
         justify-content: space-between;
     }
@@ -472,9 +472,9 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        margin-top: 0%;
-        margin-bottom: 0%;
+        margin: 0;
         padding: 0;
+        flex-wrap: wrap;
     }
 
     .main_menu ul li:first-child {
@@ -1014,7 +1014,7 @@
     }
 
     .checkboxes_buttons{
-        display: flex;
+        display: none;
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
@@ -1310,7 +1310,7 @@
         justify-content: center;
     }
 
-    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"] {
+    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"] {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1330,7 +1330,7 @@
         margin: 4vw;
     }
 
-    #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"]{
+    #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"]{
         margin: 0;
     }
 

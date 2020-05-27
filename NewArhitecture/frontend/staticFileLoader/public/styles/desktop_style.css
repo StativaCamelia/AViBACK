@@ -748,7 +748,7 @@
     .topic2:hover>p,
     .topic3:hover>p {
         display: block;
-        margin-top: 5vh;
+        margin-top: 3vh;
         font-family: Novecentosanswide;
     }
 
@@ -812,7 +812,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
-        flex-basis: 600px;
+        width: 50%;
     }
 
     .main_menu ul {
@@ -882,7 +882,7 @@
         flex-direction: row;
         clear: both;
         justify-content: center;
-        flex-basis: 370px;
+        width: 30%;
     }
 
     .statistics ul {
@@ -1117,7 +1117,7 @@
     }
 
     .checkboxes_buttons{
-        display: flex;
+        display: none;
         flex-direction: row;
         justify-content: space-between;
         width: 80%;
@@ -1464,7 +1464,7 @@
 
     }
 
-    #submit_button[type="submit"] {
+    #submit_button[type="submit"]{
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: white;
@@ -1498,7 +1498,7 @@
         text-shadow: 0px 1px 0px #e1e2ed;
     }
 
-    #reset_button[type="reset"], #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"] {
+    #reset_button[type="reset"], #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"] {
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: white;
@@ -1514,7 +1514,7 @@
         margin-left: 12vw;
         text-shadow: 0px 1px 0px #e1e2ed;
     }
-    #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"]{
+    #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"]{
         margin: 0;
     }
     .map-history {

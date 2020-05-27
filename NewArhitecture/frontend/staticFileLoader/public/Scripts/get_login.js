@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.status === 200 || this.status === 400 || this.status === 401) {
         const response = JSON.parse(this.responseText);
         const values = response.content.values;
-        console.log(response)
-        console.log(values)
         profileLog.innerText = values.value;
         profileLog.id = values.id;
         profileLog.href = values.href;
@@ -21,7 +19,22 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Authentification error!");
       }
       if (profileLog.id !== "button") {
-        profileLog.removeEventListener("click", loginListener);
+        const logout = document.getElementById("logout");
+        const windowUrl = window.location.href;
+        const index = windowUrl.indexOf("profile");
+        logout.style.display = "inline-block";
+        logout.addEventListener("click",() => {
+          localStorage.removeItem("auth-token");
+          logout.style.display = "none";
+          if(index !== -1){
+            location.href = windowUrl.substring(0,index) + "home";
+          }else{
+            location.href = windowUrl;
+          }
+        });
+        if(index === -1){
+          profileLog.removeEventListener("click", loginListener);
+        }
       }
     }
   };

@@ -469,7 +469,7 @@ ul li {
     opacity: 0;
 }
 
-#submit_button:hover, #back_filters:hover, #submit_checkboxes:hover, #select_all:hover {
+#submit_button:hover, #back_filters:hover, #submit_checkboxes:hover, #select_all:hover, #select_radio:hover {
     background-color: #041F60;
     color: white;
 }
@@ -605,8 +605,14 @@ a.control_button:active{
     flex-direction: row;
 }
 
-#button{
+#button, #logout{
     display: none;
+}
+
+#profile.active{
+    color: white;
+    text-decoration: none;
+    border-bottom: 4px solid white;
 }
 
 .info_pie h2,#left_cont h2, #filters_pie_new h2{
@@ -623,6 +629,13 @@ a.control_button:active{
     display: flex;
     flex-direction: column;
 }
+.radio_pie{
+    display: none;
+    width: 100%;
+    height: auto;
+    align-self: center;
+    margin: 0 0 2vh 0;
+}
 .checkbox_pie{
     display: flex;
     flex-direction: row;
@@ -631,7 +644,7 @@ a.control_button:active{
     height: auto;
     align-self: center;
 }
-.checkbox_pie_element{
+.checkbox_pie_element,.radio_pie_element{
     margin: 0 1vw 1vh 0;
 }
 /*TOP BUTTON*/

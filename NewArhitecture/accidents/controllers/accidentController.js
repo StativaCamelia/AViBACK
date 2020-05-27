@@ -96,21 +96,13 @@ class AccidentController {
         },
       ];
       let content = await this.database.Accident.aggregate(aggregatorOpts);
-      content = await this.editResultContent(content);
+      content = await utils.deleteBlankFieldsAfterGrouping(content);
       return content;
     } catch (error) {
       throw error;
     }
   }
 
-  async editResultContent(content){
-    for(let i = 0; i < content.length; i++){
-      if(!content[i]._id){
-        content.splice(i,1);
-      }
-    }
-    return content;
-  }
 
   async getDailyAccidents() {
     try {
@@ -249,6 +241,14 @@ class AccidentController {
       );
       if(criterion === "State"){
         content = await this.modifyIdForStates(content);
+      }else{
+        if(criterion === "Start_Date"){
+          content = await utils.modifyStartDateResult(content);
+        }else{
+          if(criterion === "Start_Hour"){
+            content = await utils.modifyStartHourResult(content);
+          }
+        }
       }
       console.log(content)
       return content;
