@@ -491,7 +491,7 @@
     .topic2:hover>p,
     .topic3:hover>p {
         display: block;
-        margin-top: 5vh;
+        margin-top: 2vh;
         font-family: Novecentosanswide;
     }
 
@@ -1113,6 +1113,15 @@
         align-self: auto;
     }
 
+    .checkboxes_buttons{
+        display: none;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 80%;
+        margin-top: 2vh;
+        align-self: center;
+    }
+
     /*FILTRE*/
     .filtres {
         width: 100%;
@@ -1374,7 +1383,7 @@
         justify-content: center;
     }
 
-    #submit_button[type="submit"] {
+    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"] {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1415,6 +1424,10 @@
         margin: 0;
     }
     
+    #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"]{
+        margin: 0;
+    }
+
     #next_button {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;

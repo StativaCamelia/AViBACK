@@ -157,6 +157,32 @@ class AccidentController {
     }
   }
 
+  //numarul de accidente in functie de niste criterii grupate pe un criteriu dat de noi(*Georgiana nu uita ca ai sters aia cu map si ai zis ca folosesti asta in schimb)
+  async getNumberOfAccidentsByQueryAndGroupBy(query, groupBy) {
+    try {
+      let aggregatorOpts;
+      aggregatorOpts = [
+        {
+          $match: query,
+        },
+        {
+          $unwind: { path: "$" + groupBy, preserveNullAndEmptyArrays: false },
+        },
+        {
+          $group: {
+            _id: "$" + groupBy,
+            count: { $sum: 1 },
+          },
+        },
+      ];
+      let content = await this.database.Accident.aggregate(aggregatorOpts);
+      content = await utils.deleteBlankFieldsAfterGrouping(content);
+      return content;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getDailyAccidents() {
     try {
       const content = await this.database.Accident.getNumberOfAccidents();
@@ -294,6 +320,14 @@ class AccidentController {
       );
       if (criterion === "State") {
         content = await this.modifyIdForStates(content);
+      } else {
+        if (criterion === "Start_Date") {
+          content = await utils.modifyStartDateResult(content);
+        } else {
+          if (criterion === "Start_Hour") {
+            content = await utils.modifyStartHourResult(content);
+          }
+        }
       }
       return content;
     } catch (error) {

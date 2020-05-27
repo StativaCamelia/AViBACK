@@ -1,6 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
   const api = "http://localhost:5004/accidents?";
   const method = "GET";
+  const criterionMoreValues = [
+    "State",
+    "County",
+    "City",
+    "Street",
+    "Number",
+    "Timezone",
+    "Weather",
+    "Wind direction",
+    "Temperature",
+    "Wind chill",
+    "Wind speed",
+    "Humidity",
+    "Pressure",
+    "Visibility",
+    "Precipitation",
+    "Severity",
+    "Hour",
+  ];
 
   function setVisible(selector, visible) {
     document.querySelector(selector).style.display = visible ? "flex" : "none";
@@ -12,16 +31,32 @@ document.addEventListener("DOMContentLoaded", function () {
       setVisible("#left_cont", false);
       setVisible("#loading", true);
       if (this.readyState === 4 && this.status === 200) {
-        const { content } = JSON.parse(this.responseText);
-        generatePie(content);
         setVisible("#loading", false);
         setVisible("#left_cont", true);
+        const { content } = JSON.parse(this.responseText);
+        console.log(content);
+        representResponseData(content);
       }
     };
     url = api + query;
     console.log(url);
     xhttp.open(method, url, true);
     xhttp.send();
+  }
+
+  function representResponseData(content) {
+    if (
+      content.length > 2 &&
+      criterionMoreValues.indexOf(pieCriteria.value) !== -1
+    ) {
+      generateValuesList(content);
+    } else {
+      if (pieCriteria.value === "Accident date") {
+        generateAccidentDateOptions(content);
+      } else {
+        generatePie(content);
+      }
+    }
   }
 
   const state = document.getElementById("state");
@@ -127,18 +162,35 @@ document.addEventListener("DOMContentLoaded", function () {
   const resetFilters = document.getElementById("reset_button");
   const pieCriteria = document.getElementById("pie_criteria");
   const filtersForm = document.getElementById("filters_form");
+  const filtersPieNew = document.getElementById("filters_pie_new");
+  const submitPieButton = document.getElementById("submit_checkboxes");
+  const backPieButton = document.getElementById("back_filters");
+  const selectAllButton = document.getElementById("select_all");
   let message = document.getElementById("filter_message");
+  const filtersPieDown = document.getElementById("filters_pie_down");
+  const checkboxPie = document.querySelector(".checkbox_pie");
+  const radioPie = document.querySelector(".radio_pie");
+  const checkboxesButtons = document.querySelector(".checkboxes_buttons");
+  const years = document.getElementById("years");
+  const months = document.getElementById("months");
+  const days = document.getElementById("days");
+  const daysOfWeek = document.getElementById("days_of_week");
+  const allDates = document.getElementById("all_dates");
   let criterion;
 
   filtersForm.addEventListener("change", criterionForPie);
   resetFilters.addEventListener("click", function () {
     deletePieCriteriaNodes();
+    generatePie([]);
+    let errorMessageResult = document.getElementById("error_message_result");
+    errorMessageResult.innerText = "";
   });
 
   submitFilters.addEventListener("click", handlerSubmitFilters);
 
   function handlerSubmitFilters(e) {
     e.preventDefault();
+    goOnTop();
     let filtersValues = {};
     let queryString = "";
     const pageTypeIndex = window.location.href.lastIndexOf("/");
@@ -487,7 +539,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function createCriterionOptions(options) {
-    for (i = 0; i < options.length; i++) {
+    for (let i = 0; i < options.length; i++) {
       let option = document.createElement("option");
       let opt = options[i];
       option.value = opt;
@@ -564,6 +616,105 @@ document.addEventListener("DOMContentLoaded", function () {
     return ok && okDate && okCriterion;
   }
 
+  function goOnTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  function nextStepFilters() {
+    filtersForm.style.display = "none";
+    filtersPieDown.style.display = "none";
+    filtersPieNew.style.display = "flex";
+    filtersPieNew.style.flexDirection = "column";
+  }
+
+  function generateAccidentDateOptions(content) {
+    nextStepFilters();
+    radioPie.style.display = "flex";
+    radioPie.style.flexDirection = "row";
+    radioPie.style.flexWrap = "wrap";
+    const okButton = document.getElementById("select_radio");
+    okButton.addEventListener("click", () => {
+      if (years.checked) {
+        generateValuesList(content.years, " -year ");
+      } else {
+        if (months.checked) {
+          generateValuesList(content.months, " -month ");
+        } else {
+          if (days.checked) {
+            generateValuesList(content.days, " -day ");
+          } else {
+            if (daysOfWeek.checked) {
+              generateValuesList(content.daysOfWeek, " -day ");
+            } else {
+              if (allDates.checked) {
+                generateValuesList(content.allDates);
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function generateValuesList(content, dateField) {
+    nextStepFilters();
+    checkboxesButtons.style.display = "flex";
+    deleteElementNodes(checkboxPie);
+
+    const { info, data } = createArraysFromContent(content);
+    for (let i = 0; i < info.length; i++) {
+      let div = document.createElement("div");
+      div.className = "checkbox_pie_element";
+      let input = document.createElement("input");
+      input.type = "checkbox";
+      input.name = info[i];
+      input.id = info[i];
+      let label = document.createElement("label");
+      label.htmlFor = info[i];
+      label.innerText = info[i];
+      div.appendChild(input);
+      div.appendChild(label);
+      checkboxPie.appendChild(div);
+    }
+    submitPieButton.addEventListener("click", () => {
+      let newContent = [];
+      let checkboxes = checkboxPie.children;
+      for (let i = 0; i < checkboxes.length; i++) {
+        let input = checkboxes[i].getElementsByTagName("input");
+        let newContentElem = {};
+        if (input[0].checked) {
+          newContentElem._id = info[i];
+          newContentElem.count = data[i];
+          newContent.push(newContentElem);
+        }
+      }
+      generatePie(newContent, dateField);
+    });
+
+    backPieButton.addEventListener("click", () => {
+      deleteElementNodes(checkboxPie);
+      years.checked = false;
+      months.checked = false;
+      days.checked = false;
+      daysOfWeek.checked = false;
+      allDates.checked = false;
+      filtersForm.style.display = "block";
+      filtersPieNew.style.display = "none";
+      filtersPieDown.style.display = "flex";
+      checkboxesButtons.style.display = "none";
+      radioPie.style.display = "none";
+    });
+
+    selectAllButton.addEventListener("click", () => {
+      let allCheckboxes = checkboxPie.children;
+      for (let i = 0; i < allCheckboxes.length; i++) {
+        let input = allCheckboxes[i].getElementsByTagName("input");
+        input[0].checked = true;
+      }
+    });
+  }
+
   function editCriterion(criterion) {
     switch (criterion) {
       case "Road side":
@@ -604,10 +755,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function deletePieLegend() {
-    let legendPie = document.querySelector(".legend_pie");
-    while (legendPie.firstChild) {
-      legendPie.removeChild(legendPie.lastChild);
-    }
+    const legendPie = document.querySelector(".legend_pie");
+    deleteElementNodes(legendPie);
   }
 
   function errorMessage() {
@@ -620,7 +769,7 @@ document.addEventListener("DOMContentLoaded", function () {
     errorMessageResult.innerText = "";
   }
 
-  function generatePieLegend(dataProcents, data, info) {
+  function generatePieLegend(dataProcents, data, info, dateField) {
     deleteErrorMessage();
 
     let legendAfter = d3.select(".legend_pie");
@@ -648,8 +797,18 @@ document.addEventListener("DOMContentLoaded", function () {
       .append("text")
       .text(function (d, i) {
         let number = data[i];
-        let text = info[i];
-        return criterion + " " + text + ": " + number + " accidents";
+        let text1 = info[i];
+        let text2 = dateField ? dateField : " ";
+        return (
+          pieCriteria.value +
+          text2 +
+          text1 +
+          ": " +
+          number +
+          " accidents (" +
+          dataProcents[i].toFixed(2) +
+          "%)"
+        );
       });
   }
 
@@ -691,24 +850,33 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  function generatePie(dataResponse) {
+  function createArraysFromContent(content) {
+    let data = [];
+    let info = [];
+    for (let i = 0; i < content.length; i++) {
+      if (content[i]._id) {
+        data.push(content[i].count);
+        info.push(content[i]._id);
+      }
+    }
+    return { data: data, info: info };
+  }
+
+  function generatePie(dataResponse, dateField) {
+    goOnTop();
     dataResponse.sort(function (a, b) {
       return a.count - b.count;
     });
-    console.log(dataResponse);
     let data = [];
     let info = [];
 
     if (Object.keys(dataResponse).length === 0) {
       data = [100];
       errorMessage();
-    }
-
-    for (let i = 0; i < dataResponse.length; i++) {
-      if (dataResponse[i]._id) {
-        data.push(dataResponse[i].count);
-        info.push(dataResponse[i]._id);
-      }
+    } else {
+      const arraysFromContent = createArraysFromContent(dataResponse);
+      data = arraysFromContent.data;
+      info = arraysFromContent.info;
     }
 
     let total = 0;
@@ -721,7 +889,13 @@ document.addEventListener("DOMContentLoaded", function () {
     deletePieLegend();
 
     if (Object.keys(dataResponse).length !== 0) {
-      generatePieLegend(dataProcents, data, info);
+      generatePieLegend(dataProcents, data, info, dateField);
+    }
+  }
+
+  function deleteElementNodes(element) {
+    while (element.firstChild) {
+      element.removeChild(element.lastChild);
     }
   }
 

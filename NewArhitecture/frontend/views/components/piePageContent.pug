@@ -14,6 +14,9 @@ block left_content
                 height="350")
             .legend_pie
             h2#error_message_result
+block loading
+    h3 Loading...
+    #loader
 block right_content
     .filtres
         form#filters_form.form_filters
@@ -241,11 +244,36 @@ block right_content
                             .moon_option
                                 input#astronomical_twilight_night(type='radio' form='filters_form' name='astronomical_twilight')
                                 label.moon_option_label(for='astronomical_twilight_night') Night
-        h2#filter_message
-        .select_criteria
-            h3.criteria_select_label *Criterion for generate pie:
-            select#pie_criteria
-                option(value='criterion' selected='' hidden='') Criterion
-        .submit_button
-            input#reset_button(form='filters_form' type='reset' value='Reset')
-            input#submit_button(form='filters_form' type='submit' value='Submit')
+        #filters_pie_down
+            h2#filter_message
+            .select_criteria
+                h3.criteria_select_label *Criterion for generate pie:
+                select#pie_criteria
+                    option(value='criterion' selected='' hidden='') Criterion
+            .submit_button
+                input#reset_button(form='filters_form' type='reset' value='Reset')
+                input#submit_button(form='filters_form' type='submit' value='Submit')
+        #filters_pie_new
+            h2 Select what you want to see on pie
+            .radio_pie
+                .radio_pie_element
+                    input#years(type='radio' name='date_pie')
+                    label(for='years') Years
+                .radio_pie_element
+                    input#months(type='radio' name='date_pie')
+                    label(for='months') Months
+                .radio_pie_element
+                    input#days(type='radio' name='date_pie')
+                    label(for='days') Days
+                .radio_pie_element
+                    input#days_of_week(type='radio' name='date_pie')
+                    label(for='days_of_week') Days of week
+                .radio_pie_element
+                    input#all_dates(type='radio' name='date_pie')
+                    label(for='all_dates') All dates
+                input#select_radio(type='button' value='OK')
+            .checkbox_pie
+            .checkboxes_buttons
+                input#back_filters(type='button' value='Back')
+                input#select_all(type='button' value='SelectAll')
+                input#submit_checkboxes(type='submit' value='Submit')
