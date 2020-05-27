@@ -1374,7 +1374,8 @@
         margin: 0;
     }
 
-    #remove_button, #update_button{
+    #change_button, #update_intreval_button{
+        display: none;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 10px;

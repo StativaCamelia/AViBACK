@@ -97,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
       datasetsSend = [];
       let time_interval = document.querySelector(".time_filtres");
       time_interval.style.display = "flex";
-      filtersForm.reset();
     }
   }
 
@@ -110,9 +109,20 @@ document.addEventListener("DOMContentLoaded", function () {
     document.documentElement.scrollTop = 0;
   }
 
+  const resetButton = document.getElementById("reset_button");
+  resetButton.addEventListener("click", resetSelect);
+  function resetSelect() {
+    const selects = document.querySelectorAll("select");
+    for (let select of selects) {
+      select.selectedIndex = 0;
+    }
+  }
+
   function send_request(query) {
     var xhttp = new XMLHttpRequest();
     up();
+    filtersForm.reset();
+    resetSelect();
     xhttp.onreadystatechange = function () {
       setVisible("#left_cont", false);
       setVisible("#loading", true);
@@ -265,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "Severity",
   ];
 
-  const roadConditions = [
+  const roadComponents = [
     amenity,
     bump,
     crossing,
@@ -313,6 +323,37 @@ document.addEventListener("DOMContentLoaded", function () {
     "SecondHour",
   ];
 
+  const astronomicComponents = [
+    sunriseSunsetDay,
+    sunriseSunsetNight,
+    civilTwilightDay,
+    civilTwilightNight,
+    nauticalTwilightDay,
+    nauticalTwilightNight,
+    astronomicalTwilightDay,
+    astronomicalTwilightNight,
+  ];
+  const astronomicDatabase = [
+    "Sunrise_Sunset",
+    "Sunrise_Sunset",
+    "Civil_Twilight",
+    "Civil_Twilight",
+    "Nautical_Twilight",
+    "Nautical_Twilight",
+    "Astronomical_Twilight",
+    "Astronomical_Twilight",
+  ];
+  const astronomicValues = [
+    "Day",
+    "Night",
+    "Day",
+    "Night",
+    "Day",
+    "Night",
+    "Day",
+    "Night",
+  ];
+
   const submitFilters = document.getElementById("submit_button");
   let message = document.getElementById("filter_message");
   let filtersValues = {};
@@ -343,8 +384,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
-    for (let i = 0; i < roadConditions.length; i++) {
-      roadConditions[i].checked
+    for (let i = 0; i < roadComponents.length; i++) {
+      roadComponents[i].checked
         ? (dataset[roadConditionDatabase[i]] = "True")
         : (dataset[roadConditionDatabase[i]] = "False");
       dataString = concatQueryString(
@@ -384,37 +425,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
       }
     }
-
-    const astronomicComponents = [
-      sunriseSunsetDay,
-      sunriseSunsetNight,
-      civilTwilightDay,
-      civilTwilightNight,
-      nauticalTwilightDay,
-      nauticalTwilightNight,
-      astronomicalTwilightDay,
-      astronomicalTwilightNight,
-    ];
-    const astronomicDatabase = [
-      "Sunrise_Sunset",
-      "Sunrise_Sunset",
-      "Civil_Twilight",
-      "Civil_Twilight",
-      "Nautical_Twilight",
-      "Nautical_Twilight",
-      "Astronomical_Twilight",
-      "Astronomical_Twilight",
-    ];
-    const astronomicValues = [
-      "Day",
-      "Night",
-      "Day",
-      "Night",
-      "Day",
-      "Night",
-      "Day",
-      "Night",
-    ];
     for (let i = 0; i < astronomicComponents.length; i++) {
       if (astronomicComponents[i].checked) {
         dataset[astronomicDatabase[i]] = astronomicValues[i];
@@ -479,9 +489,10 @@ document.addEventListener("DOMContentLoaded", function () {
       datasetsSend.push(dataset);
       queryString += dataString;
       let time_interval = document.querySelector(".time_filtres");
+      let change_interval = document.getElementById("change_button");
       if (type === "Add") {
         time_interval.style.display = "none";
-        filtersForm.reset();
+        change_interval.style.display = "block";
       }
       send_request(queryString.substring(1));
     }
@@ -489,26 +500,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function addDatasetToSelect() {
     let datasetsSelect = document.getElementById("list_datasets");
-    for (let i = 0; i < datasetsSend.length; i++) {
-      let option = document.createElement("option");
-      option.value = "Dataset" + (i + 1);
-      option.textContent = "Dataset" + (i + 1);
-      datasetsSelect.appendChild(option);
-    }
+    let option = document.createElement("option");
+    option.value = datasetsSend.length;
+    option.innerHTML = "Dataset" + datasetsSend.length;
+    datasetsSelect.appendChild(option);
   }
 
-  //Handler de trimis
+  function setDatasetTitle(index) {
+    let title = document.querySelector("#filters_form>h2");
+    title.innerHTML = "Dataset:" + (index + 1);
+  }
+
   function handlerAddFiltres(e) {
     e.preventDefault();
-    if (datasetsSend.length === 0) {
-      continueGraph = "Add";
-      addDatasetToSelect();
-      prepareQueryString("Add");
-    } else {
-      continueGraph = "Add";
-      addDatasetToSelect();
-      prepareQueryString("Add");
-    }
+    continueGraph = "Add";
+    setDatasetTitle(datasetsSend.length + 1);
+    prepareQueryString("Add");
+    addDatasetToSelect(datasetsSend.length + 1);
   }
 
   function handlerSubmitFilters(e) {
@@ -734,5 +742,81 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
     verifyDateGroup({ year1, year2, month1, month2, day1, day2, hour1, hour2 });
+  }
+
+  const update_button = document.getElementById("update_button");
+  const datasets_select = document.getElementById("list_datasets");
+  datasets_select.addEventListener("change", goToDataset);
+
+  function goToDataset() {
+    let index = parseInt(datasets_select.value) - 1;
+    let data = datasetsSend[index];
+    setDatasetTitle(index);
+    for (let field in data) {
+      if (locationDatabase.indexOf(field) !== -1) {
+        if (field === "Side") {
+          data[field] === "L"
+            ? (data[field] = "Left")
+            : (data[field] = "Right");
+        }
+        locationComponents[locationDatabase.indexOf(field)].value = data[field];
+      }
+      if (roadConditionDatabase.indexOf(field) !== -1) {
+        data[field] === "True"
+          ? (roadComponents[
+              roadConditionDatabase.indexOf(field)
+            ].checked = true)
+          : (roadComponents[
+              roadConditionDatabase.indexOf(field)
+            ].checked = false);
+      }
+      if (lowerValuesWeather.indexOf(field) !== -1) {
+        lowerWeatherComponents[lowerValuesWeather.indexOf(field)].value =
+          data[field];
+      }
+      if (higherValuesWeather.indexOf(field) !== -1) {
+        higherWeatherComponents[higherValuesWeather.indexOf(field)].value =
+          data[field];
+      }
+      if (datesFields.indexOf(field) !== -1) {
+        databaseComponents[datesFields.indexOf(field)].value = data[field];
+      }
+      if (astronomicDatabase.indexOf(field) !== -1) {
+        data[field] === "Day"
+          ? (astronomicComponents[
+              astronomicDatabase.indexOf(field)
+            ].checked = true)
+          : (astronomicComponents[
+              astronomicDatabase.indexOf(field)
+            ].checked = true);
+      }
+    }
+  }
+
+  let change_interval = document.getElementById("change_button");
+
+  change_interval.addEventListener("click", changeTimeInterval);
+  function changeTimeInterval() {
+    function displayTimeElements() {
+      let time_interval = document.querySelector(".time_filtres");
+      let update_interval_button = document.getElementById(
+        "update_interval_button"
+      );
+      time_interval.style.display = "flex";
+      update_interval_button.style.display = "flex";
+    }
+
+    function getNewTimeValues() {
+      let newTimeValues = {};
+      for (let i = 0; i < databaseComponents.length; i++) {
+        if (datesComponents[i].value !== "") {
+          newTimeValues[datesFields[i]] = datesComponents[i].value.toString();
+        }
+      }
+      console.log(newTimeValues);
+    }
+
+    displayTimeElements();
+    getNewTimeValues();
   }
 });

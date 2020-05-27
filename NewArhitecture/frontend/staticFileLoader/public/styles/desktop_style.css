@@ -1481,7 +1481,9 @@
         text-shadow: 0px 1px 0px #e1e2ed;
     }
 
-    #remove_button, #update_button{
+    #change_button, #update_interval_button{
+        display: none;
+        text-align: center;
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: white;

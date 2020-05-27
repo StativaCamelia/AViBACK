@@ -307,12 +307,8 @@ document.addEventListener("DOMContentLoaded", function () {
       );
     }
     if (severity.value !== "0") {
-      filtersValues.Severity = severity.value;
-      queryString = concatQueryString(
-        queryString,
-        "Severity",
-        severity.value.toString()
-      );
+      filtersValues.Severity = parseInt(severity.value);
+      queryString = concatQueryString(queryString, "Severity", severity.value);
     }
     if (sunriseSunsetDay.checked) {
       filtersValues.Sunrise_Sunset = "Day";

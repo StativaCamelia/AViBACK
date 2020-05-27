@@ -81,9 +81,7 @@ class AccidentController {
         },
       ];
       let content = await this.database.Accident.aggregate(aggregatorOpts);
-      console.log(content);
       content = utils.getArraySorted(content, groupByValue, query);
-      console.log(content);
       return content;
     } catch (error) {
       throw error;
