@@ -17,11 +17,92 @@ class AccidentController {
         console.log("Fa chart");
         content = "abc";
       } else if (type === "line") {
-        content = await this.getLineRepresentation(query);
+        content = await this.getLineRepresentation(query, criterion);
       }
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
+    }
+  }
+
+  //numarul de accidente in functie de niste criterii grupate pe un criteriu dat de noi(*Georgiana nu uita ca ai sters aia cu map si ai zis ca folosesti asta in schimb)
+  async getNumberOfAccidentsByQueryAndGroupBy(query, groupBy) {
+    try {
+      let aggregatorOpts;
+      aggregatorOpts = [
+        {
+          $match: query,
+        },
+        {
+          $unwind: { path: "$" + groupBy, preserveNullAndEmptyArrays: false },
+        },
+        {
+          $group: {
+            _id: "$" + groupBy,
+            count: { $sum: 1 },
+          },
+        },
+      ];
+      const content = await this.database.Accident.aggregate(aggregatorOpts);
+      return content;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  getGroupByCriteria(groupBy, query) {
+    if (groupBy === "Years") {
+      return { $substr: ["$Start_Date", 0, 4] };
+    } else if (groupBy === "Months") {
+      return { $substr: ["$Start_Date", 0, 7] };
+    } else if (groupBy === "Days") {
+      return { $substr: ["$Start_Date", 0, 10] };
+    } else if (groupBy === "Hours" && query.Start_Date) {
+      return {
+        day: { $substr: ["$Start_Date", 0, 10] },
+        hour: { $substr: ["$Start_Hour", 0, 2] },
+      };
+    } else return { $substr: ["$Start_Hour", 0, 2] };
+  }
+
+  async getNumberOfAccidentsAndGroupByRegex(query, groupByValue) {
+    try {
+      let aggregatorOpts;
+      let groupBy = this.getGroupByCriteria(groupByValue, query);
+      aggregatorOpts = [
+        {
+          $match: query,
+        },
+        {
+          $group: {
+            _id: groupBy,
+            count: { $sum: 1 },
+          },
+        },
+      ];
+      let content = await this.database.Accident.aggregate(aggregatorOpts);
+      console.log(content);
+      content = utils.getArraySorted(content, groupByValue, query);
+      console.log(content);
+      return content;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getLineRepresentation(query, criterion) {
+    try {
+      const timeIntervals = {
+        Start_Date: query["Start_Date"],
+        Start_Hour: query["Start_Hour"],
+      };
+      const accidents = this.getNumberOfAccidentsAndGroupByRegex(
+        query,
+        criterion
+      );
+      return accidents;
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -52,7 +133,6 @@ class AccidentController {
 
   async getMapMarkers(query) {
     try {
-      delete query["Types"];
       const marker = await this.database.Accident.find(query).limit(1);
       return {
         Start_Lat: marker[0].Start_Lat,
@@ -72,31 +152,6 @@ class AccidentController {
       );
       const boudaries = utils.getBoudaries(result);
       return { dataset: result, boudaries };
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  //numarul de accidente in functie de niste criterii grupate pe un criteriu dat de noi(*Georgiana nu uita ca ai sters aia cu map si ai zis ca folosesti asta in schimb)
-  async getNumberOfAccidentsByQueryAndGroupBy(query, groupBy) {
-    try {
-      let aggregatorOpts;
-      aggregatorOpts = [
-        {
-          $match: query,
-        },
-        {
-          $unwind: { path: "$" + groupBy, preserveNullAndEmptyArrays: false },
-        },
-        {
-          $group: {
-            _id: "$" + groupBy,
-            count: { $sum: 1 },
-          },
-        },
-      ];
-      const content = await this.database.Accident.aggregate(aggregatorOpts);
-      return content;
     } catch (error) {
       throw error;
     }
@@ -221,12 +276,12 @@ class AccidentController {
     }
   }
 
-  async modifyIdForStates(result){
+  async modifyIdForStates(result) {
     let modified = [];
-    for(let i = 0; i < result.length; i++){
+    for (let i = 0; i < result.length; i++) {
       let id = await this.database.State.getNameByAbbr(result[i]._id);
       let count = result[i].count;
-      modified.push({_id: id, count: count});
+      modified.push({ _id: id, count: count });
     }
     return modified;
   }
@@ -237,10 +292,9 @@ class AccidentController {
         query,
         criterion
       );
-      if(criterion === "State"){
+      if (criterion === "State") {
         content = await this.modifyIdForStates(content);
       }
-      console.log(content)
       return content;
     } catch (error) {
       throw error;

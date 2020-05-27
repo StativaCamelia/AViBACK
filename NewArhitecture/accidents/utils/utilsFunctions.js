@@ -88,6 +88,79 @@ class Utils {
     else
       return { first: [0, 0], second: [0, 0], third: [0, 0], fourth: [0, 0] };
   }
+
+  getArraySorted(content, groupBy, query) {
+    if (groupBy === "Years") {
+      return content.sort(function (a, b) {
+        return parseInt(a._id) - parseInt(b._id);
+      });
+    }
+    if (groupBy === "Months") {
+      return content.sort(function (a, b) {
+        if (parseInt(a._id.substring(0, 4)) !== parseInt(b._id.substring(0, 4)))
+          return (
+            parseInt(a._id.substring(0, 4)) - parseInt(b._id.substring(0, 4))
+          );
+        else {
+          return parseInt(
+            a._id.substring(5, 7) - parseInt(b._id.substring(5, 7))
+          );
+        }
+      });
+    }
+    if (groupBy === "Days") {
+      return content.sort(function (a, b) {
+        if (parseInt(a._id.substring(0, 4)) !== parseInt(b._id.substring(0, 4)))
+          return (
+            parseInt(a._id.substring(0, 4)) - parseInt(b._id.substring(0, 4))
+          );
+        else if (
+          parseInt(a._id.substring(5, 7)) !== parseInt(b._id.substring(5, 7))
+        ) {
+          return parseInt(
+            a._id.substring(5, 7) - parseInt(b._id.substring(5, 7))
+          );
+        } else
+          return (
+            parseInt(a._id.substring(8, 10)) - parseInt(b._id.substring(8.1))
+          );
+      });
+    }
+    if (groupBy === "Hours") {
+      if (query.Start_Date) {
+        return content.sort(function (a, b) {
+          if (
+            parseInt(a._id.day.substring(0, 4)) !==
+            parseInt(b._id.day.substring(0, 4))
+          )
+            return (
+              parseInt(a._id.day.substring(0, 4)) -
+              parseInt(b._id.day.substring(0, 4))
+            );
+          else if (
+            parseInt(a._id.day.substring(5, 7)) !==
+            parseInt(b._id.day.substring(5, 7))
+          ) {
+            return (
+              parseInt(a._id.day.substring(5, 7)) -
+              parseInt(b._id.day.substring(5, 7))
+            );
+          } else if (
+            parseInt(a._id.day.substring(8, 10)) !==
+            parseInt(b._id.day.substring(8, 10))
+          ) {
+            return (
+              parseInt(a._id.day.substring(8, 10)) -
+              parseInt(b._id.day.substring(8.1))
+            );
+          } else return parseInt(a._id.hour) - parseInt(a._id.hour);
+        });
+      } else
+        return content.sort(function (a, b) {
+          return parseInt(a._id) - parseInt(b._id);
+        });
+    }
+  }
 }
 
 module.exports = Utils;

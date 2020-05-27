@@ -139,42 +139,46 @@ class FiltresController {
         criterion = parsedQueryString.Pie_Criterion;
         delete parsedQueryString.Pie_Criterion;
       }
+      if (parsedQueryString.Line_Criterion) {
+        criterion = parsedQueryString.Line_Criterion;
+        delete parsedQueryString.Line_Criterion;
+      }
       let type = parsedQueryString.Type;
       delete parsedQueryString.Type;
 
       parsedQueryString = await this.editWeather(parsedQueryString);
-
-      console.log(parsedQueryString);
       return { query: parsedQueryString, type: type, criterion: criterion };
     }
   }
 
   async createFilterDatabase() {
     try {
-      const states = await this.database.Accident.getAllStatesEntities();
-      for (let stateData of states) {
-        this.service.locationController.createStateEntity(stateData);
-      }
-      const counties = await this.database.Accident.getAllCountiesEntities();
-      for (let countyData of counties) {
-        const stateData = await this.database.State.findOne({
-          name: countyData.state,
-        });
-        const timezone = stateData.timezone;
-        countyData.timezone = timezone;
-        this.service.locationController.createCountyEntity(countyData);
-      }
-      const cities = await this.database.Accident.getAllCitiesEntities();
-      for (let cityData of cities) {
-        const countyData = await this.database.County.findOne({
-          name: cityData.county,
-        });
-        cityData.state = countyData.state;
-        cityData.timezone = countyData.timezone;
-        this.service.locationController.createCityEntity(cityData);
-      }
+      // const states = await this.database.Accident.getAllStatesEntities();
+      // for (let stateData of states) {
+      //   this.service.locationController.createStateEntity(stateData);
+      // }
+      // const counties = await this.database.Accident.getAllCountiesEntities();
+      // for (let countyData of counties) {
+      //   const stateData = await this.database.State.findOne({
+      //     name: countyData.state,
+      //   });
+      //   const timezone = stateData.timezone;
+      //   countyData.timezone = timezone;
+      //   this.service.locationController.createCountyEntity(countyData);
+      // }
+      // const cities = await this.database.Accident.getAllCitiesEntities();
+      // for (let cityData of cities) {
+
+      //   const countyData = await this.database.County.findOne({
+      //     name: cityData.county,
+      //   });
+      //   cityData.state = countyData.state;
+      //   cityData.timezone = countyData.timezone;
+      //   this.service.locationController.createCityEntity(cityData);
+      // }
       const streets = await this.database.Accident.getAllStreetsEntities();
       for (let streetData of streets) {
+        console.log(streetData);
         const cityData = await this.database.City.findOne({
           name: streetData.city,
         });

@@ -1088,6 +1088,26 @@
         align-items: center;
     }
 
+    .select_box_interval{
+        box-shadow: 1px 1px #888888;
+        width: auto;
+        border-radius: 3px;
+        margin: 1vh;
+        color: white;
+        font-family: Novecentosanswide;
+        align-self: center;
+    }
+
+    
+    .select_box_interval>select{
+        width: auto;
+        border-radius: 3px;
+        background-color: #041F60;
+        padding: 2px 2px;
+        color: white;
+        font-family: Novecentosanswide;
+    }
+    
     #line_chart{
         width :100%!important;
         height:50%!important;
@@ -1326,6 +1346,26 @@
         font-size: 13px;
         font-weight: bold;
         padding: 7px 25px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #e1e2ed;
+        width: auto;
+        align-self: center;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+    }
+
+    #remove_button, #update_button{
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: whitesmoke;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        color: black;
+        font-family: Novecentosanswide;
+        font-size: 10px;
+        padding: 5px;
+        font-weight: bold;
         text-decoration: none;
         text-shadow: 0px 1px 0px #e1e2ed;
         width: auto;

@@ -381,11 +381,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     filtersValues.Pie_Criterion = editCriterion(pieCriteria.value);
     criterion = filtersValues.Pie_Criterion;
-    queryString = concatQueryString(
-      queryString,
-      "Pie_Criterion",
-      criterion
-    );
+    queryString = concatQueryString(queryString, "Pie_Criterion", criterion);
 
     if (verifFilters(filtersValues) === true) {
       send_request(queryString.substring(1));

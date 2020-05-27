@@ -1,5 +1,12 @@
 .filtres
     form#filters_form.form_filters
+        h2 Dataset 1
+        .up_filtres
+            .select_box_interval
+                select#list_datasets.options(form='filters_form' name='groupBy_select')
+                    option(value='' selected='' hidden='') Datasets
+                    option(value='Dataset 1' selected='' hidden='') Dataset 1
+            input#update_button(form='filters_form' type='button' value='Update')
         .time_filtres
             h3 Choose a time interval
             .calendar
@@ -15,8 +22,8 @@
                     p -
                     input#accident_hour_end(type='time' name='accident_hour_end')
                 .select_box_interval
-                    select#intervalType.options(form='filters_form' name='byDate')
-                        option(value='interval' selected='' hidden='') Group By
+                    select#intervalType.options(form='filters_form' name='groupBy_select')
+                        option(value='' selected='' hidden='') Group By
         .up_filtres
             .left_filtres
                 label.label_spatial Spatial Coordinates

@@ -1467,6 +1467,22 @@
         text-shadow: 0px 1px 0px #e1e2ed;
     }
 
+    #remove_button, #update_button{
+        z-index: 0;
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: white;
+        border-radius: 10px;
+        padding: 5px;
+        text-align: center;
+        cursor: pointer;
+        color: black;
+        font-family: Novecentosanswide;
+        font-size: 10px;
+        font-weight: bold;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #e1e2ed;
+    }
+
     #next_button {
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
