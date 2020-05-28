@@ -595,21 +595,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function verifFilters(filtersValues) {
-    let filtersValueLength = Object.keys(filtersValues).length;
     if (
-      filtersValueLength - existsDate(filtersValues).number == 12 &&
-      filtersValues.Amenity === "False" &&
-      filtersValues.Bump === "False" &&
-      filtersValues.Crossing === "False" &&
-      filtersValues.Give_Way === "False" &&
-      filtersValues.Junction === "False" &&
-      filtersValues.No_Exit === "False" &&
-      filtersValues.Railway === "False" &&
-      filtersValues.Roundabout === "False" &&
-      filtersValues.Traffic_Calming === "False" &&
-      filtersValues.Stop === "False" &&
-      filtersValues.Station === "False" &&
-      filtersValues.Traffic_Signal === "False" &&
       existsDate(filtersValues).exists &&
       existsDate(filtersValues).number >= 1
     ) {
