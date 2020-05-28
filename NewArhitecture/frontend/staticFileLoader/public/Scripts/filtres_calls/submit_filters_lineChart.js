@@ -257,9 +257,9 @@ document.addEventListener("DOMContentLoaded", function () {
     "street",
     "number",
     "timezone",
-    "",
-    "",
-    "",
+    "Side",
+    "weather_Condition",
+    "wind_Direction",
     "0",
   ];
   const locationDatabase = [
