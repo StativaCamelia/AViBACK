@@ -37,14 +37,14 @@ document.addEventListener("DOMContentLoaded", function updateCounties(event) {
   }
 
   function send_request(selection, sub_selection, value) {
-    console.log(selection);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
         change_options(location_entities[sub_selection], this.responseText);
       }
     };
-    url = "http://localhost:5004/accidents/location/" +
+    url =
+      "http://localhost:5004/accidents/location/" +
       location_entities[sub_selection] +
       "?" +
       location_entities[selection] +

@@ -55,6 +55,9 @@ class FiltresController {
         delete parsedQueryString[higherValues[i]];
       }
     }
+    if (parsedQueryString.Severity) {
+      parsedQueryString["Severity"] = parseInt(parsedQueryString.Severity);
+    }
     return parsedQueryString;
   }
   async editFiltres(query) {
@@ -139,12 +142,14 @@ class FiltresController {
         criterion = parsedQueryString.Pie_Criterion;
         delete parsedQueryString.Pie_Criterion;
       }
+      if (parsedQueryString.Line_Criterion) {
+        criterion = parsedQueryString.Line_Criterion;
+        delete parsedQueryString.Line_Criterion;
+      }
       let type = parsedQueryString.Type;
       delete parsedQueryString.Type;
 
       parsedQueryString = await this.editWeather(parsedQueryString);
-
-      console.log(parsedQueryString);
       return { query: parsedQueryString, type: type, criterion: criterion };
     }
   }
@@ -175,6 +180,7 @@ class FiltresController {
       }
       const streets = await this.database.Accident.getAllStreetsEntities();
       for (let streetData of streets) {
+        console.log(streetData);
         const cityData = await this.database.City.findOne({
           name: streetData.city,
         });

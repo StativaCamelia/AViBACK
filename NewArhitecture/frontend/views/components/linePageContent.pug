@@ -2,6 +2,9 @@ extends ./layouts/layoutLineChart.pug
 block left_content
     canvas#line_chart
         | Your browser does not support the canvas element.
+block loading
+    h3 Loading...
+    #loader
 block right_content
     include ./statisticsComponents/filtersMulti
         
