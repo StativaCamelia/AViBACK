@@ -56,6 +56,19 @@ var nameDictionary = {
   PR: "Puerto Rico",
 };
 
+const hourPredicate = (accident,firstHourDate,secondHourDate) => {
+  if(accident.Start_Time.getUTCHours() > firstHourDate.getUTCHours() && accident.Start_Time.getUTCHours() < secondHourDate.getUTCHours()){
+    return true;
+  }else{
+    if(accident.Start_Time.getUTCHours() === firstHourDate.getUTCHours() && accident.Start_Time.getUTCHours() === secondHourDate.getUTCHours()){
+      if(accident.Start_Time.getUTCMinutes() >= firstHourDate.getUTCMinutes() && accident.Start_Time.getUTCMinutes() <= secondHourDate.getUTCMinutes()){
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 module.exports = function (accidentSchema) {
   accidentSchema.statics.getAllStates = async function () {
     try {
@@ -207,7 +220,7 @@ module.exports = function (accidentSchema) {
   accidentSchema.statics.getAccidentsCount = async function (filters) {
     try {
       let accidents = await this.find(filters);
-      return accidents.length;
+      return accidents;
     } catch (error) {
       throw error;
     }

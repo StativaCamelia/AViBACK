@@ -1,11 +1,35 @@
 .filtres
     form#filters_form.form_filters
+        h2 Dataset 1
+        .up_filtres
+            .select_box_interval
+                select#list_datasets.options(name='groupBy_select')
+                    option(value='' selected='' hidden='') Datasets
+            input#change_button(form='filters_form' type='button' value='Change Interval')
+        .time_filtres
+            h3 Choose a time interval
+            .calendar
+                label.label_calendar Date
+                .calendar_input
+                    input#accident_date_start(type='date' min='2016-02-01' max='2019-12-31' name='accident_date_start' form='filters_form')
+                    p -
+                    input#accident_date_end(type='date' min='2016-02-01' max='2019-12-31' name='accident_date_end' form='filters_form')
+            .slider_container_2
+                label.slider_label Hour:
+                .range_icons
+                    input#accident_hour_start(type='time' name='accident_hour_start')
+                    p -
+                    input#accident_hour_end(type='time' name='accident_hour_end')
+                .select_box_interval
+                    select#intervalType.options(form='filters_form' name='groupBy_select')
+                        option(value='' selected='' hidden='') Group By
+                input#update_interval_button(form='filters_form' type='button' value='Update Interval')
         .up_filtres
             .left_filtres
                 label.label_spatial Spatial Coordinates
                 .select_box
                     select#state.options(form='filters_form' name='country')
-                        option(value='state' selected='' hidden='') State
+                        option(value='state' selected='selected' hidden='') State
                         - let keyStates = {states}
                         - let valuesStates = JSON.parse(keyStates.states)
                         each n in valuesStates
@@ -13,7 +37,7 @@
                                 | #{n.value}
                 .select_box
                     select#county.options_county(form='filters_form' name='county')
-                        option(value='county' selected='' hidden='') County
+                        option(value='county' selected='selected' hidden='') County
                         - let keyCounties = {counties}
                         - let valuesCounties = JSON.parse(keyCounties.counties)
                         each n in valuesCounties
@@ -21,7 +45,7 @@
                                 | #{n}
                 .select_box
                     select#city.options_city(form='filters_form' name='City')
-                        option(value='city' selected='' hidden='') City
+                        option(value='city' selected='selected' hidden='') City
                         - let keyCities = {cities}
                         - let valuesCities = JSON.parse(keyCities.cities)
                         each n in valuesCities
@@ -29,7 +53,7 @@
                                 | #{n}
                 .select_box
                     select#street.options_street(form='filters_form' name='Street')
-                        option(value='street' selected='' hidden='') Street
+                        option(value='street' selected='selected' hidden='') Street
                         - let keyStreets = {streets}
                         - let valuesStreets = JSON.parse(keyStreets.streets)
                         each n in valuesStreets
@@ -37,7 +61,7 @@
                                 | #{n}
                 .select_box
                     select#number.options_number(form='filters_form' name='number')
-                        option(value='number' selected='' hidden='') Number
+                        option(value='number' selected='selected' hidden='') Number
                         - let keyNumbers = {numbers}
                         - let valuesNumbers = JSON.parse(keyNumbers.numbers)
                         each n in valuesNumbers
@@ -45,7 +69,7 @@
                                 | #{n}
                 .select_box
                     select#timezone.options_timezone(form='filters_form' name='Timezone')
-                        option(value='timezone' selected='' hidden='') Timezone
+                        option(value='timezone' selected='selected' hidden='') Timezone
                         - let keyTimezones = {timezones}
                         - let valuesTimezones = JSON.parse(keyTimezones.timezones)
                         each n in valuesTimezones
@@ -53,7 +77,7 @@
                                 | #{n}
                 .select_box
                     select#road_side.options_season(form='filters_form' name='Road_Side')
-                        option(value='Side' selected='' hidden='') Road side
+                        option(value='' selected='selected' hidden='') Road side
                         - let keyRoadSides = {roadSides}
                         - let valuesRoadSides = JSON.parse(keyRoadSides.roadSides)
                         each n in valuesRoadSides
@@ -63,7 +87,7 @@
                 label.label_weather(for='Weather_Condition') Weather Conditions
                 .select_box
                     select#Weather_Condition.options_weather(form='filters_form' name='Weather_Condition')
-                        option(value='weather_Condition' selected='' hidden='') Weather
+                        option(value='' selected='selected' hidden='') Weather
                         - let keyWeather = {weather}
                         - let valuesWeather = JSON.parse(keyWeather.weather)
                         each n in valuesWeather
@@ -71,14 +95,14 @@
                                 | #{n}
                 .select_box
                     select#Wind_Direction.options_weather(form='filters_form' name='Wind_Direction')
-                        option(value='wind_Direction' selected='' hidden='') Wind direction
+                        option(value='' selected='selected' hidden='') Wind direction
                         - let keyWindDirections = {windDirections}
                         - let valuesWindDirections = JSON.parse(keyWindDirections.windDirections)
                         each n in valuesWindDirections
                             option(value=n)
                                 | #{n}
                 .weather_filtre
-                    h5 Interval:
+                    h5 Interval: 
                     h5 From
                     h5 To
                 .weather_filtre
@@ -164,21 +188,8 @@
                 .road_option
                     input#Traffic_Signal.road_event(type='checkbox' name='Traffic_Signal' form='filters_form')
                     label.road_event_label(for='Traffic_Signal') Traffic signal
-        // -DOWN FILTRES
+            // -DOWN FILTRES
         .down_filtres
-            .calendar
-                .calendar_text
-                    label.label_calendar Accident date
-                .calendar_input
-                    input#accident_date_start(type='date' min='2016-02-01' max='2019-12-31' name='accident_date_start' form='filters_form')
-                    p -
-                    input#accident_date_end(type='date' min='2016-02-01' max='2019-12-31' name='accident_date_end' form='filters_form')
-            .slider_container_2
-                label.slider_label Hour:
-                .range_icons
-                    input#accident_hour_start(type='time' name='accident_hour_start')
-                    p -
-                    input#accident_hour_end(type='time' name='accident_hour_end')
             .slider_container_1
                 label.slider_label(for='severity') Accident Severity
                 input#severity.slider(form='filters_form' type='range' name='severity' min='0' max='3' value='0' step='1')
@@ -227,5 +238,6 @@
         h2#filter_message
         .submit_button
             input#reset_button(form='filters_form' type='reset' value='Reset')
+            input#next_button(form='filters_form'  type='submit' value='Next')
             input#submit_button(form='filters_form' type='submit' value='Submit')
             

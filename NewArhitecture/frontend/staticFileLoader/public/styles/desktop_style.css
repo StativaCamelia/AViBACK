@@ -748,7 +748,7 @@
     .topic2:hover>p,
     .topic3:hover>p {
         display: block;
-        margin-top: 5vh;
+        margin-top: 3vh;
         font-family: Novecentosanswide;
     }
 
@@ -812,7 +812,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
-        flex-basis: 600px;
+        width: 50%;
     }
 
     .main_menu ul {
@@ -882,7 +882,7 @@
         flex-direction: row;
         clear: both;
         justify-content: center;
-        flex-basis: 370px;
+        width: 30%;
     }
 
     .statistics ul {
@@ -1009,11 +1009,8 @@
     
     #right_cont {
         display: flex;
-        height: auto;
         width: 40%;
-        flex-direction: column;
         justify-content: space-around;
-        align-items: center;
         margin: 3vh;
     }
 
@@ -1023,7 +1020,7 @@
         flex-direction: column;
         width: auto;
         height: auto;
-        margin: 5vh 5vw 0 0;
+        margin: 0 5vw 0 0;
     }
 
     .info_pie {
@@ -1113,6 +1110,20 @@
         clear: both;
     }
 
+    #filters_pie_new{
+        display: none;
+        width: 100%;
+        align-self: center;
+    }
+
+    .checkboxes_buttons{
+        display: none;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 80%;
+        margin-top: 2vh;
+        align-self: center;
+    }
     /*END ZONA PIE*/
 
 
@@ -1171,14 +1182,14 @@
     .left_filtres {
         display: flex;
         flex-direction: column;
-        width: 30%;
+        width: 40%;
     }
 
-    .right_filtres {
+    .right_filters {
         align-items: center;
         display: flex;
         flex-direction: column;
-        width: 40%;
+        width: 48%;
     }
 
     .weather_filtre {
@@ -1187,6 +1198,11 @@
         justify-content: space-evenly;
         flex-basis: fit-content;
         flex-direction: row;
+        width: 100%;
+    }
+
+    .weather_filtre p{
+        margin: 0 0.3vw 0 0.3vw;
     }
 
     .label_road,
@@ -1212,7 +1228,7 @@
         height: 0.2vh;
         font-size: x-small;
         box-shadow: 0.5px 0.5px #888888;
-        width: 16%;
+        width: 14%;
         border-radius: 3px;
         color: black;
         font-family: Novecentosanswide;
@@ -1224,6 +1240,14 @@
         flex-direction: column;
         width: 100%;
         align-items: center;
+    }
+
+    .time_filtres{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        padding: 0;
     }
 
     .last_set_filters_col,
@@ -1251,6 +1275,11 @@
         align-items: baseline;
     }
 
+   #line_chart{
+        width :100%!important;
+        height:40%!important;
+    }
+    
     .road_event_label,
     .moon_option_label {
         flex-grow: 1;
@@ -1281,6 +1310,25 @@
         padding: 2px 2px;
         color: white;
         font-family: Novecentosanswide;
+    }
+
+    .select_box_interval>select{
+        width: auto;
+        border-radius: 3px;
+        background-color: #041F60;
+        padding: 2px 2px;
+        color: white;
+        font-family: Novecentosanswide;
+    }
+
+    .select_box_interval{
+        box-shadow: 1px 1px #888888;
+        width: auto;
+        border-radius: 3px;
+        margin: 1vh;
+        color: white;
+        font-family: Novecentosanswide;
+        align-self: center;
     }
 
     .select_criteria {
@@ -1340,7 +1388,28 @@
         align-self: center;
         display: flex;
         flex-direction: column;
-        width: 15vw;
+        width: 100%;
+        justify-content: space-between;
+        margin: 1vh 0 1vh 0;
+    }
+
+    .calendar_input{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
+        width: 65%;
+    }
+    .calendar_input p,.range_icons p{
+        font-size: 1.5rem;
+        margin: 0.4vh 0 0 0;
+    }
+
+    .calendar_text{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
     }
 
     .slider_container_1 {
@@ -1352,11 +1421,29 @@
     .slider_container_2 {
         display: flex;
         flex-direction: column;
+        width: 100%;
     }
 
     .range_icons {
-        display: inline-flex;
-        align-content: center;
+        display: flex;
+        flex-direction: row;
+        width: 65%;
+        justify-content: space-between;
+        align-self: center;
+        margin: 1vh 0 1vh 0;
+    }
+
+    #accident_hour_start,#accident_hour_end{
+        z-index: 0;
+        text-align: start;
+        height: 1.5vh;
+        font-size: 0.7rem;
+        box-shadow: 0.5px 0.5px #888888;
+        width: 30%;
+        border-radius: 3px;
+        color: black;
+        font-family: Novecentosanswide;
+        padding: 10px;
     }
 
     .slider_container_1>ul {
@@ -1377,25 +1464,7 @@
 
     }
 
-    .slider_container_2>ul {
-        list-style-type: none;
-        display: flex;
-        flex-direction: row;
-        padding-left: 2vw;
-        padding-top: 0px;
-    }
-
-    .slider_container_2>ul li {
-        width: 50%;
-        margin-right: 50%;
-        margin-left: 0px;
-        font-size: small;
-        padding-top: 0ex;
-        margin-top: 0px;
-
-    }
-
-    #submit_button[type="submit"] {
+    #submit_button[type="submit"]{
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: white;
@@ -1412,7 +1481,25 @@
         text-shadow: 0px 1px 0px #e1e2ed;
     }
 
-    #reset_button[type="reset"] {
+    #change_button, #update_interval_button{
+        display: none;
+        text-align: center;
+        z-index: 0;
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: white;
+        border-radius: 10px;
+        padding: 5px;
+        text-align: center;
+        cursor: pointer;
+        color: black;
+        font-family: Novecentosanswide;
+        font-size: 10px;
+        font-weight: bold;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #e1e2ed;
+    }
+
+    #next_button {
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: white;
@@ -1429,6 +1516,25 @@
         text-shadow: 0px 1px 0px #e1e2ed;
     }
 
+    #reset_button[type="reset"], #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"] {
+        z-index: 0;
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: white;
+        border-radius: 15px;
+        text-align: center;
+        cursor: pointer;
+        color: black;
+        font-family: Novecentosanswide;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 7px 25px;
+        text-decoration: none;
+        margin-left: 12vw;
+        text-shadow: 0px 1px 0px #e1e2ed;
+    }
+    #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"]{
+        margin: 0;
+    }
     .map-history {
         display: flex;
         flex-basis: 10px;
@@ -1441,11 +1547,6 @@
         margin: 0;
         width: 100%;
         height: 50%;
-    }
-
-    /*TOP BUTTON*/
-    button#top_button {
-        display: none !important;
     }
 
     /*POP-MAP*/

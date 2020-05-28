@@ -448,7 +448,7 @@ ul li {
     font-size: 1rem;
 }
 
-#accident_date {
+#accident_date_start, #accident_date_end {
     z-index: 0;
     background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
     border: 2px solid black;
@@ -456,22 +456,25 @@ ul li {
     border-radius: 3px;
     padding: 3px 5px;
     background-color: #174ea6;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
 }
 
-#accident_date[type="date"]::-webkit-inner-spin-button {
+#accident_date_start[type="date"]::-webkit-inner-spin-button, #accident_date_end[type="date"]::-webkit-inner-spin-button {
     display: none;
 }
 
-#accident_date[type="date"]::-webkit-calendar-picker-indicator {
+#accident_date_start[type="date"]::-webkit-calendar-picker-indicator, #accident_date_end[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 
-#submit_button:hover {
+#submit_button:hover, #back_filters:hover, #submit_checkboxes:hover, #select_all:hover, #select_radio:hover {
     background-color: #041F60;
     color: white;
 }
 
-#reset_button:hover {
+#reset_button:hover, #next_button:hover, #remove_button:hover, #update_button:hover {
     background-color: #041F60;
     color: white;
 }
@@ -600,4 +603,70 @@ a.control_button:active{
 #dash_stats_upper{
     display: flex;
     flex-direction: row;
+}
+
+#button, #logout{
+    display: none;
+}
+
+#profile.active{
+    color: white;
+    text-decoration: none;
+    border-bottom: 4px solid white;
+}
+
+.info_pie h2,#left_cont h2, #filters_pie_new h2{
+    font-family: Novecentosanswide;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.3rem;
+}
+#left_cont h2{
+    margin-top: 5vh;
+}
+/*SECOND STEP FOR PIE*/
+#filters_pie_down{
+    display: flex;
+    flex-direction: column;
+}
+.radio_pie{
+    display: none;
+    width: 100%;
+    height: auto;
+    align-self: center;
+    margin: 0 0 2vh 0;
+}
+.checkbox_pie{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+    align-self: center;
+}
+.checkbox_pie_element,.radio_pie_element{
+    margin: 0 1vw 1vh 0;
+}
+/*TOP BUTTON*/
+#top_button {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 4px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #041F60;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 18px;
+    text-align: center;
+    width: 55px;
+    height: 45px;
+}
+
+#top_button:hover {
+    opacity: 0.7;
 }

@@ -9,9 +9,11 @@
         - let valuesIds = JSON.parse(keyIds.activeIds)
         - let home = valuesIds[0]
         - let contact = valuesIds[1]
-        - let map = valuesIds[2]
-        - let pie = valuesIds[3]
-        - let chart = valuesIds[4]
+        - let profile = valuesIds[2]
+        - let map = valuesIds[3]
+        - let pie = valuesIds[4]
+        - let barChart = valuesIds[5]
+        - let lineChart = valuesIds[6]
         ul
           li
             a.logo(href='home')
@@ -21,7 +23,9 @@
           li
             a.myButton(id=contact href='http://localhost:5002/contact') CONTACT
           li
-            a.myButton#button
+            a.myButton#button(class=profile)
+          li
+            a.myButton#logout LOGOUT
       .statistics
         ul
           li.effect1
@@ -29,7 +33,7 @@
               img.for_img(title='Maps' src='./Images/Icons/map.png')
             a(id=pie href='pie')
               img.for_img(title='Pie Chart' src='./Images/Icons/pie-white.png')
-            a(id=chart href='chart')
+            a(id=barChart href='chart')
               img.for_img(title='Chart' src='./Images/Icons/bar-chart.png')
-            a(id=line href='line')
+            a(id=lineChart href='line')
               img.for_img(title='Line Chart' src='./Images/Icons/line-chart.png')

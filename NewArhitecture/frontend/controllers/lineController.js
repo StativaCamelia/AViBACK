@@ -177,7 +177,7 @@ class LineController {
         "WSW",
         "West",
       ];
-      const ids = ["", "", "", "", "", "active"];
+      const ids = ["", "", "", "", "", "", "active"];
 
       const { content, contentType } = linePage.getLinePage(
         statesValues,

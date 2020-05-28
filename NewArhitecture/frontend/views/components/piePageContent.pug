@@ -2,7 +2,7 @@ extends ./layouts/layoutPie.pug
 block left_content
     .pie
         .info_pie
-            h1 Generate a pie statistics
+            h2 Enter your data and generate a pie
         .content_pie
             svg(xmlns="http://www.w3.org/2000/svg"
                 id="svg_pie"
@@ -13,7 +13,10 @@ block left_content
                 width="350"
                 height="350")
             .legend_pie
-        script(src="./Scripts/pie_chart.js")
+            h2#error_message_result
+block loading
+    h3 Loading...
+    #loader
 block right_content
     .filtres
         form#filters_form.form_filters
@@ -70,17 +73,17 @@ block right_content
                                     | #{n}
                     .select_box
                         select#road_side.options_season(form='filters_form' name='Road_Side')
-                            option(value='' selected='' hidden='') Road side
+                            option(value='Side' selected='' hidden='') Road side
                             - let keyRoadSides = {roadSides}
                             - let valuesRoadSides = JSON.parse(keyRoadSides.roadSides)
                             each n in valuesRoadSides
                                 option(value=n)
                                     | #{n}
                 .right_filters
-                    label.label_weather(for='accident_date') Weather Conditions
+                    label.label_weather(for='Weather_Condition') Weather Conditions
                     .select_box
                         select#Weather_Condition.options_weather(form='filters_form' name='Weather_Condition')
-                            option(value='' selected='' hidden='') Weather
+                            option(value='weather_Condition' selected='' hidden='') Weather
                             - let keyWeather = {weather}
                             - let valuesWeather = JSON.parse(keyWeather.weather)
                             each n in valuesWeather
@@ -88,7 +91,7 @@ block right_content
                                     | #{n}
                     .select_box
                         select#Wind_Direction.options_weather(form='filters_form' name='Wind_Direction')
-                            option(value='' selected='' hidden='') Wind direction
+                            option(value='wind_Direction' selected='' hidden='') Wind direction
                             - let keyWindDirections = {windDirections}
                             - let valuesWindDirections = JSON.parse(keyWindDirections.windDirections)
                             each n in valuesWindDirections
@@ -99,38 +102,45 @@ block right_content
                         h5 From
                         h5 To
                     .weather_filtre
-                        label.weather_select_label(for='temperature') Temperature:
+                        label.weather_select_label Temperature:
                         input#temperature1.weather_select(type='number' name='temperature' form='filters_form' value='' min='-30' max='40' placeholder="°C")
+                        p -
                         input#temperature2.weather_select(type='number' name='temperature' form='filters_form' value='' min='-30' max='40' placeholder="°C")
                     .weather_filtre
-                        label.weather_select_label(for='wind_chill')
+                        label.weather_select_label
                             | Wind chill:
                         input#wind_chill1.weather_select(type='number' name='wind_chill' form='filters_form' value='' min='0' max='100' placeholder="F")
+                        p -
                         input#wind_chill2.weather_select(type='number' name='wind_chill' form='filters_form' value='' min='0' max='100' placeholder="F")
                     .weather_filtre
-                        label.weather_select_label(for='wind_chill')
+                        label.weather_select_label
                             | Wind speed:
                         input#wind_speed1.weather_select(type='number' name='wind_speed' form='filters_form' value='' min='0' max='100' placeholder="mph")
+                        p -
                         input#wind_speed2.weather_select(type='number' name='wind_speed' form='filters_form' value='' min='0' max='100' placeholder="mph")
                     .weather_filtre
-                        label.weather_select_label(for='humidity')
+                        label.weather_select_label
                             | Humidity:
                         input#humidity1.weather_select(type='number' name='humidity' form='filters_form' value='' min='0' max='100' placeholder="%")
+                        p -
                         input#humidity2.weather_select(type='number' name='humidity' form='filters_form' value='' min='0' max='100' placeholder="%")
                     .weather_filtre
-                        label.weather_select_label(for='pressure')
+                        label.weather_select_label
                             | Pressure:
                         input#pressure1.weather_select(type='number' name='pressure' form='filters_form' value='' min='0' max='100' placeholder="in")
+                        p -
                         input#pressure2.weather_select(type='number' name='pressure' form='filters_form' value='' min='0' max='100' placeholder="in")
                     .weather_filtre
-                        label.weather_select_label(for='wind_chill')
+                        label.weather_select_label
                             | Visibility:
                         input#visibility1.weather_select(type='number' form='filters_form' name='visibility' value='' min='0' max='100' placeholder="mi")
+                        p -
                         input#visibility2.weather_select(type='number' form='filters_form' name='visibility' value='' min='0' max='100' placeholder="mi")
                     .weather_filtre
-                        label.weather_select_label(for='wind_chill')
+                        label.weather_select_label
                             | Precipitation:
                         input#precipitation1.weather_select(type='number' form='filters_form' name='precipitation' value='' min='0' max='100' placeholder="in")
+                        p -
                         input#precipitation2.weather_select(type='number' form='filters_form' name='precipitation' value='' min='0' max='100' placeholder="in")
                 // MIDDLE FILTRES
             .middle_filtres
@@ -177,8 +187,18 @@ block right_content
             // -DOWN FILTRES
             .down_filtres
                 .calendar
-                    label.label_calendar(for='accident_date') Accident Date
-                    input#accident_date(type='date' min='2016-02-01' max='2019-12-31' name='accident_date' form='filters_form')
+                    .calendar_text
+                        label.label_calendar Accident date
+                    .calendar_input
+                        input#accident_date_start(type='date' min='2016-02-01' max='2019-12-31' name='accident_date_start' form='filters_form')
+                        p -
+                        input#accident_date_end(type='date' min='2016-02-01' max='2019-12-31' name='accident_date_end' form='filters_form')
+                .slider_container_2
+                    label.slider_label Hour:
+                    .range_icons
+                        input#accident_hour_start(type='time' name='accident_hour_start')
+                        p -
+                        input#accident_hour_end(type='time' name='accident_hour_end')
                 .slider_container_1
                     label.slider_label(for='severity') Accident Severity
                     input#severity.slider(form='filters_form' type='range' name='severity' min='0' max='3' value='0' step='1')
@@ -186,16 +206,6 @@ block right_content
                         li.minor Minor
                         li.major Major
                         li.fatal Fatal
-                .slider_container_2
-                    label.slider_label Hour:
-                    .range_icons
-                        img.icons(alt='sun' src='./Images/Icons/sun.png')
-                        input#hourIN.slider(form='filters_form' name='Hour' type='range' min='0' max='24' step='1' value='0')
-                        output#hourOUT(name='hourOUT')
-                        img.icons(alt='moon' src='./Images/Icons/moon.png')
-                    ul.slider_options_2
-                        li.minor Day
-                        li.major Night
                 // LAST SET OF FILTERS
                 .last_set_filters
                     .last_set_filters_col
@@ -234,11 +244,36 @@ block right_content
                             .moon_option
                                 input#astronomical_twilight_night(type='radio' form='filters_form' name='astronomical_twilight')
                                 label.moon_option_label(for='astronomical_twilight_night') Night
-        h2#filter_message
-        .select_criteria
-            h3.criteria_select_label *Criterion for generate pie:
-            select#pie_criteria
-                option(value='criterion' selected='' hidden='') Criterion
-        .submit_button
-            input#reset_button(form='filters_form' type='reset' value='Reset')
-            input#submit_button(form='filters_form' type='submit' value='Submit')
+        #filters_pie_down
+            h2#filter_message
+            .select_criteria
+                h3.criteria_select_label *Criterion for generate pie:
+                select#pie_criteria
+                    option(value='criterion' selected='' hidden='') Criterion
+            .submit_button
+                input#reset_button(form='filters_form' type='reset' value='Reset')
+                input#submit_button(form='filters_form' type='submit' value='Submit')
+        #filters_pie_new
+            h2 Select what you want to see on pie
+            .radio_pie
+                .radio_pie_element
+                    input#years(type='radio' name='date_pie')
+                    label(for='years') Years
+                .radio_pie_element
+                    input#months(type='radio' name='date_pie')
+                    label(for='months') Months
+                .radio_pie_element
+                    input#days(type='radio' name='date_pie')
+                    label(for='days') Days
+                .radio_pie_element
+                    input#days_of_week(type='radio' name='date_pie')
+                    label(for='days_of_week') Days of week
+                .radio_pie_element
+                    input#all_dates(type='radio' name='date_pie')
+                    label(for='all_dates') All dates
+                input#select_radio(type='button' value='OK')
+            .checkbox_pie
+            .checkboxes_buttons
+                input#back_filters(type='button' value='Back')
+                input#select_all(type='button' value='SelectAll')
+                input#submit_checkboxes(type='submit' value='Submit')

@@ -144,6 +144,7 @@ class UserController {
     let message = user.validateUserRegister();
     if (message !== "") {
       return {
+        success: false,
         statusCode: 400,
         contentType: "text/html",
         content: { message },
@@ -152,6 +153,7 @@ class UserController {
       message = await this.database.User.existEmail(user.email);
       if (message) {
         return {
+          success: false,
           statusCode: 400,
           content: { message },
         };
@@ -159,6 +161,7 @@ class UserController {
         message = await this.database.User.existUsername(user.username);
         if (message) {
           return {
+            succes: false,
             statusCode: 400,
             content: { message },
           };
@@ -170,6 +173,7 @@ class UserController {
             message =
               "Succesfully registered! Please sign in and set your profile!";
             return {
+              success: true,
               statusCode: 200,
               content: { message },
             };
@@ -177,6 +181,7 @@ class UserController {
             console.log(err);
             message = "Undefined";
             return {
+              success: false,
               statusCode: 400,
               content: { message },
             };
@@ -194,7 +199,7 @@ class UserController {
     });
     let message = user.validateUserLogin();
     if (message !== "") {
-      return { statusCode: 400, content: { message } };
+      return { success: false, statusCode: 400, content: { message } };
     } else {
       message = await this.database.User.existUser(
         user.username,
@@ -202,18 +207,23 @@ class UserController {
       );
       if (message === "Invalid username or password!") {
         return {
+          success: false,
           statusCode: 400,
           content: { message },
         };
       } else {
-        const userObj = {
-          token: message,
-        };
-        const { username } = body;
-        const user = await this.database.User.findOne({ username: username });
-        user.auth_tokens.push(message);
-        user.save();
-        return { statusCode: 200, content: { userObj } };
+        try{
+          const userObj = {
+            token: message,
+          };
+          const { username } = body;
+          const user = await this.database.User.findOne({ username: username });
+          user.auth_tokens.push(message);
+          user.save();
+          return { success: true, statusCode: 200, content: { userObj } };
+        }catch(error){
+          return { success: false, statusCode: 400, content: error };
+        }
       }
     }
   }
@@ -241,7 +251,7 @@ class UserController {
             href: "http://localhost:5002/profile",
           };
         }
-        return { statusCode: 200, content: { values } };
+        return { success: true, statusCode: 200, content: { values } };
       } catch (err) {
         values = {
           id: "button",
@@ -249,6 +259,7 @@ class UserController {
           href: "#",
         };
         return {
+          success: false,
           statusCode: 400,
           content: { values },
         };
@@ -259,7 +270,7 @@ class UserController {
         value: "LOGIN",
         href: "#",
       };
-      return { statusCode: 200, content: { values } };
+      return { success: true, statusCode: 200, content: { values } };
     }
   }
   //AUTHORIZATION

@@ -14,7 +14,7 @@
         height: auto;
         width: auto;
         margin-bottom: 8vh;
-        margin-top: 16vh;
+        margin-top: 22vh;
         align-self: center;
         justify-content: space-between;
     }
@@ -472,9 +472,9 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        margin-top: 0%;
-        margin-bottom: 0%;
+        margin: 0;
         padding: 0;
+        flex-wrap: wrap;
     }
 
     .main_menu ul li:first-child {
@@ -734,6 +734,11 @@
     }
 
     input[type=reset]:hover {
+        background-color: #B1D4E0;
+        color: #041F60;
+    }
+
+    #next_button:hover {
         background-color: #B1D4E0;
         color: #041F60;
     }
@@ -1002,6 +1007,21 @@
         align-self: auto;
     }
 
+    #filters_pie_new{
+        display: none;
+        width: 80%;
+        align-self: center;
+    }
+
+    .checkboxes_buttons{
+        display: none;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 2vh;
+        align-self: center;
+    }
+
     /*FILTRE*/
     .filtres {
         width: 100%;
@@ -1025,7 +1045,7 @@
         align-items: center;
         display: flex;
         flex-direction: column;
-        width: 40%;
+        width: 50%;
     }
 
     .left_filtres {
@@ -1041,6 +1061,10 @@
         flex-basis: fit-content;
         flex-direction: row;
         width: 100%;
+    }
+
+    .weather_filtre p{
+        margin: 0 0.5vw 0 0.5vw;
     }
 
     .label_road,
@@ -1065,18 +1089,43 @@
         height: 0.2vh;
         font-size: x-small;
         box-shadow: 0.5px 0.5px #888888;
-        width: 16%;
+        width: 7%;
         border-radius: 3px;
         color: black;
         font-family: Novecentosanswide;
         padding: 12px;
     }
 
-    .down_filtres {
+    .down_filtres, .time_filtres{
         display: flex;
         flex-direction: column;
         width: 100%;
         align-items: center;
+    }
+
+    .select_box_interval{
+        box-shadow: 1px 1px #888888;
+        width: auto;
+        border-radius: 3px;
+        margin: 1vh;
+        color: white;
+        font-family: Novecentosanswide;
+        align-self: center;
+    }
+
+    
+    .select_box_interval>select{
+        width: auto;
+        border-radius: 3px;
+        background-color: #041F60;
+        padding: 2px 2px;
+        color: white;
+        font-family: Novecentosanswide;
+    }
+    
+    #line_chart{
+        width :100%!important;
+        height:50%!important;
     }
 
     .road_select_col {
@@ -1196,7 +1245,28 @@
         align-self: center;
         display: flex;
         flex-direction: column;
-        width: 35vw;
+        width: 100%;
+        justify-content: space-between;
+        margin: 1vh 0 1vh 0;
+    }
+
+    .calendar_input{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
+        width: 70%;
+    }
+    .calendar_input p,.range_icons p{
+        font-size: 2rem;
+        margin: 0.3vh 0 0 0;
+    }
+
+    .calendar_text{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
     }
 
     .slider_container_1 {
@@ -1209,15 +1279,29 @@
     .slider_container_2 {
         display: flex;
         flex-direction: column;
-        width: 70vw;
-        align-self: center;
+        width: 100%;
     }
 
     .range_icons {
-        display: inline-flex;
-        width: 70vw;
+        display: flex;
+        flex-direction: row;
+        width: 60%;
+        justify-content: space-between;
         align-self: center;
-        padding-left: 5vw;
+        margin: 1vh 0 1vh 0;
+    }
+
+    #accident_hour_start,#accident_hour_end{
+        z-index: 0;
+        text-align: start;
+        height: 1.5vh;
+        font-size: 0.7rem;
+        box-shadow: 0.5px 0.5px #888888;
+        width: 30%;
+        border-radius: 3px;
+        color: black;
+        font-family: Novecentosanswide;
+        padding: 10px;
     }
 
     .slider_container_1>ul {
@@ -1238,24 +1322,6 @@
 
     }
 
-    .slider_container_2>ul {
-        list-style-type: none;
-        display: flex;
-        flex-direction: row;
-        padding-left: 17vw;
-        padding-top: 0px;
-    }
-
-    .slider_container_2>ul li {
-        width: 50%;
-        margin-right: 50%;
-        margin-left: 0px;
-        font-size: small;
-        padding-top: 0ex;
-        margin-top: 0px;
-
-    }
-
     .submit_button {
         margin: 1vh;
         width: auto;
@@ -1264,7 +1330,7 @@
         justify-content: center;
     }
 
-    #submit_button[type="submit"] {
+    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"] {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1282,6 +1348,10 @@
         display: flex;
         flex-direction: row;
         margin: 4vw;
+    }
+
+    #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"]{
+        margin: 0;
     }
 
     #reset_button[type="reset"] {
@@ -1304,6 +1374,48 @@
         margin: 0;
     }
 
+    #change_button, #update_intreval_button{
+        display: none;
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: whitesmoke;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        color: black;
+        font-family: Novecentosanswide;
+        font-size: 10px;
+        padding: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #e1e2ed;
+        width: auto;
+        align-self: center;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+    }
+
+    #next_button{
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: whitesmoke;
+        border-radius: 15px;
+        text-align: center;
+        cursor: pointer;
+        color: black;
+        font-family: Novecentosanswide;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 7px 25px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #e1e2ed;
+        width: auto;
+        align-self: center;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+    }
+
+
     .map-history {
         display: flex;
         flex-basis: 10px;
@@ -1313,29 +1425,7 @@
         margin-top: 2vh;
     }
 
-    /*TOP BUTTON*/
-    #top_button {
-        display: none;
-        position: fixed;
-        bottom: 80px;
-        right: 4px;
-        z-index: 99;
-        border: none;
-        outline: none;
-        background-color: #041F60;
-        color: white;
-        cursor: pointer;
-        padding: 10px;
-        border-radius: 10px;
-        font-size: 18px;
-        text-align: center;
-        width: 55px;
-        height: 45px;
-    }
 
-    #top_button:hover {
-        background-color: #555;
-    }
 
     /*POP MAP*/
     #states_pop {

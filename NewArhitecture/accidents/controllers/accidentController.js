@@ -6,19 +6,101 @@ class AccidentController {
     this.service = service;
   }
 
-  async getData(query) {
+  async getData(query, type, criterion) {
     try {
       let content;
-      if (query.Type === "map") {
+      if (type === "map") {
         content = await this.getMapRepresentation(query);
-      } else if (query.Type === "pie") {
-        console.log("Fa pie");
-      } else if (query.Type === "chart") {
+      } else if (type === "pie") {
+        content = await this.getPieRepresentation(query, criterion);
+      } else if (type === "chart") {
         console.log("Fa chart");
+        content = "abc";
+      } else if (type === "line") {
+        content = await this.getLineRepresentation(query, criterion);
       }
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
+    }
+  }
+
+  //numarul de accidente in functie de niste criterii grupate pe un criteriu dat de noi(*Georgiana nu uita ca ai sters aia cu map si ai zis ca folosesti asta in schimb)
+  async getNumberOfAccidentsByQueryAndGroupBy(query, groupBy) {
+    try {
+      let aggregatorOpts;
+      aggregatorOpts = [
+        {
+          $match: query,
+        },
+        {
+          $unwind: { path: "$" + groupBy, preserveNullAndEmptyArrays: false },
+        },
+        {
+          $group: {
+            _id: "$" + groupBy,
+            count: { $sum: 1 },
+          },
+        },
+      ];
+      const content = await this.database.Accident.aggregate(aggregatorOpts);
+      return content;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  getGroupByCriteria(groupBy, query) {
+    if (groupBy === "Years") {
+      return { $substr: ["$Start_Date", 0, 4] };
+    } else if (groupBy === "Months") {
+      return { $substr: ["$Start_Date", 0, 7] };
+    } else if (groupBy === "Days") {
+      return { $substr: ["$Start_Date", 0, 10] };
+    } else if (groupBy === "Hours" && query.Start_Date) {
+      return {
+        day: { $substr: ["$Start_Date", 0, 10] },
+        hour: { $substr: ["$Start_Hour", 0, 2] },
+      };
+    } else return { $substr: ["$Start_Hour", 0, 2] };
+  }
+
+  async getNumberOfAccidentsAndGroupByRegex(query, groupByValue) {
+    try {
+      let aggregatorOpts;
+      let groupBy = this.getGroupByCriteria(groupByValue, query);
+      aggregatorOpts = [
+        {
+          $match: query,
+        },
+        {
+          $group: {
+            _id: groupBy,
+            count: { $sum: 1 },
+          },
+        },
+      ];
+      let content = await this.database.Accident.aggregate(aggregatorOpts);
+      content = utils.getArraySorted(content, groupByValue, query);
+      return content;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getLineRepresentation(query, criterion) {
+    try {
+      const timeIntervals = {
+        Start_Date: query["Start_Date"],
+        Start_Hour: query["Start_Hour"],
+      };
+      const accidents = this.getNumberOfAccidentsAndGroupByRegex(
+        query,
+        criterion
+      );
+      return accidents;
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -37,7 +119,7 @@ class AccidentController {
       });
       let content;
       if (hasALocationKey.length) {
-        await this.getMapMarkers(query);
+        content = await this.getMapMarkers(query);
       } else {
         content = await this.getMapByStates(query);
       }
@@ -49,6 +131,12 @@ class AccidentController {
 
   async getMapMarkers(query) {
     try {
+      const marker = await this.database.Accident.find(query).limit(1);
+      return {
+        Start_Lat: marker[0].Start_Lat,
+        Start_Lng: marker[0].Start_Lng,
+        State: marker[0].State,
+      };
     } catch (error) {
       throw error;
     }
@@ -70,15 +158,13 @@ class AccidentController {
   //numarul de accidente in functie de niste criterii grupate pe un criteriu dat de noi(*Georgiana nu uita ca ai sters aia cu map si ai zis ca folosesti asta in schimb)
   async getNumberOfAccidentsByQueryAndGroupBy(query, groupBy) {
     try {
-      delete query["Type"];
-      delete query["Start_Time"];
-      const aggregatorOpts = [
-        { $sort: { "Temperature(F)": 1 } },
+      let aggregatorOpts;
+      aggregatorOpts = [
         {
           $match: query,
         },
         {
-          $unwind: "$" + groupBy,
+          $unwind: { path: "$" + groupBy, preserveNullAndEmptyArrays: false },
         },
         {
           $group: {
@@ -87,8 +173,8 @@ class AccidentController {
           },
         },
       ];
-
-      const content = await this.database.Accident.aggregate(aggregatorOpts);
+      let content = await this.database.Accident.aggregate(aggregatorOpts);
+      content = await utils.deleteBlankFieldsAfterGrouping(content);
       return content;
     } catch (error) {
       throw error;
@@ -211,6 +297,39 @@ class AccidentController {
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
+    }
+  }
+
+  async modifyIdForStates(result) {
+    let modified = [];
+    for (let i = 0; i < result.length; i++) {
+      let id = await this.database.State.getNameByAbbr(result[i]._id);
+      let count = result[i].count;
+      modified.push({ _id: id, count: count });
+    }
+    return modified;
+  }
+
+  async getPieRepresentation(query, criterion) {
+    try {
+      let content = await this.getNumberOfAccidentsByQueryAndGroupBy(
+        query,
+        criterion
+      );
+      if (criterion === "State") {
+        content = await this.modifyIdForStates(content);
+      } else {
+        if (criterion === "Start_Date") {
+          content = await utils.modifyStartDateResult(content);
+        } else {
+          if (criterion === "Start_Hour") {
+            content = await utils.modifyStartHourResult(content);
+          }
+        }
+      }
+      return content;
+    } catch (error) {
+      throw error;
     }
   }
 }

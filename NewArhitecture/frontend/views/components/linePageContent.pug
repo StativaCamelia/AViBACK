@@ -1,7 +1,10 @@
-extends ./layouts/layoutBarChart.pug
+extends ./layouts/layoutLineChart.pug
 block left_content
-    canvas#line_chart(width='960', height='800')
+    canvas#line_chart
         | Your browser does not support the canvas element.
+block loading
+    h3 Loading...
+    #loader
 block right_content
-    include ./statisticsComponents/filtres
+    include ./statisticsComponents/filtersMulti
         

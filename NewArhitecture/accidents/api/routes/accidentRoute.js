@@ -50,7 +50,7 @@ exports.getRes = async (req, res) => {
   } else if (
     path.endsWith("accidents") &&
     method === "get" &&
-    Object.keys(queryStringObject).length == 0
+    Object.keys(queryStringObject).length === 0
   ) {
     try {
       const auth = {};
@@ -149,8 +149,14 @@ exports.getRes = async (req, res) => {
     }
   } else if (path.endsWith("accidents") && method === "get") {
     try {
-      const query = await filtresController.editFiltres(queryStringObject);
-      const { success, data } = await accidentController.getData(query);
+      const { query, type, criterion } = await filtresController.editFiltres(
+        queryStringObject
+      );
+      const { success, data } = await accidentController.getData(
+        query,
+        type,
+        criterion
+      );
       utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);

@@ -2,6 +2,65 @@ document.addEventListener("DOMContentLoaded", function () {
   const api = "http://localhost:5004/accidents?";
   const method = "GET";
 
+  const lowerValues = [
+    "Temperature1",
+    "Wind_Chill1",
+    "Wind_Speed1",
+    "Pressure1",
+    "Precipitation1",
+    "Humidity1",
+    "Visibility1",
+  ];
+  const higherValues = [
+    "Temperature2",
+    "Wind_Chill2",
+    "Wind_Speed2",
+    "Pressure2",
+    "Precipitation2",
+    "Humidity2",
+    "Visibility2",
+  ];
+  const weatherNames = [
+    "Temperature",
+    "Wind Chill",
+    "Wind Speed",
+    "Pressure",
+    "Precipitation",
+    "Humidity",
+    "Visibility",
+  ];
+  const valuesLikeNames = [
+    "state",
+    "county",
+    "city",
+    "street",
+    "number",
+    "timezone",
+    "weather_Condition",
+    "wind_Direction",
+  ];
+  const valuesTrueFalse = [
+    "Amenity",
+    "Bump",
+    "Crossing",
+    "Give_Way",
+    "Junction",
+    "No_Exit",
+    "Railway",
+    "Roundabout",
+    "Traffic_Calming",
+    "Stop",
+    "Station",
+    "Traffic_Signal",
+  ];
+  const dateValues = ["FirstDate", "SecondDate", "FirstHour", "SecondHour"];
+  const valuesDayNight = ["Sunrise_Sunset", "Civil_Twilight", "Nautical_Twilight", "Astronomical_Twilight"];
+
+  function up() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
   function setVisible(selector, visible) {
     document.querySelector(selector).style.display = visible ? "flex" : "none";
   }
@@ -13,61 +72,20 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.send();
     setVisible("#left_cont", false);
     setVisible("#loading", true);
+    up();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
         setVisible("#loading", false);
         setVisible("#left_cont", true);
         const { content } = JSON.parse(this.responseText);
-        history(content.boudaries);
-        color_map(content.dataset, content.boudaries);
+        if (!content.Start_Lat && !content.Start_Lng) {
+          history(content.boudaries);
+          color_map(content.dataset, content.boudaries);
+        } else {
+          open_map(content);
+        }
       }
     };
-  }
-
-  function history(boudaries) {
-    const low = document.querySelector("p.low");
-    const medium = document.querySelector("p.medium");
-    const medium1 = document.querySelector("p.medium1");
-    const high = document.querySelector("p.high");
-
-    low.innerHTML = boudaries.first[0] + "-" + Math.round(boudaries.first[1]);
-    medium.innerHTML =
-      Math.round(boudaries.second[0]) + "-" + Math.round(boudaries.second[1]);
-    medium1.innerHTML =
-      Math.round(boudaries.third[0]) + "-" + Math.round(boudaries.third[1]);
-    high.innerHTML =
-      Math.round(boudaries.fourth[0]) + "-" + Math.round(boudaries.fourth[1]);
-  }
-
-  function color_map(content, boudaries) {
-    var levels = ["high_s", "medium_s", "medium1_s", "low_s"];
-    var svgStates = document.querySelectorAll("#states > *");
-    svgStates.forEach(function (el) {
-      let state = content.find((obj) => obj._id === el.id);
-      if (state === undefined) {
-        let noResponse = {};
-        noResponse._id = el.id;
-        noResponse.count = 0;
-        el.setAttribute("class", levels[3]);
-        el.setAttribute("count", 0);
-      } else {
-        el.setAttribute("count", state.count);
-        if (state.count <= boudaries.first[0])
-          el.setAttribute("class", levels[3]);
-        if (
-          state.count > boudaries.second[0] &&
-          state.count <= boudaries.second[1]
-        )
-          el.setAttribute("class", levels[2]);
-        if (
-          state.count > boudaries.third[0] &&
-          state.count <= boudaries.third[1]
-        )
-          el.setAttribute("class", levels[1]);
-        if (state.count > boudaries.fourth[0])
-          el.setAttribute("class", levels[0]);
-      }
-    });
   }
 
   const state = document.getElementById("state");
@@ -105,9 +123,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const stop = document.getElementById("Stop");
   const station = document.getElementById("Station");
   const trafficSignal = document.getElementById("Traffic_Signal");
-  const accidentDate = document.getElementById("accident_date");
+  const accidentDateStart = document.getElementById("accident_date_start");
+  const accidentDateEnd = document.getElementById("accident_date_end");
   const severity = document.getElementById("severity");
-  const hourIn = document.getElementById("hourIN");
+  const accidentHourStart = document.getElementById("accident_hour_start");
+  const accidentHourEnd = document.getElementById("accident_hour_end");
   const sunriseSunsetDay = document.getElementById("sunrise_sunset_day");
   const sunriseSunsetNight = document.getElementById("sunrise_sunset_night");
   const civilTwilightDay = document.getElementById("civil_twilight_day");
@@ -122,32 +142,47 @@ document.addEventListener("DOMContentLoaded", function () {
   const astronomicalTwilightNight = document.getElementById(
     "astronomical_twilight_night"
   );
-  const lowerValues = [
-    "Temperature1",
-    "Wind_Chill1",
-    "Wind_Speed1",
-    "Pressure1",
-    "Precipitation1",
-    "Humidity1",
-    "Visibility1",
+  const valuesLikeNamesComponents = [
+    state,
+    county,
+    city,
+    street,
+    number,
+    timezone,
+    weather,
+    windDirection,
   ];
-  const higherValues = [
-    "Temperature2",
-    "Wind_Chill2",
-    "Wind_Speed2",
-    "Pressure2",
-    "Precipitation2",
-    "Humidity2",
-    "Visibility2",
+  const valuesTrueFalseComponents = [
+    amenity,
+    bump,
+    crossing,
+    giveWay,
+    junction,
+    noExit,
+    railway,
+    roundabout,
+    trafficCalming,
+    stop,
+    station,
+    trafficSignal,
   ];
-  const weatherNames = [
-    "Temperature",
-    "Wind Chill",
-    "Wind Speed",
-    "Pressure",
-    "Precipitation",
-    "Humidity",
-    "Visibility",
+  const dateValuesComponents = [
+    accidentDateStart,
+    accidentDateEnd,
+    accidentHourStart,
+    accidentHourEnd,
+  ];
+  const valuesDayComponents = [
+    sunriseSunsetDay,
+    civilTwilightDay,
+    nauticalTwilightDay,
+    astronomicalTwilightDay,
+  ];
+  const valuesNightComponents = [
+    sunriseSunsetNight,
+    civilTwilightNight,
+    nauticalTwilightNight,
+    astronomicalTwilightNight,
   ];
   const lowerValuesComponents = [
     temperature1,
@@ -167,234 +202,87 @@ document.addEventListener("DOMContentLoaded", function () {
     humidity2,
     visibility2,
   ];
-
   const submitFilters = document.getElementById("submit_button");
   let message = document.getElementById("filter_message");
 
   submitFilters.addEventListener("click", handlerSubmitFilters);
-
   function handlerSubmitFilters(e) {
     e.preventDefault();
     let filtersValues = {};
     let queryString = "";
-    let accidentStartTime;
     const pageTypeIndex = window.location.href.lastIndexOf("/");
     const pageType = window.location.href.substring(pageTypeIndex + 1);
 
     queryString = concatQueryString(queryString, "Type", pageType);
-    if (state.value !== "state") {
-      filtersValues.State = state.value;
-      queryString = concatQueryString(queryString, "State", state.value);
+    for (let i = 0; i < valuesLikeNamesComponents.length; i++) {
+      if (valuesLikeNamesComponents[i].value !== valuesLikeNames[i]) {
+        let initUpperCase = valuesLikeNames[i].charAt(0).toUpperCase() + valuesLikeNames[i].substring(1);
+        filtersValues[initUpperCase] = valuesLikeNamesComponents[i].value;
+        queryString = concatQueryString(
+            queryString,
+            `${initUpperCase}`,
+            valuesLikeNamesComponents[i].value
+        );
+      }
     }
-    if (county.value !== "county") {
-      filtersValues.County = county.value;
-      queryString = concatQueryString(queryString, "County", county.value);
-    }
-    if (city.value !== "city") {
-      filtersValues.City = city.value;
-      queryString = concatQueryString(queryString, "City", city.value);
-    }
-    if (street.value !== "street") {
-      filtersValues.Street = street.value;
-      queryString = concatQueryString(queryString, "Street", street.value);
-    }
-    if (number.value !== "number") {
-      filtersValues.Number = number.value;
-      queryString = concatQueryString(queryString, "Number", number.value);
-    }
-    if (timezone.value !== "timezone") {
-      filtersValues.Timezone = timezone.value;
-      queryString = concatQueryString(queryString, "Timezone", timezone.value);
-    }
-    if (roadSide.value !== "") {
-      filtersValues.Side = roadSide.value === "Left" ? "L" : "R";
+    if (roadSide.value !== "Side") {
       let roadSideValue = roadSide.value === "Left" ? "L" : "R";
+      filtersValues.Side = roadSideValue;
       queryString = concatQueryString(queryString, "Side", roadSideValue);
     }
-    if (weather.value !== "") {
-      filtersValues.Weather_Condition = weather.value;
-      queryString = concatQueryString(
-        queryString,
-        "Weather_Condition",
-        weather.value
-      );
+    for (let i = 0; i < valuesTrueFalseComponents.length; i++) {
+      if (valuesTrueFalseComponents[i].checked) {
+        filtersValues[valuesTrueFalse[i]] = "True";
+        queryString = concatQueryString(
+            queryString,
+            `${valuesTrueFalse[i]}`,
+            "True"
+        );
+      } else {
+        filtersValues[valuesTrueFalse[i]] = "False";
+        queryString = concatQueryString(
+            queryString,
+            `${valuesTrueFalse[i]}`,
+            "False"
+        );
+      }
     }
-    if (windDirection.value !== "") {
-      filtersValues.Wind_Direction = windDirection.value;
-      queryString = concatQueryString(
-        queryString,
-        "Wind_Direction",
-        windDirection.value
-      );
-    }
-    if (amenity.checked) {
-      filtersValues.Amenity = "True";
-      queryString = concatQueryString(queryString, "Amenity", "True");
-    } else {
-      filtersValues.Amenity = "False";
-      queryString = concatQueryString(queryString, "Amenity", "False");
-    }
-    if (bump.checked) {
-      filtersValues.Bump = "True";
-      queryString = concatQueryString(queryString, "Bump", "True");
-    } else {
-      filtersValues.Bump = "False";
-      queryString = concatQueryString(queryString, "Bump", "False");
-    }
-    if (crossing.checked) {
-      filtersValues.Crossing = "True";
-      queryString = concatQueryString(queryString, "Crossing", "True");
-    } else {
-      filtersValues.Crossing = "False";
-      queryString = concatQueryString(queryString, "Crossing", "False");
-    }
-    if (giveWay.checked) {
-      filtersValues.Give_Way = "True";
-      queryString = concatQueryString(queryString, "Give_Way", "True");
-    } else {
-      filtersValues.Give_Way = "False";
-      queryString = concatQueryString(queryString, "Give_Way", "False");
-    }
-    if (junction.checked) {
-      filtersValues.Junction = "True";
-      queryString = concatQueryString(queryString, "Junction", "True");
-    } else {
-      filtersValues.Junction = "False";
-      queryString = concatQueryString(queryString, "Junction", "False");
-    }
-    if (noExit.checked) {
-      filtersValues.No_Exit = "True";
-      queryString = concatQueryString(queryString, "No_Exit", "True");
-    } else {
-      filtersValues.No_Exit = "False";
-      queryString = concatQueryString(queryString, "No_Exit", "False");
-    }
-    if (railway.checked) {
-      filtersValues.Railway = "True";
-      queryString = concatQueryString(queryString, "Railway", "True");
-    } else {
-      filtersValues.Railway = "False";
-      queryString = concatQueryString(queryString, "Railway", "False");
-    }
-    if (roundabout.checked) {
-      filtersValues.Roundabout = "True";
-      queryString = concatQueryString(queryString, "Roundabout", "True");
-    } else {
-      filtersValues.Roundabout = "False";
-      queryString = concatQueryString(queryString, "Roundabout", "False");
-    }
-    if (trafficCalming.checked) {
-      filtersValues.Traffic_Calming = "True";
-      queryString = concatQueryString(queryString, "Traffic_Calming", "True");
-    } else {
-      filtersValues.Traffic_Calming = "False";
-      queryString = concatQueryString(queryString, "Traffic_Calming", "False");
-    }
-    if (stop.checked) {
-      filtersValues.Stop = "True";
-      queryString = concatQueryString(queryString, "Stop", "True");
-    } else {
-      filtersValues.Stop = "False";
-      queryString = concatQueryString(queryString, "Stop", "False");
-    }
-    if (station.checked) {
-      filtersValues.Station = "True";
-      queryString = concatQueryString(queryString, "Station", "True");
-    } else {
-      filtersValues.Station = "False";
-      queryString = concatQueryString(queryString, "Station", "False");
-    }
-    if (trafficSignal.checked) {
-      filtersValues.Traffic_Signal = "True";
-      queryString = concatQueryString(queryString, "Traffic_Signal", "True");
-    } else {
-      filtersValues.Traffic_Signal = "False";
-      queryString = concatQueryString(queryString, "Traffic_Signal", "False");
-    }
-    if (accidentDate.value !== "") {
-      filtersValues.Start_Time = accidentDate.value.toString();
-      accidentStartTime = accidentDate.value.toString();
+    for (let i = 0; i < dateValuesComponents.length; i++) {
+      if (dateValuesComponents[i].value !== "") {
+        filtersValues[dateValues[i]] = dateValuesComponents[i].value;
+        queryString = concatQueryString(
+            queryString,
+            `${dateValues[i]}`,
+            dateValuesComponents[i].value.toString()
+        );
+      }
     }
     if (severity.value !== "0") {
       filtersValues.Severity = severity.value;
       queryString = concatQueryString(
-        queryString,
-        "Severity",
-        severity.value.toString()
+          queryString,
+          "Severity",
+          severity.value.toString()
       );
     }
-    if (hourIn.value !== "0") {
-      let value = hourIn.value.toString();
-      if (value.length === 1) {
-        value = "0" + value;
+    for(let i = 0; i < valuesDayComponents.length; i++){
+      if(valuesDayComponents[i].checked){
+        filtersValues[valuesDayNight[i]] = "Day";
+        queryString = concatQueryString(queryString,`${valuesDayNight[i]}`,"Day");
+      }else{
+        if(valuesNightComponents[i].checked){
+          filtersValues[valuesDayNight[i]] = "Night";
+          queryString = concatQueryString(queryString,`${valuesDayNight[i]}`,"Night");
+        }
       }
-      if (filtersValues.Start_Time) {
-        filtersValues.Start_Time = filtersValues.Start_Time + " " + value + ":";
-      } else {
-        filtersValues.Start_Time = " " + value + ":";
-      }
-      if (accidentStartTime) {
-        accidentStartTime = accidentStartTime + "T" + value;
-      } else {
-        accidentStartTime = value;
-      }
-    }
-    queryString = concatQueryString(
-      queryString,
-      "Start_Time",
-      accidentStartTime
-    );
-    if (sunriseSunsetDay.checked) {
-      filtersValues.Sunrise_Sunset = "Day";
-      queryString = concatQueryString(queryString, "Sunrise_Sunset", "Day");
-    }
-    if (sunriseSunsetNight.checked) {
-      filtersValues.Sunrise_Sunset = "Night";
-      queryString = concatQueryString(queryString, "Sunrise_Sunset", "Night");
-    }
-    if (civilTwilightDay.checked) {
-      filtersValues.Civil_Twilight = "Day";
-      queryString = concatQueryString(queryString, "Civil_Twilight", "Day");
-    }
-    if (civilTwilightNight.checked) {
-      filtersValues.Civil_Twilight = "Night";
-      queryString = concatQueryString(queryString, "Civil_Twilight", "Night");
-    }
-    if (nauticalTwilightDay.checked) {
-      filtersValues.Nautical_Twilight = "Day";
-      queryString = concatQueryString(queryString, "Nautical_Twilight", "Day");
-    }
-    if (nauticalTwilightNight.checked) {
-      filtersValues.Nautical_Twilight = "Night";
-      queryString = concatQueryString(
-        queryString,
-        "Nautical_Twilight",
-        "Night"
-      );
-    }
-    if (astronomicalTwilightDay.checked) {
-      filtersValues.Astronomical_Twilight = "Day";
-      queryString = concatQueryString(
-        queryString,
-        "Astronomical_Twilight",
-        "Day"
-      );
-    }
-    if (astronomicalTwilightNight.checked) {
-      filtersValues.Astronomical_Twilight = "Night";
-      queryString = concatQueryString(
-        queryString,
-        "Astronomical_Twilight",
-        "Night"
-      );
     }
     for (let i = 0; i < lowerValuesComponents.length; i++) {
       if (lowerValuesComponents[i].value !== "") {
         filtersValues[lowerValues[i]] = lowerValuesComponents[i].value;
         queryString = concatQueryString(
-          queryString,
-          `${lowerValues[i]}`,
-          lowerValuesComponents[i].value
+            queryString,
+            `${lowerValues[i]}`,
+            lowerValuesComponents[i].value
         );
       }
     }
@@ -402,13 +290,12 @@ document.addEventListener("DOMContentLoaded", function () {
       if (higherValuesComponents[i].value !== "") {
         filtersValues[higherValues[i]] = higherValuesComponents[i].value;
         queryString = concatQueryString(
-          queryString,
-          `${higherValues[i]}`,
-          higherValuesComponents[i].value
+            queryString,
+            `${higherValues[i]}`,
+            higherValuesComponents[i].value
         );
       }
     }
-
     if (verifFilters(filtersValues) === true) {
       send_request(queryString.substring(1));
     }
@@ -421,37 +308,127 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function verifyWeatherFiltres(filtersValues) {
-    for (let i = 0; i < lowerValues.length; i++)
-      if (filtersValues[lowerValues[i]] > filtersValues[higherValues[i]]) {
+    for (let i = 0; i < lowerValues.length; i++) {
+      if (
+        parseFloat(filtersValues[lowerValues[i]]) >
+        parseFloat(filtersValues[higherValues[i]])
+      ) {
         message.innerText = `The first value for ${weatherNames[i]} cannot be higher that the second value`;
         return false;
       }
+    }
+    return true;
+  }
+
+  function verifyDates(filtersValues) {
+    if (filtersValues.Start_Date_1 > filtersValues.Start_Date_2) {
+      message.innerText = "First date must be smaller than second date!";
+      return false;
+    } else {
+      if (filtersValues.Start_Hour_1 > filtersValues.Start_Hour_2) {
+        message.innerText = "First hour must be smaller than second hour!";
+        return false;
+      }
+      return true;
+    }
+  }
+
+  function verifyLocation(filtersValues) {
+    const locations = [
+      "State",
+      "County",
+      "City",
+      "Street",
+      "Number",
+      "Temperature",
+    ];
+    for (let i = 0; i < locations.length; i++) {
+      if (filtersValues[locations[i]]) {
+        message.innerText =
+          "WARNING: You can only see a Cartomap for the entire USA.";
+        return false;
+      }
+    }
     return true;
   }
 
   function verifFilters(filtersValues) {
-    let filtersValueLength = Object.keys(filtersValues).length;
-    if (
-      filtersValueLength === 12 &&
-      filtersValues.Amenity === "False" &&
-      filtersValues.Bump === "False" &&
-      filtersValues.Crossing === "False" &&
-      filtersValues.Give_Way === "False" &&
-      filtersValues.Junction === "False" &&
-      filtersValues.No_Exit === "False" &&
-      filtersValues.Railway === "False" &&
-      filtersValues.Roundabout === "False" &&
-      filtersValues.Traffic_Calming === "False" &&
-      filtersValues.Stop === "False" &&
-      filtersValues.Station === "False" &&
-      filtersValues.Traffic_Signal === "False"
-    ) {
-      message.innerText = "You have to select at least one filter!";
-      return false;
-    }
-    const ok = verifyWeatherFiltres(filtersValues) ? true : false;
-    console.log(verifyWeatherFiltres(filtersValues));
-    if (ok) message.innerText = "";
-    return ok;
+    const ok = verifyWeatherFiltres(filtersValues);
+    const okDate = verifyDates(filtersValues);
+    const okLocation = verifyLocation(filtersValues);
+    if (ok && okDate && okLocation) message.innerText = "";
+    return ok && okDate;
+  }
+
+  function history(boudaries) {
+    const low = document.querySelector("p.low");
+    const medium = document.querySelector("p.medium");
+    const medium1 = document.querySelector("p.medium1");
+    const high = document.querySelector("p.high");
+    low.innerHTML = boudaries.first[0] + "-" + Math.round(boudaries.first[1]);
+    medium.innerHTML =
+      Math.round(boudaries.second[0]) + "-" + Math.round(boudaries.second[1]);
+    medium1.innerHTML =
+      Math.round(boudaries.third[0]) + "-" + Math.round(boudaries.third[1]);
+    high.innerHTML =
+      Math.round(boudaries.fourth[0]) + "-" + Math.round(boudaries.fourth[1]);
+  }
+
+  function open_map(content) {
+    up();
+    var pop = document.getElementById("states_pop");
+    var map = document.getElementById("map");
+    map.setAttribute("latitude", parseFloat(content.Start_Lat));
+    map.getAttribute("longitude", parseFloat(content.Start_Lng));
+
+    var left = pop.childNodes[0];
+    var el = document.querySelectorAll("#states > #" + content.State)[0];
+    pop.style.display = "flex";
+    pop.style.top = window.scrollY + 140 + "px";
+    left.innerHTML =
+      '<div class = "pop_text"><p>' +
+      dict_names[el.getAttribute("id")] +
+      "</p>";
+    if (el.hasAttribute("count"))
+      left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
+
+    left.innerHTML +=
+      '<div class = "pop_img"><img src="' +
+      dict_img[el.getAttribute("id")] +
+      '"></div>';
+
+    google.maps.event.addDomListener(window, "load", initMap());
+  }
+
+  function color_map(content, boudaries) {
+    up();
+    var levels = ["high_s", "medium_s", "medium1_s", "low_s"];
+    var svgStates = document.querySelectorAll("#states > *");
+    svgStates.forEach(function (el) {
+      let state = content.find((obj) => obj._id === el.id);
+      if (state === undefined) {
+        let noResponse = {};
+        noResponse._id = el.id;
+        noResponse.count = 0;
+        el.setAttribute("class", levels[3]);
+        el.setAttribute("count", 0);
+      } else {
+        el.setAttribute("count", state.count);
+        if (state.count <= boudaries.first[0])
+          el.setAttribute("class", levels[3]);
+        if (
+          state.count > boudaries.second[0] &&
+          state.count <= boudaries.second[1]
+        )
+          el.setAttribute("class", levels[2]);
+        if (
+          state.count > boudaries.third[0] &&
+          state.count <= boudaries.third[1]
+        )
+          el.setAttribute("class", levels[1]);
+        if (state.count > boudaries.fourth[0])
+          el.setAttribute("class", levels[0]);
+      }
+    });
   }
 });

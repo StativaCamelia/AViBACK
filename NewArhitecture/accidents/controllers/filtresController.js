@@ -55,30 +55,102 @@ class FiltresController {
         delete parsedQueryString[higherValues[i]];
       }
     }
+    if (parsedQueryString.Severity) {
+      parsedQueryString["Severity"] = parseInt(parsedQueryString.Severity);
+    }
     return parsedQueryString;
   }
   async editFiltres(query) {
     if (Object.keys(query).length !== 0) {
       let parsedQueryString = query;
+      let criterion;
       if (parsedQueryString.State) {
         parsedQueryString.State = await this.database.State.getAbbrByName(
           parsedQueryString.State
         );
       }
-      if (parsedQueryString.Start_Time.length > 2) {
-        parsedQueryString.Start_Time = parsedQueryString.Start_Time.replace(
-          "T",
-          " "
-        );
 
-        parsedQueryString.Start_Time = parsedQueryString.Start_Time + ":";
-        parsedQueryString.Start_Time = {
-          $regex: parsedQueryString.Start_Time,
-          $options: "i",
+      if (
+        parsedQueryString.FirstDate &&
+        parsedQueryString.SecondDate &&
+        parsedQueryString.FirstHour &&
+        parsedQueryString.SecondHour
+      ) {
+        parsedQueryString.Start_Date = {
+          $gte: parsedQueryString.FirstDate,
+          $lte: parsedQueryString.SecondDate,
         };
+
+        parsedQueryString.Start_Hour = {
+          $gte: parsedQueryString.FirstHour,
+          $lte: parsedQueryString.SecondHour,
+        };
+
+        delete parsedQueryString.FirstDate;
+        delete parsedQueryString.SecondDate;
+        delete parsedQueryString.FirstHour;
+        delete parsedQueryString.SecondHour;
+      } else {
+        if (parsedQueryString.FirstDate && parsedQueryString.SecondDate) {
+          parsedQueryString.Start_Date = {
+            $gte: parsedQueryString.FirstDate,
+            $lte: parsedQueryString.SecondDate,
+          };
+          delete parsedQueryString.FirstDate;
+          delete parsedQueryString.SecondDate;
+        } else {
+          if (parsedQueryString.FirstHour && parsedQueryString.SecondHour) {
+            parsedQueryString.Start_Hour = {
+              $gte: parsedQueryString.FirstHour,
+              $lte: parsedQueryString.SecondHour,
+            };
+
+            delete parsedQueryString.FirstHour;
+            delete parsedQueryString.SecondHour;
+          } else {
+            if (parsedQueryString.FirstDate) {
+              parsedQueryString.Start_Date = {
+                $gte: parsedQueryString.FirstDate,
+              };
+              delete parsedQueryString.FirstDate;
+            } else {
+              if (parsedQueryString.SecondDate) {
+                parsedQueryString.Start_Date = {
+                  $lte: parsedQueryString.SecondDate,
+                };
+                delete parsedQueryString.SecondDate;
+              } else {
+                if (parsedQueryString.FirstHour) {
+                  parsedQueryString.Start_Hour = {
+                    $gte: parsedQueryString.FirstHour,
+                  };
+                  delete parsedQueryString.FirstHour;
+                } else {
+                  if (parsedQueryString.SecondHour) {
+                    parsedQueryString.Start_Hour = {
+                      $lte: parsedQueryString.SecondHour,
+                    };
+                    delete parsedQueryString.SecondHour;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
+      if (parsedQueryString.Pie_Criterion) {
+        criterion = parsedQueryString.Pie_Criterion;
+        delete parsedQueryString.Pie_Criterion;
+      }
+      if (parsedQueryString.Line_Criterion) {
+        criterion = parsedQueryString.Line_Criterion;
+        delete parsedQueryString.Line_Criterion;
+      }
+      let type = parsedQueryString.Type;
+      delete parsedQueryString.Type;
+
       parsedQueryString = await this.editWeather(parsedQueryString);
-      return parsedQueryString;
+      return { query: parsedQueryString, type: type, criterion: criterion };
     }
   }
 
@@ -108,6 +180,7 @@ class FiltresController {
       }
       const streets = await this.database.Accident.getAllStreetsEntities();
       for (let streetData of streets) {
+        console.log(streetData);
         const cityData = await this.database.City.findOne({
           name: streetData.city,
         });

@@ -22,32 +22,6 @@ class PieController {
       const streetsValues = result.content.streetsValues;
       const timezoneValues = result.content.timezoneValues;
 
-      // if(Object.keys(req.queryStringObject).length !== 0){
-      //   let parsedQueryString = req.queryStringObject;
-      //   if(parsedQueryString.State){
-      //     parsedQueryString.State = await this.database.State.getAbbrByName(
-      //         parsedQueryString.State
-      //     );
-      //   }
-      //   if(parsedQueryString.Start_Time){
-      //     if(parsedQueryString.Start_Time.length > 2){
-      //       parsedQueryString.Start_Time = parsedQueryString.Start_Time.replace("T"," ");
-      //     }
-      //     parsedQueryString.Start_Time = parsedQueryString.Start_Time + ":";
-      //     parsedQueryString.Start_Time = { "$regex" : parsedQueryString.Start_Time, "$options" : "i" };
-      //   }
-      //
-      //   let pieCriterion = parsedQueryString.Pie_Criterion;
-      //   console.log(pieCriterion)
-      //
-      //   delete parsedQueryString.Pie_Criterion;
-      //   console.log(parsedQueryString);
-      //
-      //   const countResults = await this.database.Accident.getAccidentsCount(parsedQueryString);
-      //   console.log(countResults)
-      // }
-
-
       let numbersValues = [];
       for (var i = 0; i < 9997; i = i + 10) {
         numbersValues.push(i.toString());
@@ -203,7 +177,7 @@ class PieController {
         "WSW",
         "West",
       ];
-      const ids = ["", "", "", "active", ""];
+      const ids = ["", "", "", "", "active", "", ""];
       const { content, contentType } = piePage.getPiePage(
         statesValues,
         countiesValues,
