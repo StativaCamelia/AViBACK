@@ -4,19 +4,8 @@ function domloaded() {
   var ctx = canvas.getContext("2d");
   Chart.defaults.global.defaultFontSize = 16;
   var data = {
-    labels: ["1900", "1950", "1999", "2050"],
-    datasets: [
-      {
-        label: "Africa",
-        backgroundColor: "#3e95cd",
-        data: [133, 221, 783, 2478],
-      },
-      {
-        label: "Europe",
-        backgroundColor: "#8e5ea2",
-        data: [408, 547, 675, 734],
-      },
-    ],
+    labels: [2016, 2017, 2018, 2019],
+    datasets: [],
   };
 
   var myFirstChart = new Chart(ctx, {
@@ -25,7 +14,12 @@ function domloaded() {
     options: {
       title: {
         display: true,
-        text: "Population growth (millions)",
+        text: "Enter your data an generate a bar chart",
+      },
+      legend: {
+        fontSize: 10,
+        fontFamily: "tamoha",
+        fontColor: "Sienna",
       },
     },
   });
