@@ -1,9 +1,7 @@
 extends ./layouts/layoutBarChart.pug
 block left_content
-    h2 Enter your data and generate a bar chart
-    .box
-        svg(id="root" height="500" width="500" viewBox="0 0 500 500")
-    script(src="./Scripts/chart.js")
+    canvas#bar_chart(width='960', height='800')
+        | Your browser does not support the canvas element.
 block right_content
     include ./statisticsComponents/filtres
         
