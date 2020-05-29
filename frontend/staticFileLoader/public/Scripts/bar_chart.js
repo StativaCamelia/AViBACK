@@ -2,13 +2,13 @@ document.addEventListener("DOMContentLoaded", domloaded, false);
 function domloaded() {
   var canvas = document.getElementById("bar_chart");
   var ctx = canvas.getContext("2d");
-  Chart.defaults.global.defaultFontSize = 16;
+  Chart.defaults.global.defaultFontSize = 12;
   var data = {
     labels: [2016, 2017, 2018, 2019],
     datasets: [],
   };
 
-  var myFirstChart = new Chart(ctx, {
+  var myBarChart = new Chart(ctx, {
     type: "bar",
     data: data,
     options: {

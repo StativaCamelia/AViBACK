@@ -184,7 +184,8 @@
         margin-bottom: 8%;
     }
 
-    .form_log h1,h2{
+    .form_log h1,
+    h2 {
         font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
         text-transform: uppercase;
         text-rendering: optimizeLegibility;
@@ -612,7 +613,7 @@
         text-shadow: 2px 3px 0 rgba(0, 0, 0, 0.2);
     }
 
-    .info_1 p{
+    .info_1 p {
         font-family: Novecentosanswide;
     }
 
@@ -642,7 +643,8 @@
         text-align: center;
     }
 
-    .chart, .line {
+    .chart,
+    .line {
         width: 10vw;
         height: 8vh;
         border-left: 2px dotted #000000;
@@ -732,7 +734,7 @@
 
     .topic1>h2,
     .topic2>h2,
-    .topic3>h2{
+    .topic3>h2 {
         margin: 0;
         font-family: Novecentosanswide;
     }
@@ -754,13 +756,13 @@
 
     .topic1:hover>h2,
     .topic2:hover>h2,
-    .topic3:hover>h2{
+    .topic3:hover>h2 {
         display: none;
     }
 
     .topic1:hover>i,
     .topic2:hover>i,
-    .topic3:hover>i{
+    .topic3:hover>i {
         display: none;
     }
 
@@ -989,7 +991,7 @@
         display: none;
     }
 
-    #loader{
+    #loader {
         align-self: center;
         width: 100px;
         height: 100px;
@@ -998,15 +1000,20 @@
         border-top-color: #041F60;
         animation: spin 1s ease-in-out infinite;
         -webkit-animation: spin 1s ease-in-out infinite;
-      }
-      
-      @keyframes spin {
-        to { -webkit-transform: rotate(360deg); }
-      }
-      @-webkit-keyframes spin {
-        to { -webkit-transform: rotate(360deg); }
-      }
-    
+    }
+
+    @keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @-webkit-keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
     #right_cont {
         display: flex;
         width: 40%;
@@ -1110,13 +1117,13 @@
         clear: both;
     }
 
-    #filters_pie_new{
+    #filters_pie_new {
         display: none;
         width: 100%;
         align-self: center;
     }
 
-    .checkboxes_buttons{
+    .checkboxes_buttons {
         display: none;
         flex-direction: row;
         justify-content: space-between;
@@ -1124,6 +1131,7 @@
         margin-top: 2vh;
         align-self: center;
     }
+
     /*END ZONA PIE*/
 
 
@@ -1201,7 +1209,7 @@
         width: 100%;
     }
 
-    .weather_filtre p{
+    .weather_filtre p {
         margin: 0 0.3vw 0 0.3vw;
     }
 
@@ -1242,7 +1250,7 @@
         align-items: center;
     }
 
-    .time_filtres{
+    .time_filtres {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -1275,11 +1283,16 @@
         align-items: baseline;
     }
 
-   #line_chart{
-        width :100%!important;
-        height:40%!important;
+    #line_chart {
+        width: 100% !important;
+        height: 40% !important;
     }
-    
+
+    #bar_chart {
+        width: 100% !important;
+        height: 40% !important;
+    }
+
     .road_event_label,
     .moon_option_label {
         flex-grow: 1;
@@ -1312,7 +1325,7 @@
         font-family: Novecentosanswide;
     }
 
-    .select_box_interval>select{
+    .select_box_interval>select {
         width: auto;
         border-radius: 3px;
         background-color: #041F60;
@@ -1321,7 +1334,7 @@
         font-family: Novecentosanswide;
     }
 
-    .select_box_interval{
+    .select_box_interval {
         box-shadow: 1px 1px #888888;
         width: auto;
         border-radius: 3px;
@@ -1339,7 +1352,7 @@
         margin: 2vh 0 2vh 0;
     }
 
-    .criteria_select_label{
+    .criteria_select_label {
         flex-grow: 1;
         font-family: Novecentosanswide;
         font-size: 1.1rem;
@@ -1364,7 +1377,7 @@
         cursor: pointer;
     }
 
-    h2#filter_message{
+    h2#filter_message {
         font-family: Novecentosanswide;
         font-size: 1rem;
         color: red;
@@ -1393,19 +1406,21 @@
         margin: 1vh 0 1vh 0;
     }
 
-    .calendar_input{
+    .calendar_input {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-self: center;
         width: 65%;
     }
-    .calendar_input p,.range_icons p{
+
+    .calendar_input p,
+    .range_icons p {
         font-size: 1.5rem;
         margin: 0.4vh 0 0 0;
     }
 
-    .calendar_text{
+    .calendar_text {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -1433,7 +1448,8 @@
         margin: 1vh 0 1vh 0;
     }
 
-    #accident_hour_start,#accident_hour_end{
+    #accident_hour_start,
+    #accident_hour_end {
         z-index: 0;
         text-align: start;
         height: 1.5vh;
@@ -1464,7 +1480,7 @@
 
     }
 
-    #submit_button[type="submit"]{
+    #submit_button[type="submit"] {
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: white;
@@ -1481,7 +1497,8 @@
         text-shadow: 0px 1px 0px #e1e2ed;
     }
 
-    #change_button, #update_interval_button{
+    #change_button,
+    #update_interval_button {
         display: none;
         text-align: center;
         z-index: 0;
@@ -1516,7 +1533,11 @@
         text-shadow: 0px 1px 0px #e1e2ed;
     }
 
-    #reset_button[type="reset"], #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"] {
+    #reset_button[type="reset"],
+    #back_filters[type="button"],
+    #submit_checkboxes[type="submit"],
+    #select_all[type="button"],
+    #select_radio[type="button"] {
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: white;
@@ -1532,9 +1553,14 @@
         margin-left: 12vw;
         text-shadow: 0px 1px 0px #e1e2ed;
     }
-    #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"]{
+
+    #back_filters[type="button"],
+    #submit_checkboxes[type="submit"],
+    #select_all[type="button"],
+    #select_radio[type="button"] {
         margin: 0;
     }
+
     .map-history {
         display: flex;
         flex-basis: 10px;
@@ -1570,7 +1596,7 @@
     }
 
     .left_description {
-        font-size:large;
+        font-size: large;
         width: 20%;
         display: flex;
         align-items: flex-start;

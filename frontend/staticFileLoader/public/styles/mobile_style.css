@@ -315,7 +315,8 @@
         text-align: center;
     }
 
-    .chart,.line {
+    .chart,
+    .line {
         width: 26vw;
         height: 10vh;
         border-left: 2px dotted #000000;
@@ -789,7 +790,8 @@
         height: auto;
     }
 
-    .form_log h1,h2 {
+    .form_log h1,
+    h2 {
         font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
         text-transform: uppercase;
         text-rendering: optimizeLegibility;
@@ -887,15 +889,15 @@
         margin: 0px;
     }
 
-    #left_cont h2{
+    #left_cont h2 {
         font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-    text-transform: uppercase;
-    text-rendering: optimizeLegibility;
-    color: #041F60;
-    font-size: 1.5rem;
-    text-align: center
+        text-transform: uppercase;
+        text-rendering: optimizeLegibility;
+        color: #041F60;
+        font-size: 1.5rem;
+        text-align: center
     }
-    
+
     #right_cont {
         display: flex;
         height: auto;
@@ -904,15 +906,6 @@
         justify-content: space-evenly;
         margin: 0px;
         align-self: center;
-    }
-
-
-
-    /*CHART*/
-    rect {
-        fill: lightblue;
-        stroke-width: 1px;
-        stroke: #fff;
     }
 
     /*PIE*/
@@ -1007,13 +1000,13 @@
         align-self: auto;
     }
 
-    #filters_pie_new{
+    #filters_pie_new {
         display: none;
         width: 80%;
         align-self: center;
     }
 
-    .checkboxes_buttons{
+    .checkboxes_buttons {
         display: none;
         flex-direction: row;
         justify-content: space-between;
@@ -1063,7 +1056,7 @@
         width: 100%;
     }
 
-    .weather_filtre p{
+    .weather_filtre p {
         margin: 0 0.5vw 0 0.5vw;
     }
 
@@ -1096,14 +1089,15 @@
         padding: 12px;
     }
 
-    .down_filtres, .time_filtres{
+    .down_filtres,
+    .time_filtres {
         display: flex;
         flex-direction: column;
         width: 100%;
         align-items: center;
     }
 
-    .select_box_interval{
+    .select_box_interval {
         box-shadow: 1px 1px #888888;
         width: auto;
         border-radius: 3px;
@@ -1113,8 +1107,8 @@
         align-self: center;
     }
 
-    
-    .select_box_interval>select{
+
+    .select_box_interval>select {
         width: auto;
         border-radius: 3px;
         background-color: #041F60;
@@ -1122,10 +1116,15 @@
         color: white;
         font-family: Novecentosanswide;
     }
-    
-    #line_chart{
-        width :100%!important;
-        height:50%!important;
+
+    #line_chart {
+        width: 100% !important;
+        height: 50% !important;
+    }
+
+    #bar_chart {
+        width: 100% !important;
+        height: 50% !important;
     }
 
     .road_select_col {
@@ -1136,7 +1135,7 @@
         flex-grow: 3;
     }
 
-    .last_set_filters_col{
+    .last_set_filters_col {
         display: flex;
         flex-direction: column;
         width: 20%;
@@ -1207,7 +1206,7 @@
         margin: 2vh 0 2vh 0;
     }
 
-    .criteria_select_label{
+    .criteria_select_label {
         flex-grow: 1;
         font-family: Novecentosanswide;
         font-size: 1.1rem;
@@ -1250,19 +1249,21 @@
         margin: 1vh 0 1vh 0;
     }
 
-    .calendar_input{
+    .calendar_input {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-self: center;
         width: 70%;
     }
-    .calendar_input p,.range_icons p{
+
+    .calendar_input p,
+    .range_icons p {
         font-size: 2rem;
         margin: 0.3vh 0 0 0;
     }
 
-    .calendar_text{
+    .calendar_text {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -1291,7 +1292,8 @@
         margin: 1vh 0 1vh 0;
     }
 
-    #accident_hour_start,#accident_hour_end{
+    #accident_hour_start,
+    #accident_hour_end {
         z-index: 0;
         text-align: start;
         height: 1.5vh;
@@ -1330,7 +1332,11 @@
         justify-content: center;
     }
 
-    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"] {
+    #submit_button[type="submit"],
+    #back_filters[type="button"],
+    #submit_checkboxes[type="submit"],
+    #select_all[type="button"],
+    #select_radio[type="button"] {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1350,7 +1356,10 @@
         margin: 4vw;
     }
 
-    #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"]{
+    #back_filters[type="button"],
+    #submit_checkboxes[type="submit"],
+    #select_all[type="button"],
+    #select_radio[type="button"] {
         margin: 0;
     }
 
@@ -1374,7 +1383,8 @@
         margin: 0;
     }
 
-    #change_button, #update_intreval_button{
+    #change_button,
+    #update_intreval_button {
         display: none;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
@@ -1395,7 +1405,7 @@
         margin: 0;
     }
 
-    #next_button{
+    #next_button {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1499,7 +1509,7 @@
         display: none;
     }
 
-    #loader{
+    #loader {
         align-self: center;
         width: 100px;
         height: 100px;
@@ -1508,14 +1518,19 @@
         border-top-color: #041F60;
         animation: spin 1s ease-in-out infinite;
         -webkit-animation: spin 1s ease-in-out infinite;
-      }
-      
-      @keyframes spin {
-        to { -webkit-transform: rotate(360deg); }
-      }
-      @-webkit-keyframes spin {
-        to { -webkit-transform: rotate(360deg); }
-      }
+    }
+
+    @keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @-webkit-keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
 
     /*END POP-MAP*/
 }
