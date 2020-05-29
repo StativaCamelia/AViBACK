@@ -241,6 +241,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const days = document.getElementById("days");
   const daysOfWeek = document.getElementById("days_of_week");
   const allDates = document.getElementById("all_dates");
+  const exportData = document.querySelector(".export");
+  const csvExport = document.getElementById("csv_export");
+  const pngExport = document.getElementById("png_export");
+  const svgExport = document.getElementById("svg_export");
+  let sentFilters;
   let criterion;
 
   filtersForm.addEventListener("change", criterionForPie);
@@ -349,6 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
     criterion = filtersValues.Pie_Criterion;
     queryString = concatQueryString(queryString, "Pie_Criterion", criterion);
     if (verifFilters(filtersValues) === true) {
+      sentFilters = filtersValues;
       send_request(queryString.substring(1));
     }
   }
@@ -702,7 +708,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (Object.keys(dataResponse).length !== 0) {
       generatePieLegend(dataProcents, data, info, dateField);
+      exportFunction(data,info);
     }
+  }
+
+  function exportFunction(data,info) {
+    exportData.style.display = "flex";
+    csvExport.addEventListener("click", () => {
+      generateCsvFormat(data,info);
+    });
+    pngExport.addEventListener("click",() => {
+      generatePngFormat();
+    });
+    svgExport.addEventListener("click",() => {
+      generateSvgFormat();
+    });
+  }
+
+  function generateCsvFormat(data,info) {
+    console.log(sentFilters)
+    console.log(Object.keys(sentFilters))
+    console.log(data)
+    console.log(info)
+  }
+  
+  function generatePngFormat() {
+
+  }
+  
+  function generateSvgFormat() {
+
   }
 
   function deleteElementNodes(element) {

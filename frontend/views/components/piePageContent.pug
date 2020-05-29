@@ -197,9 +197,9 @@ block right_content
                 .slider_container_2
                     label.slider_label Hour:
                     .range_icons
-                        input#accident_hour_start(type='time' name='accident_hour_start')
+                        input#accident_hour_start(type='time' name='accident_hour_start' form='filters_form')
                         p -
-                        input#accident_hour_end(type='time' name='accident_hour_end')
+                        input#accident_hour_end(type='time' name='accident_hour_end' form='filters_form')
                 .slider_container_1
                     label.slider_label(for='severity') Accident Severity
                     input#severity.slider(form='filters_form' type='range' name='severity' min='0' max='3' value='0' step='1')

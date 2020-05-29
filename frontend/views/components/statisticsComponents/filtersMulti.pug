@@ -17,9 +17,9 @@
             .slider_container_2
                 label.slider_label Hour:
                 .range_icons
-                    input#accident_hour_start(type='time' name='accident_hour_start')
+                    input#accident_hour_start(type='time' name='accident_hour_start' form='filters_form')
                     p -
-                    input#accident_hour_end(type='time' name='accident_hour_end')
+                    input#accident_hour_end(type='time' name='accident_hour_end' form='filters_form')
                 .select_box_interval
                     select#intervalType.options(form='filters_form' name='groupBy_select')
                         option(value='' selected='' hidden='') Group By
