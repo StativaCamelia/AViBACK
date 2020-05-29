@@ -254,7 +254,16 @@ document.addEventListener("DOMContentLoaded", function () {
     generatePie([]);
     let errorMessageResult = document.getElementById("error_message_result");
     errorMessageResult.innerText = "";
+    exportData.style.display = "none";
+    resetSelectsToDefaultValues();
   });
+
+  function resetSelectsToDefaultValues(){
+    for (let i = 0; i < valuesLikeNamesComponents.length; i++) {
+      valuesLikeNamesComponents[i].value = valuesLikeNames[i];
+    }
+    roadSide.value = "Side";
+  }
 
   submitFilters.addEventListener("click", handlerSubmitFilters);
 
@@ -708,14 +717,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (Object.keys(dataResponse).length !== 0) {
       generatePieLegend(dataProcents, data, info, dateField);
-      exportFunction(data,info);
+      exportFunction(data,info,dataProcents);
     }
   }
 
-  function exportFunction(data,info) {
+  function exportFunction(data,info,dataProcents) {
     exportData.style.display = "flex";
-    csvExport.addEventListener("click", () => {
-      generateCsvFormat(data,info);
+    csvExport.addEventListener("click", async () => {
+      const csvData = await generateCsvFormat(data,info,dataProcents);
+      downloadCsv(csvData);
     });
     pngExport.addEventListener("click",() => {
       generatePngFormat();
@@ -725,11 +735,45 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function generateCsvFormat(data,info) {
+  function downloadCsv(csvData) {
+    const blob = new Blob([csvData], { type : "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("hidden","");
+    a.setAttribute("href",url);
+    a.setAttribute("download","AVi-statistics.csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function generateCsvFormat(data,info,dataProcents) {
     console.log(sentFilters)
     console.log(Object.keys(sentFilters))
     console.log(data)
     console.log(info)
+    let csvRows = [];
+    delete sentFilters.Pie_Criterion;
+    let headers = Object.keys(sentFilters);
+    let selectedValues = [];
+    headers.map(key => selectedValues.push(sentFilters[key]));
+    headers.push(criterion);
+    headers.push("Accidents_No.")
+    headers.push("Percent")
+    csvRows.push(headers.join(','));
+    console.log(csvRows)
+    for(let i = 0; i < info.length; i++){
+      let values = [];
+      for(let j = 0; j < selectedValues.length; j++){
+        const escaped = ('' + selectedValues[j]).replace(/"/g,'\\"');
+        values.push(`"${escaped}"`);
+      }
+      values.push(`${info[i]}`);
+      values.push(`${data[i]}`);
+      values.push(`${dataProcents[i]}`);
+      csvRows.push(values.join(','));
+    }
+    return csvRows.join('\n');
   }
   
   function generatePngFormat() {
