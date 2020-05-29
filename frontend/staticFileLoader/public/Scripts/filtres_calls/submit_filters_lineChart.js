@@ -226,8 +226,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let message = document.getElementById("filter_message");
   let filtersValues = {};
   submitFilters.addEventListener("click", handlerSubmitFilters);
-  const addFiltres = document.getElementById("next_button");
-  addFiltres.addEventListener("click", handlerAddFiltres);
+  const addFilters = document.getElementById("next_button");
+  addFilters.addEventListener("click", handlerAddFiltres);
   const groupBy = document.getElementById("intervalType");
 
   function createLineChart(content) {
@@ -367,9 +367,11 @@ document.addEventListener("DOMContentLoaded", function () {
       setVisible("#loading", true);
       if (this.readyState === 4 && this.status === 200) {
         const { content } = JSON.parse(this.responseText);
-        setVisible("#loading", false);
-        setVisible("#left_cont", true);
-
+        if (continueGraph !== "Update") {
+          console.log(continueGraph);
+          setVisible("#loading", false);
+          setVisible("#left_cont", true);
+        }
         createLineChart(content);
       }
     };

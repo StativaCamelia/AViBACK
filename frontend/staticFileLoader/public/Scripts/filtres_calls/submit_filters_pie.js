@@ -72,7 +72,12 @@ document.addEventListener("DOMContentLoaded", function () {
     "Traffic_Signal",
   ];
   const dateValues = ["FirstDate", "SecondDate", "FirstHour", "SecondHour"];
-  const valuesDayNight = ["Sunrise_Sunset", "Civil_Twilight", "Nautical_Twilight", "Astronomical_Twilight"];
+  const valuesDayNight = [
+    "Sunrise_Sunset",
+    "Civil_Twilight",
+    "Nautical_Twilight",
+    "Astronomical_Twilight",
+  ];
   function setVisible(selector, visible) {
     document.querySelector(selector).style.display = visible ? "flex" : "none";
   }
@@ -258,7 +263,7 @@ document.addEventListener("DOMContentLoaded", function () {
     resetSelectsToDefaultValues();
   });
 
-  function resetSelectsToDefaultValues(){
+  function resetSelectsToDefaultValues() {
     for (let i = 0; i < valuesLikeNamesComponents.length; i++) {
       valuesLikeNamesComponents[i].value = valuesLikeNames[i];
     }
@@ -278,7 +283,9 @@ document.addEventListener("DOMContentLoaded", function () {
     queryString = concatQueryString(queryString, "Type", pageType);
     for (let i = 0; i < valuesLikeNamesComponents.length; i++) {
       if (valuesLikeNamesComponents[i].value !== valuesLikeNames[i]) {
-        let initUpperCase = valuesLikeNames[i].charAt(0).toUpperCase() + valuesLikeNames[i].substring(1);
+        let initUpperCase =
+          valuesLikeNames[i].charAt(0).toUpperCase() +
+          valuesLikeNames[i].substring(1);
         filtersValues[initUpperCase] = valuesLikeNamesComponents[i].value;
         queryString = concatQueryString(
           queryString,
@@ -327,14 +334,22 @@ document.addEventListener("DOMContentLoaded", function () {
         severity.value.toString()
       );
     }
-    for(let i = 0; i < valuesDayComponents.length; i++){
-      if(valuesDayComponents[i].checked){
+    for (let i = 0; i < valuesDayComponents.length; i++) {
+      if (valuesDayComponents[i].checked) {
         filtersValues[valuesDayNight[i]] = "Day";
-        queryString = concatQueryString(queryString,`${valuesDayNight[i]}`,"Day");
-      }else{
-        if(valuesNightComponents[i].checked){
+        queryString = concatQueryString(
+          queryString,
+          `${valuesDayNight[i]}`,
+          "Day"
+        );
+      } else {
+        if (valuesNightComponents[i].checked) {
           filtersValues[valuesDayNight[i]] = "Night";
-          queryString = concatQueryString(queryString,`${valuesDayNight[i]}`,"Night");
+          queryString = concatQueryString(
+            queryString,
+            `${valuesDayNight[i]}`,
+            "Night"
+          );
         }
       }
     }
@@ -382,33 +397,67 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function createCriterionFields() {
     let options = [];
-    const valuesLikeNameOptions = ["State", "County", "City", "Street", "Number", "Timezone", "Weather", "Wind direction"];
+    const valuesLikeNameOptions = [
+      "State",
+      "County",
+      "City",
+      "Street",
+      "Number",
+      "Timezone",
+      "Weather",
+      "Wind direction",
+    ];
     for (let i = 0; i < valuesLikeNamesComponents.length; i++) {
       if (valuesLikeNamesComponents[i].value === valuesLikeNames[i]) {
         options.push(valuesLikeNameOptions[i]);
       }
     }
-    const valuesEmptyStringOptions = ["Temperature", "Wind chill", "Wind speed", "Humidity", "Pressure", "Visibility", "Precipitation"];
-    for(let i = 0; i < lowerValuesComponents.length; i++){
-      if(lowerValuesComponents[i].value === "" && higherValuesComponents[i].value === ""){
+    const valuesEmptyStringOptions = [
+      "Temperature",
+      "Wind chill",
+      "Wind speed",
+      "Humidity",
+      "Pressure",
+      "Visibility",
+      "Precipitation",
+    ];
+    for (let i = 0; i < lowerValuesComponents.length; i++) {
+      if (
+        lowerValuesComponents[i].value === "" &&
+        higherValuesComponents[i].value === ""
+      ) {
         options.push(valuesEmptyStringOptions[i]);
       }
     }
-    if(dateValuesComponents[0].value === "" && dateValuesComponents[1].value === ""){
+    if (
+      dateValuesComponents[0].value === "" &&
+      dateValuesComponents[1].value === ""
+    ) {
       options.push("Accident date");
     }
-    if(dateValuesComponents[2].value === "" && dateValuesComponents[3].value === ""){
+    if (
+      dateValuesComponents[2].value === "" &&
+      dateValuesComponents[3].value === ""
+    ) {
       options.push("Hour");
     }
-    if(roadSide.value === "Side"){
+    if (roadSide.value === "Side") {
       options.push("Road side");
     }
-    if(severity.value === "0"){
+    if (severity.value === "0") {
       options.push("Severity");
     }
-    const dayNightOptions = ["Sunrise/Sunset", "Civil twilight", "Nautical twilight", "Astronomical twilight"];
-    for(let i = 0; i < valuesDayComponents.length; i++){
-      if(valuesDayComponents[i].checked === false && valuesNightComponents[i].checked === false){
+    const dayNightOptions = [
+      "Sunrise/Sunset",
+      "Civil twilight",
+      "Nautical twilight",
+      "Astronomical twilight",
+    ];
+    for (let i = 0; i < valuesDayComponents.length; i++) {
+      if (
+        valuesDayComponents[i].checked === false &&
+        valuesNightComponents[i].checked === false
+      ) {
         options.push(dayNightOptions[i]);
       }
     }
@@ -571,10 +620,44 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function editCriterion(criterion) {
-    const caseValues = ["Road side","Weather","Wind direction","Temperature","Wind chill","Wind speed","Humidity","Pressure","Visibility","Precipitation","Accident date","Hour","Sunrise/Sunset","Civil twilight","Nautical twilight","Astronomical twilight"];
-    const returnValues = ["Side","Weather_Condition","Wind_Direction","Temperature(F)","Wind_Chill(F)","Wind_Speed(mph)","Humidity(%)","Pressure(in)","Visibility(mi)","Precipitation(in)","Start_Date","Start_Hour","Sunrise_Sunset","Civil_Twilight","Nautical_Twilight","Astronomical_Twilight"];
-    for(let i = 0; i < caseValues.length; i++){
-      if(criterion === caseValues[i]){
+    const caseValues = [
+      "Road side",
+      "Weather",
+      "Wind direction",
+      "Temperature",
+      "Wind chill",
+      "Wind speed",
+      "Humidity",
+      "Pressure",
+      "Visibility",
+      "Precipitation",
+      "Accident date",
+      "Hour",
+      "Sunrise/Sunset",
+      "Civil twilight",
+      "Nautical twilight",
+      "Astronomical twilight",
+    ];
+    const returnValues = [
+      "Side",
+      "Weather_Condition",
+      "Wind_Direction",
+      "Temperature(F)",
+      "Wind_Chill(F)",
+      "Wind_Speed(mph)",
+      "Humidity(%)",
+      "Pressure(in)",
+      "Visibility(mi)",
+      "Precipitation(in)",
+      "Start_Date",
+      "Start_Hour",
+      "Sunrise_Sunset",
+      "Civil_Twilight",
+      "Nautical_Twilight",
+      "Astronomical_Twilight",
+    ];
+    for (let i = 0; i < caseValues.length; i++) {
+      if (criterion === caseValues[i]) {
         return returnValues[i];
       }
     }
@@ -717,72 +800,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (Object.keys(dataResponse).length !== 0) {
       generatePieLegend(dataProcents, data, info, dateField);
-      exportFunction(data,info,dataProcents);
+      exportFunction(data, info, dataProcents);
     }
   }
 
-  function exportFunction(data,info,dataProcents) {
+  function exportFunction(data, info, dataProcents) {
     exportData.style.display = "flex";
     csvExport.addEventListener("click", async () => {
-      const csvData = await generateCsvFormat(data,info,dataProcents);
+      const csvData = await generateCsvFormat(data, info, dataProcents);
       downloadCsv(csvData);
     });
-    pngExport.addEventListener("click",() => {
+    pngExport.addEventListener("click", () => {
       generatePngFormat();
     });
-    svgExport.addEventListener("click",() => {
+    svgExport.addEventListener("click", () => {
       generateSvgFormat();
     });
   }
 
   function downloadCsv(csvData) {
-    const blob = new Blob([csvData], { type : "text/csv" });
+    const blob = new Blob([csvData], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.setAttribute("hidden","");
-    a.setAttribute("href",url);
-    a.setAttribute("download","AVi-statistics.csv");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "AVi-statistics.csv");
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
   }
 
-  function generateCsvFormat(data,info,dataProcents) {
-    console.log(sentFilters)
-    console.log(Object.keys(sentFilters))
-    console.log(data)
-    console.log(info)
+  function generateCsvFormat(data, info, dataProcents) {
+    console.log(sentFilters);
+    console.log(Object.keys(sentFilters));
+    console.log(data);
+    console.log(info);
     let csvRows = [];
     delete sentFilters.Pie_Criterion;
     let headers = Object.keys(sentFilters);
     let selectedValues = [];
-    headers.map(key => selectedValues.push(sentFilters[key]));
+    headers.map((key) => selectedValues.push(sentFilters[key]));
     headers.push(criterion);
-    headers.push("Accidents_No.")
-    headers.push("Percent")
-    csvRows.push(headers.join(','));
-    console.log(csvRows)
-    for(let i = 0; i < info.length; i++){
+    headers.push("Accidents_No.");
+    headers.push("Percent");
+    csvRows.push(headers.join(","));
+    console.log(csvRows);
+    for (let i = 0; i < info.length; i++) {
       let values = [];
-      for(let j = 0; j < selectedValues.length; j++){
-        const escaped = ('' + selectedValues[j]).replace(/"/g,'\\"');
+      for (let j = 0; j < selectedValues.length; j++) {
+        const escaped = ("" + selectedValues[j]).replace(/"/g, '\\"');
         values.push(`"${escaped}"`);
       }
       values.push(`${info[i]}`);
       values.push(`${data[i]}`);
       values.push(`${dataProcents[i]}`);
-      csvRows.push(values.join(','));
+      csvRows.push(values.join(","));
     }
-    return csvRows.join('\n');
+    return csvRows.join("\n");
   }
-  
-  function generatePngFormat() {
 
-  }
-  
-  function generateSvgFormat() {
+  function generatePngFormat() {}
 
-  }
+  function generateSvgFormat() {}
 
   function deleteElementNodes(element) {
     while (element.firstChild) {

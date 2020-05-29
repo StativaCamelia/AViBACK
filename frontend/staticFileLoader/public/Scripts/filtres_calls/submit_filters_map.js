@@ -1,92 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
   const api = "http://localhost:5004/accidents?";
   const method = "GET";
+  let filtersValues;
 
-  const lowerValues = [
-    "Temperature1",
-    "Wind_Chill1",
-    "Wind_Speed1",
-    "Pressure1",
-    "Precipitation1",
-    "Humidity1",
-    "Visibility1",
-  ];
-  const higherValues = [
-    "Temperature2",
-    "Wind_Chill2",
-    "Wind_Speed2",
-    "Pressure2",
-    "Precipitation2",
-    "Humidity2",
-    "Visibility2",
-  ];
-  const weatherNames = [
-    "Temperature",
-    "Wind Chill",
-    "Wind Speed",
-    "Pressure",
-    "Precipitation",
-    "Humidity",
-    "Visibility",
-  ];
-  const valuesLikeNames = [
-    "state",
-    "county",
-    "city",
-    "street",
-    "number",
-    "timezone",
-    "weather_Condition",
-    "wind_Direction",
-  ];
-  const valuesTrueFalse = [
-    "Amenity",
-    "Bump",
-    "Crossing",
-    "Give_Way",
-    "Junction",
-    "No_Exit",
-    "Railway",
-    "Roundabout",
-    "Traffic_Calming",
-    "Stop",
-    "Station",
-    "Traffic_Signal",
-  ];
-  const dateValues = ["FirstDate", "SecondDate", "FirstHour", "SecondHour"];
-  const valuesDayNight = ["Sunrise_Sunset", "Civil_Twilight", "Nautical_Twilight", "Astronomical_Twilight"];
-
-  function up() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  }
-
-  function setVisible(selector, visible) {
-    document.querySelector(selector).style.display = visible ? "flex" : "none";
-  }
-
-  function send_request(query) {
-    var xhttp = new XMLHttpRequest();
-    url = api + query;
-    xhttp.open(method, url, true);
-    xhttp.send();
-    setVisible("#left_cont", false);
-    setVisible("#loading", true);
-    up();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState === 4 && this.status === 200) {
-        setVisible("#loading", false);
-        setVisible("#left_cont", true);
-        const { content } = JSON.parse(this.responseText);
-        if (!content.Start_Lat && !content.Start_Lng) {
-          history(content.boudaries);
-          color_map(content.dataset, content.boudaries);
-        } else {
-          open_map(content);
-        }
-      }
-    };
-  }
+  const exportData = document.querySelector(".export");
+  const csvExport = document.getElementById("csv_export");
+  const pngExport = document.getElementById("png_export");
+  const svgExport = document.getElementById("svg_export");
 
   const state = document.getElementById("state");
   const county = document.getElementById("county");
@@ -204,11 +124,168 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
   const submitFilters = document.getElementById("submit_button");
   let message = document.getElementById("filter_message");
+  const lowerValues = [
+    "Temperature1",
+    "Wind_Chill1",
+    "Wind_Speed1",
+    "Pressure1",
+    "Precipitation1",
+    "Humidity1",
+    "Visibility1",
+  ];
+  const higherValues = [
+    "Temperature2",
+    "Wind_Chill2",
+    "Wind_Speed2",
+    "Pressure2",
+    "Precipitation2",
+    "Humidity2",
+    "Visibility2",
+  ];
+  const weatherNames = [
+    "Temperature",
+    "Wind Chill",
+    "Wind Speed",
+    "Pressure",
+    "Precipitation",
+    "Humidity",
+    "Visibility",
+  ];
+  const valuesLikeNames = [
+    "state",
+    "county",
+    "city",
+    "street",
+    "number",
+    "timezone",
+    "weather_Condition",
+    "wind_Direction",
+  ];
+  const valuesTrueFalse = [
+    "Amenity",
+    "Bump",
+    "Crossing",
+    "Give_Way",
+    "Junction",
+    "No_Exit",
+    "Railway",
+    "Roundabout",
+    "Traffic_Calming",
+    "Stop",
+    "Station",
+    "Traffic_Signal",
+  ];
+  const dateValues = ["FirstDate", "SecondDate", "FirstHour", "SecondHour"];
+  const valuesDayNight = [
+    "Sunrise_Sunset",
+    "Civil_Twilight",
+    "Nautical_Twilight",
+    "Astronomical_Twilight",
+  ];
+
+  function up() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  function setVisible(selector, visible) {
+    document.querySelector(selector).style.display = visible ? "flex" : "none";
+  }
+
+  function loadingState(stop, start) {
+    setVisible("#left_cont", stop);
+    setVisible("#loading", start);
+  }
+
+  function resetFiltres() {
+    const filtresForm = document.getElementById("filters_form");
+    filtresForm.reset();
+    resetSelect();
+  }
+
+  function send_request(query) {
+    var xhttp = new XMLHttpRequest();
+    url = api + query;
+    xhttp.open(method, url, true);
+    xhttp.send();
+    loadingState(false, true);
+    up();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        loadingState(true, false);
+        const { content } = JSON.parse(this.responseText);
+        if (!content.Start_Lat && !content.Start_Lng) {
+          resetFiltres();
+          history(content.boudaries);
+          color_map(content.dataset, content.boudaries);
+          exportFunction(content.dataset);
+        } else {
+          resetFiltres();
+          open_map(content);
+        }
+      }
+    };
+  }
+
+  function exportFunction(dataset) {
+    exportData.style.display = "flex";
+    csvExport.addEventListener("click", async () => {
+      const csvData = await generateCsvFormat(dataset);
+      await downloadCsv(csvData);
+    });
+    pngExport.addEventListener("click", () => {
+      generatePngFormat();
+    });
+    svgExport.addEventListener("click", () => {
+      generateSvgFormat();
+    });
+  }
+
+  function downloadCsv(csvData) {
+    const blob = new Blob([csvData], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "AVi-statistics.csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function generateCsvFormat(dataset) {
+    console.log(dataset);
+    console.log(filtersValues);
+    let csvRows = [];
+    let headers = Object.keys(filtersValues);
+    let selectedValues = [];
+    headers.map((key) => selectedValues.push(filtersValues[key]));
+    headers.push("State");
+    headers.push("Accidents_No.");
+    csvRows.push(headers.join(","));
+    console.log(csvRows);
+    for (let i = 0; i < dataset.length; i++) {
+      let values = [];
+      for (let j = 0; j < selectedValues.length; j++) {
+        const escaped = ("" + selectedValues[j]).replace(/"/g, '\\"');
+        values.push(`"${escaped}"`);
+      }
+      values.push(`${dataset[i]._id}`);
+      values.push(`${dataset[i].count}`);
+      csvRows.push(values.join(","));
+    }
+    console.log(csvRows);
+    return csvRows.join("\n");
+  }
+
+  function generatePngFormat() {}
+
+  function generateSvgFormat() {}
 
   submitFilters.addEventListener("click", handlerSubmitFilters);
   function handlerSubmitFilters(e) {
     e.preventDefault();
-    let filtersValues = {};
+    filtersValues = {};
     let queryString = "";
     const pageTypeIndex = window.location.href.lastIndexOf("/");
     const pageType = window.location.href.substring(pageTypeIndex + 1);
@@ -216,12 +293,14 @@ document.addEventListener("DOMContentLoaded", function () {
     queryString = concatQueryString(queryString, "Type", pageType);
     for (let i = 0; i < valuesLikeNamesComponents.length; i++) {
       if (valuesLikeNamesComponents[i].value !== valuesLikeNames[i]) {
-        let initUpperCase = valuesLikeNames[i].charAt(0).toUpperCase() + valuesLikeNames[i].substring(1);
+        let initUpperCase =
+          valuesLikeNames[i].charAt(0).toUpperCase() +
+          valuesLikeNames[i].substring(1);
         filtersValues[initUpperCase] = valuesLikeNamesComponents[i].value;
         queryString = concatQueryString(
-            queryString,
-            `${initUpperCase}`,
-            valuesLikeNamesComponents[i].value
+          queryString,
+          `${initUpperCase}`,
+          valuesLikeNamesComponents[i].value
         );
       }
     }
@@ -234,16 +313,16 @@ document.addEventListener("DOMContentLoaded", function () {
       if (valuesTrueFalseComponents[i].checked) {
         filtersValues[valuesTrueFalse[i]] = "True";
         queryString = concatQueryString(
-            queryString,
-            `${valuesTrueFalse[i]}`,
-            "True"
+          queryString,
+          `${valuesTrueFalse[i]}`,
+          "True"
         );
       } else {
         filtersValues[valuesTrueFalse[i]] = "False";
         queryString = concatQueryString(
-            queryString,
-            `${valuesTrueFalse[i]}`,
-            "False"
+          queryString,
+          `${valuesTrueFalse[i]}`,
+          "False"
         );
       }
     }
@@ -251,28 +330,36 @@ document.addEventListener("DOMContentLoaded", function () {
       if (dateValuesComponents[i].value !== "") {
         filtersValues[dateValues[i]] = dateValuesComponents[i].value;
         queryString = concatQueryString(
-            queryString,
-            `${dateValues[i]}`,
-            dateValuesComponents[i].value.toString()
+          queryString,
+          `${dateValues[i]}`,
+          dateValuesComponents[i].value.toString()
         );
       }
     }
     if (severity.value !== "0") {
       filtersValues.Severity = severity.value;
       queryString = concatQueryString(
-          queryString,
-          "Severity",
-          severity.value.toString()
+        queryString,
+        "Severity",
+        severity.value.toString()
       );
     }
-    for(let i = 0; i < valuesDayComponents.length; i++){
-      if(valuesDayComponents[i].checked){
+    for (let i = 0; i < valuesDayComponents.length; i++) {
+      if (valuesDayComponents[i].checked) {
         filtersValues[valuesDayNight[i]] = "Day";
-        queryString = concatQueryString(queryString,`${valuesDayNight[i]}`,"Day");
-      }else{
-        if(valuesNightComponents[i].checked){
+        queryString = concatQueryString(
+          queryString,
+          `${valuesDayNight[i]}`,
+          "Day"
+        );
+      } else {
+        if (valuesNightComponents[i].checked) {
           filtersValues[valuesDayNight[i]] = "Night";
-          queryString = concatQueryString(queryString,`${valuesDayNight[i]}`,"Night");
+          queryString = concatQueryString(
+            queryString,
+            `${valuesDayNight[i]}`,
+            "Night"
+          );
         }
       }
     }
@@ -280,9 +367,9 @@ document.addEventListener("DOMContentLoaded", function () {
       if (lowerValuesComponents[i].value !== "") {
         filtersValues[lowerValues[i]] = lowerValuesComponents[i].value;
         queryString = concatQueryString(
-            queryString,
-            `${lowerValues[i]}`,
-            lowerValuesComponents[i].value
+          queryString,
+          `${lowerValues[i]}`,
+          lowerValuesComponents[i].value
         );
       }
     }
@@ -290,9 +377,9 @@ document.addEventListener("DOMContentLoaded", function () {
       if (higherValuesComponents[i].value !== "") {
         filtersValues[higherValues[i]] = higherValuesComponents[i].value;
         queryString = concatQueryString(
-            queryString,
-            `${higherValues[i]}`,
-            higherValuesComponents[i].value
+          queryString,
+          `${higherValues[i]}`,
+          higherValuesComponents[i].value
         );
       }
     }
@@ -307,7 +394,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return queryString;
   }
 
-  function verifyWeatherFiltres(filtersValues) {
+  function verifyWeatherFilters(filtersValues) {
     for (let i = 0; i < lowerValues.length; i++) {
       if (
         parseFloat(filtersValues[lowerValues[i]]) >
@@ -353,7 +440,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function verifFilters(filtersValues) {
-    const ok = verifyWeatherFiltres(filtersValues);
+    const ok = verifyWeatherFilters(filtersValues);
     const okDate = verifyDates(filtersValues);
     const okLocation = verifyLocation(filtersValues);
     if (ok && okDate && okLocation) message.innerText = "";
@@ -430,5 +517,14 @@ document.addEventListener("DOMContentLoaded", function () {
           el.setAttribute("class", levels[0]);
       }
     });
+  }
+
+  const resetButton = document.getElementById("reset_button");
+  resetButton.addEventListener("click", resetSelect);
+  function resetSelect() {
+    const selects = document.querySelectorAll("select");
+    for (let select of selects) {
+      select.selectedIndex = 0;
+    }
   }
 });
