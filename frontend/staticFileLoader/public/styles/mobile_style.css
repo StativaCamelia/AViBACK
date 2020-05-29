@@ -1533,4 +1533,70 @@
     }
 
     /*END POP-MAP*/
+    /* EXPORT DATA */
+    .export{
+        display: none;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 70%;
+        align-self: center;
+        margin: 5vh 0 0 0;
+    }
+
+    .csv_class, .png_class, .svg_class{
+        display: flex;
+        flex-direction: row;
+        align-self: center;
+        width: 25%;
+        height: 6vh;
+        border: 1px solid #041F60;
+        border-radius: 10px;
+    }
+
+    .csv_class:hover, .png_class:hover, .svg_class:hover{
+        opacity: 0.5;
+        cursor: pointer;
+    }
+
+    .csv_icon, .png_icon, .svg_icon{
+        width: 42%;
+        height: 4.5vh;
+        align-self: center;
+        margin: 0 0 0 0.3vw;
+    }
+
+    .csv_icon>img, .png_icon>img, .svg_icon>img{
+        width: 7vw;
+    }
+
+    .csv_text, .png_text, .svg_text{
+        width: 42%;
+        align-self: center;
+    }
+
+    .csv_text>p, .png_text>p, .svg_text>p{
+        margin: 0;
+        font-size: 0.7rem;
+        font-family: Novecentosanswide;
+    }
+
+    .plus{
+        display: flex;
+        flex-direction: row;
+        width: 16%;
+        background-color: #041F60;
+        padding: 0 0 0 2px;
+        margin: 0;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .plus>p{
+        margin: 0;
+        font-weight: bold;
+        font-size: 1rem;
+        color: white;
+        align-self: center;
+        font-family: Novecentosanswide;
+    }
+    /*END EXPORT*/
 }

@@ -1,5 +1,7 @@
 extends ./layouts/layoutBarChart.pug
 block left_content
+    include ./statisticsComponents/exportData.pug
+    h2 Enter your data and generate a bar chart
     canvas#bar_chart
         | Your browser does not support the canvas element.
 block loading

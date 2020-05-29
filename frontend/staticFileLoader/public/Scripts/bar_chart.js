@@ -12,10 +12,6 @@ function domloaded() {
     type: "bar",
     data: data,
     options: {
-      title: {
-        display: true,
-        text: "Enter your data an generate a bar chart",
-      },
       legend: {
         fontSize: 10,
         fontFamily: "tamoha",

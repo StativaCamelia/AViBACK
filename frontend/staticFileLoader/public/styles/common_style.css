@@ -631,6 +631,9 @@ a.control_button:active{
 }
 .radio_pie{
     display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     width: 100%;
     height: auto;
     align-self: center;

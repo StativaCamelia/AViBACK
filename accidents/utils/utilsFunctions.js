@@ -233,6 +233,9 @@ class Utils {
         years[index].count += yearCount;
       }
     }
+    years.sort(function (a, b) {
+      return a._id.localeCompare(b._id);
+    });
     return years;
   }
 

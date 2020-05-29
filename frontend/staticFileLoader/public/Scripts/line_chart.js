@@ -12,10 +12,6 @@ function domloaded() {
     type: "line",
     data: data,
     options: {
-      title: {
-        display: true,
-        text: "Enter your data an generate a line chart",
-      },
       legend: {
         fontSize: 10,
         fontFamily: "tamoha",

@@ -540,7 +540,7 @@ document.addEventListener("DOMContentLoaded", function () {
       dataset.Start_Hour_2 != undefined;
     existsFiltres
       ? (message.innerHTML = "")
-      : (message.innerHTML = "You shoul select a time interval");
+      : (message.innerHTML = "You should select a time interval");
     return existsFiltres;
   }
 

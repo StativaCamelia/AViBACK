@@ -473,8 +473,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function generateAccidentDateOptions(content) {
     nextStepFilters();
     radioPie.style.display = "flex";
-    radioPie.style.flexDirection = "row";
-    radioPie.style.flexWrap = "wrap";
     const okButton = document.getElementById("select_radio");
     okButton.addEventListener("click", () => {
       if (years.checked) {
@@ -679,7 +677,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function generatePie(dataResponse, dateField) {
     goOnTop();
     dataResponse.sort(function (a, b) {
-      return a.count - b.count;
+      return b.count - a.count;
     });
     let data = [];
     let info = [];
