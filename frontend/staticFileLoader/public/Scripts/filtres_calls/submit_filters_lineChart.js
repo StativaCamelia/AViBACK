@@ -245,7 +245,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return color;
     }
 
-    function getDataFromTimeObject(labels, data) {
+    function getDatasetFromAnswer(data, numberOfDataset) {
+      let dataset = [];
+      let dataChart;
+      let labels = [];
       for (let i = 0; i < data.length; i++) {
         dataset.push(data[i].count);
         if (!data[i]._id.day) {
@@ -254,12 +257,6 @@ document.addEventListener("DOMContentLoaded", function () {
           labels.push(data[i]._id.day + data[i]._id.hour);
         }
       }
-    }
-    function getDatasetFromAnswer(data, numberOfDataset) {
-      let dataset = [];
-      let dataChart;
-      let labels = [];
-      labels = getDataFromTimeObject(labels, data);
       dataChart = {
         data: dataset,
         label: "Dataset " + (numberOfDataset + 1),
