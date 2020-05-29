@@ -14,7 +14,6 @@ class AccidentController {
       } else if (type === "pie") {
         content = await this.getPieRepresentation(query, criterion);
       } else if (type === "chart") {
-        console.log("Fa chart");
         content = await this.getChartRepresentation(query, criterion);
       } else if (type === "line") {
         content = await this.getLineRepresentation(query, criterion);

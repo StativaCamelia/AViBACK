@@ -2,66 +2,127 @@ document.addEventListener("DOMContentLoaded", function () {
   const api = "http://localhost:5004/accidents?";
   const method = "GET";
 
-  const lowerValues = [
-    "Temperature1",
-    "Wind_Chill1",
-    "Wind_Speed1",
-    "Pressure1",
-    "Precipitation1",
-    "Humidity1",
-    "Visibility1",
-  ];
-  const higherValues = [
-    "Temperature2",
-    "Wind_Chill2",
-    "Wind_Speed2",
-    "Pressure2",
-    "Precipitation2",
-    "Humidity2",
-    "Visibility2",
-  ];
-  const weatherNames = [
-    "Temperature",
-    "Wind Chill",
-    "Wind Speed",
-    "Pressure",
-    "Precipitation",
-    "Humidity",
-    "Visibility",
-  ];
-  const valuesLikeNames = [
-    "state",
-    "county",
-    "city",
-    "street",
-    "number",
-    "timezone",
-    "weather_Condition",
-    "wind_Direction",
-  ];
-  const valuesTrueFalse = [
-    "Amenity",
-    "Bump",
-    "Crossing",
-    "Give_Way",
-    "Junction",
-    "No_Exit",
-    "Railway",
-    "Roundabout",
-    "Traffic_Calming",
-    "Stop",
-    "Station",
-    "Traffic_Signal",
-  ];
-  const dateValues = ["FirstDate", "SecondDate", "FirstHour", "SecondHour"];
-  const valuesDayNight = ["Sunrise_Sunset", "Civil_Twilight", "Nautical_Twilight", "Astronomical_Twilight"];
+  let datasetsSend = [];
+  let datasetsReceived = [];
+  let continueGraph = "Submit";
+  let groupByCriterion;
+  var lineChart;
+
+  function createLineChart(content) {
+    var canvas = document.getElementById("bar_chart");
+    var ctx = canvas.getContext("2d");
+    Chart.defaults.global.defaultFontSize = 12;
+    if (lineChart != undefined) lineChart.destroy();
+
+    function getRandomColor() {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function getDatasetFromAnswer(data, numberOfDataset) {
+      let dataset = [];
+      let dataChart;
+      let labels = [];
+      for (let i = 0; i < data.length; i++) {
+        dataset.push(data[i].count);
+        if (!data[i]._id.day) {
+          labels.push(data[i]._id);
+        } else {
+          labels.push("Day:" + data[i]._id.day + " Hour:" + data[i]._id.hour);
+        }
+      }
+      dataChart = {
+        data: dataset,
+        label: "Dataset " + (numberOfDataset + 1),
+        borderColor: getRandomColor(),
+        fill: true,
+      };
+      return { labels: labels, data: dataChart };
+    }
+
+    if (content !== []) {
+      datasetsReceived.push(content);
+      let allDatasets = [];
+      let dateLabels = [];
+      for (let j = 0; j < datasetsReceived.length; j++) {
+        let { labels, data } = getDatasetFromAnswer(datasetsReceived[j], j);
+        if (j === 0) dateLabels = labels;
+        allDatasets.push(data);
+      }
+      var data = {
+        labels: dateLabels,
+        datasets: allDatasets,
+      };
+      lineChart = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: {
+          title: {
+            display: true,
+          },
+          legend: {
+            fontSize: 10,
+            fontFamily: "tamoha",
+            fontColor: "Sienna",
+          },
+        },
+      });
+    } else {
+      var data = {
+        labels: [2016, 2017, 2018, 2019],
+        datasets: [],
+      };
+      lineChart = new Chart(ctx, {
+        type: "line",
+        data: data,
+        options: {
+          title: {
+            display: true,
+            text: "No data was found ",
+          },
+          legend: {
+            fontSize: 10,
+            fontFamily: "tamoha",
+            fontColor: "Sienna",
+          },
+        },
+      });
+    }
+    if (continueGraph === "Submit") {
+      datasetsReceived = [];
+      datasetsSend = [];
+      let time_interval = document.querySelector(".time_filtres");
+      time_interval.style.display = "flex";
+    }
+  }
 
   function setVisible(selector, visible) {
     document.querySelector(selector).style.display = visible ? "flex" : "none";
   }
 
+  function up() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  const resetButton = document.getElementById("reset_button");
+  resetButton.addEventListener("click", resetSelect);
+  function resetSelect() {
+    const selects = document.querySelectorAll("select");
+    for (let select of selects) {
+      select.selectedIndex = 0;
+    }
+  }
+
   function send_request(query) {
     var xhttp = new XMLHttpRequest();
+    up();
+    filtersForm.reset();
+    resetSelect();
     xhttp.onreadystatechange = function () {
       setVisible("#left_cont", false);
       setVisible("#loading", true);
@@ -69,10 +130,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const { content } = JSON.parse(this.responseText);
         setVisible("#loading", false);
         setVisible("#left_cont", true);
+        createLineChart(content);
       }
     };
     url = api + query;
-    console.log(url);
     xhttp.open(method, url, true);
     xhttp.send();
   }
@@ -131,17 +192,90 @@ document.addEventListener("DOMContentLoaded", function () {
   const astronomicalTwilightNight = document.getElementById(
     "astronomical_twilight_night"
   );
-  const valuesLikeNamesComponents = [
+  const lowerValuesWeather = [
+    "Temperature1",
+    "Wind_Chill1",
+    "Wind_Speed1",
+    "Pressure1",
+    "Precipitation1",
+    "Humidity1",
+    "Visibility1",
+  ];
+  const higherValuesWeather = [
+    "Temperature2",
+    "Wind_Chill2",
+    "Wind_Speed2",
+    "Pressure2",
+    "Precipitation2",
+    "Humidity2",
+    "Visibility2",
+  ];
+  const weatherNames = [
+    "Temperature",
+    "Wind Chill",
+    "Wind Speed",
+    "Pressure",
+    "Precipitation",
+    "Humidity",
+    "Visibility",
+  ];
+  const lowerWeatherComponents = [
+    temperature1,
+    windChill1,
+    windSpeed1,
+    pressure1,
+    precipitation1,
+    humidity1,
+    visibility1,
+  ];
+  const higherWeatherComponents = [
+    temperature2,
+    windChill2,
+    windSpeed2,
+    pressure2,
+    precipitation2,
+    humidity2,
+    visibility2,
+  ];
+
+  const locationComponents = [
     state,
     county,
     city,
     street,
     number,
     timezone,
+    roadSide,
     weather,
     windDirection,
+    severity,
   ];
-  const valuesTrueFalseComponents = [
+  const defaultValuesLocation = [
+    "state",
+    "county",
+    "city",
+    "street",
+    "number",
+    "timezone",
+    "Side",
+    "weather_Condition",
+    "wind_Direction",
+    "0",
+  ];
+  const locationDatabase = [
+    "State",
+    "County",
+    "City",
+    "Street",
+    "Number",
+    "Timezone",
+    "Side",
+    "Weather_Condition",
+    "Wind_Direction",
+    "Severity",
+  ];
+
+  const roadComponents = [
     amenity,
     bump,
     crossing,
@@ -155,141 +289,240 @@ document.addEventListener("DOMContentLoaded", function () {
     station,
     trafficSignal,
   ];
-  const dateValuesComponents = [
+  const roadConditionDatabase = [
+    "Amenity",
+    "Bump",
+    "Crossing",
+    "Give_Way",
+    "Junction",
+    "No_Exit",
+    "Railway",
+    "Roundabout",
+    "Traffic_Calming",
+    "Stop",
+    "Station",
+    "Traffic_Signal",
+  ];
+
+  const datesComponents = [
     accidentDateStart,
     accidentDateEnd,
     accidentHourStart,
     accidentHourEnd,
   ];
-  const valuesDayComponents = [
-    sunriseSunsetDay,
-    civilTwilightDay,
-    nauticalTwilightDay,
-    astronomicalTwilightDay,
+  const datesFields = [
+    "Start_Date_1",
+    "Start_Date_2",
+    "Start_Hour_1",
+    "Start_Hour_2",
   ];
-  const valuesNightComponents = [
+  const databaseComponents = [
+    "FirstDate",
+    "SecondDate",
+    "FirstHour",
+    "SecondHour",
+  ];
+
+  const astronomicComponents = [
+    sunriseSunsetDay,
     sunriseSunsetNight,
+    civilTwilightDay,
     civilTwilightNight,
+    nauticalTwilightDay,
     nauticalTwilightNight,
+    astronomicalTwilightDay,
     astronomicalTwilightNight,
   ];
-  const lowerValuesComponents = [
-    temperature1,
-    windChill1,
-    windSpeed1,
-    pressure1,
-    precipitation1,
-    humidity1,
-    visibility1,
+  const astronomicDatabase = [
+    "Sunrise_Sunset",
+    "Sunrise_Sunset",
+    "Civil_Twilight",
+    "Civil_Twilight",
+    "Nautical_Twilight",
+    "Nautical_Twilight",
+    "Astronomical_Twilight",
+    "Astronomical_Twilight",
   ];
-  const higherValuesComponents = [
-    temperature2,
-    windChill2,
-    windSpeed2,
-    pressure2,
-    precipitation2,
-    humidity2,
-    visibility2,
+  const astronomicValues = [
+    "Day",
+    "Night",
+    "Day",
+    "Night",
+    "Day",
+    "Night",
+    "Day",
+    "Night",
   ];
+
   const submitFilters = document.getElementById("submit_button");
   let message = document.getElementById("filter_message");
-
+  let filtersValues = {};
   submitFilters.addEventListener("click", handlerSubmitFilters);
+  const addFiltres = document.getElementById("next_button");
+  addFiltres.addEventListener("click", handlerAddFiltres);
+  const groupBy = document.getElementById("intervalType");
+
+  function collectData() {
+    let dataset = {};
+    let dataString = "";
+    for (let i = 0; i < locationComponents.length; i++) {
+      if (locationComponents[i].value !== defaultValuesLocation[i]) {
+        if (locationComponents[i] === roadSide) {
+          dataset[locationDatabase[i]] = "Left" ? "L" : "R";
+        } else {
+          dataset[locationDatabase[i]] = locationComponents[i].value;
+        }
+        if (locationComponents[i] === severity) {
+          dataset[locationDatabase[i]] ===
+            parseInt(locationComponents[i].value);
+        }
+        dataString = concatQueryString(
+          dataString,
+          locationDatabase[i],
+          dataset[locationDatabase[i]]
+        );
+      }
+    }
+
+    for (let i = 0; i < roadComponents.length; i++) {
+      roadComponents[i].checked
+        ? (dataset[roadConditionDatabase[i]] = "True")
+        : (dataset[roadConditionDatabase[i]] = "False");
+      dataString = concatQueryString(
+        dataString,
+        roadConditionDatabase[i],
+        dataset[roadConditionDatabase[i]]
+      );
+    }
+
+    for (let i = 0; i < lowerWeatherComponents.length; i++) {
+      if (lowerWeatherComponents[i].value !== "") {
+        dataset[lowerValuesWeather[i]] = lowerWeatherComponents[i].value;
+        dataString = concatQueryString(
+          dataString,
+          `${lowerValuesWeather[i]}`,
+          lowerWeatherComponents[i].value
+        );
+      }
+    }
+    for (let i = 0; i < higherWeatherComponents.length; i++) {
+      if (higherWeatherComponents[i].value !== "") {
+        dataset[higherValuesWeather[i]] = higherWeatherComponents[i].value;
+        dataString = concatQueryString(
+          dataString,
+          `${higherValuesWeather[i]}`,
+          higherWeatherComponents[i].value
+        );
+      }
+    }
+    for (let i = 0; i < databaseComponents.length; i++) {
+      if (datesComponents[i].value !== "") {
+        dataset[datesFields[i]] = datesComponents[i].value.toString();
+        dataString = concatQueryString(
+          dataString,
+          databaseComponents[i],
+          dataset[datesFields[i]].toString()
+        );
+      }
+    }
+    for (let i = 0; i < astronomicComponents.length; i++) {
+      if (astronomicComponents[i].checked) {
+        dataset[astronomicDatabase[i]] = astronomicValues[i];
+        dataString = concatQueryString(
+          dataString,
+          astronomicDatabase[i],
+          astronomicValues[i]
+        );
+      }
+    }
+    return { dataset, dataString };
+  }
+
+  //Preparare Date query String
+  function prepareQueryString(type = "Submit") {
+    const pageTypeIndex = window.location.href.lastIndexOf("/");
+    const pageType = window.location.href.substring(pageTypeIndex + 1);
+    let queryString = "";
+    queryString = concatQueryString(queryString, "Type", pageType);
+    let { dataString, dataset } = collectData();
+    if (datasetsSend.length > 0) {
+      dataset.Start_Date_1 = datasetsSend[0].Start_Date_1;
+      if (dataset.Start_Date_1 !== undefined)
+        queryString += concatQueryString("", "FirstDate", dataset.Start_Date_1);
+      dataset.Start_Date_2 = datasetsSend[0].Start_Date_2;
+      if (dataset.Start_Date_2 !== undefined)
+        queryString += concatQueryString(
+          "",
+          "SecondDate",
+          dataset.Start_Date_2
+        );
+      dataset.Start_Hour_1 = datasetsSend[0].Start_Hour_1;
+      if (dataset.Start_Hour_1 !== undefined)
+        queryString += concatQueryString("", "FirstHour", dataset.Start_Hour_1);
+      dataset.Start_Hour_2 = datasetsSend[0].Start_Hour_2;
+      if (dataset.Start_Hour_2 !== undefined)
+        queryString += concatQueryString(
+          "",
+          "SecondHour",
+          dataset.Start_Hour_2
+        );
+    }
+    if (
+      verifFilters(dataset) === true &&
+      verifyIntervalExists(dataset) === true &&
+      verifyGroupBy() === true
+    ) {
+      if (datasetsSend.length === 0) {
+        groupByCriterion = groupBy.value;
+        queryString += concatQueryString(
+          "",
+          "Line_Criterion",
+          groupByCriterion
+        );
+      } else {
+        queryString += concatQueryString(
+          "",
+          "Line_Criterion",
+          groupByCriterion
+        );
+      }
+      datasetsSend.push(dataset);
+      queryString += dataString;
+      let time_interval = document.querySelector(".time_filtres");
+      let change_interval = document.getElementById("change_button");
+      if (type === "Add") {
+        time_interval.style.display = "none";
+        change_interval.style.display = "block";
+      }
+      send_request(queryString.substring(1));
+    }
+  }
+
+  function addDatasetToSelect() {
+    let datasetsSelect = document.getElementById("list_datasets");
+    let option = document.createElement("option");
+    option.value = datasetsSend.length;
+    option.innerHTML = "Dataset" + datasetsSend.length;
+    datasetsSelect.appendChild(option);
+  }
+
+  function setDatasetTitle(index) {
+    let title = document.querySelector("#filters_form>h2");
+    title.innerHTML = "Dataset:" + (index + 1);
+  }
+
+  function handlerAddFiltres(e) {
+    e.preventDefault();
+    continueGraph = "Add";
+    setDatasetTitle(datasetsSend.length + 1);
+    prepareQueryString("Add");
+    addDatasetToSelect(datasetsSend.length + 1);
+  }
 
   function handlerSubmitFilters(e) {
     e.preventDefault();
-    let filtersValues = {};
-    let queryString = "";
-    const pageTypeIndex = window.location.href.lastIndexOf("/");
-    const pageType = window.location.href.substring(pageTypeIndex + 1);
-
-    queryString = concatQueryString(queryString, "Type", pageType);
-    for (let i = 0; i < valuesLikeNamesComponents.length; i++) {
-      if (valuesLikeNamesComponents[i].value !== valuesLikeNames[i]) {
-        let initUpperCase = valuesLikeNames[i].charAt(0).toUpperCase() + valuesLikeNames[i].substring(1);
-        filtersValues[initUpperCase] = valuesLikeNamesComponents[i].value;
-        queryString = concatQueryString(
-            queryString,
-            `${initUpperCase}`,
-            valuesLikeNamesComponents[i].value
-        );
-      }
-    }
-    if (roadSide.value !== "Side") {
-      let roadSideValue = roadSide.value === "Left" ? "L" : "R";
-      filtersValues.Side = roadSideValue;
-      queryString = concatQueryString(queryString, "Side", roadSideValue);
-    }
-    for (let i = 0; i < valuesTrueFalseComponents.length; i++) {
-      if (valuesTrueFalseComponents[i].checked) {
-        filtersValues[valuesTrueFalse[i]] = "True";
-        queryString = concatQueryString(
-            queryString,
-            `${valuesTrueFalse[i]}`,
-            "True"
-        );
-      } else {
-        filtersValues[valuesTrueFalse[i]] = "False";
-        queryString = concatQueryString(
-            queryString,
-            `${valuesTrueFalse[i]}`,
-            "False"
-        );
-      }
-    }
-    for (let i = 0; i < dateValuesComponents.length; i++) {
-      if (dateValuesComponents[i].value !== "") {
-        filtersValues[dateValues[i]] = dateValuesComponents[i].value;
-        queryString = concatQueryString(
-            queryString,
-            `${dateValues[i]}`,
-            dateValuesComponents[i].value.toString()
-        );
-      }
-    }
-    if (severity.value !== "0") {
-      filtersValues.Severity = severity.value;
-      queryString = concatQueryString(
-          queryString,
-          "Severity",
-          severity.value.toString()
-      );
-    }
-    for(let i = 0; i < valuesDayComponents.length; i++){
-      if(valuesDayComponents[i].checked){
-        filtersValues[valuesDayNight[i]] = "Day";
-        queryString = concatQueryString(queryString,`${valuesDayNight[i]}`,"Day");
-      }else{
-        if(valuesNightComponents[i].checked){
-          filtersValues[valuesDayNight[i]] = "Night";
-          queryString = concatQueryString(queryString,`${valuesDayNight[i]}`,"Night");
-        }
-      }
-    }
-    for (let i = 0; i < lowerValuesComponents.length; i++) {
-      if (lowerValuesComponents[i].value !== "") {
-        filtersValues[lowerValues[i]] = lowerValuesComponents[i].value;
-        queryString = concatQueryString(
-            queryString,
-            `${lowerValues[i]}`,
-            lowerValuesComponents[i].value
-        );
-      }
-    }
-    for (let i = 0; i < higherValuesComponents.length; i++) {
-      if (higherValuesComponents[i].value !== "") {
-        filtersValues[higherValues[i]] = higherValuesComponents[i].value;
-        queryString = concatQueryString(
-            queryString,
-            `${higherValues[i]}`,
-            higherValuesComponents[i].value
-        );
-      }
-    }
-    console.log(queryString)
-    if (verifFilters(filtersValues) === true) {
-      send_request(queryString.substring(1));
-    }
+    prepareQueryString("Submit");
+    continueGraph = "Submit";
   }
 
   function concatQueryString(queryString, key, value) {
@@ -298,11 +531,32 @@ document.addEventListener("DOMContentLoaded", function () {
     return queryString;
   }
 
+  // FRONTEND CHECK
+  function verifyIntervalExists(dataset) {
+    const existsFiltres =
+      dataset.Start_Date_1 != undefined ||
+      dataset.Start_Date_2 != undefined ||
+      dataset.Start_Hour_1 != undefined ||
+      dataset.Start_Hour_2 != undefined;
+    existsFiltres
+      ? (message.innerHTML = "")
+      : (message.innerHTML = "You shoul select a time interval");
+    return existsFiltres;
+  }
+
+  function verifyGroupBy() {
+    if (groupBy.value === "" && datasetsSend.length === 0) {
+      message.innerHTML =
+        "You should select a group by value for your interval";
+    } else message.innerHTML = "";
+    return groupBy.value === "" && datasetsSend.length === 0 ? false : true;
+  }
+
   function verifyWeatherFiltres(filtersValues) {
-    for (let i = 0; i < lowerValues.length; i++) {
+    for (let i = 0; i < lowerValuesWeather.length; i++) {
       if (
-        parseFloat(filtersValues[lowerValues[i]]) >
-        parseFloat(filtersValues[higherValues[i]])
+        parseFloat(filtersValues[lowerValuesWeather[i]]) >
+        parseFloat(filtersValues[higherValuesWeather[i]])
       ) {
         message.innerText = `The first value for ${weatherNames[i]} cannot be higher that the second value`;
         return false;
@@ -324,11 +578,224 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function existsDate(filtersValues) {
+    let numberOfValues = 0;
+    let existsFiltres = false;
+    const dates = [
+      "Start_Date_1",
+      "Start_Date_2",
+      "Start_Hour_1",
+      "Start_Hour_2",
+    ];
+    for (let i = 0; i < dates.length; i++) {
+      if (filtersValues[dates[i]] !== undefined) numberOfValues++;
+      existsFiltres = existsFiltres || filtersValues[dates[i]] !== undefined;
+    }
+    return { number: numberOfValues, exists: existsFiltres };
+  }
+
   function verifFilters(filtersValues) {
     const ok = verifyWeatherFiltres(filtersValues);
     const okDate = verifyDates(filtersValues);
-    console.log(verifyWeatherFiltres(filtersValues));
     if (ok && okDate) message.innerText = "";
     return ok && okDate;
+  }
+
+  //Generarea Campului de Group By
+  const filtersForm = document.getElementById("filters_form");
+  filtersForm.addEventListener("change", addGroupByOptions);
+
+  function getNumberOfYears(year1, year2) {
+    const boundsYears = [2016, 2019];
+    if (year1 && !year2) {
+      return boundsYears[1] - year1;
+    } else if (!year1 && year2) {
+      return year2 - boundsYears[0];
+    } else if (year1 && year2) {
+      return year2 - year1;
+    }
+  }
+
+  function getNumberOfMonths(numberOfYears, month1, month2) {
+    let months;
+    months = numberOfYears * 12;
+    if (month1 && !month2) {
+      return 12 - month1 + 12 * numberOfYears;
+    } else if (month2 && !month1) {
+      return month2 - 1 + 12 * numberOfYears;
+    } else if (month1 && month2) {
+      return month2 - month1 + 12 * numberOfYears;
+    }
+    return months;
+  }
+
+  function getNumberOfDays(month1, month2, day1, day2) {
+    if (month1 && !month2) {
+      return 31 - day1;
+    } else if (!month1 && month2) {
+      return day2 - 1;
+    } else if (month1 && month2) {
+      if (month2 - month1 === 1) {
+        return 31 - day1 + day2;
+      } else return day2 - day1;
+    }
+  }
+
+  function getNumberOfHours(numberOfDays, hour1, hour2) {
+    if (numberOfDays) {
+      if (numberOfDays)
+        return numberOfDays === 0 ? hour2 - hour1 : 24 - hour1 + hour2;
+    } else {
+      return hour2 - hour1;
+    }
+  }
+
+  function verifyDateGroup(dates) {
+    const numberOfYears = getNumberOfYears(dates.year1, dates.year2);
+    const numberOfMonths = getNumberOfMonths(
+      numberOfYears,
+      dates.month1,
+      dates.month2
+    );
+    let numberOfDays;
+    if (numberOfMonths <= 1) {
+      numberOfDays = getNumberOfDays(
+        dates.month1,
+        dates.month2,
+        dates.day1,
+        dates.day2
+      );
+    }
+    let numberOfHours;
+    if ((numberOfDays && numberOfDays <= 1) || dates.hour1 || dates.hour2) {
+      numberOfHours = getNumberOfHours(numberOfDays, dates.hour1, dates.hour2);
+    }
+    if (numberOfDays > 1) {
+      numberOfHours = null;
+    }
+    const intervals = ["Years", "Months", "Days", "Hours"];
+    const numbers = [
+      numberOfYears,
+      numberOfMonths,
+      numberOfDays,
+      numberOfHours,
+    ];
+    for (let i = 0; i < numbers.length; i++) {
+      if (numbers[i] > 0 && document.getElementById(intervals[i]) === null) {
+        let option = document.createElement("option");
+        option.value = intervals[i];
+        option.textContent = intervals[i];
+        option.id = intervals[i];
+        groupBy.appendChild(option);
+      } else if (!numbers[i]) {
+        let element = document.getElementById(intervals[i]);
+        if (element !== null) groupBy.removeChild(element);
+      }
+    }
+  }
+
+  function addGroupByOptions() {
+    const { dataset, dataString } = collectData();
+    let year1, year2, month1, month2, day1, day2, hour1, hour2;
+    if (
+      dataset.Start_Date_1 ||
+      dataset.Start_Date_2 ||
+      dataset.Start_Hour_1 ||
+      dataset.Start_Hour_2
+    ) {
+      if (dataset.Start_Date_1) {
+        year1 = parseInt(dataset.Start_Date_1.substring(0, 4));
+        month1 = parseInt(dataset.Start_Date_1.substring(5, 7));
+        day1 = parseInt(dataset.Start_Date_1.substring(8, 10));
+      }
+      if (dataset.Start_Date_2) {
+        year2 = parseInt(dataset.Start_Date_2.substring(0, 4));
+        month2 = parseInt(dataset.Start_Date_2.substring(5, 7));
+        day2 = parseInt(dataset.Start_Date_2.substring(8, 10));
+      }
+      if (dataset.Start_Hour_1) {
+        hour1 = parseInt(dataset.Start_Hour_1);
+      }
+      if (dataset.Start_Hour_2) {
+        hour2 = parseInt(dataset.Start_Hour_2);
+      }
+    }
+    verifyDateGroup({ year1, year2, month1, month2, day1, day2, hour1, hour2 });
+  }
+
+  const update_button = document.getElementById("update_button");
+  const datasets_select = document.getElementById("list_datasets");
+  datasets_select.addEventListener("change", goToDataset);
+
+  function goToDataset() {
+    let index = parseInt(datasets_select.value) - 1;
+    let data = datasetsSend[index];
+    setDatasetTitle(index);
+    for (let field in data) {
+      if (locationDatabase.indexOf(field) !== -1) {
+        if (field === "Side") {
+          data[field] === "L"
+            ? (data[field] = "Left")
+            : (data[field] = "Right");
+        }
+        locationComponents[locationDatabase.indexOf(field)].value = data[field];
+      }
+      if (roadConditionDatabase.indexOf(field) !== -1) {
+        data[field] === "True"
+          ? (roadComponents[
+              roadConditionDatabase.indexOf(field)
+            ].checked = true)
+          : (roadComponents[
+              roadConditionDatabase.indexOf(field)
+            ].checked = false);
+      }
+      if (lowerValuesWeather.indexOf(field) !== -1) {
+        lowerWeatherComponents[lowerValuesWeather.indexOf(field)].value =
+          data[field];
+      }
+      if (higherValuesWeather.indexOf(field) !== -1) {
+        higherWeatherComponents[higherValuesWeather.indexOf(field)].value =
+          data[field];
+      }
+      if (datesFields.indexOf(field) !== -1) {
+        databaseComponents[datesFields.indexOf(field)].value = data[field];
+      }
+      if (astronomicDatabase.indexOf(field) !== -1) {
+        data[field] === "Day"
+          ? (astronomicComponents[
+              astronomicDatabase.indexOf(field)
+            ].checked = true)
+          : (astronomicComponents[
+              astronomicDatabase.indexOf(field)
+            ].checked = true);
+      }
+    }
+  }
+
+  let change_interval = document.getElementById("change_button");
+
+  change_interval.addEventListener("click", changeTimeInterval);
+  function changeTimeInterval() {
+    function displayTimeElements() {
+      let time_interval = document.querySelector(".time_filtres");
+      let update_interval_button = document.getElementById(
+        "update_interval_button"
+      );
+      time_interval.style.display = "flex";
+      update_interval_button.style.display = "flex";
+    }
+
+    function getNewTimeValues() {
+      let newTimeValues = {};
+      for (let i = 0; i < databaseComponents.length; i++) {
+        if (datesComponents[i].value !== "") {
+          newTimeValues[datesFields[i]] = datesComponents[i].value.toString();
+        }
+      }
+      console.log(newTimeValues);
+    }
+
+    displayTimeElements();
+    getNewTimeValues();
   }
 });
