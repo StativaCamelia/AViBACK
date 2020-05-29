@@ -595,13 +595,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function verifFilters(filtersValues) {
-    if (
-      existsDate(filtersValues).exists &&
-      existsDate(filtersValues).number >= 1
-    ) {
-      message.innerText = "You have to select at least one filter!";
-      return false;
-    }
     const ok = verifyWeatherFiltres(filtersValues);
     const okDate = verifyDates(filtersValues);
     if (ok && okDate) message.innerText = "";

@@ -77,7 +77,7 @@
                                 | #{n}
                 .select_box
                     select#road_side.options_season(form='filters_form' name='Road_Side')
-                        option(value='' selected='selected' hidden='') Road side
+                        option(value='Side' selected='selected' hidden='') Road side
                         - let keyRoadSides = {roadSides}
                         - let valuesRoadSides = JSON.parse(keyRoadSides.roadSides)
                         each n in valuesRoadSides
@@ -87,7 +87,7 @@
                 label.label_weather(for='Weather_Condition') Weather Conditions
                 .select_box
                     select#Weather_Condition.options_weather(form='filters_form' name='Weather_Condition')
-                        option(value='' selected='selected' hidden='') Weather
+                        option(value='weather_Condition' selected='selected' hidden='') Weather
                         - let keyWeather = {weather}
                         - let valuesWeather = JSON.parse(keyWeather.weather)
                         each n in valuesWeather
@@ -95,7 +95,7 @@
                                 | #{n}
                 .select_box
                     select#Wind_Direction.options_weather(form='filters_form' name='Wind_Direction')
-                        option(value='' selected='selected' hidden='') Wind direction
+                        option(value='wind_Direction' selected='selected' hidden='') Wind direction
                         - let keyWindDirections = {windDirections}
                         - let valuesWindDirections = JSON.parse(keyWindDirections.windDirections)
                         each n in valuesWindDirections
