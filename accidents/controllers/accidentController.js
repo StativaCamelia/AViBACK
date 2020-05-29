@@ -15,7 +15,7 @@ class AccidentController {
         content = await this.getPieRepresentation(query, criterion);
       } else if (type === "chart") {
         console.log("Fa chart");
-        content = "abc";
+        content = await this.getChartRepresentation(query, criterion);
       } else if (type === "line") {
         content = await this.getLineRepresentation(query, criterion);
       }
@@ -89,6 +89,22 @@ class AccidentController {
   }
 
   async getLineRepresentation(query, criterion) {
+    try {
+      const timeIntervals = {
+        Start_Date: query["Start_Date"],
+        Start_Hour: query["Start_Hour"],
+      };
+      const accidents = this.getNumberOfAccidentsAndGroupByRegex(
+        query,
+        criterion
+      );
+      return accidents;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getChartRepresentation(query, criterion) {
     try {
       const timeIntervals = {
         Start_Date: query["Start_Date"],
