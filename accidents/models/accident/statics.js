@@ -56,18 +56,27 @@ var nameDictionary = {
   PR: "Puerto Rico",
 };
 
-const hourPredicate = (accident,firstHourDate,secondHourDate) => {
-  if(accident.Start_Time.getUTCHours() > firstHourDate.getUTCHours() && accident.Start_Time.getUTCHours() < secondHourDate.getUTCHours()){
+const hourPredicate = (accident, firstHourDate, secondHourDate) => {
+  if (
+    accident.Start_Time.getUTCHours() > firstHourDate.getUTCHours() &&
+    accident.Start_Time.getUTCHours() < secondHourDate.getUTCHours()
+  ) {
     return true;
-  }else{
-    if(accident.Start_Time.getUTCHours() === firstHourDate.getUTCHours() && accident.Start_Time.getUTCHours() === secondHourDate.getUTCHours()){
-      if(accident.Start_Time.getUTCMinutes() >= firstHourDate.getUTCMinutes() && accident.Start_Time.getUTCMinutes() <= secondHourDate.getUTCMinutes()){
+  } else {
+    if (
+      accident.Start_Time.getUTCHours() === firstHourDate.getUTCHours() &&
+      accident.Start_Time.getUTCHours() === secondHourDate.getUTCHours()
+    ) {
+      if (
+        accident.Start_Time.getUTCMinutes() >= firstHourDate.getUTCMinutes() &&
+        accident.Start_Time.getUTCMinutes() <= secondHourDate.getUTCMinutes()
+      ) {
         return true;
       }
     }
   }
   return false;
-}
+};
 
 module.exports = function (accidentSchema) {
   accidentSchema.statics.getAllStates = async function () {
@@ -94,7 +103,7 @@ module.exports = function (accidentSchema) {
 
       const currentDate = formatDate();
       var query = await this.find({
-        Start_Time: {
+        Start_Date: {
           $regex: currentDate,
         },
       }).limit(1000000);
