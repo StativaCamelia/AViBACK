@@ -3,8 +3,8 @@ block left_content
     include ./statisticsComponents/exportData.pug
     .pie
         .info_pie
-            h2 Enter your data and generate a pie
-        .content_pie
+            h2 Enter your data and generate a pie chart
+        .content_pie#content_pie
             svg(xmlns="http://www.w3.org/2000/svg"
                 id="svg_pie"
                 preserveAspectRatio="xMidYMid meet"
@@ -13,7 +13,7 @@ block left_content
                 viewBox="0 0 350 350"
                 width="350"
                 height="350")
-            .legend_pie
+            .legend_pie#legend_pie
             h2#error_message_result
 block loading
     h3 Loading...

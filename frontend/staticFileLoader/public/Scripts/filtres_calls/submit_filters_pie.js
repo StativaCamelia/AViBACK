@@ -250,6 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const csvExport = document.getElementById("csv_export");
   const pngExport = document.getElementById("png_export");
   const svgExport = document.getElementById("svg_export");
+  const pie = document.getElementById("svg_pie");
   let sentFilters;
   let criterion;
 
@@ -723,6 +724,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function drawPie(dataProcents) {
+    deleteElementNodes(pie);
     let svgAfter = d3.select("#svg_pie"),
       widthAfter = svgAfter.attr("width"),
       heightAfter = svgAfter.attr("height"),
@@ -831,10 +833,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function generateCsvFormat(data, info, dataProcents) {
-    console.log(sentFilters);
-    console.log(Object.keys(sentFilters));
-    console.log(data);
-    console.log(info);
     let csvRows = [];
     delete sentFilters.Pie_Criterion;
     let headers = Object.keys(sentFilters);
@@ -844,7 +842,6 @@ document.addEventListener("DOMContentLoaded", function () {
     headers.push("Accidents_No.");
     headers.push("Percent");
     csvRows.push(headers.join(","));
-    console.log(csvRows);
     for (let i = 0; i < info.length; i++) {
       let values = [];
       for (let j = 0; j < selectedValues.length; j++) {
@@ -859,7 +856,39 @@ document.addEventListener("DOMContentLoaded", function () {
     return csvRows.join("\n");
   }
 
-  function generatePngFormat() {}
+  function downloadPng(canvasData) {
+    const pngImg = document.createElement("img");
+    pngImg.src = canvasData;
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", canvasData);
+    a.setAttribute("download", "AVi-statistics_pie.png");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function generatePngFormat() {
+    const pieSerializer = new XMLSerializer().serializeToString(pie);
+    const canvas = document.createElement("canvas");
+    const pieSize = pie.getBoundingClientRect();
+    canvas.width = pieSize.width * 3;
+    canvas.height = pieSize.height * 3;
+    canvas.style.width = pieSize.width;
+    canvas.style.height = pieSize.height;
+    const context = canvas.getContext("2d");
+    context.scale(2, 2);
+    const img = document.createElement("img");
+    img.setAttribute(
+        "src",
+        "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(pieSerializer)))
+    );
+    img.onload = function () {
+      context.drawImage(img, 0, 0);
+      const canvasData = canvas.toDataURL("image/png", 1);
+      downloadPng(canvasData);
+    };
+  }
 
   function generateSvgFormat() {}
 
