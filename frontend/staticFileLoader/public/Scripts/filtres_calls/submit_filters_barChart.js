@@ -6,13 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
   let datasetsReceived = [];
   let continueGraph = "Submit";
   let groupByCriterion;
-  var lineChart;
+  var barChart;
 
   function createLineChart(content) {
     var canvas = document.getElementById("bar_chart");
     var ctx = canvas.getContext("2d");
     Chart.defaults.global.defaultFontSize = 12;
-    if (lineChart != undefined) lineChart.destroy();
+    if (barChart != undefined) barChart.destroy();
 
     function getRandomColor() {
       var letters = "0123456789ABCDEF";
@@ -35,10 +35,12 @@ document.addEventListener("DOMContentLoaded", function () {
           labels.push("Day:" + data[i]._id.day + " Hour:" + data[i]._id.hour);
         }
       }
+      let color = getRandomColor();
       dataChart = {
         data: dataset,
         label: "Dataset " + (numberOfDataset + 1),
-        borderColor: getRandomColor(),
+        borderColor: color,
+        backgroundColor: color,
         fill: true,
       };
       return { labels: labels, data: dataChart };
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         labels: dateLabels,
         datasets: allDatasets,
       };
-      lineChart = new Chart(ctx, {
+      barChart = new Chart(ctx, {
         type: "bar",
         data: data,
         options: {
@@ -76,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
         labels: [2016, 2017, 2018, 2019],
         datasets: [],
       };
-      lineChart = new Chart(ctx, {
+      barChart = new Chart(ctx, {
         type: "line",
         data: data,
         options: {
