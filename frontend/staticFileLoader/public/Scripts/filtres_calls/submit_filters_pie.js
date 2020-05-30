@@ -820,18 +820,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function downloadCsv(csvData) {
-    const blob = new Blob([csvData], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.setAttribute("hidden", "");
-    a.setAttribute("href", url);
-    a.setAttribute("download", "AVi-statistics.csv");
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
   function generateCsvFormat(data, info, dataProcents) {
     let csvRows = [];
     delete sentFilters.Pie_Criterion;
@@ -856,13 +844,13 @@ document.addEventListener("DOMContentLoaded", function () {
     return csvRows.join("\n");
   }
 
-  function downloadPng(canvasData) {
-    const pngImg = document.createElement("img");
-    pngImg.src = canvasData;
+  function downloadCsv(csvData) {
+    const blob = new Blob([csvData], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.setAttribute("hidden", "");
-    a.setAttribute("href", canvasData);
-    a.setAttribute("download", "AVi-statistics_pie.png");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "AVi-statistics_pie.csv");
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -885,12 +873,45 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     img.onload = function () {
       context.drawImage(img, 0, 0);
-      const canvasData = canvas.toDataURL("image/png", 1);
-      downloadPng(canvasData);
+      const canvasDataUrl = canvas.toDataURL("image/png", 1);
+      downloadPng(canvasDataUrl);
     };
   }
 
-  function generateSvgFormat() {}
+  function downloadPng(canvasDataUrl) {
+    const pngImg = document.createElement("img");
+    pngImg.src = canvasDataUrl;
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", canvasDataUrl);
+    a.setAttribute("download", "AVi-statistics_pie.png");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function generateSvgFormat() {
+    let pieSerializer = new XMLSerializer().serializeToString(pie);
+    if(!pieSerializer.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+      pieSerializer = pieSerializer.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+    if(!pieSerializer.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+      pieSerializer = pieSerializer.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+    }
+    pieSerializer = '<?xml version="1.0" standalone="no"?>\r\n' + pieSerializer;
+    const svgUrl = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(pieSerializer);
+    downloadSvg(svgUrl);
+  }
+
+  function downloadSvg(svgUrl) {
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", svgUrl);
+    a.setAttribute("download", "AVi-statistics_pie.svg");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 
   function deleteElementNodes(element) {
     while (element.firstChild) {
