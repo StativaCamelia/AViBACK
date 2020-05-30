@@ -206,7 +206,6 @@ ul li {
 
 #svg_map>path {
     fill: #84b18f;
-    stroke: black;
 }
 
 /*HOVER MAP*/
@@ -226,22 +225,6 @@ ul li {
     background-color: #edeff1;
 }
 
-.high_s {
-    fill: rgb(15, 17, 92);
-}
-
-.medium_s {
-    fill: #174ea6;
-}
-
-.medium1_s{
-    fill :#899cb9;
-}
-
-.low_s {
-    fill: #edeff1;
-}
-
 .high_s:hover {
     fill: rgb(3, 14, 31);
 }
@@ -253,6 +236,7 @@ ul li {
 .medium1_s:hover {
     fill: #356ec9;
 }
+
 .low_s:hover {
     fill: #a4abb6;
 }

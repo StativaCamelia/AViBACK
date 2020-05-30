@@ -214,31 +214,70 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.readyState === 4 && this.status === 200) {
         loadingState(true, false);
         const { content } = JSON.parse(this.responseText);
-        if (!content.Start_Lat && !content.Start_Lng) {
-          resetFiltres();
-          history(content.boudaries);
-          color_map(content.dataset, content.boudaries);
-          exportFunction(content.dataset);
-        } else {
-          resetFiltres();
-          open_map(content);
-        }
+        if (content)
+          if (!content.Start_Lat && !content.Start_Lng) {
+            resetFiltres();
+            history(content.boudaries);
+            color_map(content.dataset, content.boudaries);
+            exportFunction(content.dataset);
+          } else {
+            resetFiltres();
+            open_map(content);
+          }
       }
     };
   }
 
   function exportFunction(dataset) {
     exportData.style.display = "flex";
-    csvExport.addEventListener("click", async () => {
-      const csvData = await generateCsvFormat(dataset);
-      await downloadCsv(csvData);
+    csvExport.addEventListener("click", () => {
+      const csvData = generateCsvFormat(dataset);
+      downloadCsv(csvData);
     });
     pngExport.addEventListener("click", () => {
-      generatePngFormat();
+      const pngData = generatePngFormat();
+      // downloadPng(pngData);
     });
     svgExport.addEventListener("click", () => {
-      generateSvgFormat();
+      const svgData = generateSvgFormat();
+      console.log(svgData);
+      downloadSvg(svgData);
     });
+  }
+
+  function generatePngFormat() {
+    var svg = document.getElementById("svg_map");
+    var svgData = new XMLSerializer().serializeToString(svg);
+    var canvas = document.createElement("canvas");
+    var svgSize = svg.getBoundingClientRect();
+    canvas.width = svgSize.width * 3;
+    canvas.height = svgSize.height * 3;
+    canvas.style.width = svgSize.width;
+    canvas.style.height = svgSize.height;
+    var ctx = canvas.getContext("2d");
+    ctx.scale(1, 1);
+    var img = document.createElement("img");
+    img.setAttribute(
+      "src",
+      "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)))
+    );
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0);
+      var canvasdata = canvas.toDataURL("image/png", 1);
+      downloadPng(canvasdata);
+    };
+  }
+
+  function downloadPng(canvasdata) {
+    const pngimg = document.createElement("img");
+    pngimg.src = canvasdata;
+    var a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", canvasdata);
+    a.setAttribute("download", "AVi-statistics_map.png");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   function downloadCsv(csvData) {
@@ -254,8 +293,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function generateCsvFormat(dataset) {
-    console.log(dataset);
-    console.log(filtersValues);
     let csvRows = [];
     let headers = Object.keys(filtersValues);
     let selectedValues = [];
@@ -263,7 +300,6 @@ document.addEventListener("DOMContentLoaded", function () {
     headers.push("State");
     headers.push("Accidents_No.");
     csvRows.push(headers.join(","));
-    console.log(csvRows);
     for (let i = 0; i < dataset.length; i++) {
       let values = [];
       for (let j = 0; j < selectedValues.length; j++) {
@@ -274,13 +310,30 @@ document.addEventListener("DOMContentLoaded", function () {
       values.push(`${dataset[i].count}`);
       csvRows.push(values.join(","));
     }
-    console.log(csvRows);
     return csvRows.join("\n");
   }
 
-  function generatePngFormat() {}
+  function generateSvgFormat() {
+    var svg = document.getElementById("svg_map");
+    var img = document.createElement("IMG");
+    var xml = new XMLSerializer().serializeToString(svg);
+    var svg64 = btoa(xml);
+    var b64Start = "data:image/svg+xml;base64,";
+    var image64 = b64Start + svg64;
+    console.log(image64);
+    return image64;
+  }
 
-  function generateSvgFormat() {}
+  function downloadSvg(image64) {
+    const url = image64;
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "AVi-statistics.svg");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 
   submitFilters.addEventListener("click", handlerSubmitFilters);
   function handlerSubmitFilters(e) {
@@ -488,8 +541,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function color_map(content, boudaries) {
-    up();
     var levels = ["high_s", "medium_s", "medium1_s", "low_s"];
+    up();
     var svgStates = document.querySelectorAll("#states > *");
     svgStates.forEach(function (el) {
       let state = content.find((obj) => obj._id === el.id);
@@ -497,28 +550,36 @@ document.addEventListener("DOMContentLoaded", function () {
         let noResponse = {};
         noResponse._id = el.id;
         noResponse.count = 0;
-        el.setAttribute("class", levels[3]);
+        setAttributesPath(el, "class", levels[3]);
         el.setAttribute("count", 0);
       } else {
         el.setAttribute("count", state.count);
-        if (state.count <= boudaries.first[0])
-          el.setAttribute("class", levels[3]);
+        if (state.count <= boudaries.first[1]) {
+          setAttributesPath(el, "#edeff1", levels[3]);
+        }
         if (
           state.count > boudaries.second[0] &&
           state.count <= boudaries.second[1]
-        )
-          el.setAttribute("class", levels[2]);
+        ) {
+          setAttributesPath(el, "#899cb9", levels[2]);
+        }
         if (
           state.count > boudaries.third[0] &&
           state.count <= boudaries.third[1]
-        )
-          el.setAttribute("class", levels[1]);
-        if (state.count > boudaries.fourth[0])
-          el.setAttribute("class", levels[0]);
+        ) {
+          setAttributesPath(el, "#174ea6", levels[1]);
+        }
+        if (state.count > boudaries.fourth[0]) {
+          setAttributesPath(el, "#0f115c", levels[0]);
+        }
       }
     });
   }
 
+  function setAttributesPath(el, color, level) {
+    el.style.fill = color;
+    el.setAttribute("class", level);
+  }
   const resetButton = document.getElementById("reset_button");
   resetButton.addEventListener("click", resetSelect);
   function resetSelect() {
