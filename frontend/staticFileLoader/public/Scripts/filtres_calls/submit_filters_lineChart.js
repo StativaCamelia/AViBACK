@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let datasetsReceived = [];
   let continueGraph = "Submit";
   let groupByCriterion;
+<<<<<<< HEAD
   let lineChart;
   let correctChangeInterval = true;
 
@@ -26,6 +27,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const datasets_select = document.getElementById("list_datasets");
   datasets_select.addEventListener("change", goToDataset);
   const messageUpper = document.getElementById("time_message");
+=======
+  var lineChart;
+
+  const exportData = document.querySelector(".export");
+  const csvExport = document.getElementById("csv_export");
+  const pngExport = document.getElementById("png_export");
+  const svgExport = document.getElementById("svg_export");
+>>>>>>> 529fd8f632fce706be73b56c2e3bc18073f9d570
 
   const state = document.getElementById("state");
   const county = document.getElementById("county");
@@ -365,7 +374,11 @@ document.addEventListener("DOMContentLoaded", function () {
           controlLoading(true, false);
         }
         createLineChart(content);
+<<<<<<< HEAD
         exportFunction(content.dataset);
+=======
+        exportFunction(content);
+>>>>>>> 529fd8f632fce706be73b56c2e3bc18073f9d570
       }
     };
 
@@ -379,6 +392,7 @@ document.addEventListener("DOMContentLoaded", function () {
     csvExport.addEventListener("click", () => {
       const csvData = generateCsvFormat(dataset);
       downloadCsv(csvData);
+<<<<<<< HEAD
       removeClick(downloadCsv);
     });
     pngExport.addEventListener("click", () => {
@@ -392,6 +406,67 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+=======
+    });
+    pngExport.addEventListener("click", function () {
+      generatePngFormat();
+    });
+    svgExport.addEventListener("click", () => {
+      //implement
+    });
+  }
+
+  function generatePngFormat() {
+    var lineUrl = document.getElementById("line_chart").toDataURL("image/jpg");
+    downloadPng(lineUrl);
+  }
+
+  function downloadPng(lineData) {
+    const pngimg = document.createElement("img");
+    pngimg.src = lineData;
+    var a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", lineData);
+    a.setAttribute("download", "AVi-statistics_map.png");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function generateCsvFormat(dataset) {
+    let csvRows = [];
+    let headers = Object.keys(filtersValues);
+    let selectedValues = [];
+    headers.map((key) => selectedValues.push(filtersValues[key]));
+    headers.push("State");
+    headers.push("Accidents_No.");
+    csvRows.push(headers.join(","));
+    for (let i = 0; i < dataset.length; i++) {
+      let values = [];
+      for (let j = 0; j < selectedValues.length; j++) {
+        const escaped = ("" + selectedValues[j]).replace(/"/g, '\\"');
+        values.push(`"${escaped}"`);
+      }
+      values.push(`${dataset[i]._id}`);
+      values.push(`${dataset[i].count}`);
+      csvRows.push(values.join(","));
+    }
+    return csvRows.join("\n");
+  }
+
+  function downloadCsv(csvData) {
+    const blob = new Blob([csvData], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "AVi-statistics.csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+>>>>>>> 529fd8f632fce706be73b56c2e3bc18073f9d570
   function collectData() {
     let dataset = {};
     let dataString = "";

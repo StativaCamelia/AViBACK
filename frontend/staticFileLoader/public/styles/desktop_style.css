@@ -1127,7 +1127,7 @@
         display: none;
         flex-direction: row;
         justify-content: space-between;
-        width: 80%;
+        width: 100%;
         margin-top: 2vh;
         align-self: center;
     }
@@ -1537,6 +1537,7 @@
     #back_filters[type="button"],
     #submit_checkboxes[type="submit"],
     #select_all[type="button"],
+    #reset_all[type="button"],
     #select_radio[type="button"] {
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
@@ -1557,6 +1558,7 @@
     #back_filters[type="button"],
     #submit_checkboxes[type="submit"],
     #select_all[type="button"],
+    #reset_all[type="button"],
     #select_radio[type="button"] {
         margin: 0;
     }

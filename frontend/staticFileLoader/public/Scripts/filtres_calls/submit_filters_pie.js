@@ -236,6 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const submitPieButton = document.getElementById("submit_checkboxes");
   const backPieButton = document.getElementById("back_filters");
   const selectAllButton = document.getElementById("select_all");
+  const resetAllButton = document.getElementById("reset_all");
   let message = document.getElementById("filter_message");
   const filtersPieDown = document.getElementById("filters_pie_down");
   const checkboxPie = document.querySelector(".checkbox_pie");
@@ -250,12 +251,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const csvExport = document.getElementById("csv_export");
   const pngExport = document.getElementById("png_export");
   const svgExport = document.getElementById("svg_export");
+  const pie = document.getElementById("svg_pie");
   let sentFilters;
   let criterion;
 
   filtersForm.addEventListener("change", criterionForPie);
   resetFilters.addEventListener("click", function () {
     deletePieCriteriaNodes();
+    const criteria = ["State","County","City","Street","Number","Road side","Timezone","Weather","Wind direction","Wind chill","Wind speed","Humidity","Pressure","Visibility","Precipitation","Accident date","Hour","Severity","Sunrise/Sunset","Civil twilight","Nautical twilight","Astronomical twilight"];
+    createCriterionOptions(criteria);
     generatePie([]);
     let errorMessageResult = document.getElementById("error_message_result");
     errorMessageResult.innerText = "";
@@ -617,6 +621,14 @@ document.addEventListener("DOMContentLoaded", function () {
         input[0].checked = true;
       }
     });
+
+    resetAllButton.addEventListener("click", () => {
+      let allCheckboxes = checkboxPie.children;
+      for (let i = 0; i < allCheckboxes.length; i++) {
+        let input = allCheckboxes[i].getElementsByTagName("input");
+        input[0].checked = false;
+      }
+    });
   }
 
   function editCriterion(criterion) {
@@ -723,6 +735,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function drawPie(dataProcents) {
+    deleteElementNodes(pie);
     let svgAfter = d3.select("#svg_pie"),
       widthAfter = svgAfter.attr("width"),
       heightAfter = svgAfter.attr("height"),
@@ -772,6 +785,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return { data: data, info: info };
   }
 
+  let dataPie, infoPie, dataProcentsPie;
+
   function generatePie(dataResponse, dateField) {
     goOnTop();
     dataResponse.sort(function (a, b) {
@@ -800,41 +815,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (Object.keys(dataResponse).length !== 0) {
       generatePieLegend(dataProcents, data, info, dateField);
-      exportFunction(data, info, dataProcents);
+      dataPie = data;
+      infoPie = info;
+      dataProcentsPie = dataProcents;
+      exportFunction();
     }
   }
 
-  function exportFunction(data, info, dataProcents) {
+  function exportFunction() {
     exportData.style.display = "flex";
-    csvExport.addEventListener("click", async () => {
-      const csvData = await generateCsvFormat(data, info, dataProcents);
-      downloadCsv(csvData);
-    });
-    pngExport.addEventListener("click", () => {
-      generatePngFormat();
-    });
-    svgExport.addEventListener("click", () => {
-      generateSvgFormat();
-    });
+    csvExport.addEventListener("click", handlerCsvExport);
+    pngExport.addEventListener("click", generatePngFormat);
+    svgExport.addEventListener("click", generateSvgFormat);
+
   }
 
-  function downloadCsv(csvData) {
-    const blob = new Blob([csvData], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.setAttribute("hidden", "");
-    a.setAttribute("href", url);
-    a.setAttribute("download", "AVi-statistics.csv");
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+  async function handlerCsvExport() {
+    const csvData = await generateCsvFormat(dataPie, infoPie, dataProcentsPie);
+    downloadCsv(csvData);
+    csvExport.removeEventListener("click",handlerCsvExport);
   }
 
   function generateCsvFormat(data, info, dataProcents) {
-    console.log(sentFilters);
-    console.log(Object.keys(sentFilters));
-    console.log(data);
-    console.log(info);
     let csvRows = [];
     delete sentFilters.Pie_Criterion;
     let headers = Object.keys(sentFilters);
@@ -844,7 +846,6 @@ document.addEventListener("DOMContentLoaded", function () {
     headers.push("Accidents_No.");
     headers.push("Percent");
     csvRows.push(headers.join(","));
-    console.log(csvRows);
     for (let i = 0; i < info.length; i++) {
       let values = [];
       for (let j = 0; j < selectedValues.length; j++) {
@@ -859,9 +860,76 @@ document.addEventListener("DOMContentLoaded", function () {
     return csvRows.join("\n");
   }
 
-  function generatePngFormat() {}
+  function downloadCsv(csvData) {
+    const blob = new Blob([csvData], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "AVi-statistics_pie.csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 
-  function generateSvgFormat() {}
+  function generatePngFormat() {
+    const pieSerializer = new XMLSerializer().serializeToString(pie);
+    const canvas = document.createElement("canvas");
+    const pieSize = pie.getBoundingClientRect();
+    canvas.width = pieSize.width * 3;
+    canvas.height = pieSize.height * 3;
+    canvas.style.width = pieSize.width;
+    canvas.style.height = pieSize.height;
+    const context = canvas.getContext("2d");
+    context.scale(2, 2);
+    const img = document.createElement("img");
+    img.setAttribute(
+        "src",
+        "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(pieSerializer)))
+    );
+    img.onload = function () {
+      context.drawImage(img, 0, 0);
+      const canvasDataUrl = canvas.toDataURL("image/png", 1);
+      downloadPng(canvasDataUrl);
+    };
+    pngExport.removeEventListener("click",generatePngFormat);
+  }
+
+  function downloadPng(canvasDataUrl) {
+    const pngImg = document.createElement("img");
+    pngImg.src = canvasDataUrl;
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", canvasDataUrl);
+    a.setAttribute("download", "AVi-statistics_pie.png");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function generateSvgFormat() {
+    let pieSerializer = new XMLSerializer().serializeToString(pie);
+    if(!pieSerializer.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+      pieSerializer = pieSerializer.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+    if(!pieSerializer.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+      pieSerializer = pieSerializer.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+    }
+    pieSerializer = '<?xml version="1.0" standalone="no"?>\r\n' + pieSerializer;
+    const svgUrl = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(pieSerializer);
+    downloadSvg(svgUrl);
+    svgExport.removeEventListener("click",generateSvgFormat);
+  }
+
+  function downloadSvg(svgUrl) {
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", svgUrl);
+    a.setAttribute("download", "AVi-statistics_pie.svg");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 
   function deleteElementNodes(element) {
     while (element.firstChild) {

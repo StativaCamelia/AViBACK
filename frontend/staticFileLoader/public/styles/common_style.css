@@ -453,7 +453,7 @@ ul li {
     opacity: 0;
 }
 
-#submit_button:hover, #back_filters:hover, #submit_checkboxes:hover, #select_all:hover, #select_radio:hover {
+#submit_button:hover, #back_filters:hover, #submit_checkboxes:hover, #select_all:hover, #reset_all:hover, #select_radio:hover {
     background-color: #041F60;
     color: white;
 }
@@ -627,6 +627,7 @@ a.control_button:active{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
     width: 100%;
     height: auto;
     align-self: center;
