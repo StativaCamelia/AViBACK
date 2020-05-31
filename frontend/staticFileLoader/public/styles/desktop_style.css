@@ -1377,7 +1377,7 @@
         cursor: pointer;
     }
 
-    h2#filter_message {
+    h2#filter_message, h2#time_message {
         font-family: Novecentosanswide;
         font-size: 1rem;
         color: red;

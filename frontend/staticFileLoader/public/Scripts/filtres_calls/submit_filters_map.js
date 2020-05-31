@@ -233,18 +233,22 @@ document.addEventListener("DOMContentLoaded", function () {
     csvExport.addEventListener("click", () => {
       const csvData = generateCsvFormat(dataset);
       downloadCsv(csvData);
+      removeClick(downloadCsv);
     });
     pngExport.addEventListener("click", () => {
       const pngData = generatePngFormat();
-      // downloadPng(pngData);
+      removeClick(downloadPng);
     });
     svgExport.addEventListener("click", () => {
       const svgData = generateSvgFormat();
-      console.log(svgData);
       downloadSvg(svgData);
+      removeClick(downloadCsv);
     });
   }
 
+  function removeClick(onHandler) {
+    removeEventListener("click", downloadCsv);
+  }
   function generatePngFormat() {
     var svg = document.getElementById("svg_map");
     var svgData = new XMLSerializer().serializeToString(svg);
@@ -294,20 +298,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function generateCsvFormat(dataset) {
     let csvRows = [];
+    var svgStates = document.querySelectorAll("#states > *");
     let headers = Object.keys(filtersValues);
     let selectedValues = [];
     headers.map((key) => selectedValues.push(filtersValues[key]));
     headers.push("State");
     headers.push("Accidents_No.");
     csvRows.push(headers.join(","));
-    for (let i = 0; i < dataset.length; i++) {
+    for (let i = 0; i < svgStates.length; i++) {
       let values = [];
       for (let j = 0; j < selectedValues.length; j++) {
         const escaped = ("" + selectedValues[j]).replace(/"/g, '\\"');
         values.push(`"${escaped}"`);
       }
-      values.push(`${dataset[i]._id}`);
-      values.push(`${dataset[i].count}`);
+      values.push(`${svgStates[i].getAttribute("id")}`);
+      values.push(`${svgStates[i].getAttribute("count")}`);
       csvRows.push(values.join(","));
     }
     return csvRows.join("\n");
@@ -315,13 +320,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function generateSvgFormat() {
     var svg = document.getElementById("svg_map");
-    var img = document.createElement("IMG");
     var xml = new XMLSerializer().serializeToString(svg);
     var svg64 = btoa(xml);
-    var b64Start = "data:image/svg+xml;base64,";
+    var b64Start = "data:image/svg+xml;charset=utf8,";
+    svg64 = encodeURIComponent(serializeString(svg));
     var image64 = b64Start + svg64;
-    console.log(image64);
     return image64;
+  }
+
+  function serializeString(svg) {
+    const xmlns = "http://www.w3.org/2000/xmlns/";
+    const xlinkns = "http://www.w3.org/1999/xlink";
+    const svgns = "http://www.w3.org/2000/svg";
+    svg = svg.cloneNode(true);
+    const fragment = window.location.href + "#";
+    const walker = document.createTreeWalker(
+      svg,
+      NodeFilter.SHOW_ELEMENT,
+      null,
+      false
+    );
+    while (walker.nextNode()) {
+      for (const attr of walker.currentNode.attributes) {
+        if (attr.value.includes(fragment)) {
+          attr.value = attr.value.replace(fragment, "#");
+        }
+      }
+    }
+    svg.setAttributeNS(xmlns, "xmlns", svgns);
+    svg.setAttributeNS(xmlns, "xmlns:xlink", xlinkns);
+    const serializer = new XMLSerializer();
+    const string = serializer.serializeToString(svg);
+    console.log(string);
+    return string;
   }
 
   function downloadSvg(image64) {

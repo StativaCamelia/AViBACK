@@ -5,7 +5,28 @@ document.addEventListener("DOMContentLoaded", function () {
   let datasetsReceived = [];
   let continueGraph = "Submit";
   let groupByCriterion;
-  var lineChart;
+  let lineChart;
+  let correctChangeInterval = true;
+
+  let change_interval = document.getElementById("change_button");
+  let time_interval = document.querySelector(".time_filtres");
+  let submit_change_interval = document.getElementById(
+    "update_interval_button"
+  );
+  change_interval.addEventListener("click", changeTimeInterval);
+  submit_change_interval.addEventListener("click", submitNewTimeInterval);
+  const submitFilters = document.getElementById("submit_button");
+  submitFilters.addEventListener("click", handlerSubmitFilters);
+  const resetButton = document.getElementById("reset_button");
+  resetButton.addEventListener("click", resetSelect);
+  const addFilters = document.getElementById("next_button");
+  addFilters.addEventListener("click", handlerAddFiltres);
+  const filtersForm = document.getElementById("filters_form");
+  filtersForm.addEventListener("change", addGroupByOptions);
+  const datasets_select = document.getElementById("list_datasets");
+  datasets_select.addEventListener("change", goToDataset);
+  const messageUpper = document.getElementById("time_message");
+
   const state = document.getElementById("state");
   const county = document.getElementById("county");
   const city = document.getElementById("city");
@@ -60,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const astronomicalTwilightNight = document.getElementById(
     "astronomical_twilight_night"
   );
-  const lowerValuesWeather = [
+  const valuesWeather = [
     "Temperature1",
     "Wind_Chill1",
     "Wind_Speed1",
@@ -68,8 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
     "Precipitation1",
     "Humidity1",
     "Visibility1",
-  ];
-  const higherValuesWeather = [
     "Temperature2",
     "Wind_Chill2",
     "Wind_Speed2",
@@ -87,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "Humidity",
     "Visibility",
   ];
-  const lowerWeatherComponents = [
+  const weatherComponents = [
     temperature1,
     windChill1,
     windSpeed1,
@@ -95,8 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
     precipitation1,
     humidity1,
     visibility1,
-  ];
-  const higherWeatherComponents = [
     temperature2,
     windChill2,
     windSpeed2,
@@ -105,7 +122,6 @@ document.addEventListener("DOMContentLoaded", function () {
     humidity2,
     visibility2,
   ];
-
   const locationComponents = [
     state,
     county,
@@ -142,7 +158,6 @@ document.addEventListener("DOMContentLoaded", function () {
     "Wind_Direction",
     "Severity",
   ];
-
   const roadComponents = [
     amenity,
     bump,
@@ -171,7 +186,6 @@ document.addEventListener("DOMContentLoaded", function () {
     "Station",
     "Traffic_Signal",
   ];
-
   const datesComponents = [
     accidentDateStart,
     accidentDateEnd,
@@ -190,7 +204,6 @@ document.addEventListener("DOMContentLoaded", function () {
     "FirstHour",
     "SecondHour",
   ];
-
   const astronomicComponents = [
     sunriseSunsetDay,
     sunriseSunsetNight,
@@ -201,7 +214,6 @@ document.addEventListener("DOMContentLoaded", function () {
     astronomicalTwilightDay,
     astronomicalTwilightNight,
   ];
-
   const astronomicDatabase = [
     "Sunrise_Sunset",
     "Sunrise_Sunset",
@@ -222,12 +234,8 @@ document.addEventListener("DOMContentLoaded", function () {
     "Day",
     "Night",
   ];
-  const submitFilters = document.getElementById("submit_button");
   let message = document.getElementById("filter_message");
   let filtersValues = {};
-  submitFilters.addEventListener("click", handlerSubmitFilters);
-  const addFilters = document.getElementById("next_button");
-  addFilters.addEventListener("click", handlerAddFiltres);
   const groupBy = document.getElementById("intervalType");
 
   function createLineChart(content) {
@@ -235,7 +243,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var ctx = canvas.getContext("2d");
     Chart.defaults.global.defaultFontSize = 12;
     if (lineChart != undefined) lineChart.destroy();
-
     function getRandomColor() {
       var letters = "0123456789ABCDEF";
       var color = "#";
@@ -243,6 +250,42 @@ document.addEventListener("DOMContentLoaded", function () {
         color += letters[Math.floor(Math.random() * 16)];
       }
       return color;
+    }
+
+    function createLineElement(dateLabels, allDatasets) {
+      var data = {
+        labels: dateLabels,
+        datasets: allDatasets,
+      };
+      lineChart = new Chart(ctx, {
+        type: "line",
+        data: data,
+        options: {
+          title: {
+            display: true,
+          },
+          legend: {
+            fontSize: 10,
+            fontFamily: "tamoha",
+            fontColor: "Sienna",
+          },
+        },
+      });
+    }
+
+    function getEachDataset(datasetsReceived) {
+      let maximLabels = 0;
+      let dateLabels = [];
+      let allDatasets = [];
+      for (let j = 0; j < datasetsReceived.length; j++) {
+        let { labels, data } = getDatasetFromAnswer(datasetsReceived[j], j);
+        if (labels.length > maximLabels) {
+          maximLabels = labels.length;
+          dateLabels = labels;
+        }
+        allDatasets.push(data);
+      }
+      return { allDatasets, dateLabels };
     }
 
     function getDatasetFromAnswer(data, numberOfDataset) {
@@ -265,58 +308,12 @@ document.addEventListener("DOMContentLoaded", function () {
       };
       return { labels: labels, data: dataChart };
     }
-
     if (content !== []) {
       datasetsReceived.push(content);
-      let allDatasets = [];
-      let dateLabels = [];
-      let maximLabels = 0;
-      for (let j = 0; j < datasetsReceived.length; j++) {
-        let { labels, data } = getDatasetFromAnswer(datasetsReceived[j], j);
-        if (labels.length > maximLabels) {
-          maximLabels = labels.length;
-          dateLabels = labels;
-        }
-        allDatasets.push(data);
-      }
-      var data = {
-        labels: dateLabels,
-        datasets: allDatasets,
-      };
-      lineChart = new Chart(ctx, {
-        type: "line",
-        data: data,
-        options: {
-          title: {
-            display: true,
-          },
-          legend: {
-            fontSize: 10,
-            fontFamily: "tamoha",
-            fontColor: "Sienna",
-          },
-        },
-      });
+      let { dateLabels, allDatasets } = getEachDataset(datasetsReceived);
+      createLineElement(dateLabels, allDatasets);
     } else {
-      var data = {
-        labels: [2016, 2017, 2018, 2019],
-        datasets: [],
-      };
-      lineChart = new Chart(ctx, {
-        type: "line",
-        data: data,
-        options: {
-          title: {
-            display: true,
-            text: "No data was found ",
-          },
-          legend: {
-            fontSize: 10,
-            fontFamily: "tamoha",
-            fontColor: "Sienna",
-          },
-        },
-      });
+      createLineElement([2016, 2017, 2018, 2019], []);
     }
     if (continueGraph === "Submit") {
       datasetsReceived = [];
@@ -327,11 +324,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function changePanel() {
-    let time_interval = document.querySelector(".time_filtres");
-    let change_interval = document.getElementById("change_button");
-    let submit_change_interval = document.getElementById(
-      "update_interval_button"
-    );
     submit_change_interval = "none";
     time_interval.style.display = "flex";
     change_interval.style.display = "none";
@@ -346,13 +338,16 @@ document.addEventListener("DOMContentLoaded", function () {
     document.documentElement.scrollTop = 0;
   }
 
-  const resetButton = document.getElementById("reset_button");
-  resetButton.addEventListener("click", resetSelect);
   function resetSelect() {
     const selects = document.querySelectorAll("select");
     for (let select of selects) {
       select.selectedIndex = 0;
     }
+  }
+
+  function controlLoading(start, stop) {
+    setVisible("#left_cont", start);
+    setVisible("#loading", stop);
   }
 
   function send_request(query) {
@@ -363,21 +358,38 @@ document.addEventListener("DOMContentLoaded", function () {
       resetSelect();
     }
     xhttp.onreadystatechange = function () {
-      setVisible("#left_cont", false);
-      setVisible("#loading", true);
+      controlLoading(false, true);
       if (this.readyState === 4 && this.status === 200) {
         const { content } = JSON.parse(this.responseText);
         if (continueGraph !== "Update") {
-          console.log(continueGraph);
-          setVisible("#loading", false);
-          setVisible("#left_cont", true);
+          controlLoading(true, false);
         }
         createLineChart(content);
+        exportFunction(content.dataset);
       }
     };
+
     url = api + query;
     xhttp.open(method, url, true);
     xhttp.send();
+  }
+
+  function exportFunction(dataset) {
+    exportData.style.display = "flex";
+    csvExport.addEventListener("click", () => {
+      const csvData = generateCsvFormat(dataset);
+      downloadCsv(csvData);
+      removeClick(downloadCsv);
+    });
+    pngExport.addEventListener("click", () => {
+      const pngData = generatePngFormat();
+      removeClick(downloadPng);
+    });
+    svgExport.addEventListener("click", () => {
+      const svgData = generateSvgFormat();
+      downloadSvg(svgData);
+      removeClick(downloadCsv);
+    });
   }
 
   function collectData() {
@@ -401,7 +413,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
       }
     }
-
     for (let i = 0; i < roadComponents.length; i++) {
       roadComponents[i].checked
         ? (dataset[roadConditionDatabase[i]] = "True")
@@ -412,24 +423,13 @@ document.addEventListener("DOMContentLoaded", function () {
         dataset[roadConditionDatabase[i]]
       );
     }
-
-    for (let i = 0; i < lowerWeatherComponents.length; i++) {
-      if (lowerWeatherComponents[i].value !== "") {
-        dataset[lowerValuesWeather[i]] = lowerWeatherComponents[i].value;
+    for (let i = 0; i < weatherComponents.length; i++) {
+      if (weatherComponents[i].value !== "") {
+        dataset[valuesWeather[i]] = weatherComponents[i].value;
         dataString = concatQueryString(
           dataString,
-          `${lowerValuesWeather[i]}`,
-          lowerWeatherComponents[i].value
-        );
-      }
-    }
-    for (let i = 0; i < higherWeatherComponents.length; i++) {
-      if (higherWeatherComponents[i].value !== "") {
-        dataset[higherValuesWeather[i]] = higherWeatherComponents[i].value;
-        dataString = concatQueryString(
-          dataString,
-          `${higherValuesWeather[i]}`,
-          higherWeatherComponents[i].value
+          `${valuesWeather[i]}`,
+          weatherComponents[i].value
         );
       }
     }
@@ -458,30 +458,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //Preparare Date query String
   function addTimeInterval(dataset, queryString) {
-    if (datasetsSend[0].Start_Date_1 !== undefined)
-      dataset.Start_Date_1 = datasetsSend[0].Start_Date_1;
-    if (dataset.Start_Date_1 !== undefined)
-      queryString += concatQueryString("", "FirstDate", dataset.Start_Date_1);
-    if (datasetsSend[0].Start_Date_2 !== undefined)
-      dataset.Start_Date_2 = datasetsSend[0].Start_Date_2;
-    if (dataset.Start_Date_2 !== undefined)
-      queryString += concatQueryString("", "SecondDate", dataset.Start_Date_2);
-    if (datasetsSend[0].Start_Hour_1 !== undefined)
-      dataset.Start_Hour_1 = datasetsSend[0].Start_Hour_1;
-    if (dataset.Start_Hour_1 !== undefined)
-      queryString += concatQueryString("", "FirstHour", dataset.Start_Hour_1);
-    if (datasetsSend[0].Start_Hour_2 !== undefined)
-      dataset.Start_Hour_2 = datasetsSend[0].Start_Hour_2;
-    if (dataset.Start_Hour_2 !== undefined)
-      queryString += concatQueryString("", "SecondHour", dataset.Start_Hour_2);
+    for (let i = 0; i < datesFields.length; i++) {
+      if (datasetsSend[0][datesFields[i]] !== undefined)
+        dataset[datesFields[i]] = datasetsSend[0][datesFields[i]];
+      if (dataset[datesFields[i]] !== undefined)
+        queryString += concatQueryString(
+          "",
+          databaseComponents[i],
+          dataset[datesFields[i]]
+        );
+    }
+    return queryString;
+  }
+
+  function setPageType() {
+    let queryString = "";
+    const pageTypeIndex = window.location.href.lastIndexOf("/");
+    const pageType = window.location.href.substring(pageTypeIndex + 1);
+    queryString = concatQueryString(queryString, "Type", pageType);
     return queryString;
   }
 
   function prepareQueryString(type = "Submit", dataString = "", dataset = {}) {
-    const pageTypeIndex = window.location.href.lastIndexOf("/");
-    const pageType = window.location.href.substring(pageTypeIndex + 1);
-    let queryString = "";
-    queryString = concatQueryString(queryString, "Type", pageType);
+    let queryString = setPageType();
     if (type !== "Update") {
       let { dataString: string, dataset: object } = collectData();
       dataString = string;
@@ -511,8 +510,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       if (type !== "Update") datasetsSend.push(dataset);
       queryString += dataString;
-      let time_interval = document.querySelector(".time_filtres");
-      let change_interval = document.getElementById("change_button");
       if (type === "Add") {
         time_interval.style.display = "none";
         change_interval.style.display = "block";
@@ -553,33 +550,58 @@ document.addEventListener("DOMContentLoaded", function () {
     queryString = queryString + key + "=" + value;
     return queryString;
   }
-
   // FRONTEND CHECK
+
+  function setMessage(component, existsFiltres) {
+    if (existsFiltres) {
+      component.innerHTML = "";
+      correctChangeInterval = true;
+    } else {
+      component.innerHTML = "You should select a time interval";
+      correctChangeInterval = false;
+    }
+  }
+
   function verifyIntervalExists(dataset) {
     const existsFiltres =
       dataset.Start_Date_1 != undefined ||
       dataset.Start_Date_2 != undefined ||
       dataset.Start_Hour_1 != undefined ||
       dataset.Start_Hour_2 != undefined;
-    existsFiltres
-      ? (message.innerHTML = "")
-      : (message.innerHTML = "You should select a time interval");
+    if (continueGraph !== "Update") setMessage(message, existsFiltres);
+    else {
+      setMessage(messageUpper, existsFiltres);
+    }
     return existsFiltres;
   }
 
+  function setGroupByMessage(component, type) {
+    component.innerHTML =
+      "You should select a group by value for your interval";
+    if (type === "Update") open_time_change = true;
+  }
+
   function verifyGroupBy() {
-    if (groupBy.value === "" && datasetsSend.length === 0) {
-      message.innerHTML =
-        "You should select a group by value for your interval";
-    } else message.innerHTML = "";
-    return groupBy.value === "" && datasetsSend.length === 0 ? false : true;
+    console.log(groupBy.value);
+    if (
+      groupBy.value === "" &&
+      (datasetsSend.length === 0 || continueGraph === "Update")
+    ) {
+      continueGraph !== "Update"
+        ? setGroupByMessage(message, "Submit")
+        : setGroupByMessage(messageUpper, "Update");
+    } else continueGraph !== "Update" ? (message.innerHTML = "") : (messageUpper.innerHTML = "");
+    return groupBy.value === "" &&
+      (datasetsSend.length === 0 || continueGraph === "Update")
+      ? false
+      : true;
   }
 
   function verifyWeatherFiltres(filtersValues) {
-    for (let i = 0; i < lowerValuesWeather.length; i++) {
+    for (let i = 0; i < valuesWeather.length; i++) {
       if (
-        parseFloat(filtersValues[lowerValuesWeather[i]]) >
-        parseFloat(filtersValues[higherValuesWeather[i]])
+        parseFloat(filtersValues[valuesWeather[i]]) >
+        parseFloat(filtersValues[valuesWeather[i + 7]])
       ) {
         message.innerText = `The first value for ${weatherNames[i]} cannot be higher that the second value`;
         return false;
@@ -601,22 +623,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function existsDate(filtersValues) {
-    let numberOfValues = 0;
-    let existsFiltres = false;
-    const dates = [
-      "Start_Date_1",
-      "Start_Date_2",
-      "Start_Hour_1",
-      "Start_Hour_2",
-    ];
-    for (let i = 0; i < dates.length; i++) {
-      if (filtersValues[dates[i]] !== undefined) numberOfValues++;
-      existsFiltres = existsFiltres || filtersValues[dates[i]] !== undefined;
-    }
-    return { number: numberOfValues, exists: existsFiltres };
-  }
-
   function verifFilters(filtersValues) {
     const ok = verifyWeatherFiltres(filtersValues);
     const okDate = verifyDates(filtersValues);
@@ -625,9 +631,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   //Generarea Campului de Group By
-  const filtersForm = document.getElementById("filters_form");
-  filtersForm.addEventListener("change", addGroupByOptions);
-
   function getNumberOfYears(year1, year2) {
     const boundsYears = [2016, 2019];
     if (year1 && !year2) {
@@ -746,10 +749,6 @@ document.addEventListener("DOMContentLoaded", function () {
     verifyDateGroup({ year1, year2, month1, month2, day1, day2, hour1, hour2 });
   }
 
-  const update_button = document.getElementById("update_button");
-  const datasets_select = document.getElementById("list_datasets");
-  datasets_select.addEventListener("change", goToDataset);
-
   function goToDataset() {
     let index = parseInt(datasets_select.value) - 1;
     let data = datasetsSend[index];
@@ -772,13 +771,8 @@ document.addEventListener("DOMContentLoaded", function () {
               roadConditionDatabase.indexOf(field)
             ].checked = false);
       }
-      if (lowerValuesWeather.indexOf(field) !== -1) {
-        lowerWeatherComponents[lowerValuesWeather.indexOf(field)].value =
-          data[field];
-      }
-      if (higherValuesWeather.indexOf(field) !== -1) {
-        higherWeatherComponents[higherValuesWeather.indexOf(field)].value =
-          data[field];
+      if (valuesWeather.indexOf(field) !== -1) {
+        weatherComponents[valuesWeather.indexOf(field)].value = data[field];
       }
       if (datesFields.indexOf(field) !== -1) {
         databaseComponents[datesFields.indexOf(field)].value = data[field];
@@ -795,21 +789,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  let change_interval = document.getElementById("change_button");
   let open_time_change = false;
-  change_interval.addEventListener("click", changeTimeInterval);
-  let submit_change_interval = document.getElementById(
-    "update_interval_button"
-  );
-  submit_change_interval.addEventListener("click", submitNewTimeInterval);
-
   function setVisibilityTimeElements(visibility) {
-    let time_interval = document.querySelector(".time_filtres");
-    let update_interval_button = document.getElementById(
-      "update_interval_button"
-    );
     time_interval.style.display = visibility;
-    update_interval_button.style.display = visibility;
+    submit_change_interval.style.display = visibility;
   }
 
   function changeTimeInterval() {
@@ -854,7 +837,6 @@ document.addEventListener("DOMContentLoaded", function () {
             dataset[locationDatabase[i]]
           );
       }
-
       for (let i = 0; i < roadComponents.length; i++) {
         if (dataset[roadConditionDatabase[i]])
           dataString = concatQueryString(
@@ -864,20 +846,12 @@ document.addEventListener("DOMContentLoaded", function () {
           );
       }
 
-      for (let i = 0; i < lowerWeatherComponents.length; i++) {
-        if (dataset[lowerValuesWeather[i]])
+      for (let i = 0; i < weatherComponents.length; i++) {
+        if (dataset[valuesWeather[i]])
           dataString = concatQueryString(
             dataString,
-            `${lowerValuesWeather[i]}`,
-            dataset[lowerValuesWeather[i]]
-          );
-      }
-      for (let i = 0; i < higherWeatherComponents.length; i++) {
-        if (dataset[higherValuesWeather[i]])
-          dataString = concatQueryString(
-            dataString,
-            `${higherValuesWeather[i]}`,
-            dataset[higherValuesWeather[i]]
+            `${valuesWeather[i]}`,
+            dataset[valuesWeather[i]]
           );
       }
       for (let i = 0; i < databaseComponents.length; i++) {
@@ -906,7 +880,6 @@ document.addEventListener("DOMContentLoaded", function () {
       for (let i = 0; i < datasetsSend.length; i++) {
         let string = prepareNewQueryStrings(datasetsSend[i]);
         let dataset = datasetsSend[i];
-        if (i === datasetsSend.length - 1) continueGraph = "Add";
         prepareQueryString("Update", string, dataset);
       }
     }

@@ -180,7 +180,6 @@ class FiltresController {
       }
       const streets = await this.database.Accident.getAllStreetsEntities();
       for (let streetData of streets) {
-        console.log(streetData);
         const cityData = await this.database.City.findOne({
           name: streetData.city,
         });

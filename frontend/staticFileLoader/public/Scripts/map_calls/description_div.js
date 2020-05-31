@@ -320,10 +320,6 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
   var right = pop.childNodes[1];
   var map = document.getElementById("map");
 
-  window.onresize = function (event) {
-    document.location.reload(true);
-  };
-
   svgStates.forEach(function (el) {
     var iconPos = el.getBoundingClientRect();
     if (dim.matches) {

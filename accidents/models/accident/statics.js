@@ -55,29 +55,6 @@ var nameDictionary = {
   MP: "Northern Mariana Islands",
   PR: "Puerto Rico",
 };
-
-const hourPredicate = (accident, firstHourDate, secondHourDate) => {
-  if (
-    accident.Start_Time.getUTCHours() > firstHourDate.getUTCHours() &&
-    accident.Start_Time.getUTCHours() < secondHourDate.getUTCHours()
-  ) {
-    return true;
-  } else {
-    if (
-      accident.Start_Time.getUTCHours() === firstHourDate.getUTCHours() &&
-      accident.Start_Time.getUTCHours() === secondHourDate.getUTCHours()
-    ) {
-      if (
-        accident.Start_Time.getUTCMinutes() >= firstHourDate.getUTCMinutes() &&
-        accident.Start_Time.getUTCMinutes() <= secondHourDate.getUTCMinutes()
-      ) {
-        return true;
-      }
-    }
-  }
-  return false;
-};
-
 module.exports = function (accidentSchema) {
   accidentSchema.statics.getAllStates = async function () {
     try {
@@ -106,7 +83,7 @@ module.exports = function (accidentSchema) {
         Start_Date: {
           $regex: currentDate,
         },
-      }).limit(1000000);
+      });
       return query.length;
     } catch (error) {
       throw error;
@@ -205,7 +182,7 @@ module.exports = function (accidentSchema) {
 
   accidentSchema.statics.getAllStreetsEntities = async function () {
     try {
-      const cities = await this.getAllCities();
+      const cities = await this.find({}).distinct("City");
       const streetsEntities = [];
       for (city of cities) {
         const streets = await this.find({ City: city }).distinct("Street");
@@ -213,10 +190,6 @@ module.exports = function (accidentSchema) {
           const streetEntity = {};
           streetEntity.name = street;
           streetEntity.city = city;
-          const numbers = await this.find({ Street: street }).distinct(
-            "Number"
-          );
-          streetEntity.numbers = numbers;
           streetsEntities.push(streetEntity);
         }
       }
