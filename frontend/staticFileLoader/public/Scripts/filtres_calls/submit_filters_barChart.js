@@ -381,8 +381,9 @@ document.addEventListener("DOMContentLoaded", function () {
           setVisible("#loading", false);
           setVisible("#left_cont", true);
         }
+        setGlobalDataset(content);
         createBarChart(content);
-        exportFunction(content);
+        exportFunction();
       }
     };
     url = api + query;
@@ -390,23 +391,26 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.send();
   }
 
-  function exportFunction(dataset) {
+  function exportFunction() {
     exportData.style.display = "flex";
-    csvExport.addEventListener("click", () => {
-      const csvData = generateCsvFormat(dataset);
-      downloadCsv(csvData);
-    });
-    pngExport.addEventListener("click", function () {
-      generatePngFormat();
-    });
+    csvExport.addEventListener("click", handlerCsvExport);
+    pngExport.addEventListener("click", generatePngFormat);
     svgExport.addEventListener("click", () => {
       //implement
     });
   }
 
+  async function handlerCsvExport() {
+    const csvData = generateCsvFormat();
+    //get all the datasets, send them ^
+    downloadCsv(csvData);
+    csvExport.removeEventListener("click", handlerCsvExport);
+  }
+
   function generatePngFormat() {
     var barUrl = document.getElementById("bar_chart").toDataURL("image/jpg");
     downloadPng(barUrl);
+    pngExport.removeEventListener("click", generatePngFormat);
   }
 
   function downloadPng(barData) {
@@ -421,12 +425,13 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.removeChild(a);
   }
 
-  function generateCsvFormat(dataset) {
+  function generateCsvFormat(datasets) {
+    //undefined right now, get all datasets, and map them
     let csvRows = [];
     let headers = Object.keys(filtersValues);
     let selectedValues = [];
     headers.map((key) => selectedValues.push(filtersValues[key]));
-    headers.push("State");
+    headers.push("Date");
     headers.push("Accidents_No.");
     csvRows.push(headers.join(","));
     for (let i = 0; i < dataset.length; i++) {
