@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let continueGraph = "Submit";
   let groupByCriterion;
   var lineChart;
+
+  const exportData = document.querySelector(".export");
+  const csvExport = document.getElementById("csv_export");
+  const pngExport = document.getElementById("png_export");
+  const svgExport = document.getElementById("svg_export");
+
   const state = document.getElementById("state");
   const county = document.getElementById("county");
   const city = document.getElementById("city");
@@ -373,11 +379,76 @@ document.addEventListener("DOMContentLoaded", function () {
           setVisible("#left_cont", true);
         }
         createLineChart(content);
+        exportFunction(content);
       }
     };
     url = api + query;
     xhttp.open(method, url, true);
     xhttp.send();
+  }
+
+  function exportFunction(dataset) {
+    exportData.style.display = "flex";
+    csvExport.addEventListener("click", () => {
+      const csvData = generateCsvFormat(dataset);
+      downloadCsv(csvData);
+    });
+    pngExport.addEventListener("click", function () {
+      generatePngFormat();
+    });
+    svgExport.addEventListener("click", () => {
+      //implement
+    });
+  }
+
+  function generatePngFormat() {
+    var lineUrl = document.getElementById("line_chart").toDataURL("image/jpg");
+    downloadPng(lineUrl);
+  }
+
+  function downloadPng(lineData) {
+    const pngimg = document.createElement("img");
+    pngimg.src = lineData;
+    var a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", lineData);
+    a.setAttribute("download", "AVi-statistics_map.png");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function generateCsvFormat(dataset) {
+    let csvRows = [];
+    let headers = Object.keys(filtersValues);
+    let selectedValues = [];
+    headers.map((key) => selectedValues.push(filtersValues[key]));
+    headers.push("State");
+    headers.push("Accidents_No.");
+    csvRows.push(headers.join(","));
+    for (let i = 0; i < dataset.length; i++) {
+      let values = [];
+      for (let j = 0; j < selectedValues.length; j++) {
+        const escaped = ("" + selectedValues[j]).replace(/"/g, '\\"');
+        values.push(`"${escaped}"`);
+      }
+      values.push(`${dataset[i]._id}`);
+      values.push(`${dataset[i].count}`);
+      csvRows.push(values.join(","));
+    }
+    return csvRows.join("\n");
+  }
+
+  function downloadCsv(csvData) {
+    const blob = new Blob([csvData], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "AVi-statistics.csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   function collectData() {

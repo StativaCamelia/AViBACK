@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
   addFiltres.addEventListener("click", handlerAddFiltres);
   const groupBy = document.getElementById("intervalType");
 
-  function createLineChart(content) {
+  function createBarChart(content) {
     var canvas = document.getElementById("bar_chart");
     var ctx = canvas.getContext("2d");
     Chart.defaults.global.defaultFontSize = 12;
@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function () {
           setVisible("#loading", false);
           setVisible("#left_cont", true);
         }
-        createLineChart(content);
+        createBarChart(content);
         exportFunction(content);
       }
     };
@@ -393,16 +393,32 @@ document.addEventListener("DOMContentLoaded", function () {
   function exportFunction(dataset) {
     exportData.style.display = "flex";
     csvExport.addEventListener("click", () => {
-      console.log("aici");
       const csvData = generateCsvFormat(dataset);
       downloadCsv(csvData);
     });
-    pngExport.addEventListener("click", () => {
-      //implement
+    pngExport.addEventListener("click", function () {
+      generatePngFormat();
     });
     svgExport.addEventListener("click", () => {
       //implement
     });
+  }
+
+  function generatePngFormat() {
+    var barUrl = document.getElementById("bar_chart").toDataURL("image/jpg");
+    downloadPng(barUrl);
+  }
+
+  function downloadPng(barData) {
+    const pngimg = document.createElement("img");
+    pngimg.src = barData;
+    var a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", barData);
+    a.setAttribute("download", "AVi-statistics_map.png");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   function generateCsvFormat(dataset) {
