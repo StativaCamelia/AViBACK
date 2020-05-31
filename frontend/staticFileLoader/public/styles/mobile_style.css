@@ -1010,6 +1010,7 @@
         display: none;
         flex-direction: row;
         justify-content: space-between;
+        flex-wrap: wrap;
         width: 100%;
         margin-top: 2vh;
         align-self: center;
@@ -1336,7 +1337,7 @@
     #back_filters[type="button"],
     #submit_checkboxes[type="submit"],
     #select_all[type="button"],
-    #select_radio[type="button"] {
+    #select_radio[type="button"],#reset_all[type="button"] {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1359,8 +1360,9 @@
     #back_filters[type="button"],
     #submit_checkboxes[type="submit"],
     #select_all[type="button"],
+    #reset_all[type="button"],
     #select_radio[type="button"] {
-        margin: 0;
+        margin: 0 0 1vh 0;
     }
 
     #reset_button[type="reset"] {

@@ -236,6 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const submitPieButton = document.getElementById("submit_checkboxes");
   const backPieButton = document.getElementById("back_filters");
   const selectAllButton = document.getElementById("select_all");
+  const resetAllButton = document.getElementById("reset_all");
   let message = document.getElementById("filter_message");
   const filtersPieDown = document.getElementById("filters_pie_down");
   const checkboxPie = document.querySelector(".checkbox_pie");
@@ -257,6 +258,8 @@ document.addEventListener("DOMContentLoaded", function () {
   filtersForm.addEventListener("change", criterionForPie);
   resetFilters.addEventListener("click", function () {
     deletePieCriteriaNodes();
+    const criteria = ["State","County","City","Street","Number","Road side","Timezone","Weather","Wind direction","Wind chill","Wind speed","Humidity","Pressure","Visibility","Precipitation","Accident date","Hour","Severity","Sunrise/Sunset","Civil twilight","Nautical twilight","Astronomical twilight"];
+    createCriterionOptions(criteria);
     generatePie([]);
     let errorMessageResult = document.getElementById("error_message_result");
     errorMessageResult.innerText = "";
@@ -618,6 +621,14 @@ document.addEventListener("DOMContentLoaded", function () {
         input[0].checked = true;
       }
     });
+
+    resetAllButton.addEventListener("click", () => {
+      let allCheckboxes = checkboxPie.children;
+      for (let i = 0; i < allCheckboxes.length; i++) {
+        let input = allCheckboxes[i].getElementsByTagName("input");
+        input[0].checked = false;
+      }
+    });
   }
 
   function editCriterion(criterion) {
@@ -774,6 +785,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return { data: data, info: info };
   }
 
+  let dataPie, infoPie, dataProcentsPie;
+
   function generatePie(dataResponse, dateField) {
     goOnTop();
     dataResponse.sort(function (a, b) {
@@ -802,22 +815,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (Object.keys(dataResponse).length !== 0) {
       generatePieLegend(dataProcents, data, info, dateField);
-      exportFunction(data, info, dataProcents);
+      dataPie = data;
+      infoPie = info;
+      dataProcentsPie = dataProcents;
+      exportFunction();
     }
   }
 
-  function exportFunction(data, info, dataProcents) {
+  function exportFunction() {
     exportData.style.display = "flex";
-    csvExport.addEventListener("click", async () => {
-      const csvData = await generateCsvFormat(data, info, dataProcents);
-      downloadCsv(csvData);
-    });
-    pngExport.addEventListener("click", () => {
-      generatePngFormat();
-    });
-    svgExport.addEventListener("click", () => {
-      generateSvgFormat();
-    });
+    csvExport.addEventListener("click", handlerCsvExport);
+    pngExport.addEventListener("click", generatePngFormat);
+    svgExport.addEventListener("click", generateSvgFormat);
+
+  }
+
+  async function handlerCsvExport() {
+    const csvData = await generateCsvFormat(dataPie, infoPie, dataProcentsPie);
+    downloadCsv(csvData);
+    csvExport.removeEventListener("click",handlerCsvExport);
   }
 
   function generateCsvFormat(data, info, dataProcents) {
@@ -876,6 +892,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const canvasDataUrl = canvas.toDataURL("image/png", 1);
       downloadPng(canvasDataUrl);
     };
+    pngExport.removeEventListener("click",generatePngFormat);
   }
 
   function downloadPng(canvasDataUrl) {
@@ -901,6 +918,7 @@ document.addEventListener("DOMContentLoaded", function () {
     pieSerializer = '<?xml version="1.0" standalone="no"?>\r\n' + pieSerializer;
     const svgUrl = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(pieSerializer);
     downloadSvg(svgUrl);
+    svgExport.removeEventListener("click",generateSvgFormat);
   }
 
   function downloadSvg(svgUrl) {

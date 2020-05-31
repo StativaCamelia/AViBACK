@@ -251,9 +251,31 @@ block right_content
                 h3.criteria_select_label *Criterion for generate pie:
                 select#pie_criteria
                     option(value='criterion' selected='' hidden='') Criterion
+                    option(value='State') State
+                    option(value='County') County
+                    option(value='City') City
+                    option(value='Street') Street
+                    option(value='Number') Number
+                    option(value='Road side') Road side
+                    option(value='Timezone') Timezone
+                    option(value='Weather') Weather
+                    option(value='Wind direction') Wind direction
+                    option(value='Wind chill') Wind chill
+                    option(value='Wind speed') Wind speed
+                    option(value='Humidity') Humidity
+                    option(value='Pressure') Pressure
+                    option(value='Visibility') Visibility
+                    option(value='Precipitation') Precipitation
+                    option(value='Accident date') Accident date
+                    option(value='Hour') Hour
+                    option(value='Severity') Severity
+                    option(value='Sunrise/Sunset') Sunrise/Sunset
+                    option(value='Civil twilight') Civil twilight
+                    option(value='Nautical twilight') Nautical twilight
+                    option(value='Astronomical twilight') Astronomical twilight
             .submit_button
-                input#reset_button(form='filters_form' type='reset' value='Reset')
-                input#submit_button(form='filters_form' type='submit' value='Submit')
+                    input#reset_button(form='filters_form' type='reset' value='Reset')
+                    input#submit_button(form='filters_form' type='submit' value='Submit')
         #filters_pie_new
             h2 Select what you want to see on pie
             .radio_pie
@@ -276,5 +298,6 @@ block right_content
             .checkbox_pie
             .checkboxes_buttons
                 input#back_filters(type='button' value='Back')
-                input#select_all(type='button' value='SelectAll')
+                input#reset_all(type='button' value='Reset')
+                input#select_all(type='button' value='Select All')
                 input#submit_checkboxes(type='submit' value='Submit')
