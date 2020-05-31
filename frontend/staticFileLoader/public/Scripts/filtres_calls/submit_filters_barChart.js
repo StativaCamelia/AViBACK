@@ -8,138 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let groupByCriterion;
   var barChart;
 
-  function createLineChart(content) {
-    var canvas = document.getElementById("bar_chart");
-    var ctx = canvas.getContext("2d");
-    Chart.defaults.global.defaultFontSize = 12;
-    if (barChart != undefined) barChart.destroy();
-
-    function getRandomColor() {
-      var letters = "0123456789ABCDEF";
-      var color = "#";
-      for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    }
-
-    function getDatasetFromAnswer(data, numberOfDataset) {
-      let dataset = [];
-      let dataChart;
-      let labels = [];
-      for (let i = 0; i < data.length; i++) {
-        dataset.push(data[i].count);
-        if (!data[i]._id.day) {
-          labels.push(data[i]._id);
-        } else {
-          labels.push("Day:" + data[i]._id.day + " Hour:" + data[i]._id.hour);
-        }
-      }
-      let color = getRandomColor();
-      dataChart = {
-        data: dataset,
-        label: "Dataset " + (numberOfDataset + 1),
-        borderColor: color,
-        backgroundColor: color,
-        fill: true,
-      };
-      return { labels: labels, data: dataChart };
-    }
-
-    if (content !== []) {
-      datasetsReceived.push(content);
-      let allDatasets = [];
-      let dateLabels = [];
-      for (let j = 0; j < datasetsReceived.length; j++) {
-        let { labels, data } = getDatasetFromAnswer(datasetsReceived[j], j);
-        if (j === 0) dateLabels = labels;
-        allDatasets.push(data);
-      }
-      var data = {
-        labels: dateLabels,
-        datasets: allDatasets,
-      };
-      barChart = new Chart(ctx, {
-        type: "bar",
-        data: data,
-        options: {
-          title: {
-            display: true,
-          },
-          legend: {
-            fontSize: 10,
-            fontFamily: "tamoha",
-            fontColor: "Sienna",
-          },
-        },
-      });
-    } else {
-      var data = {
-        labels: [2016, 2017, 2018, 2019],
-        datasets: [],
-      };
-      barChart = new Chart(ctx, {
-        type: "line",
-        data: data,
-        options: {
-          title: {
-            display: true,
-            text: "No data was found ",
-          },
-          legend: {
-            fontSize: 10,
-            fontFamily: "tamoha",
-            fontColor: "Sienna",
-          },
-        },
-      });
-    }
-    if (continueGraph === "Submit") {
-      datasetsReceived = [];
-      datasetsSend = [];
-      let time_interval = document.querySelector(".time_filtres");
-      time_interval.style.display = "flex";
-    }
-  }
-
-  function setVisible(selector, visible) {
-    document.querySelector(selector).style.display = visible ? "flex" : "none";
-  }
-
-  function up() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  }
-
-  const resetButton = document.getElementById("reset_button");
-  resetButton.addEventListener("click", resetSelect);
-  function resetSelect() {
-    const selects = document.querySelectorAll("select");
-    for (let select of selects) {
-      select.selectedIndex = 0;
-    }
-  }
-
-  function send_request(query) {
-    var xhttp = new XMLHttpRequest();
-    up();
-    filtersForm.reset();
-    resetSelect();
-    xhttp.onreadystatechange = function () {
-      setVisible("#left_cont", false);
-      setVisible("#loading", true);
-      if (this.readyState === 4 && this.status === 200) {
-        const { content } = JSON.parse(this.responseText);
-        setVisible("#loading", false);
-        setVisible("#left_cont", true);
-        createLineChart(content);
-      }
-    };
-    url = api + query;
-    xhttp.open(method, url, true);
-    xhttp.send();
-  }
-
   const state = document.getElementById("state");
   const county = document.getElementById("county");
   const city = document.getElementById("city");
@@ -364,6 +232,158 @@ document.addEventListener("DOMContentLoaded", function () {
   addFiltres.addEventListener("click", handlerAddFiltres);
   const groupBy = document.getElementById("intervalType");
 
+  function createLineChart(content) {
+    var canvas = document.getElementById("bar_chart");
+    var ctx = canvas.getContext("2d");
+    Chart.defaults.global.defaultFontSize = 12;
+    if (barChart != undefined) barChart.destroy();
+
+    function getRandomColor() {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function getDatasetFromAnswer(data, numberOfDataset) {
+      let dataset = [];
+      let dataChart;
+      let labels = [];
+      for (let i = 0; i < data.length; i++) {
+        dataset.push(data[i].count);
+        if (!data[i]._id.day) {
+          labels.push(data[i]._id);
+        } else {
+          labels.push(data[i]._id.day + data[i]._id.hour);
+        }
+      }
+      let color = getRandomColor();
+      dataChart = {
+        data: dataset,
+        label: "Dataset " + (numberOfDataset + 1),
+        borderColor: color,
+        backgroundColor: color,
+        fill: false,
+      };
+      return { labels: labels, data: dataChart };
+    }
+
+    if (content !== []) {
+      datasetsReceived.push(content);
+      let allDatasets = [];
+      let dateLabels = [];
+      let maximLabels = 0;
+      for (let j = 0; j < datasetsReceived.length; j++) {
+        let { labels, data } = getDatasetFromAnswer(datasetsReceived[j], j);
+        if (labels.length > maximLabels) {
+          maximLabels = labels.length;
+          dateLabels = labels;
+        }
+        allDatasets.push(data);
+      }
+      var data = {
+        labels: dateLabels,
+        datasets: allDatasets,
+      };
+      barChart = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: {
+          title: {
+            display: true,
+          },
+          legend: {
+            fontSize: 10,
+            fontFamily: "tamoha",
+            fontColor: "Sienna",
+          },
+        },
+      });
+    } else {
+      var data = {
+        labels: [2016, 2017, 2018, 2019],
+        datasets: [],
+      };
+      barChart = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: {
+          title: {
+            display: true,
+            text: "No data was found ",
+          },
+          legend: {
+            fontSize: 10,
+            fontFamily: "tamoha",
+            fontColor: "Sienna",
+          },
+        },
+      });
+    }
+    if (continueGraph === "Submit") {
+      datasetsReceived = [];
+      datasetsSend = [];
+      changePanel();
+      setDatasetTitle(1);
+    }
+  }
+
+  function changePanel() {
+    let time_interval = document.querySelector(".time_filtres");
+    let change_interval = document.getElementById("change_button");
+    let submit_change_interval = document.getElementById(
+      "update_interval_button"
+    );
+    submit_change_interval = "none";
+    time_interval.style.display = "flex";
+    change_interval.style.display = "none";
+  }
+
+  function setVisible(selector, visible) {
+    document.querySelector(selector).style.display = visible ? "flex" : "none";
+  }
+
+  function up() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  const resetButton = document.getElementById("reset_button");
+  resetButton.addEventListener("click", resetSelect);
+  function resetSelect() {
+    const selects = document.querySelectorAll("select");
+    for (let select of selects) {
+      select.selectedIndex = 0;
+    }
+  }
+
+  function send_request(query) {
+    var xhttp = new XMLHttpRequest();
+    up();
+    if (continueGraph !== "Update") {
+      filtersForm.reset();
+      resetSelect();
+    }
+    xhttp.onreadystatechange = function () {
+      setVisible("#left_cont", false);
+      setVisible("#loading", true);
+      if (this.readyState === 4 && this.status === 200) {
+        const { content } = JSON.parse(this.responseText);
+        if (continueGraph !== "Update") {
+          console.log(continueGraph);
+          setVisible("#loading", false);
+          setVisible("#left_cont", true);
+        }
+        createLineChart(content);
+      }
+    };
+    url = api + query;
+    xhttp.open(method, url, true);
+    xhttp.send();
+  }
+
   function collectData() {
     let dataset = {};
     let dataString = "";
@@ -437,44 +457,49 @@ document.addEventListener("DOMContentLoaded", function () {
         );
       }
     }
-    return { dataset, dataString };
+    return { dataString, dataset };
   }
 
   //Preparare Date query String
-  function prepareQueryString(type = "Submit") {
+  function addTimeInterval(dataset, queryString) {
+    if (datasetsSend[0].Start_Date_1 !== undefined)
+      dataset.Start_Date_1 = datasetsSend[0].Start_Date_1;
+    if (dataset.Start_Date_1 !== undefined)
+      queryString += concatQueryString("", "FirstDate", dataset.Start_Date_1);
+    if (datasetsSend[0].Start_Date_2 !== undefined)
+      dataset.Start_Date_2 = datasetsSend[0].Start_Date_2;
+    if (dataset.Start_Date_2 !== undefined)
+      queryString += concatQueryString("", "SecondDate", dataset.Start_Date_2);
+    if (datasetsSend[0].Start_Hour_1 !== undefined)
+      dataset.Start_Hour_1 = datasetsSend[0].Start_Hour_1;
+    if (dataset.Start_Hour_1 !== undefined)
+      queryString += concatQueryString("", "FirstHour", dataset.Start_Hour_1);
+    if (datasetsSend[0].Start_Hour_2 !== undefined)
+      dataset.Start_Hour_2 = datasetsSend[0].Start_Hour_2;
+    if (dataset.Start_Hour_2 !== undefined)
+      queryString += concatQueryString("", "SecondHour", dataset.Start_Hour_2);
+    return queryString;
+  }
+
+  function prepareQueryString(type = "Submit", dataString = "", dataset = {}) {
     const pageTypeIndex = window.location.href.lastIndexOf("/");
     const pageType = window.location.href.substring(pageTypeIndex + 1);
     let queryString = "";
     queryString = concatQueryString(queryString, "Type", pageType);
-    let { dataString, dataset } = collectData();
-    if (datasetsSend.length > 0) {
-      dataset.Start_Date_1 = datasetsSend[0].Start_Date_1;
-      if (dataset.Start_Date_1 !== undefined)
-        queryString += concatQueryString("", "FirstDate", dataset.Start_Date_1);
-      dataset.Start_Date_2 = datasetsSend[0].Start_Date_2;
-      if (dataset.Start_Date_2 !== undefined)
-        queryString += concatQueryString(
-          "",
-          "SecondDate",
-          dataset.Start_Date_2
-        );
-      dataset.Start_Hour_1 = datasetsSend[0].Start_Hour_1;
-      if (dataset.Start_Hour_1 !== undefined)
-        queryString += concatQueryString("", "FirstHour", dataset.Start_Hour_1);
-      dataset.Start_Hour_2 = datasetsSend[0].Start_Hour_2;
-      if (dataset.Start_Hour_2 !== undefined)
-        queryString += concatQueryString(
-          "",
-          "SecondHour",
-          dataset.Start_Hour_2
-        );
+    if (type !== "Update") {
+      let { dataString: string, dataset: object } = collectData();
+      dataString = string;
+      dataset = object;
+    }
+    if (datasetsSend.length > 0 && type !== "Update") {
+      queryString = addTimeInterval(dataset, queryString);
     }
     if (
       verifFilters(dataset) === true &&
       verifyIntervalExists(dataset) === true &&
       verifyGroupBy() === true
     ) {
-      if (datasetsSend.length === 0) {
+      if (datasetsSend.length === 0 || type === "Update") {
         groupByCriterion = groupBy.value;
         queryString += concatQueryString(
           "",
@@ -488,7 +513,7 @@ document.addEventListener("DOMContentLoaded", function () {
           groupByCriterion
         );
       }
-      datasetsSend.push(dataset);
+      if (type !== "Update") datasetsSend.push(dataset);
       queryString += dataString;
       let time_interval = document.querySelector(".time_filtres");
       let change_interval = document.getElementById("change_button");
@@ -516,9 +541,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function handlerAddFiltres(e) {
     e.preventDefault();
     continueGraph = "Add";
-    setDatasetTitle(datasetsSend.length + 1);
     prepareQueryString("Add");
-    addDatasetToSelect(datasetsSend.length + 1);
+    setDatasetTitle(datasetsSend.length);
+    addDatasetToSelect(datasetsSend.length);
   }
 
   function handlerSubmitFilters(e) {
@@ -775,18 +800,33 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   let change_interval = document.getElementById("change_button");
-
+  let open_time_change = false;
   change_interval.addEventListener("click", changeTimeInterval);
-  function changeTimeInterval() {
-    function displayTimeElements() {
-      let time_interval = document.querySelector(".time_filtres");
-      let update_interval_button = document.getElementById(
-        "update_interval_button"
-      );
-      time_interval.style.display = "flex";
-      update_interval_button.style.display = "flex";
-    }
+  let submit_change_interval = document.getElementById(
+    "update_interval_button"
+  );
+  submit_change_interval.addEventListener("click", submitNewTimeInterval);
 
+  function setVisibilityTimeElements(visibility) {
+    let time_interval = document.querySelector(".time_filtres");
+    let update_interval_button = document.getElementById(
+      "update_interval_button"
+    );
+    time_interval.style.display = visibility;
+    update_interval_button.style.display = visibility;
+  }
+
+  function changeTimeInterval() {
+    if (!open_time_change) {
+      setVisibilityTimeElements("flex");
+      open_time_change = true;
+    } else {
+      setVisibilityTimeElements("none");
+      open_time_change = false;
+    }
+  }
+
+  function submitNewTimeInterval() {
     function getNewTimeValues() {
       let newTimeValues = {};
       for (let i = 0; i < databaseComponents.length; i++) {
@@ -794,10 +834,88 @@ document.addEventListener("DOMContentLoaded", function () {
           newTimeValues[datesFields[i]] = datesComponents[i].value.toString();
         }
       }
-      console.log(newTimeValues);
+      return newTimeValues;
     }
 
-    displayTimeElements();
-    getNewTimeValues();
+    function updateIntervalValues() {
+      const getNewTimes = getNewTimeValues();
+      for (let i = 0; i < datasetsSend.length; i++) {
+        for (let j = 0; j < databaseComponents.length; j++) {
+          if (getNewTimes[datesFields[j]] !== undefined) {
+            datasetsSend[i][datesFields[j]] = getNewTimes[datesFields[j]];
+          } else delete datasetsSend[i][datesFields[j]];
+        }
+      }
+    }
+
+    function prepareNewQueryStrings(dataset) {
+      let dataString = "";
+      for (let i = 0; i < locationComponents.length; i++) {
+        if (dataset[locationDatabase[i]])
+          dataString = concatQueryString(
+            dataString,
+            locationDatabase[i],
+            dataset[locationDatabase[i]]
+          );
+      }
+
+      for (let i = 0; i < roadComponents.length; i++) {
+        if (dataset[roadConditionDatabase[i]])
+          dataString = concatQueryString(
+            dataString,
+            roadConditionDatabase[i],
+            dataset[roadConditionDatabase[i]]
+          );
+      }
+
+      for (let i = 0; i < lowerWeatherComponents.length; i++) {
+        if (dataset[lowerValuesWeather[i]])
+          dataString = concatQueryString(
+            dataString,
+            `${lowerValuesWeather[i]}`,
+            dataset[lowerValuesWeather[i]]
+          );
+      }
+      for (let i = 0; i < higherWeatherComponents.length; i++) {
+        if (dataset[higherValuesWeather[i]])
+          dataString = concatQueryString(
+            dataString,
+            `${higherValuesWeather[i]}`,
+            dataset[higherValuesWeather[i]]
+          );
+      }
+      for (let i = 0; i < databaseComponents.length; i++) {
+        if (dataset[datesFields[i]])
+          dataString = concatQueryString(
+            dataString,
+            databaseComponents[i],
+            dataset[datesFields[i]].toString()
+          );
+      }
+      for (let i = 0; i < astronomicComponents.length; i++) {
+        if (dataset[astronomicDatabase[i]]) {
+          dataString = concatQueryString(
+            dataString,
+            astronomicDatabase[i],
+            dataset[astronomicDatabase[i]]
+          );
+        }
+      }
+      return dataString;
+    }
+
+    function sendNewInterval() {
+      datasetsReceived = [];
+      continueGraph = "Update";
+      for (let i = 0; i < datasetsSend.length; i++) {
+        let string = prepareNewQueryStrings(datasetsSend[i]);
+        let dataset = datasetsSend[i];
+        if (i === datasetsSend.length - 1) continueGraph = "Add";
+        prepareQueryString("Update", string, dataset);
+      }
+    }
+    updateIntervalValues();
+    sendNewInterval();
+    setVisibilityTimeElements("none");
   }
 });
