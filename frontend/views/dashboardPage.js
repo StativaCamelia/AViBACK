@@ -6,7 +6,7 @@ const dashboardPageLocation = path.join(
   "./components/dashboardPageContent.pug"
 );
 
-class ContactPage {
+class DashboardPage {
   constructor() {}
 
   getPage(ids) {
@@ -24,4 +24,4 @@ class ContactPage {
   }
 }
 
-module.exports = ContactPage;
+module.exports = DashboardPage;

@@ -64,7 +64,7 @@ class Utils {
     try {
       const auth_token = req.headers["auth-token"];
       let result = await fetch(
-        "http://localhost:5003/user/authorization?token=" + auth_token,
+        "http://localhost:5003/users/authorization?token=" + auth_token,
         {
           method: "get",
         }

@@ -24,7 +24,7 @@ exports.getRes = async (req, res) => {
     body = Buffer.concat(body).toString();
     if (body) parsedReq.body = JSON.parse(body);
 
-    if (parsedReq.path.indexOf("user") !== -1) {
+    if (parsedReq.path.indexOf("users") !== -1) {
       userRoute.getRes(req, parsedReq, res);
       return;
     }

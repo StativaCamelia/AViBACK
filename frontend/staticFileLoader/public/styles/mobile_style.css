@@ -1601,4 +1601,69 @@
         font-family: Novecentosanswide;
     }
     /*END EXPORT*/
+
+    /*CONTROL PANEL*/
+    .dash_container{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: auto;
+        width: 100%;
+        margin: 22vh 0 0 0;
+        align-self: center;
+    }
+    .control_first_div{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-self: center;
+        width: 80%;
+        height: auto;
+        margin: 5vh auto 0 auto;
+        border-bottom: solid #041F60;
+    }
+    .button_box{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
+        width: 90%;
+        height: auto;
+    }
+
+    a.control_button{
+        text-decoration: none;
+        font-family:  Novecentosanswide;
+        font-weight: 800;
+        color: #041F60;
+        text-align: center;
+        margin: 0 0 2vh 0;
+    }
+    a.control_button:hover,#active_dash{
+        opacity: 0.7;
+    }
+
+    .control_second_div{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-self: center;
+        width: 80%;
+        height: auto;
+        margin: 10vh auto 5vh auto;
+    }
+
+    .first_box_dash, .second_box_dash{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        border: 4px groove #041F60;
+        border-radius: 8px;
+        box-shadow: 5px 6px #888888;
+        margin: 0 0 10vh 0;
+    }
 }

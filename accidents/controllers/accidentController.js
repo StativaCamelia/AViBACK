@@ -1,9 +1,11 @@
 const { utils } = require("../utils/index");
+const mongoose = require("mongoose");
 
 class AccidentController {
   constructor(database, service) {
     this.database = database;
     this.service = service;
+    this.accidentsNumber = 2974335;
   }
 
   async getData(query, type, criterion) {
@@ -237,11 +239,27 @@ class AccidentController {
     }
   }
 
+  //returneaza numarul total de accidente
+  async getAccidentsNumber(){
+    try{
+      const content = await this.database.Accident.find({}).countDocuments();
+      return { success: true, data: { content } };
+    }catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
   //adauga un accident in functie de informatiile din body(admin)
   async addAccident(payload) {
     const content = new this.database.Accident(payload);
     try {
       await content.save();
+      const log = new this.database.AccidentsLog({
+        method: "create",
+        date: new Date(),
+      });
+      await log.save();
+      this.accidentsNumber++;
       await utils.sendEmail({ payload });
       return { success: true, data: { content } };
     } catch (error) {
@@ -253,6 +271,15 @@ class AccidentController {
   async deleteAllAccidents(req, res) {
     try {
       const content = await this.database.Accident.deleteMany({});
+      const accidentsNumber = await this.getAccidentsNumber().data.content;
+      for(let i = 0; i < accidentsNumber; i++){
+        const log = new this.database.AccidentsLog({
+          method: "delete",
+          date: new Date(),
+        });
+        await log.save();
+        this.accidentsNumber = 0;
+      }
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -285,6 +312,11 @@ class AccidentController {
         { newContent },
         options
       );
+      const log = new this.database.AccidentsLog({
+        method: "update",
+        date: new Date(),
+      });
+      await log.save();
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -298,6 +330,12 @@ class AccidentController {
       const content = await this.database.Accident.findOneAndDelete({
         _id: accidentId,
       });
+      const log = new this.database.AccidentsLog({
+        method: "delete",
+        date: new Date(),
+      });
+      await log.save();
+      this.accidentsNumber--;
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -345,6 +383,23 @@ class AccidentController {
       return content;
     } catch (error) {
       throw error;
+    }
+  }
+
+  async getAccidentsGeneralDetails(){
+    try{
+      let content = {};
+      const newAccidents = await this.database.AccidentsLog.findByMethod("create");
+      const deletedAccidents = await this.database.AccidentsLog.findByMethod("delete");
+      const updatedAccidents = await this.database.AccidentsLog.findByMethod("update");
+
+      content.accidentsNumber = this.accidentsNumber;
+      content.newAccidentsNumber = newAccidents;
+      content.deletedAccidentsNumber = deletedAccidents;
+      content.updatedAccidentsNumber = updatedAccidents;
+      return { success: true, data: { content } };
+    }catch (error) {
+      return { success: false, data: { error } };
     }
   }
 }

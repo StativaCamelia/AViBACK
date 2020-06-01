@@ -10,10 +10,11 @@
         - let home = valuesIds[0]
         - let contact = valuesIds[1]
         - let profile = valuesIds[2]
-        - let map = valuesIds[3]
-        - let pie = valuesIds[4]
-        - let barChart = valuesIds[5]
-        - let lineChart = valuesIds[6]
+        - let logout = valuesIds[3]
+        - let map = valuesIds[4]
+        - let pie = valuesIds[5]
+        - let barChart = valuesIds[6]
+        - let lineChart = valuesIds[7]
         ul
           li
             a.logo(href='home')
@@ -25,15 +26,15 @@
           li
             a.myButton#button(class=profile)
           li
-            a.myButton#logout LOGOUT
+            a.myButton#logout(class=logout) LOGOUT
       .statistics
         ul
           li.effect1
-            a(id=map href='map')
+            a(id=map href='http://localhost:5002/map')
               img.for_img(title='Maps' src='./Images/Icons/map.png')
-            a(id=pie href='pie')
+            a(id=pie href='http://localhost:5002/pie')
               img.for_img(title='Pie Chart' src='./Images/Icons/pie-white.png')
-            a(id=barChart href='chart')
+            a(id=barChart href='http://localhost:5002/chart')
               img.for_img(title='Chart' src='./Images/Icons/bar-chart.png')
-            a(id=lineChart href='line')
+            a(id=lineChart href='http://localhost:5002/line')
               img.for_img(title='Line Chart' src='./Images/Icons/line-chart.png')
