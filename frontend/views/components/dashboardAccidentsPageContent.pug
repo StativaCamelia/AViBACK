@@ -1,0 +1,6 @@
+extends ./layouts/layoutDashboardAccidents.pug
+block controller_first_div
+    .button_box
+        a.control_button(href='http://localhost:5002/dashboard') GENERAL
+        a.control_button(href='http://localhost:5002/dashboard/users') USERS
+        a.control_button#active_dash(href='http://localhost:5002/dashboard/accidents') ACCIDENTS

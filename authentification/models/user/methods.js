@@ -60,13 +60,13 @@ module.exports = function (schema) {
       message = "Blank field(s)!";
     } else {
       if (user.username.length < 6 && user.password.length < 6) {
-        message = "Incorrect username and password!";
+        message = errorMessage;
       } else {
         if (user.username.length < 6) {
-          message = "Incorrect username!";
+          message = errorMessage;
         } else {
           if (user.password.length < 6) {
-            message = "Incorrect password!";
+            message = errorMessage;
           }
         }
       }

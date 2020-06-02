@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function getUsers(event) {
     const token = localStorage.getItem("auth-token");
 
     var xhttp = new XMLHttpRequest();
-    url = "user";
+    url = "users";
     xhttp.open("GET", url, true);
     xhttp.setRequestHeader("auth-token", token ? token : "");
     xhttp.send();

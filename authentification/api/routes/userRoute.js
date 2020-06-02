@@ -31,9 +31,9 @@ function sendAnswerAPI(success, data, res, statusCode = 401) {
   if (success) {
     const { content } = data;
     res.writeHead(200, {
+      "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
-      "Access-Control-Request-Headers": "X-PINGOTHER, Content-Type",
       "Access-Control-Allow-Headers": "auth-token, Content-Type",
     });
     res.write(JSON.stringify({ content }, null, 2));
@@ -48,7 +48,6 @@ function sendAnswerAPI(success, data, res, statusCode = 401) {
 
 exports.getRes = async (req, parsedReq, res) => {
   const { path, method, queryStringObject, body, headers } = parsedReq;
-
   if (method === "options") {
     res.writeHead(200, {
       "Access-Control-Allow-Origin": "*",
@@ -94,12 +93,12 @@ exports.getRes = async (req, parsedReq, res) => {
     }
   }
   if (
-    path.endsWith("/user") &&
+    path.endsWith("/users") &&
     method === "delete" &&
     Object.keys(queryStringObject).length === 0
   ) {
     try {
-      const auth = await authorization.getAuth(req);
+      const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
         const { success, data } = await userController.deleteAllUsers();
         sendAnswerAPI(success, data, res);
@@ -120,12 +119,12 @@ exports.getRes = async (req, parsedReq, res) => {
       );
     }
   } else if (
-    path.endsWith("user") &&
+    path.endsWith("/users") &&
     method === "get" &&
     Object.keys(queryStringObject).length === 0
   ) {
     try {
-      const auth = await authorization.getAuth(req);
+      const auth = await userController.getAuth(req.headers["auth-token"]);
 
       if (auth.succes) {
         const { success, data } = await userController.getAllUsers();
@@ -141,9 +140,9 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("user") && method === "patch")
+  } else if (path.endsWith("/users") && method === "patch"){
     try {
-      const auth = await authorization.getAuth(req);
+      const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
         const { userId } = queryStringObject;
         const { success, data } = await userController.updateUser({
@@ -156,15 +155,15 @@ exports.getRes = async (req, parsedReq, res) => {
       }
     } catch (error) {
       sendAnswerAPI(
-        false,
-        { error: { message: "Internal Error" } },
-        res,
-        (statusCode = 501)
+          false,
+          { error: { message: "Internal Error" } },
+          res,
+          (statusCode = 501)
       );
     }
-  else if (path.endsWith("user") && method === "delete")
+  } else if (path.endsWith("/users") && method === "delete"){
     try {
-      const auth = await authorization.getAuth(req);
+      const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
         const { userId } = queryStringObject;
         const { success, data } = await userController.deleteUser({
@@ -176,15 +175,15 @@ exports.getRes = async (req, parsedReq, res) => {
       }
     } catch (error) {
       sendAnswerAPI(
-        false,
-        { error: { message: "Internal Error" } },
-        res,
-        (statusCode = 501)
+          false,
+          { error: { message: "Internal Error" } },
+          res,
+          (statusCode = 501)
       );
     }
-  else if (path.endsWith("user") && method === "get")
+  } else if (path.endsWith("/users") && method === "get"){
     try {
-      const auth = await authorization.getAuth(req);
+      const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
         const { userId } = queryStringObject;
         const { success, data } = await userController.getUserById({
@@ -197,13 +196,13 @@ exports.getRes = async (req, parsedReq, res) => {
     } catch (error) {
       console.log(error.message);
       sendAnswerAPI(
-        false,
-        { error: { message: "Internal error" } },
-        res,
-        (statusCode = 501)
+          false,
+          { error: { message: "Internal error" } },
+          res,
+          (statusCode = 501)
       );
     }
-  else if (path.endsWith("authorization") && method == "get") {
+  } else if (path.endsWith("authorization") && method === "get") {
     try {
       const { succes, data } = await userController.getAuth(
         queryStringObject.token
@@ -218,7 +217,7 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("send-email") && method == "get") {
+  } else if (path.endsWith("send-email") && method === "get") {
     try {
       const { succes, data } = await userController.getIntrestedUsers(
         queryStringObject
@@ -233,9 +232,9 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("user") && method === "post")
+  } else if (path.endsWith("/users") && method === "post"){
     try {
-      const auth = await userController.getAuth(req);
+      const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
         const { userId } = queryStringObject;
         const { success, data } = await userController.createUser({
@@ -249,10 +248,29 @@ exports.getRes = async (req, parsedReq, res) => {
     } catch (error) {
       console.log(error.message);
       sendAnswerAPI(
-        false,
-        { error: { message: "Internal error" } },
-        res,
-        (statusCode = 501)
+          false,
+          { error: { message: "Internal error" } },
+          res,
+          (statusCode = 501)
       );
     }
+  }else if(path.endsWith("/general") && method === "get"){
+    try {
+      const auth = await userController.getAuth(req.headers["auth-token"]);
+      if (auth.succes) {
+        const { success, data } = await userController.getUsersGeneralDetails();
+        sendAnswerAPI(success, data, res);
+      } else {
+        sendAnswerAPI(auth.succes, auth.data, res, (statusCode = 403));
+      }
+    } catch (error) {
+      console.log(error.message);
+      sendAnswerAPI(
+          false,
+          { error: { message: "Internal error" } },
+          res,
+          (statusCode = 501)
+      );
+    }
+  }
 };

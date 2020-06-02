@@ -5,6 +5,7 @@ const pieRoute = require("./pieRoute");
 const chartRoute = require("./chartRoute");
 const profileRoute = require("./profileRoute");
 const lineRoute = require("./lineRoute");
+const dashboardRoute = require("./dashboardRoute");
 module.exports = {
   lineRoute,
   homeRoute,
@@ -13,4 +14,5 @@ module.exports = {
   pieRoute,
   chartRoute,
   profileRoute,
+  dashboardRoute
 };

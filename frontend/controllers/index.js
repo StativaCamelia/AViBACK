@@ -6,6 +6,10 @@ const PieController = require("./pieController");
 const ChartController = require("./chartController");
 const ProfileController = require("./profileController");
 const LineController = require("./lineController");
+const DashboardController = require("./dashboardController");
+const DashboardUsersController = require("./dashboardUsersController");
+const DashboardAccidentsController = require("./dashboardAccidentsController");
+
 const contactController = new ContactController();
 const homeController = new HomeController();
 const staticFilesController = new StaticFilesController();
@@ -14,6 +18,9 @@ const pieController = new PieController();
 const chartController = new ChartController();
 const profileController = new ProfileController();
 const lineController = new LineController();
+const dashboardController = new DashboardController();
+const dashboardUsersController = new DashboardUsersController();
+const dashboardAccidentsController = new DashboardAccidentsController();
 
 module.exports = {
   mapController,
@@ -24,4 +31,7 @@ module.exports = {
   chartController,
   profileController,
   lineController,
+  dashboardController,
+  dashboardUsersController,
+  dashboardAccidentsController
 };

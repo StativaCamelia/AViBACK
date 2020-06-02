@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("auth-token");
   let xhttp = new XMLHttpRequest();
-  xhttp.open("get", "http://localhost:5003/user/login", true);
+  xhttp.open("get", "http://localhost:5003/users/login", true);
   xhttp.setRequestHeader("auth-token", token ? token : "");
   xhttp.send();
   xhttp.onreadystatechange = function () {
@@ -13,26 +13,31 @@ document.addEventListener("DOMContentLoaded", function () {
         profileLog.innerText = values.value;
         profileLog.id = values.id;
         profileLog.href = values.href;
-        profileLog.style.display = "inline-block";
+        profileLog.style.display = "initial";
       }
       if (this.status === 400) {
-        alert("Authentification error!");
+        alert("Authentication error!");
       }
       if (profileLog.id !== "button") {
         const logout = document.getElementById("logout");
         const windowUrl = window.location.href;
-        const index = windowUrl.indexOf("profile");
-        logout.style.display = "inline-block";
+        const indexProfile = windowUrl.indexOf("profile");
+        const indexDashboard = windowUrl.indexOf("dashboard");
+        logout.style.display = "initial";
         logout.addEventListener("click",() => {
           localStorage.removeItem("auth-token");
           logout.style.display = "none";
-          if(index !== -1){
-            location.href = windowUrl.substring(0,index) + "home";
+          if(indexProfile !== -1){
+            location.href = windowUrl.substring(0,indexProfile) + "home";
           }else{
-            location.href = windowUrl;
+            if(indexDashboard !== -1){
+              location.href = windowUrl.substring(0,indexDashboard) + "home";
+            }else{
+              location.href = windowUrl;
+            }
           }
         });
-        if(index === -1){
+        if(indexProfile === -1 && indexDashboard === -1){
           profileLog.removeEventListener("click", loginListener);
         }
       }

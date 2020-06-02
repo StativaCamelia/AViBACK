@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     verifUsernameLogin(username.value);
     verifPasswordLogin(password.value);
     let xhttp = new XMLHttpRequest();
-    xhttp.open("post", "http://localhost:5003/user/login", true);
+    xhttp.open("post", "http://localhost:5003/users/login", true);
     xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
     const values = {
       username: username.value,

@@ -15,7 +15,7 @@ exports.getRes = async (req, res) => {
     return;
   }
   if (
-    path.endsWith("accidents") &&
+    path.endsWith("/accidents") &&
     method === "delete" &&
     Object.keys(queryStringObject).length === 0
   ) {
@@ -48,7 +48,7 @@ exports.getRes = async (req, res) => {
       console.log(error);
     }
   } else if (
-    path.endsWith("accidents") &&
+    path.endsWith("/accidents") &&
     method === "get" &&
     Object.keys(queryStringObject).length === 0
   ) {
@@ -69,7 +69,7 @@ exports.getRes = async (req, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("accidents") && method === "post") {
+  } else if (path.endsWith("/accidents") && method === "post") {
     const auth = await utils.getAuthorization(req);
     try {
       if (auth) {
@@ -93,7 +93,7 @@ exports.getRes = async (req, res) => {
       );
     }
     //PATCH(Update) Accident data by ID (from the original database not our ID)
-  } else if (path.endsWith("accidents") && method === "patch") {
+  } else if (path.endsWith("/accidents") && method === "patch") {
     try {
       const auth = await utils.getAuthorization(req);
       if (auth) {
@@ -121,7 +121,7 @@ exports.getRes = async (req, res) => {
       );
     }
     //DELETE Accident by ID(from the original database, not our ID)
-  } else if (path.endsWith("accidents") && method === "delete") {
+  } else if (path.endsWith("/accidents") && method === "delete") {
     try {
       const auth = await utils.getAuthorization(req);
       if (auth) {
@@ -147,7 +147,7 @@ exports.getRes = async (req, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("accidents") && method === "get") {
+  } else if (path.endsWith("/accidents") && method === "get") {
     try {
       const { query, type, criterion } = await filtresController.editFiltres(
         queryStringObject
@@ -180,6 +180,28 @@ exports.getRes = async (req, res) => {
       utils.sendAnswer(success, data, res);
     } catch (error) {
       console.log(error);
+    }
+  }else if (path.endsWith("/general") && method === "get") {
+    try {
+      const auth = await utils.getAuthorization(req);
+      if (auth) {
+        const { success, data } = await accidentController.getAccidentsGeneralDetails();
+        utils.sendAnswer(success, data, res);
+      } else {
+        utils.sendAnswer(
+            auth,
+            { error: { message: "unauthorized" } },
+            res,
+            (statusCode = 403)
+        );
+      }
+    } catch (error) {
+      utils.sendAnswer(
+          false,
+          { error: { message: "Internal Error" } },
+          res,
+          (statusCode = 501)
+      );
     }
   }
 };

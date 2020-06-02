@@ -59,6 +59,11 @@ class UserController {
     try {
       const content = new this.database.User(userContent);
       await content.save();
+      const log = new this.database.UsersLog({
+        method: "create",
+        date: new Date(),
+      });
+      await log.save();
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -83,6 +88,11 @@ class UserController {
       const content = await this.database.User.findOneAndDelete({
         _id: mongoose.Types.ObjectId(userId),
       });
+      const log = new this.database.UsersLog({
+        method: "delete",
+        date: new Date(),
+      });
+      await log.save();
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -104,6 +114,11 @@ class UserController {
         newContent,
         options
       );
+      const log = new this.database.UsersLog({
+        method: "update",
+        date: new Date(),
+      });
+      await log.save();
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -113,8 +128,43 @@ class UserController {
   async deleteAllUsers(req, res) {
     try {
       const content = await this.database.User.deleteMany({});
+      const usersNumber = await this.getUsersNumber().data.content;
+      for(let i = 0; i < usersNumber; i++){
+        const log = new this.database.UsersLog({
+          method: "delete",
+          date: new Date(),
+        });
+        await log.save();
+      }
       return { success: true, data: { content } };
     } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async getUsersNumber(){
+    try{
+      const content = await this.database.User.find({}).countDocuments();
+      return { success: true, data: { content } };
+    }catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async getUsersGeneralDetails(){
+    try{
+      let content = {};
+      const usersNumber = await this.getUsersNumber();
+      const newUsers = await this.database.UsersLog.findByMethod("create");
+      const deletedUsers = await this.database.UsersLog.findByMethod("delete");
+      const updatedUsers = await this.database.UsersLog.findByMethod("update");
+
+      content.usersNumber = usersNumber.data.content;
+      content.newUsersNumber = newUsers;
+      content.deletedUsersNumber = deletedUsers;
+      content.updatedUsersNumber = updatedUsers;
+      return { success: true, data: { content } };
+    }catch (error) {
       return { success: false, data: { error } };
     }
   }
@@ -140,13 +190,13 @@ class UserController {
       email: body.email,
       username: body.username,
       password: body.password,
+      type: body.type
     });
     let message = user.validateUserRegister();
     if (message !== "") {
       return {
         success: false,
         statusCode: 400,
-        contentType: "text/html",
         content: { message },
       };
     } else {
@@ -168,8 +218,12 @@ class UserController {
         } else {
           user.password = await user.hashPassword();
           try {
-            const savedUser = await user.save();
-            console.log(savedUser);
+            await user.save();
+            const log = new this.database.UsersLog({
+              method: "create",
+              date: new Date(),
+            });
+            await log.save();
             message =
               "Succesfully registered! Please sign in and set your profile!";
             return {
@@ -230,19 +284,20 @@ class UserController {
 
   async handlerGetLogin(req, res) {
     let values = {};
-    if (req.headers["auth-token"]) {
+    const tokenFromHeaders = req.headers["auth-token"];
+    if (tokenFromHeaders) {
       try {
         const verified = jwt.verify(
-          req.headers["auth-token"],
+          tokenFromHeaders,
           process.env.JWT_SECRET
         );
-        const token = { auth_token: req.headers["auth-token"] };
-        const isAdmin = await this.verifyAdmin(token);
+        const token = { auth_token: tokenFromHeaders };
+        const isAdmin = await this.verifyAdmin(token.auth_token);
         if (isAdmin.success) {
           values = {
             id: "dashboard",
             value: "DASHBOARD",
-            href: "http://localhost:5001/dashboard",
+            href: "http://localhost:5002/dashboard",
           };
         } else {
           values = {

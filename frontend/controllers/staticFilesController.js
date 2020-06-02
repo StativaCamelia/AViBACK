@@ -1,5 +1,5 @@
 const staticFile = require("../staticFileLoader/index");
-class StaticFilesControler {
+class StaticFilesController {
   constructor() {}
 
   async getRes(req, res) {
@@ -15,4 +15,4 @@ class StaticFilesControler {
   }
 }
 
-module.exports = StaticFilesControler;
+module.exports = StaticFilesController;

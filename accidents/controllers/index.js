@@ -2,7 +2,7 @@ const AccidentController = require("./accidentController.js");
 const FiltresController = require("./filtresController");
 const LocationController = require("./locationController");
 
-const { Accident, State, County, City, Street } = require("../models/index");
+const { Accident, State, County, City, Street, AccidentsLog } = require("../models/index");
 
 const locationController = new LocationController({
   City,
@@ -26,6 +26,7 @@ const accidentController = new AccidentController(
   {
     Accident,
     State,
+    AccidentsLog
   },
   { filtresController }
 );

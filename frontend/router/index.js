@@ -21,7 +21,6 @@ exports.getRes = async (req, res) => {
   parsedReq.method = req.method.toLowerCase();
   parsedReq.headers = req.headers;
   parsedReq.user = req.user;
-
   parsedReq.queryStringObject = JSON.parse(
     JSON.stringify(parsedReq.parsedUrl.query)
   );
