@@ -103,11 +103,11 @@ exports.getRes = async (req, res) => {
           accidentId,
           res,
         });
-        utils.sendAnswer(success, data, res);
+        utils.sendAnswer(success, data, res, (statusCode = 204));
       } else {
         utils.sendAnswer(
           auth,
-          { error: { message: "unauthorized" } },
+          { error: { message: "Unauthorized" } },
           res,
           (statusCode = 403)
         );
@@ -134,7 +134,7 @@ exports.getRes = async (req, res) => {
       } else {
         utils.sendAnswer(
           auth,
-          { error: { message: "unauthorized" } },
+          { error: { message: "Unauthorized" } },
           res,
           (statusCode = 403)
         );

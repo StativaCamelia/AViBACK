@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "mocha 'apiTests/routesTest.js'"
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +14,8 @@
     "mathjs": "^7.0.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.3"
+  },
+  "devDependencies": {
+    "supertest": "^4.0.2"
   }
 }

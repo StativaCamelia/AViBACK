@@ -15,7 +15,7 @@ class Utils {
   sendAnswer(success, data, res, statusCode = 200) {
     if (success) {
       const { content } = data;
-      res.writeHead(200, Utils.corsHeader);
+      res.writeHead(statusCode, Utils.corsHeader);
       res.write(JSON.stringify({ content }, null, 2));
       res.end();
     } else {

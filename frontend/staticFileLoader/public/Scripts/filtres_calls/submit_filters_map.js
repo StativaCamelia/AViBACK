@@ -2,12 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const api = "http://localhost:5004/accidents?";
   const method = "GET";
   let filtersValues;
-
   const exportData = document.querySelector(".export");
   const csvExport = document.getElementById("csv_export");
   const pngExport = document.getElementById("png_export");
   const svgExport = document.getElementById("svg_export");
-
   const state = document.getElementById("state");
   const county = document.getElementById("county");
   const city = document.getElementById("city");
@@ -230,25 +228,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function exportFunction(dataset) {
     exportData.style.display = "flex";
-    csvExport.addEventListener("click", () => {
-      const csvData = generateCsvFormat(dataset);
-      downloadCsv(csvData);
-      removeClick(downloadCsv);
-    });
-    pngExport.addEventListener("click", () => {
-      const pngData = generatePngFormat();
-      removeClick(downloadPng);
-    });
-    svgExport.addEventListener("click", () => {
-      const svgData = generateSvgFormat();
-      downloadSvg(svgData);
-      removeClick(downloadCsv);
-    });
+    csvExport.addEventListener("click", handlerCSVExport);
+    pngExport.addEventListener("click", handlerPngExport);
+    svgExport.addEventListener("click", handlerSVGExport);
   }
 
-  function removeClick(onHandler) {
-    removeEventListener("click", downloadCsv);
+  function handlerSVGExport() {
+    const svgData = generateSvgFormat();
+    downloadSvg(svgData);
+    svgExport.removeEventListener("click", handlerSVGExport);
   }
+
+  function handlerCSVExport(dataset) {
+    const csvData = generateCsvFormat(dataset);
+    downloadCsv(csvData);
+    csvExport.removeEventListener("click", handlerCSVExport);
+  }
+
+  function handlerPngExport() {
+    const pngData = generatePngFormat();
+    pngExport.removeEventListener("click", handlerPngExport);
+  }
+
   function generatePngFormat() {
     var svg = document.getElementById("svg_map");
     var svgData = new XMLSerializer().serializeToString(svg);
@@ -285,7 +286,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function downloadCsv(csvData) {
-    const blob = new Blob([csvData], { type: "text/csv" });
+    const blob = new Blob([csvData], {
+      type: "text/csv",
+    });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.setAttribute("hidden", "");
@@ -320,11 +323,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function generateSvgFormat() {
     var svg = document.getElementById("svg_map");
-    var xml = new XMLSerializer().serializeToString(svg);
-    var svg64 = btoa(xml);
     var b64Start = "data:image/svg+xml;charset=utf8,";
     svg64 = encodeURIComponent(serializeString(svg));
     var image64 = b64Start + svg64;
+    var url = +encodeURIComponent(serializeString(svg));
     return image64;
   }
 
@@ -351,7 +353,6 @@ document.addEventListener("DOMContentLoaded", function () {
     svg.setAttributeNS(xmlns, "xmlns:xlink", xlinkns);
     const serializer = new XMLSerializer();
     const string = serializer.serializeToString(svg);
-    console.log(string);
     return string;
   }
 
@@ -365,15 +366,14 @@ document.addEventListener("DOMContentLoaded", function () {
     a.click();
     document.body.removeChild(a);
   }
-
   submitFilters.addEventListener("click", handlerSubmitFilters);
+
   function handlerSubmitFilters(e) {
     e.preventDefault();
     filtersValues = {};
     let queryString = "";
     const pageTypeIndex = window.location.href.lastIndexOf("/");
     const pageType = window.location.href.substring(pageTypeIndex + 1);
-
     queryString = concatQueryString(queryString, "Type", pageType);
     for (let i = 0; i < valuesLikeNamesComponents.length; i++) {
       if (valuesLikeNamesComponents[i].value !== valuesLikeNames[i]) {
@@ -551,7 +551,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var map = document.getElementById("map");
     map.setAttribute("latitude", parseFloat(content.Start_Lat));
     map.getAttribute("longitude", parseFloat(content.Start_Lng));
-
     var left = pop.childNodes[0];
     var el = document.querySelectorAll("#states > #" + content.State)[0];
     pop.style.display = "flex";
@@ -562,12 +561,10 @@ document.addEventListener("DOMContentLoaded", function () {
       "</p>";
     if (el.hasAttribute("count"))
       left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
-
     left.innerHTML +=
       '<div class = "pop_img"><img src="' +
       dict_img[el.getAttribute("id")] +
       '"></div>';
-
     google.maps.event.addDomListener(window, "load", initMap());
   }
 
@@ -613,6 +610,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   const resetButton = document.getElementById("reset_button");
   resetButton.addEventListener("click", resetSelect);
+
   function resetSelect() {
     const selects = document.querySelectorAll("select");
     for (let select of selects) {

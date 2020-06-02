@@ -12,6 +12,19 @@ block left_content
             script(src='./Scripts/map_calls/description_div.js')
             script(src='./Scripts/map_calls/mapping_select_to_map.js')
             script( src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGMRsZ2FtdEy73zYaGm_JK_waMrSc9g0')
+    .map-history
+                .history_line
+                    #low.cbox
+                    p.low   0-50000 accidents
+                .history_line
+                    #medium1.cbox
+                    p.medium  50000-100000 accidents
+                .history_line
+                    #medium.cbox
+                    p.medium1   100000-200000 accidents
+                .history_line
+                    #high.cbox
+                    p.high   200000-400000 accidents
 block loading
     h3 Loading...
     #loader

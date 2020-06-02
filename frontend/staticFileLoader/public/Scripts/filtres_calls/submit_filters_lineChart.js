@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let datasetsReceived = [];
   let continueGraph = "Submit";
   let groupByCriterion;
-<<<<<<< HEAD
   let lineChart;
   let correctChangeInterval = true;
 
@@ -27,14 +26,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const datasets_select = document.getElementById("list_datasets");
   datasets_select.addEventListener("change", goToDataset);
   const messageUpper = document.getElementById("time_message");
-=======
-  var lineChart;
 
   const exportData = document.querySelector(".export");
   const csvExport = document.getElementById("csv_export");
   const pngExport = document.getElementById("png_export");
   const svgExport = document.getElementById("svg_export");
->>>>>>> 529fd8f632fce706be73b56c2e3bc18073f9d570
 
   const state = document.getElementById("state");
   const county = document.getElementById("county");
@@ -374,11 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
           controlLoading(true, false);
         }
         createLineChart(content);
-<<<<<<< HEAD
-        exportFunction(content.dataset);
-=======
         exportFunction(content);
->>>>>>> 529fd8f632fce706be73b56c2e3bc18073f9d570
       }
     };
 
@@ -392,21 +384,6 @@ document.addEventListener("DOMContentLoaded", function () {
     csvExport.addEventListener("click", () => {
       const csvData = generateCsvFormat(dataset);
       downloadCsv(csvData);
-<<<<<<< HEAD
-      removeClick(downloadCsv);
-    });
-    pngExport.addEventListener("click", () => {
-      const pngData = generatePngFormat();
-      removeClick(downloadPng);
-    });
-    svgExport.addEventListener("click", () => {
-      const svgData = generateSvgFormat();
-      downloadSvg(svgData);
-      removeClick(downloadCsv);
-    });
-  }
-
-=======
     });
     pngExport.addEventListener("click", function () {
       generatePngFormat();
@@ -466,7 +443,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.removeChild(a);
   }
 
->>>>>>> 529fd8f632fce706be73b56c2e3bc18073f9d570
   function collectData() {
     let dataset = {};
     let dataString = "";
@@ -657,7 +633,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function verifyGroupBy() {
-    console.log(groupBy.value);
     if (
       groupBy.value === "" &&
       (datasetsSend.length === 0 || continueGraph === "Update")
@@ -871,7 +846,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function changeTimeInterval() {
-    if (!open_time_change) {
+    if (!open_time_change || !correctChangeInterval) {
       setVisibilityTimeElements("flex");
       open_time_change = true;
     } else {
