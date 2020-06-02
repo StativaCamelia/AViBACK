@@ -1337,7 +1337,7 @@
     #back_filters[type="button"],
     #submit_checkboxes[type="submit"],
     #select_all[type="button"],
-    #select_radio[type="button"],#reset_all[type="button"] {
+    #select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"] {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1665,5 +1665,85 @@
         border-radius: 8px;
         box-shadow: 5px 6px #888888;
         margin: 0 0 10vh 0;
+    }
+
+    .control_users{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        height: auto;
+        margin: 5vh 0 12vh 0;
+    }
+
+    .first_div_users{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        height: auto;
+        margin: 0 0 2vh 0;
+    }
+
+    .second_div_users{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 90%;
+        height: auto;
+        margin: 0 auto 0 auto;
+    }
+
+    .control_user{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: auto;
+        height: 100%;
+        text-align: center;
+    }
+    .control_user h3{
+        font-family: Novecentosanswide;
+        font-size: 0.9rem;
+        color: #041F60;
+        font-weight: bold;
+    }
+    h3#active_user{
+        margin-bottom: 1vh;
+        border-bottom: 3px solid #041F60;
+    }
+    .dash_user_form{
+        flex-direction: column;
+        justify-content: space-between;
+        align-self: center;
+        width: 70%;
+        height: auto;
+    }
+    .dash_user_all{
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-self: center;
+        width: 70%;
+        height: auto;
+    }
+    .user_input{
+        width: 70%;
+        height: auto;
+        align-self: center;
+    }
+    .user_label{
+        font-family: Novecentosanswide;
+        font-size: 1.2rem;
+        color: #041F60;
+        text-align: left;
+        font-weight: bold;
+        width: 70%;
+        align-self: center;
+    }
+    .dash_user_button{
+        width: 30%;
+        align-self: center;
+        margin: 1vh 0 0 0;
     }
 }

@@ -59,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
         if (this.status === 200 || this.status === 400) {
-          console.log(response.content.message);
           document.getElementById("register_response").innerText =
             response.content.message;
         } else {

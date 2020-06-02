@@ -58,6 +58,7 @@ class UserController {
     const { userId, body: userContent } = data;
     try {
       const content = new this.database.User(userContent);
+      content.password = await content.hashPassword();
       await content.save();
       const log = new this.database.UsersLog({
         method: "create",

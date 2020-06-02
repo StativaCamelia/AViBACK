@@ -1384,7 +1384,7 @@
         justify-content: center;
     }
 
-    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"] {
+    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"]{
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1425,7 +1425,7 @@
         margin: 0;
     }
     
-    #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"]{
+    #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"]{
         margin: 0;
     }
 
@@ -1729,5 +1729,77 @@
         border: 4px groove #041F60;
         border-radius: 8px;
         box-shadow: 5px 6px #888888;
+    }
+
+    .control_users{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        height: auto;
+        margin: 8vh 0 12vh 0;
+    }
+
+    .first_div_users{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30%;
+        height: 60vh;
+    }
+    .second_div_users{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 60%;
+        height: auto;
+    }
+
+    .control_user{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 70%;
+        height: 10vh;
+    }
+    .control_user h3:hover, h3#active_user{
+        cursor: pointer;
+        border-bottom: 3px solid #041F60;
+    }
+    .control_user h3{
+        font-family: Novecentosanswide;
+        font-size: 1.2rem;
+        color: #041F60;
+        font-weight: bold;
+    }
+
+    .dash_user_form{
+        flex-direction: column;
+        justify-content: space-between;
+        align-self: center;
+        width: 70%;
+        height: auto;
+    }
+    .dash_user_all{
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-self: center;
+        width: 70%;
+        height: auto;
+    }
+    .user_input{
+        width: 70%;
+        height: auto;
+        align-self: center;
+    }
+    .user_label{
+        font-family: Novecentosanswide;
+        font-size: 1.2rem;
+        color: #041F60;
+        text-align: left;
+        font-weight: bold;
+        width: 70%;
+        align-self: center;
     }
 }
