@@ -328,14 +328,14 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
         function () {
           pop.style.display = "flex";
           pop.style.top = window.scrollY + 140 + "px";
-          left.innerText =
+          left.innerHTML =
             '<div class = "pop_text"><p>' +
             dict_names[el.getAttribute("id")] +
             "</p>";
           if (el.hasAttribute("count"))
-            left.innerText += "<p>" + el.getAttribute("count") + "</p></div>";
+            left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
 
-          left.innerText +=
+          left.innerHTML +=
             '<div class = "pop_img"><img src="' +
             dict_img[el.getAttribute("id")] +
             '"></div>';
@@ -378,14 +378,14 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
           pop.style.display = "flex";
           pop.style.left = iconPos.right + "px";
           pop.style.top = window.scrollY + iconPos.top + "px";
-          left.innerText =
+          left.innerHTML =
             '<div class = "pop_text"><p>' +
             dict_names[el.getAttribute("id")] +
             "</p>";
           if (el.hasAttribute("count"))
-            left.innerText += "<p>" + el.getAttribute("count") + "</p></div>";
+            left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
 
-          left.innerText +=
+          left.innerHTML +=
             '<div class = "pop_img"><img src="' +
             dict_img[el.getAttribute("id")] +
             '"></div>';
@@ -413,14 +413,14 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
           pop.style.display = "flex";
           pop.style.left = iconPos.right + "px";
           pop.style.top = window.scrollY + iconPos.top + "px";
-          left.innerText =
+          left.innerHTML =
             '<div class = "pop_text"><p>' +
             dict_names[el.getAttribute("id")] +
             "</p>";
           if (el.hasAttribute("count"))
-            left.innerText += "<p>" + el.getAttribute("count") + "</p></div>";
+            left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
 
-          left.innerText +=
+          left.innerHTML +=
             '<div class = "pop_img"><img src="' +
             dict_img[el.getAttribute("id")] +
             '"></div>';

@@ -123,11 +123,11 @@ document.addEventListener("DOMContentLoaded", function showPop(event) {
       pop.style.display = "block";
       pop.style.left = iconPos.right + "px";
       pop.style.top = window.scrollY + iconPos.top + "px";
-      pop.innerText =
+      pop.innerHTML =
         '<div class = "pop_text"><p>' +
         dict_names[el.getAttribute("id")] +
         "</p></div>";
-      pop.innerText +=
+      pop.innerHTML +=
         '<div class = "pop_img"><img src="' +
         dict_img[el.getAttribute("id")] +
         '"></div>';
