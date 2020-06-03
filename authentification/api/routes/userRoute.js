@@ -10,7 +10,7 @@ function sendAnswer(success, statusCode, content, res, handler) {
     });
     res.write(JSON.stringify({ content }, null, 2));
     res.end();
-  }else{
+  } else {
     if (handler === "loginPost") {
       if (statusCode === 200) {
         res.setHeader("auth-token", content.userObj.token);
@@ -18,7 +18,8 @@ function sendAnswer(success, statusCode, content, res, handler) {
       res.writeHead(statusCode, {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
+        "Access-Control-Allow-Methods":
+          "POST, GET, OPTIONS, PATCH, PUT, DELETE",
         "Access-Control-Allow-Headers": "auth-token, Content-Type",
       });
       res.write(JSON.stringify({ content }, null, 2));
@@ -60,10 +61,11 @@ exports.getRes = async (req, parsedReq, res) => {
   }
   if (path.endsWith("/login") && method === "post") {
     try {
-      const { success, statusCode, content } = await userController.handlerPostLogin(
-        parsedReq,
-        res
-      );
+      const {
+        success,
+        statusCode,
+        content,
+      } = await userController.handlerPostLogin(parsedReq, res);
       sendAnswer(success, statusCode, content, res, "loginPost");
     } catch (error) {
       console.log(error);
@@ -71,10 +73,11 @@ exports.getRes = async (req, parsedReq, res) => {
   } else {
     if (path.endsWith("/login") && method === "get") {
       try {
-        const { success, statusCode, content } = await userController.handlerGetLogin(
-          req,
-          res
-        );
+        const {
+          success,
+          statusCode,
+          content,
+        } = await userController.handlerGetLogin(req, res);
         sendAnswer(success, statusCode, content, res, "loginGet");
       } catch (error) {
         console.log(error);
@@ -83,10 +86,11 @@ exports.getRes = async (req, parsedReq, res) => {
   }
   if (path.endsWith("/register") && method === "post") {
     try {
-      const { success, statusCode, content } = await userController.handlerPostRegister(
-        parsedReq,
-        res
-      );
+      const {
+        success,
+        statusCode,
+        content,
+      } = await userController.handlerPostRegister(parsedReq, res);
       sendAnswer(success, statusCode, content, res, "register");
     } catch (error) {
       console.log(error);
@@ -140,7 +144,7 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("/users") && method === "patch"){
+  } else if (path.endsWith("/users") && method === "patch") {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
@@ -155,13 +159,13 @@ exports.getRes = async (req, parsedReq, res) => {
       }
     } catch (error) {
       sendAnswerAPI(
-          false,
-          { error: { message: "Internal Error" } },
-          res,
-          (statusCode = 501)
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
       );
     }
-  } else if (path.endsWith("/users") && method === "delete"){
+  } else if (path.endsWith("/users") && method === "delete") {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
@@ -175,13 +179,13 @@ exports.getRes = async (req, parsedReq, res) => {
       }
     } catch (error) {
       sendAnswerAPI(
-          false,
-          { error: { message: "Internal Error" } },
-          res,
-          (statusCode = 501)
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
       );
     }
-  } else if (path.endsWith("/users") && method === "get"){
+  } else if (path.endsWith("/users") && method === "get") {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
@@ -196,10 +200,10 @@ exports.getRes = async (req, parsedReq, res) => {
     } catch (error) {
       console.log(error.message);
       sendAnswerAPI(
-          false,
-          { error: { message: "Internal error" } },
-          res,
-          (statusCode = 501)
+        false,
+        { error: { message: "Internal error" } },
+        res,
+        (statusCode = 501)
       );
     }
   } else if (path.endsWith("authorization") && method === "get") {
@@ -232,7 +236,7 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("/users") && method === "post"){
+  } else if (path.endsWith("/users") && method === "post") {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
@@ -248,13 +252,13 @@ exports.getRes = async (req, parsedReq, res) => {
     } catch (error) {
       console.log(error.message);
       sendAnswerAPI(
-          false,
-          { error: { message: "Internal error" } },
-          res,
-          (statusCode = 501)
+        false,
+        { error: { message: "Internal error" } },
+        res,
+        (statusCode = 501)
       );
     }
-  }else if(path.endsWith("/general") && method === "get"){
+  } else if (path.endsWith("/general") && method === "get") {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
@@ -266,10 +270,10 @@ exports.getRes = async (req, parsedReq, res) => {
     } catch (error) {
       console.log(error.message);
       sendAnswerAPI(
-          false,
-          { error: { message: "Internal error" } },
-          res,
-          (statusCode = 501)
+        false,
+        { error: { message: "Internal error" } },
+        res,
+        (statusCode = 501)
       );
     }
   }

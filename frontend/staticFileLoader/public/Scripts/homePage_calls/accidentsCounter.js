@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function updateCounter(event) {
     const count = document.querySelector(".counter_numbers p");
     const target = count.getAttribute("data-target");
     setTimeout(function () {
-      count.innerHTML = i;
+      count.innerText = i;
       i++;
       if (i < target) {
         counterInc();

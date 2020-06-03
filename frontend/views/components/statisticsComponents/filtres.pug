@@ -228,4 +228,7 @@
         .submit_button
             input#reset_button(form='filters_form' type='reset' value='Reset')
             input#submit_button(form='filters_form' type='submit' value='Submit')
+    .weather_filtre
+        input#dataset.dataset_save_select(type='text' name='save_dataset' value='' placeholder="Enter Dataset Name")
+        input#save_dataset(form='filters_form' type='button' value='Save')
             

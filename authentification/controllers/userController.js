@@ -101,18 +101,12 @@ class UserController {
 
   async updateUser(payload) {
     try {
-      const options = {
-        upsert: true,
-        new: true,
-        useFindAndModify: false,
-      };
       const { userId, body: newContent } = payload;
       const content = await this.database.User.findOneAndUpdate(
         {
-          _id: mongoose.Types.ObjectId(userId),
+          _id: userId,
         },
-        newContent,
-        options
+        newContent
       );
       const log = new this.database.UsersLog({
         method: "update",
@@ -129,7 +123,7 @@ class UserController {
     try {
       const content = await this.database.User.deleteMany({});
       const usersNumber = await this.getUsersNumber().data.content;
-      for(let i = 0; i < usersNumber; i++){
+      for (let i = 0; i < usersNumber; i++) {
         const log = new this.database.UsersLog({
           method: "delete",
           date: new Date(),
@@ -142,17 +136,17 @@ class UserController {
     }
   }
 
-  async getUsersNumber(){
-    try{
+  async getUsersNumber() {
+    try {
       const content = await this.database.User.find({}).countDocuments();
       return { success: true, data: { content } };
-    }catch (error) {
+    } catch (error) {
       return { success: false, data: { error } };
     }
   }
 
-  async getUsersGeneralDetails(){
-    try{
+  async getUsersGeneralDetails() {
+    try {
       let content = {};
       const usersNumber = await this.getUsersNumber();
       const newUsers = await this.database.UsersLog.findByMethod("create");
@@ -164,7 +158,7 @@ class UserController {
       content.deletedUsersNumber = deletedUsers;
       content.updatedUsersNumber = updatedUsers;
       return { success: true, data: { content } };
-    }catch (error) {
+    } catch (error) {
       return { success: false, data: { error } };
     }
   }
@@ -190,7 +184,7 @@ class UserController {
       email: body.email,
       username: body.username,
       password: body.password,
-      type: body.type
+      type: body.type,
     });
     let message = user.validateUserRegister();
     if (message !== "") {
@@ -266,7 +260,7 @@ class UserController {
           content: { message },
         };
       } else {
-        try{
+        try {
           const userObj = {
             token: message,
           };
@@ -275,7 +269,7 @@ class UserController {
           user.auth_tokens.push(message);
           user.save();
           return { success: true, statusCode: 200, content: { userObj } };
-        }catch(error){
+        } catch (error) {
           return { success: false, statusCode: 400, content: error };
         }
       }
@@ -287,10 +281,7 @@ class UserController {
     const tokenFromHeaders = req.headers["auth-token"];
     if (tokenFromHeaders) {
       try {
-        const verified = jwt.verify(
-          tokenFromHeaders,
-          process.env.JWT_SECRET
-        );
+        const verified = jwt.verify(tokenFromHeaders, process.env.JWT_SECRET);
         const token = { auth_token: tokenFromHeaders };
         const isAdmin = await this.verifyAdmin(token.auth_token);
         if (isAdmin.success) {

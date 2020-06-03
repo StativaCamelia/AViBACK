@@ -604,13 +604,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let datasetsSelect = document.getElementById("list_datasets");
     let option = document.createElement("option");
     option.value = datasetsSend.length;
-    option.innerHTML = "Dataset" + datasetsSend.length;
+    option.innerText = "Dataset" + datasetsSend.length;
     datasetsSelect.appendChild(option);
   }
 
   function setDatasetTitle(index) {
     let title = document.querySelector("#filters_form>h2");
-    title.innerHTML = "Dataset:" + (index + 1);
+    title.innerText = "Dataset:" + (index + 1);
   }
 
   function handlerAddFiltres(e) {
@@ -641,16 +641,16 @@ document.addEventListener("DOMContentLoaded", function () {
       dataset.Start_Hour_1 != undefined ||
       dataset.Start_Hour_2 != undefined;
     existsFiltres
-      ? (message.innerHTML = "")
-      : (message.innerHTML = "You should select a time interval");
+      ? (message.innerText = "")
+      : (message.innerText = "You should select a time interval");
     return existsFiltres;
   }
 
   function verifyGroupBy() {
     if (groupBy.value === "" && datasetsSend.length === 0) {
-      message.innerHTML =
+      message.innerText =
         "You should select a group by value for your interval";
-    } else message.innerHTML = "";
+    } else message.innerText = "";
     return groupBy.value === "" && datasetsSend.length === 0 ? false : true;
   }
 

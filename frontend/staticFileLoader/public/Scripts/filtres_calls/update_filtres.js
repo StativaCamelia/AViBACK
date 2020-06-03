@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function updateCounties(event) {
 
   function change_options(location_type, response) {
     var selector = document.querySelector("#" + location_type);
-    selector.innerHTML =
+    selector.innerText =
       '<option value="' +
       location_type +
       '"selected hidden>' +

@@ -573,13 +573,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let datasetsSelect = document.getElementById("list_datasets");
     let option = document.createElement("option");
     option.value = datasetsSend.length;
-    option.innerHTML = "Dataset" + datasetsSend.length;
+    option.innerText = "Dataset" + datasetsSend.length;
     datasetsSelect.appendChild(option);
   }
 
   function setDatasetTitle(index) {
     let title = document.querySelector("#filters_form>h2");
-    title.innerHTML = "Dataset:" + (index + 1);
+    title.innerText = "Dataset:" + (index + 1);
   }
 
   function handlerAddFiltres(e) {
@@ -605,10 +605,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function setMessage(component, existsFiltres) {
     if (existsFiltres) {
-      component.innerHTML = "";
+      component.innerText = "";
       correctChangeInterval = true;
     } else {
-      component.innerHTML = "You should select a time interval";
+      component.innerText = "You should select a time interval";
       correctChangeInterval = false;
     }
   }
@@ -627,7 +627,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setGroupByMessage(component, type) {
-    component.innerHTML =
+    component.innerText =
       "You should select a group by value for your interval";
     if (type === "Update") open_time_change = true;
   }
@@ -640,7 +640,7 @@ document.addEventListener("DOMContentLoaded", function () {
       continueGraph !== "Update"
         ? setGroupByMessage(message, "Submit")
         : setGroupByMessage(messageUpper, "Update");
-    } else continueGraph !== "Update" ? (message.innerHTML = "") : (messageUpper.innerHTML = "");
+    } else continueGraph !== "Update" ? (message.innerText = "") : (messageUpper.innerText = "");
     return groupBy.value === "" &&
       (datasetsSend.length === 0 || continueGraph === "Update")
       ? false

@@ -1,6 +1,8 @@
 const request = require("supertest");
 const router = require("../index");
 
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWQ2NTdiOTM1MTY4ZTE5NjgwNDE2MDkiLCJpYXQiOjE1OTExMDU1MjJ9.OIUA8ToDjS7AFpcF7l6DcRia3hfPYxEUozHr2QTuyjE";
 describe("GET /accidents", function () {
   it("respond with json containing a list of all accidents", function (done) {
     request(router)
@@ -18,10 +20,7 @@ describe("POST /accidents", function () {
   it("respond with 201 created", function (done) {
     request(router)
       .post("/accidents")
-      .set(
-        "auth-token",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFjOTBhNjJmZWI4OTI0MmNkOTE5NTIiLCJpYXQiOjE1OTEwMzE0NzJ9.Va8ZbFP_FWUdJHtTu-MgqX6Nh8_oV_Q8-LnRN5XOIgA"
-      )
+      .set("auth-token", token)
       .send(data)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
@@ -40,10 +39,7 @@ describe("PATCH /accidents?accidentId = 5ec65d04607fb826d4b69277", function () {
   it("respond with 204 updated", function (done) {
     request(router)
       .patch("/accidents")
-      .set(
-        "auth-token",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWFjOTBhNjJmZWI4OTI0MmNkOTE5NTIiLCJpYXQiOjE1OTEwMzE0NzJ9.Va8ZbFP_FWUdJHtTu-MgqX6Nh8_oV_Q8-LnRN5XOIgA"
-      )
+      .set("auth-token", token)
       .send(data)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)

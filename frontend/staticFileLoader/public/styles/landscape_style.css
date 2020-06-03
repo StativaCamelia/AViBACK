@@ -1191,6 +1191,19 @@
         padding: 12px;
     }
 
+    .dataset_save_select {
+        z-index: 0;
+        text-align: start;
+        height: 0.2vh;
+        font-size: x-small;
+        box-shadow: 0.5px 0.5px #888888;
+        width: 16%;
+        border-radius: 3px;
+        color: black;
+        font-family: Novecentosanswide;
+        padding: 12px;
+    }
+
     .down_filtres, .time_filtres {
         display: flex;
         flex-direction: column;
@@ -1415,6 +1428,27 @@
         font-family: Novecentosanswide;
         font-size: 10px;
         padding: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #e1e2ed;
+        width: auto;
+        align-self: center;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+    }
+
+    #save_dataset{
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: whitesmoke;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        color: black;
+        font-family: Novecentosanswide;
+        font-size: 10px;
+        padding-left: 20px;
+    padding-right: 20px;
         font-weight: bold;
         text-decoration: none;
         text-shadow: 0px 1px 0px #e1e2ed;

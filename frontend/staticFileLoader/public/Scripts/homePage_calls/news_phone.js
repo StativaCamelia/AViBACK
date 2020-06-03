@@ -9,14 +9,14 @@ document.addEventListener("DOMContentLoaded", function updateNews(event) {
     for (let i = 1; i <= 6; i++) {
       element = document.getElementById("newss" + i);
       try {
-        element.innerHTML = x[i + value - 1].firstChild.nodeValue;
+        element.innerText = x[i + value - 1].firstChild.nodeValue;
       } catch (error) {}
     }
     setTimeout(function () {
       for (let i = 1; i <= 6; i++) {
         element = document.getElementById("newss" + i);
         try {
-          element.innerHTML = x[i + value - 1].firstChild.nodeValue;
+          element.innerText = x[i + value - 1].firstChild.nodeValue;
         } catch (error) {}
       }
       value += 1;

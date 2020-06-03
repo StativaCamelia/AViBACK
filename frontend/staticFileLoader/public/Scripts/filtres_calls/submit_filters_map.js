@@ -536,12 +536,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const medium = document.querySelector("p.medium");
     const medium1 = document.querySelector("p.medium1");
     const high = document.querySelector("p.high");
-    low.innerHTML = boudaries.first[0] + "-" + Math.round(boudaries.first[1]);
-    medium.innerHTML =
+    low.innerText = boudaries.first[0] + "-" + Math.round(boudaries.first[1]);
+    medium.innerText =
       Math.round(boudaries.second[0]) + "-" + Math.round(boudaries.second[1]);
-    medium1.innerHTML =
+    medium1.innerText =
       Math.round(boudaries.third[0]) + "-" + Math.round(boudaries.third[1]);
-    high.innerHTML =
+    high.innerText =
       Math.round(boudaries.fourth[0]) + "-" + Math.round(boudaries.fourth[1]);
   }
 
@@ -555,13 +555,13 @@ document.addEventListener("DOMContentLoaded", function () {
     var el = document.querySelectorAll("#states > #" + content.State)[0];
     pop.style.display = "flex";
     pop.style.top = window.scrollY + 140 + "px";
-    left.innerHTML =
+    left.innerText =
       '<div class = "pop_text"><p>' +
       dict_names[el.getAttribute("id")] +
       "</p>";
     if (el.hasAttribute("count"))
-      left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
-    left.innerHTML +=
+      left.innerText += "<p>" + el.getAttribute("count") + "</p></div>";
+    left.innerText +=
       '<div class = "pop_img"><img src="' +
       dict_img[el.getAttribute("id")] +
       '"></div>';
