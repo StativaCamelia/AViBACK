@@ -1397,7 +1397,7 @@
         justify-content: center;
     }
 
-    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"]{
+    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="button"]{
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1459,7 +1459,7 @@
         margin: 0;
     }
     
-    #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"]{
+    #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="submit"]{
         margin: 0;
     }
 

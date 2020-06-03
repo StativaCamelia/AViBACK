@@ -1,15 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
   const url = "http://localhost:5003/users";
   const authToken = localStorage.getItem("auth-token");
-  function send_request_create(emailValue, usernameValue, passwordValue) {
+  function sendRequestCreate(emailValue, usernameValue, passwordValue, typeValue) {
     let xhttp = new XMLHttpRequest();
     xhttp.open("post", url, true);
-    xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
     const values = {
       email: emailValue,
       username: usernameValue,
       password: passwordValue,
+      type: typeValue
     };
     xhttp.send(JSON.stringify(values));
     xhttp.onreadystatechange = function () {
@@ -25,9 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  function send_request_get_by_id(userId) {
+  function sendRequestGetById(userIdValue) {
     let xhttp = new XMLHttpRequest();
-    const urlWithId = url + "?userId=" + userId;
+    const urlWithId = url + "?userId=" + userIdValue;
     xhttp.open("get", urlWithId, true);
     xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
     xhttp.send();
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  function send_request_get_all() {
+  function sendRequestGetAll() {
     let xhttp = new XMLHttpRequest();
     xhttp.open("get", url, true);
     xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
@@ -60,6 +61,63 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
+  function sendRequestUpdate(userIdValue,user) {
+    let xhttp = new XMLHttpRequest();
+    const urlWithId = url + "?userId=" + userIdValue;
+    xhttp.open("put", urlWithId, true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send(JSON.stringify(user));
+    xhttp.onreadystatechange = function () {
+      if (this.readyState === 4) {
+        const response = JSON.parse(this.responseText);
+        if (this.status === 200) {
+          updateUserMessage.innerText = "USER UPDATED!";
+        } else {
+          console.log(response.content);
+          updateUserMessage.innerText = "USER NOT UPDATED!";
+        }
+      }
+    };
+  }
+
+  function sendRequestDeleteById(userIdValue) {
+    let xhttp = new XMLHttpRequest();
+    const urlWithId = url + "?userId=" + userIdValue;
+    xhttp.open("delete", urlWithId, true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState === 4) {
+        const response = JSON.parse(this.responseText);
+        if (this.status === 200) {
+          deleteUserMessage.innerText = "USER DELETED!";
+        } else {
+          console.log(response.content);
+          deleteUserMessage.innerText = "USER NOT DELETED!";
+        }
+      }
+    };
+  }
+
+  function sendRequestDeleteAll() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("delete", url, true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState === 4) {
+        const response = JSON.parse(this.responseText);
+        if (this.status === 200) {
+          deleteUsersMessage.innerText = "ALL USERS DELETED!";
+        } else {
+          console.log(response.content);
+          deleteUsersMessage.innerText = "USERS NOT DELETED!";
+        }
+      }
+    };
+  }
+
   const createUser = document.getElementById("create_user");
   const childCreateUser = createUser.childNodes;
   const readUser = document.getElementById("read_user");
@@ -67,10 +125,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const readUsers = document.getElementById("read_users");
   const childReadUsers = readUsers.childNodes;
   const updateUser = document.getElementById("update_user");
+  const childUpdateUser = updateUser.childNodes;
   const deleteUser = document.getElementById("delete_user");
+  const childDeleteUser = deleteUser.childNodes;
   const deleteAllUsers = document.getElementById("delete_all_users");
+  const childDeleteUsers = deleteAllUsers.childNodes;
 
-  function resetCreateForm() {
+  function resetCreateUserForm() {
     createUserMessage.innerText = "";
     userFormCreate.style.display = "none";
     childCreateUser[0].id = "";
@@ -81,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
     createUserEmail.value = "";
     createUserUsername.value = "";
     createUserPassword.value = "";
+    createUserType.value = "";
   }
 
   function resetGetUserForm() {
@@ -96,17 +158,48 @@ document.addEventListener("DOMContentLoaded", function () {
     childReadUsers[0].id = "";
   }
 
+  function resetUpdateUserForm(){
+    updateUserMessage.innerText = "";
+    userFormUpdate.style.display = "none";
+    childUpdateUser[0].id = "";
+    resetUpdateUserFields();
+  }
+
+  function resetUpdateUserFields() {
+    updateUserId.value = "";
+    updateUserEmail.value = "";
+    updateUserUsername.value = "";
+    updateUserType.value = "";
+  }
+
+  function resetDeleteUserForm() {
+    deleteUserId.value = "";
+    childDeleteUser[0].id = "";
+    userFormDeleteUser.style.display = "none";
+    deleteUserMessage.innerText = "";
+  }
+
+  function resetDeleteUsersForm() {
+    childDeleteUsers[0].id = "";
+    deleteAll.style.display = "none";
+    deleteUsersMessage.innerText = "";
+  }
+
   //CREATE USER
   const userFormCreate = document.getElementById("user_form_create");
   const createUserMessage = document.getElementById("create_user_message");
   const createUserEmail = document.getElementById("create_user_email");
   const createUserUsername = document.getElementById("create_user_username");
   const createUserPassword = document.getElementById("create_user_password");
+  const createUserType = document.getElementById("create_user_type");
   const submitCreateUser = document.getElementById("submit_create_user");
 
   createUser.addEventListener("click", () => {
     resetGetUserForm();
     resetGetAllUsers();
+    resetUpdateUserForm();
+    resetDeleteUserForm();
+    resetDeleteUsersForm();
     childCreateUser[0].id = "active_user";
     userFormCreate.style.display = "flex";
     submitCreateUser.addEventListener("click", (e) => {
@@ -114,7 +207,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const emailValue = createUserEmail.value;
       const usernameValue = createUserUsername.value;
       const passwordValue = createUserPassword.value;
-      send_request_create(emailValue, usernameValue, passwordValue);
+      const typeValue = createUserType.value;
+      sendRequestCreate(emailValue, usernameValue, passwordValue, typeValue);
     });
   });
 
@@ -124,14 +218,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const submitGetUser = document.getElementById("submit_get_user");
   const getUserResult = document.getElementById("get_user_result");
   readUser.addEventListener("click", () => {
-    resetCreateForm();
+    resetCreateUserForm();
     resetGetAllUsers();
+    resetUpdateUserForm();
+    resetDeleteUserForm();
+    resetDeleteUsersForm();
     childReadUser[0].id = "active_user";
     userFormGetUser.style.display = "flex";
     submitGetUser.addEventListener("click", (e) => {
       e.preventDefault();
-      const userId = getUserId.value;
-      send_request_get_by_id(userId);
+      const userIdValue = getUserId.value;
+      sendRequestGetById(userIdValue);
     });
   });
   function createGetUserResult(user) {
@@ -153,11 +250,14 @@ document.addEventListener("DOMContentLoaded", function () {
   //GET ALL USERS
   const getAllUsers = document.getElementById("get_all_users");
   readUsers.addEventListener("click", () => {
-    resetCreateForm();
+    resetCreateUserForm();
     resetGetUserForm();
+    resetUpdateUserForm();
+    resetDeleteUserForm();
+    resetDeleteUsersForm();
     childReadUsers[0].id = "active_user";
     getAllUsers.style.display = "flex";
-    send_request_get_all();
+    sendRequestGetAll();
   });
 
   function createGetUsersResult(users) {
@@ -179,6 +279,77 @@ document.addEventListener("DOMContentLoaded", function () {
       getAllUsers.appendChild(div);
     }
   }
+
+  //UPDATE AN USER
+  const userFormUpdate = document.getElementById("user_form_update");
+  const updateUserId = document.getElementById("update_user_id");
+  const updateUserEmail = document.getElementById("update_user_email");
+  const updateUserUsername = document.getElementById("update_user_username");
+  const updateUserType = document.getElementById("update_user_type");
+  const submitUpdateUser = document.getElementById("submit_update_user");
+  const updateUserMessage = document.getElementById("update_user_message");
+  updateUser.addEventListener("click",() => {
+    resetCreateUserForm();
+    resetGetUserForm();
+    resetGetAllUsers();
+    resetDeleteUserForm();
+    resetDeleteUsersForm();
+    childUpdateUser[0].id = "active_user";
+    userFormUpdate.style.display = "flex";
+    submitUpdateUser.addEventListener("click",(e) => {
+      e.preventDefault();
+      const userIdValue = updateUserId.value;
+      const user = {};
+      if(updateUserEmail.value !== ""){
+        user.email = updateUserEmail.value;
+      }
+      if(updateUserUsername.value !== ""){
+        user.username = updateUserUsername.value;
+      }
+      if(updateUserType.value !== ""){
+        user.type = updateUserType.value;
+      }
+      sendRequestUpdate(userIdValue,user);
+    });
+  });
+
+  //DELETE USER BY ID
+  const userFormDeleteUser = document.getElementById("user_form_delete_user");
+  const deleteUserId = document.getElementById("delete_user_id");
+  const submitDeleteUser = document.getElementById("submit_delete_user");
+  const deleteUserMessage = document.getElementById("delete_user_message");
+  deleteUser.addEventListener("click",() => {
+    resetCreateUserForm();
+    resetGetUserForm();
+    resetGetAllUsers();
+    resetUpdateUserForm();
+    resetDeleteUsersForm();
+    childDeleteUser[0].id = "active_user";
+    userFormDeleteUser.style.display = "flex";
+    submitDeleteUser.addEventListener("click",(e) => {
+      e.preventDefault();
+      const userId = deleteUserId.value;
+      sendRequestDeleteById(userId);
+    });
+  });
+
+  //DELETE ALL USERS
+  const deleteAll = document.getElementById("delete_all");
+  const submitDeleteUsers = document.getElementById("submit_delete_users");
+  const deleteUsersMessage = document.getElementById("delete_users_message");
+  deleteAllUsers.addEventListener("click",() => {
+    resetCreateUserForm();
+    resetGetUserForm();
+    resetGetAllUsers();
+    resetUpdateUserForm();
+    resetDeleteUserForm();
+    childDeleteUsers[0].id = "active_user";
+    deleteAll.style.display = "flex";
+    submitDeleteUsers.addEventListener("click",(e) => {
+      e.preventDefault();
+      sendRequestDeleteAll();
+    });
+  });
 
   function deleteElementNodes(element) {
     while (element.firstChild) {

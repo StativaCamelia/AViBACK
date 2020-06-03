@@ -122,9 +122,9 @@ class UserController {
 
   async deleteAllUsers(req, res) {
     try {
-      const content = await this.database.User.deleteMany({});
-      const usersNumber = await this.getUsersNumber().data.content;
-      for (let i = 0; i < usersNumber; i++) {
+      const content = await this.database.User.deleteMany({type: "user"});
+      const usersDeleted = content.deletedCount;
+      for (let i = 0; i < usersDeleted; i++) {
         const log = new this.database.UsersLog({
           method: "delete",
           date: new Date(),

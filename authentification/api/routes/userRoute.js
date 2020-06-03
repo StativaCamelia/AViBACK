@@ -144,7 +144,7 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("/users") && method === "patch") {
+  } else if (path.endsWith("/users") && method === "put") {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {

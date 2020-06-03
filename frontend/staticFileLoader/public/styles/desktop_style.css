@@ -1571,7 +1571,10 @@
     #reset_all[type="button"],
     #select_radio[type="button"],
     #submit_create_user[type="submit"],
-    #submit_get_user[type="submit"]{
+    #submit_get_user[type="submit"],
+    #submit_update_user[type="submit"],
+    #submit_delete_user[type="submit"],
+    #submit_delete_users[type="button"]{
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: white;
@@ -1594,7 +1597,10 @@
     #reset_all[type="button"],
     #select_radio[type="button"],
     #submit_create_user[type="submit"],
-    #submit_get_user[type="submit"]{
+    #submit_get_user[type="submit"],
+    #submit_update_user[type="submit"],
+    #submit_delete_user[type="submit"],
+    #submit_delete_users[type="button"]{
         margin: 0;
     }
 
