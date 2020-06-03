@@ -452,7 +452,7 @@ a:active {
     opacity: 0;
 }
 
-#submit_button:hover, #back_filters:hover, #submit_checkboxes:hover, #select_all:hover, #reset_all:hover, #select_radio:hover {
+#submit_button:hover, #back_filters:hover, #submit_checkboxes:hover, #select_all:hover, #reset_all:hover, #select_radio:hover,#submit_create_user:hover,#submit_get_user:hover {
     background-color: #041F60;
     color: white;
 }
@@ -466,12 +466,22 @@ a:active {
 
 /*Control Panel*/
 
-.first_box_dash h3, .second_box_dash h3, .first_box_dash ul li, .second_box_dash ul li{
+.first_box_dash h3, .second_box_dash h3, .first_box_dash ul li, .second_box_dash ul li,.dash_user_form h3,.dash_user_form ul li,.dash_user_all ul li{
     font-family: Novecentosanswide;
     font-size: 1.2rem;
     color: #041F60;
     text-align: left;
     font-weight: bold;
+}
+.dash_user_form ul,.dash_user_all ul{
+    padding: 0;
+}
+
+#user_form_create,#user_form_get_user,#get_all_users{
+    display: none;
+}
+#create_user_message{
+    text-align: center;
 }
 
 /*OTHER*/

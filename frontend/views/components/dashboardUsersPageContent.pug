@@ -4,3 +4,33 @@ block controller_first_div
         a.control_button(href='http://localhost:5002/dashboard') GENERAL
         a.control_button#active_dash(href='http://localhost:5002/dashboard/users') USERS
         a.control_button(href='http://localhost:5002/dashboard/accidents') ACCIDENTS
+block controller_users
+    .first_div_users
+        .control_user#create_user
+            h3 CREATE AN USER
+        .control_user#read_user
+            h3 GET AN USER BY ID
+        .control_user#read_users
+            h3 GET ALL USERS
+        .control_user#update_user
+            h3 UPDATE AN USER
+        .control_user#delete_user
+            h3 DELETE AN USER BY ID
+        .control_user#delete_all_users
+            h3 DELETE ALL USERS
+    .second_div_users
+        form.dash_user_form#user_form_create
+            label.user_label(for='create_user_email') Email:
+            input#create_user_email.user_input(type='text' name='user_email' form='user_form_create' value='')
+            label.user_label(for='create_user_username') Username:
+            input#create_user_username.user_input(type='text' name='user_username' form='user_form_create' value='')
+            label.user_label(for='create_user_password') Password:
+            input#create_user_password.user_input(type='text' name='user_password' form='user_form_create' value='')
+            input.dash_user_button#submit_create_user(form='user_form_create' type='submit' value='Create')
+            h3#create_user_message
+        form.dash_user_form#user_form_get_user
+            label.user_label(for='get_user_id') User id:
+            input#get_user_id.user_input(type='text' name='user_id' form='user_form_get_user' value='')
+            input.dash_user_button#submit_get_user(form='user_form_get_user' type='submit' value='Get user')
+        .dash_user_form#get_user_result
+        .dash_user_all#get_all_users

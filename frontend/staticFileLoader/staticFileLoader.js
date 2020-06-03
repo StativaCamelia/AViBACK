@@ -16,7 +16,7 @@ class StaticFileLoader {
   async getStaticResource(req) {
     try {
       let { path } = req;
-      if(path.indexOf("/dashboard") !== -1 && path.indexOf("/dashboard_calls") === -1){
+      if(path.indexOf("/dashboard") !== -1 && (path.indexOf("/dashboard_calls") === -1 || path.indexOf("/dashboard_calls") === 18)){
         path = path.substring(10);
       }
       const filePath = pathUtils.join(__dirname, "public", path);
