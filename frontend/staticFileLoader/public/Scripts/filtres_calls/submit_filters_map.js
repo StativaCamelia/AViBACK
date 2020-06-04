@@ -425,7 +425,7 @@ document.addEventListener("DOMContentLoaded", function () {
       queryString = concatQueryString(
         queryString,
         "Severity",
-        severity.value.toString()
+        severity.value
       );
     }
     for (let i = 0; i < valuesDayComponents.length; i++) {

@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
-        if (this.status === 200 || this.status === 400) {
+        if (this.status === 201 || this.status === 400) {
           document.getElementById("register_response").innerText =
             response.content.message;
         } else {

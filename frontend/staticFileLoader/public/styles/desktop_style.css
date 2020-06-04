@@ -1574,7 +1574,13 @@
     #submit_get_user[type="submit"],
     #submit_update_user[type="submit"],
     #submit_delete_user[type="submit"],
-    #submit_delete_users[type="button"]{
+    #submit_delete_users[type="button"],
+    #submit_create_accident[type="submit"],
+    #submit_get_accident[type="submit"],
+    #submit_update_accident[type="submit"],
+    #submit_delete_accident[type="submit"],
+    #submit_delete_accidents[type="button"],
+    #submit_get_accidents[type="submit"]{
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: white;
@@ -1600,7 +1606,13 @@
     #submit_get_user[type="submit"],
     #submit_update_user[type="submit"],
     #submit_delete_user[type="submit"],
-    #submit_delete_users[type="button"]{
+    #submit_delete_users[type="button"],
+    #submit_create_accident[type="submit"],
+    #submit_get_accident[type="submit"],
+    #submit_update_accident[type="submit"],
+    #submit_delete_accident[type="submit"],
+    #submit_delete_accidents[type="button"],
+    #submit_get_accidents[type="submit"]{
         margin: 0;
     }
 
@@ -1844,6 +1856,14 @@
         height: auto;
         margin: 8vh auto 12vh auto;
     }
+    .control_accidents{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 90%;
+        height: auto;
+        margin: 8vh auto 12vh auto;
+    }
 
     .first_div_users{
         display: flex;
@@ -1852,7 +1872,16 @@
         width: 30%;
         height: 60vh;
     }
-    .second_div_users{
+
+    .first_div_accidents{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 36%;
+        height: 60vh;
+    }
+
+    .second_div_users, .second_div_accidents{
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -1861,7 +1890,7 @@
         margin: 1em 0 0 0;
     }
 
-    .control_user{
+    .control_user, .control_accident{
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -1869,23 +1898,39 @@
         height: 10vh;
     }
 
-    .control_user h3:hover, h3#active_user{
-        cursor: pointer;
-        border-bottom: 3px solid #041F60;
-    }
-
-    .control_user h3{
+    .control_user h3, .control_accident h3{
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
         font-weight: bold;
     }
 
-    .dash_user_form{
+    .control_user h3:hover, h3#active_user, .control_accident h3:hover, h3#active_accident{
+        cursor: pointer;
+        border-bottom: 3px solid #041F60;
+    }
+
+    .dash_user_form, .dash_accident_form{
         flex-direction: column;
         justify-content: space-between;
         align-self: center;
         width: 70%;
+        height: auto;
+    }
+    .dash_accident_form_create{
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
+        flex-wrap: wrap;
+        width: 100%;
+        height: auto;
+    }
+    .dash_accident_form_get{
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
+        flex-wrap: wrap;
+        width: 80%;
         height: auto;
     }
     .dash_user_all{
@@ -1896,12 +1941,17 @@
         width: 70%;
         height: auto;
     }
-    .user_input{
+    .user_input, .input_accident{
         width: 70%;
         height: auto;
         align-self: center;
     }
-    .user_label{
+    .accident_input{
+        width: 80%;
+        height: auto;
+        align-self: center;
+    }
+    .user_label, .label_accident{
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
@@ -1910,9 +1960,35 @@
         width: 70%;
         align-self: center;
     }
-    .dash_user_button{
+    .accident_label{
+        font-family: Novecentosanswide;
+        font-size: 1.2rem;
+        color: #041F60;
+        text-align: left;
+        font-weight: bold;
+        width: 80%;
+        align-self: center;
+    }
+    .dash_user_button, .dash_accident_button{
         width: 30%;
         align-self: center;
+        margin: 1vh 0 0 0;
+    }
+    .dash_accident_button_create{
+        width: 15%;
+        align-self: center;
+    }
+    .accident_box{
+        width: 48%;
+    }
+    .accidents_get{
+        width: 40%;
+    }
+    .accident_submit{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
         margin: 1vh 0 0 0;
     }
 }

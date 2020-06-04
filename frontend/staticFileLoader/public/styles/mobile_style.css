@@ -1345,7 +1345,8 @@
     #back_filters[type="button"],
     #submit_checkboxes[type="submit"],
     #select_all[type="button"],
-    #select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="button"] {
+    #select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="button"],
+    #submit_create_accident[type="submit"],#submit_get_accident[type="submit"],#submit_delete_accident[type="submit"],#submit_delete_accidents[type="button"], #submit_get_accidents[type="submit"]{
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1704,8 +1705,16 @@
         height: auto;
         margin: 5vh 0 12vh 0;
     }
+    .control_accidents{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        height: auto;
+        margin: 10vh 0 12vh 0;
+    }
 
-    .first_div_users{
+    .first_div_users, .first_div_accidents{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1714,7 +1723,7 @@
         margin: 0 0 2vh 0;
     }
 
-    .second_div_users{
+    .second_div_users, .second_div_accidents{
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -1723,7 +1732,7 @@
         margin: 0 auto 0 auto;
     }
 
-    .control_user{
+    .control_user, .control_accident{
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -1731,13 +1740,13 @@
         height: 100%;
         text-align: center;
     }
-    .control_user h3{
+    .control_user h3, .control_accident h3{
         font-family: Novecentosanswide;
         font-size: 0.9rem;
         color: #041F60;
         font-weight: bold;
     }
-    h3#active_user{
+    h3#active_user, h3#active_accident{
         margin-bottom: 1vh;
         border-bottom: 3px solid #041F60;
     }
@@ -1748,6 +1757,28 @@
         width: 70%;
         height: auto;
     }
+    .dash_accident_form{
+        flex-direction: column;
+        justify-content: space-between;
+        align-self: center;
+        width: 70%;
+        height: auto;
+    }
+    .dash_accident_form_create{
+        flex-direction: column;
+        justify-content: space-between;
+        align-self: center;
+        width: 100%;
+        height: auto;
+    }
+    .dash_accident_form_get{
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
+        flex-wrap: wrap;
+        width: 90%;
+        height: auto;
+    }
     .dash_user_all{
         flex-direction: row;
         justify-content: space-between;
@@ -1756,12 +1787,17 @@
         width: 70%;
         height: auto;
     }
-    .user_input{
+    .user_input, .input_accident{
         width: 70%;
         height: auto;
         align-self: center;
     }
-    .user_label{
+    .accident_input{
+        width: 90%;
+        height: auto;
+        align-self: center;
+    }
+    .user_label, .label_accident{
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
@@ -1770,9 +1806,32 @@
         width: 70%;
         align-self: center;
     }
-    .dash_user_button{
+    .accident_label{
+        font-family: Novecentosanswide;
+        font-size: 1.2rem;
+        color: #041F60;
+        text-align: left;
+        font-weight: bold;
+        width: 90%;
+        align-self: center;
+    }
+    .dash_user_button, .dash_accident_button{
         width: 30%;
         align-self: center;
+        margin: 1vh 0 0 0;
+    }
+    .accident_box{
+        width: 70%;
+        align-self: center;
+    }
+    .accidents_get{
+        width: 40%;
+    }
+    .accident_submit{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
         margin: 1vh 0 0 0;
     }
 }

@@ -1397,7 +1397,8 @@
         justify-content: center;
     }
 
-    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="button"]{
+    #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="button"],
+    #submit_create_accident[type="submit"], #submit_get_accident[type="submit"], #submit_update_accident[type="submit"],#submit_delete_accident[type="submit"],#submit_delete_accidents[type="button"], #submit_get_accidents[type="submit"]{
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1459,7 +1460,8 @@
         margin: 0;
     }
     
-    #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="submit"]{
+    #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="submit"],
+    #submit_create_accident[type="submit"],#submit_get_accident[type="submit"], #submit_update_accident[type="submit"],#submit_delete_accident[type="submit"],#submit_delete_accidents[type="button"], #submit_get_accidents[type="submit"]{
         margin: 0;
     }
 
@@ -1765,7 +1767,7 @@
         box-shadow: 5px 6px #888888;
     }
 
-    .control_users{
+    .control_users, .control_accidents{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -1774,14 +1776,14 @@
         margin: 8vh 0 12vh 0;
     }
 
-    .first_div_users{
+    .first_div_users, .first_div_accidents{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         width: 30%;
         height: 60vh;
     }
-    .second_div_users{
+    .second_div_users, .second_div_accidents{
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -1789,29 +1791,39 @@
         height: auto;
     }
 
-    .control_user{
+    .control_user, .control_accident{
         display: flex;
         flex-direction: row;
         justify-content: center;
         width: 70%;
         height: 10vh;
     }
-    .control_user h3:hover, h3#active_user{
-        cursor: pointer;
-        border-bottom: 3px solid #041F60;
-    }
-    .control_user h3{
+
+    .control_user h3, .control_accident h3{
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
         font-weight: bold;
     }
 
-    .dash_user_form{
+    .control_user h3:hover, h3#active_user, .control_accident h3:hover, h3#active_accident{
+         cursor: pointer;
+         border-bottom: 3px solid #041F60;
+     }
+
+    .dash_user_form, .dash_accident_form_create, .dash_accident_form{
         flex-direction: column;
         justify-content: space-between;
         align-self: center;
         width: 70%;
+        height: auto;
+    }
+    .dash_accident_form_get{
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
+        flex-wrap: wrap;
+        width: 80%;
         height: auto;
     }
     .dash_user_all{
@@ -1822,12 +1834,17 @@
         width: 70%;
         height: auto;
     }
-    .user_input{
+    .user_input, .input_accident{
         width: 70%;
         height: auto;
         align-self: center;
     }
-    .user_label{
+    .accident_input{
+        width: 70%;
+        height: auto;
+        align-self: center;
+    }
+    .user_label, .accident_label, .label_accident{
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
@@ -1835,5 +1852,16 @@
         font-weight: bold;
         width: 70%;
         align-self: center;
+    }
+    .dash_user_button, .dash_accident_button{
+        width: 30%;
+        align-self: center;
+        margin: 1vh 0 0 0;
+    }
+    .accident_box{
+        width: 48%;
+    }
+    .accidents_get{
+        width: 40%;
     }
 }

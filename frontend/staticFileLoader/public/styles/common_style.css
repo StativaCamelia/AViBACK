@@ -452,7 +452,8 @@ a:active {
     opacity: 0;
 }
 
-#submit_button:hover, #back_filters:hover, #submit_checkboxes:hover, #select_all:hover, #reset_all:hover, #select_radio:hover,#submit_create_user:hover,#submit_get_user:hover,#submit_update_user:hover,#submit_delete_user:hover,#submit_delete_users:hover {
+#submit_button:hover, #back_filters:hover, #submit_checkboxes:hover, #select_all:hover, #reset_all:hover, #select_radio:hover,#submit_create_user:hover,#submit_get_user:hover,#submit_update_user:hover,#submit_delete_user:hover,#submit_delete_users:hover,
+#submit_create_accident:hover, #submit_get_accident:hover, #submit_update_accident:hover,#submit_delete_accident:hover,#submit_delete_accidents:hover, #submit_get_accidents:hover{
     background-color: #041F60;
     color: white;
 }
@@ -466,25 +467,29 @@ a:active {
 
 /*Control Panel*/
 
-.first_box_dash h3, .second_box_dash h3, .first_box_dash ul li, .second_box_dash ul li,.dash_user_form h3,.dash_user_form ul li,.dash_user_all ul li{
+.first_box_dash h3, .second_box_dash h3, .first_box_dash ul li, .second_box_dash ul li,.dash_user_form h3,.dash_user_form ul li,.dash_user_all ul li, .dash_accident_form_create h3, .dash_accident_form_create ul li, .dash_accident_form h3, .dash_accident_form ul li{
     font-family: Novecentosanswide;
     font-size: 1.2rem;
     color: #041F60;
     text-align: left;
     font-weight: bold;
 }
-.dash_user_form h3{
+.dash_user_form h3, .dash_accident_form_create h3, .dash_accident_form h3{
     text-align: center;
 }
-.dash_user_form ul,.dash_user_all ul{
+.dash_user_form ul,.dash_user_all ul, .dash_accident_form_create ul, .dash_accident_form ul{
     padding: 0;
 }
 
 #user_form_create,#user_form_get_user,#get_all_users,#user_form_update,#user_form_delete_user,#delete_all{
     display: none;
 }
-#create_user_message{
+#create_user_message, #update_user_message, #delete_users_message, #delete_user_message, #create_accident_message, #update_accident_message, #delete_accident_message, #delete_accidents_message{
     text-align: center;
+}
+
+#accident_form_create, #accident_form_get_accident, #accident_form_update, #accident_form_delete_accident, #delete_accidents,#accident_form_get_accidents{
+    display: none;
 }
 
 /*OTHER*/

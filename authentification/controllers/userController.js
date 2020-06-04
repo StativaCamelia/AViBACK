@@ -168,7 +168,6 @@ class UserController {
     try {
       const content = await this.database.User.find({});
       for (let user of content) {
-        user._id = undefined;
         user.password = undefined;
         user._v = undefined;
         user.auth_tokens = undefined;
@@ -223,7 +222,7 @@ class UserController {
               "Succesfully registered! Please sign in and set your profile!";
             return {
               success: true,
-              statusCode: 200,
+              statusCode: 201,
               content: { message },
             };
           } catch (err) {

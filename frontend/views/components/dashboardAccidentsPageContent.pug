@@ -4,3 +4,293 @@ block controller_first_div
         a.control_button(href='http://localhost:5002/dashboard') GENERAL
         a.control_button(href='http://localhost:5002/dashboard/users') USERS
         a.control_button#active_dash(href='http://localhost:5002/dashboard/accidents') ACCIDENTS
+block controller_accidents
+    .first_div_accidents
+        .control_accident#create_accident
+            h3 CREATE AN ACCIDENT
+        .control_accident#read_accident
+            h3 GET AN ACCIDENT BY ID
+        .control_accident#read_accidents
+            h3 GET ACCIDENTS
+        .control_accident#update_accident
+            h3 UPDATE AN ACCIDENT
+        .control_accident#delete_accident
+            h3 DELETE AN ACCIDENT BY ID
+        .control_accident#delete_all_accidents
+            h3 DELETE ALL ACCIDENTS
+    .second_div_accidents
+        form.dash_accident_form_create#accident_form_create
+            .accident_box
+                label.accident_label(for='create_accident_state') State(abbr):
+                input#create_accident_state.accident_input(type='text' name='create_accident_state' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_county') County:
+                input#create_accident_county.accident_input(type='text' name='create_accident_county' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_city') City:
+                input#create_accident_city.accident_input(type='text' name='create_accident_city' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_street') Street:
+                input#create_accident_street.accident_input(type='text' name='create_accident_street' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_number') Number:
+                input#create_accident_number.accident_input(type='text' name='create_accident_number' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_timezone') Timezone:
+                input#create_accident_timezone.accident_input(type='text' name='create_accident_timezone' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_start_date') Start date:
+                input#create_accident_start_date.accident_input(type='date' name='create_accident_start_date' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_start_hour') Start hour:
+                input#create_accident_start_hour.accident_input(type='time' name='create_accident_start_hour' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_side') Side(L/R)*:
+                input#create_accident_side.accident_input(type='text' name='create_accident_side' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_weather_condition') Weather condition:
+                input#create_accident_weather_condition.accident_input(type='text' name='create_accident_weather_condition' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_wind_direction') Wind direction:
+                input#create_accident_wind_direction.accident_input(type='text' name='create_accident_wind_direction' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_temperature') Temperature(F):
+                input#create_accident_temperature.accident_input(type='number' name='create_accident_temperature' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_wind_chill') Wind Chill(F):
+                input#create_accident_wind_chill.accident_input(type='number' name='create_accident_wind_chill' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_humidity') Humidity(%):
+                input#create_accident_humidity.accident_input(type='number' name='create_accident_humidity' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_pressure') Pressure(in):
+                input#create_accident_pressure.accident_input(type='number' name='create_accident_pressure' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_visibility') Visibility(mi):
+                input#create_accident_visibility.accident_input(type='number' name='create_accident_visibility' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_precipitation') Precipitation(in):
+                input#create_accident_precipitation.accident_input(type='number' name='create_accident_precipitation' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_wind_speed') Wind speed(mph):
+                input#create_accident_wind_speed.accident_input(type='number' name='create_accident_wind_speed' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_severity') Severity(1/2/3)*:
+                input#create_accident_severity.accident_input(type='number' name='create_accident_severity' min='1' max='3' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_start_lat') Start Lat:
+                input#create_accident_start_lat.accident_input(type='number' name='create_accident_start_lat' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_start_lng') Start Lng:
+                input#create_accident_start_lng.accident_input(type='number' name='create_accident_start_lng' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_end_lat') End lat:
+                input#create_accident_end_lat.accident_input(type='number' name='create_accident_end_lat' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_end_lng') End lng:
+                input#create_accident_end_lng.accident_input(type='number' name='create_accident_end_lng' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_amenity') Amenity(true/false):
+                input#create_accident_amenity.accident_input(type='text' name='create_accident_amenity' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_bump') Bump(true/false):
+                input#create_accident_bump.accident_input(type='text' name='create_accident_bump' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_crossing') Crossing(true/false):
+                input#create_accident_crossing.accident_input(type='text' name='create_accident_crossing' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_give_way') Give way(true/false):
+                input#create_accident_give_way.accident_input(type='text' name='create_accident_give_way' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_junction') Junction(true/false):
+                input#create_accident_junction.accident_input(type='text' name='create_accident_junction' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_no_exit') No exit(true/false):
+                input#create_accident_no_exit.accident_input(type='text' name='create_accident_no_exit' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_railway') Railway(true/false):
+                input#create_accident_railway.accident_input(type='text' name='create_accident_railway' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_roundabout') Roundabout(true/false):
+                input#create_accident_roundabout.accident_input(type='text' name='create_accident_roundabout' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_station') Station(true/false):
+                input#create_accident_station.accident_input(type='text' name='create_accident_station' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_stop') Stop(true/false):
+                input#create_accident_stop.accident_input(type='text' name='create_accident_stop' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_traffic_calming') Traffic calming(true/false):
+                input#create_accident_traffic_calming.accident_input(type='text' name='create_accident_traffic_calming' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_traffic_signal') Traffic signal(true/false):
+                input#create_accident_traffic_signal.accident_input(type='text' name='create_accident_traffic_signal' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_sunrise_sunset') Sunrise/Sunset(day/night):
+                input#create_accident_sunrise_sunset.accident_input(type='text' name='create_accident_sunrise_sunset' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_civil_twilight') Civil twilight(day/night):
+                input#create_accident_civil_twilight.accident_input(type='text' name='create_accident_civil_twilight' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_nautical_twilight') Nautical twilight(day/night):
+                input#create_accident_nautical_twilight.accident_input(type='text' name='create_accident_nautical_twilight' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_astronomical_twilight') Astronomical twilight(day/night):
+                input#create_accident_astronomical_twilight.accident_input(type='text' name='create_accident_astronomical_twilight' form='accident_form_create' value='')
+            .accident_box
+                label.accident_label(for='create_accident_description') Description:
+                input#create_accident_description.accident_input(type='text' name='create_accident_description' form='accident_form_create' value='')
+            .accident_submit
+                input.dash_accident_button_create#submit_create_accident(form='accident_form_create' type='submit' value='Create')
+                h3#create_accident_message
+        form.dash_accident_form#accident_form_get_accident
+            label.label_accident(for='get_accident_id') Accident id:
+            input#get_accident_id.input_accident(type='text' name='get_accident_id' form='accident_form_get_accident' value='')
+            input.dash_accident_button#submit_get_accident(form='accident_form_get_accident' type='submit' value='Get accident')
+        .dash_accident_form#get_accident_result
+        form.dash_accident_form_get#accident_form_get_accidents
+            .accidents_get
+                label.accident_label(for='get_accidents_date1') From
+                input#get_accidents_date1.accident_input(type='date' name='get_accidents_date1' form='accident_form_get_accidents' value='')
+            .accidents_get
+                label.accident_label(for='get_accidents_date2') To
+                input#get_accidents_date2.accident_input(type='date' name='get_accidents_date2' form='accident_form_get_accidents' value='')
+            .accident_submit
+                input.dash_accident_button_create#submit_get_accidents(form='accident_form_get_accidents' type='submit' value='Get')
+                .dash_accident_form#get_accidents_result
+        form.dash_accident_form_create#accident_form_update
+            .accident_box
+                label.accident_label(for='update_accident_id') Accident id:
+                input#update_accident_id.accident_input(type='text' name='update_accident_id' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_state') State(abbr):
+                input#update_accident_state.accident_input(type='text' name='update_accident_state' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_county') County:
+                input#update_accident_county.accident_input(type='text' name='update_accident_county' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_city') City:
+                input#update_accident_city.accident_input(type='text' name='update_accident_city' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_street') Street:
+                input#update_accident_street.accident_input(type='text' name='update_accident_street' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_number') Number:
+                input#update_accident_number.accident_input(type='text' name='update_accident_number' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_timezone') Timezone:
+                input#update_accident_timezone.accident_input(type='text' name='update_accident_timezone' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_start_date') Start date:
+                input#update_accident_start_date.accident_input(type='date' name='update_accident_start_date' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_start_hour') Start hour:
+                input#update_accident_start_hour.accident_input(type='time' name='update_accident_start_hour' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_side') Side(L/R):
+                input#update_accident_side.accident_input(type='text' name='update_accident_side' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_weather_condition') Weather condition:
+                input#update_accident_weather_condition.accident_input(type='text' name='update_accident_weather_condition' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_wind_direction') Wind direction:
+                input#update_accident_wind_direction.accident_input(type='text' name='update_accident_wind_direction' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_temperature') Temperature(F):
+                input#update_accident_temperature.accident_input(type='number' name='update_accident_temperature' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_wind_chill') Wind Chill(F):
+                input#update_accident_wind_chill.accident_input(type='number' name='update_accident_wind_chill' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_humidity') Humidity(%):
+                input#update_accident_humidity.accident_input(type='number' name='update_accident_humidity' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_pressure') Pressure(in):
+                input#update_accident_pressure.accident_input(type='number' name='update_accident_pressure' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_visibility') Visibility(mi):
+                input#update_accident_visibility.accident_input(type='number' name='update_accident_visibility' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_precipitation') Precipitation(in):
+                input#update_accident_precipitation.accident_input(type='number' name='update_accident_precipitation' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_wind_speed') Wind speed(mph):
+                input#update_accident_wind_speed.accident_input(type='number' name='update_accident_wind_speed' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_severity') Severity(1/2/3):
+                input#update_accident_severity.accident_input(type='number' name='update_accident_severity' min='1' max='3' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_start_lat') Start Lat:
+                input#update_accident_start_lat.accident_input(type='number' name='update_accident_start_lat' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_start_lng') Start Lng:
+                input#update_accident_start_lng.accident_input(type='number' name='update_accident_start_lng' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_end_lat') End lat:
+                input#update_accident_end_lat.accident_input(type='number' name='update_accident_end_lat' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_end_lng') End lng:
+                input#update_accident_end_lng.accident_input(type='number' name='update_accident_end_lng' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_amenity') Amenity(true/false):
+                input#update_accident_amenity.accident_input(type='text' name='update_accident_amenity' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_bump') Bump(true/false):
+                input#update_accident_bump.accident_input(type='text' name='update_accident_bump' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_crossing') Crossing(true/false):
+                input#update_accident_crossing.accident_input(type='text' name='update_accident_crossing' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_give_way') Give way(true/false):
+                input#update_accident_give_way.accident_input(type='text' name='update_accident_give_way' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_junction') Junction(true/false):
+                input#update_accident_junction.accident_input(type='text' name='update_accident_junction' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_no_exit') No exit(true/false):
+                input#update_accident_no_exit.accident_input(type='text' name='update_accident_no_exit' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_railway') Railway(true/false):
+                input#update_accident_railway.accident_input(type='text' name='update_accident_railway' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_roundabout') Roundabout(true/false):
+                input#update_accident_roundabout.accident_input(type='text' name='update_accident_roundabout' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_station') Station(true/false):
+                input#update_accident_station.accident_input(type='text' name='update_accident_station' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_stop') Stop(true/false):
+                input#update_accident_stop.accident_input(type='text' name='update_accident_stop' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_traffic_calming') Traffic calming(true/false):
+                input#update_accident_traffic_calming.accident_input(type='text' name='update_accident_traffic_calming' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_traffic_signal') Traffic signal(true/false):
+                input#update_accident_traffic_signal.accident_input(type='text' name='update_accident_traffic_signal' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_sunrise_sunset') Sunrise/Sunset(day/night):
+                input#update_accident_sunrise_sunset.accident_input(type='text' name='update_accident_sunrise_sunset' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_civil_twilight') Civil twilight(day/night):
+                input#update_accident_civil_twilight.accident_input(type='text' name='update_accident_civil_twilight' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_nautical_twilight') Nautical twilight(day/night):
+                input#update_accident_nautical_twilight.accident_input(type='text' name='update_accident_nautical_twilight' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_astronomical_twilight') Astronomical twilight(day/night):
+                input#update_accident_astronomical_twilight.accident_input(type='text' name='update_accident_astronomical_twilight' form='accident_form_update' value='')
+            .accident_box
+                label.accident_label(for='update_accident_description') Description:
+                input#update_accident_description.accident_input(type='text' name='update_accident_description' form='accident_form_update' value='')
+            .accident_submit
+                input.dash_accident_button_create#submit_update_accident(form='accident_form_update' type='submit' value='Update')
+                h3#update_accident_message
+        form.dash_accident_form#accident_form_delete_accident
+            label.accident_label(for='delete_accident_id') Accident id:
+            input#delete_accident_id.accident_input(type='text' name='delete_accident_id' form='accident_form_delete_accident' value='')
+            input.dash_accident_button#submit_delete_accident(form='accident_form_delete_accident' type='submit' value='Delete')
+            h3#delete_accident_message
+        .dash_accident_form#delete_accidents
+            h3 Are you sure?
+            input.dash_accident_button#submit_delete_accidents(type='button' value='Yes')
+            h3#delete_accidents_message

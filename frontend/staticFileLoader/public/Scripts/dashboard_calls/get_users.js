@@ -16,10 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
-        if (this.status === 200) {
+        if (this.status === 201) {
           createUserMessage.innerText = "USER CREATED!";
         } else {
-          console.log(response.content);
+          console.log(response.error);
           createUserMessage.innerText = "USER NOT CREATED!";
         }
       }
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (this.status === 200) {
           createGetUserResult(response.content);
         } else {
-          console.log(response.content);
+          console.log(response.error);
         }
       }
     };
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (this.status === 200) {
           createGetUsersResult(response.content);
         } else {
-          console.log(response.content);
+          console.log(response.error);
         }
       }
     };
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (this.status === 200) {
           updateUserMessage.innerText = "USER UPDATED!";
         } else {
-          console.log(response.content);
+          console.log(response.error);
           updateUserMessage.innerText = "USER NOT UPDATED!";
         }
       }
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (this.status === 200) {
           deleteUserMessage.innerText = "USER DELETED!";
         } else {
-          console.log(response.content);
+          console.log(response.error);
           deleteUserMessage.innerText = "USER NOT DELETED!";
         }
       }
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (this.status === 200) {
           deleteUsersMessage.innerText = "ALL USERS DELETED!";
         } else {
-          console.log(response.content);
+          console.log(response.error);
           deleteUsersMessage.innerText = "USERS NOT DELETED!";
         }
       }
@@ -346,7 +346,7 @@ document.addEventListener("DOMContentLoaded", function () {
     childDeleteUsers[0].id = "active_user";
     deleteAll.style.display = "flex";
     submitDeleteUsers.addEventListener("click",(e) => {
-      e.preventDefault();
+      // e.preventDefault();
       sendRequestDeleteAll();
     });
   });
