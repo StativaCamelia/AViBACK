@@ -288,6 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         allDatasets.push(data);
       }
+      setGlobalDataset(allDatasets);
       var data = {
         labels: dateLabels,
         datasets: allDatasets,
@@ -381,7 +382,6 @@ document.addEventListener("DOMContentLoaded", function () {
           setVisible("#loading", false);
           setVisible("#left_cont", true);
         }
-        setGlobalDataset(content);
         createBarChart(content);
         exportFunction();
       }
@@ -389,6 +389,16 @@ document.addEventListener("DOMContentLoaded", function () {
     url = api + query;
     xhttp.open(method, url, true);
     xhttp.send();
+  }
+
+  function setGlobalDataset(receivedData) {
+    // let data = receivedData;
+    // data.forEach((element) => {
+    //   allCurrentDatasets.push(element.data);
+    // });
+    // console.log(allCurrentDatasets);
+    console.log(datasetsSend);
+    console.log(datasetsReceived);
   }
 
   function exportFunction() {
@@ -425,24 +435,23 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.removeChild(a);
   }
 
-  function generateCsvFormat(datasets) {
-    //undefined right now, get all datasets, and map them
+  function generateCsvFormat() {
     let csvRows = [];
-    let headers = Object.keys(filtersValues);
-    let selectedValues = [];
-    headers.map((key) => selectedValues.push(filtersValues[key]));
-    headers.push("Date");
-    headers.push("Accidents_No.");
-    csvRows.push(headers.join(","));
-    for (let i = 0; i < dataset.length; i++) {
+    let headers = [];
+    for (let i = 0; i < datasetsSend.length; i++) {
+      headers = Object.getOwnPropertyNames(datasetsSend[i]);
+      headers.push("Date");
+      headers.push("Accidents_No.");
+      csvRows.push(headers.join(","));
       let values = [];
-      for (let j = 0; j < selectedValues.length; j++) {
-        const escaped = ("" + selectedValues[j]).replace(/"/g, '\\"');
-        values.push(`"${escaped}"`);
+      values = Object.values(datasetsSend[i]);
+      let currentDataset = datasetsReceived[i];
+      for (let j = 0; j < datasetsReceived[i].length; j++) {
+        values.push(`${currentDataset[j]._id}`);
+        values.push(`${currentDataset[j].count}`);
       }
-      values.push(`${dataset[i]._id}`);
-      values.push(`${dataset[i].count}`);
       csvRows.push(values.join(","));
+      console.log(csvRows);
     }
     return csvRows.join("\n");
   }
