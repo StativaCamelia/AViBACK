@@ -122,7 +122,7 @@ class UserController {
 
   async deleteAllUsers(req, res) {
     try {
-      const content = await this.database.User.deleteMany({type: "user"});
+      const content = await this.database.User.deleteMany({ type: "user" });
       const usersDeleted = content.deletedCount;
       for (let i = 0; i < usersDeleted; i++) {
         const log = new this.database.UsersLog({
@@ -264,10 +264,6 @@ class UserController {
           const userObj = {
             token: message,
           };
-          const { username } = body;
-          const user = await this.database.User.findOne({ username: username });
-          user.auth_tokens.push(message);
-          user.save();
           return { success: true, statusCode: 200, content: { userObj } };
         } catch (error) {
           return { success: false, statusCode: 400, content: error };
@@ -322,7 +318,8 @@ class UserController {
   //AUTHORIZATION
   async verifyAdmin(auth_token) {
     try {
-      const user = await this.database.User.findByToken(auth_token);
+      const userId = jwt.verify(auth_token, process.env.JWT_SECRET);
+      const user = await this.database.User.findOne({ _id: userId });
       if (user) {
         if (user.type === "admin") return { success: true, data: user };
         else return { success: false };
