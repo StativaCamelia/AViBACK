@@ -288,7 +288,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         allDatasets.push(data);
       }
-      setGlobalDataset(allDatasets);
       var data = {
         labels: dateLabels,
         datasets: allDatasets,
@@ -391,16 +390,6 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.send();
   }
 
-  function setGlobalDataset(receivedData) {
-    // let data = receivedData;
-    // data.forEach((element) => {
-    //   allCurrentDatasets.push(element.data);
-    // });
-    // console.log(allCurrentDatasets);
-    console.log(datasetsSend);
-    console.log(datasetsReceived);
-  }
-
   function exportFunction() {
     exportData.style.display = "flex";
     csvExport.addEventListener("click", handlerCsvExport);
@@ -412,7 +401,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   async function handlerCsvExport() {
     const csvData = generateCsvFormat();
-    //get all the datasets, send them ^
     downloadCsv(csvData);
     csvExport.removeEventListener("click", handlerCsvExport);
   }
@@ -451,7 +439,6 @@ document.addEventListener("DOMContentLoaded", function () {
         values.push(`${currentDataset[j].count}`);
       }
       csvRows.push(values.join(","));
-      console.log(csvRows);
     }
     return csvRows.join("\n");
   }
