@@ -1363,7 +1363,7 @@
         align-self: center;
         display: flex;
         flex-direction: row;
-        margin: 4vw;
+        margin: 0;
     }
 
     #back_filters[type="button"],

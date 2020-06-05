@@ -1,25 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const api = "http://localhost:5004/accidents?";
   const method = "GET";
-  const criterionMoreValues = [
-    "State",
-    "County",
-    "City",
-    "Street",
-    "Number",
-    "Timezone",
-    "Weather",
-    "Wind direction",
-    "Temperature",
-    "Wind chill",
-    "Wind speed",
-    "Humidity",
-    "Pressure",
-    "Visibility",
-    "Precipitation",
-    "Severity",
-    "Hour",
-  ];
   const lowerValues = [
     "Temperature1",
     "Wind_Chill1",
@@ -83,7 +64,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function send_request(query) {
-    var xhttp = new XMLHttpRequest();
+    let xhttp = new XMLHttpRequest();
+    const url = api + query;
+    xhttp.open(method, url, true);
+    xhttp.send();
     xhttp.onreadystatechange = function () {
       setVisible("#left_cont", false);
       setVisible("#loading", true);
@@ -94,21 +78,15 @@ document.addEventListener("DOMContentLoaded", function () {
         representResponseData(content);
       }
     };
-    url = api + query;
-    xhttp.open(method, url, true);
-    xhttp.send();
   }
 
   function representResponseData(content) {
-    if (
-      content.length > 2 &&
-      criterionMoreValues.indexOf(pieCriteria.value) !== -1
-    ) {
-      generateValuesList(content);
-    } else {
-      if (pieCriteria.value === "Accident date") {
-        generateAccidentDateOptions(content);
-      } else {
+    if (pieCriteria.value === "Accident date") {
+      generateAccidentDateOptions(content);
+    }else{
+      if(content.length > 2){
+        generateValuesList(content);
+      }else{
         generatePie(content);
       }
     }
@@ -251,6 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const csvExport = document.getElementById("csv_export");
   const pngExport = document.getElementById("png_export");
   const svgExport = document.getElementById("svg_export");
+  const errorMessageResult = document.getElementById("error_message_result");
   const pie = document.getElementById("svg_pie");
   let sentFilters;
   let criterion;
@@ -261,9 +240,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const criteria = ["State","County","City","Street","Number","Road side","Timezone","Weather","Wind direction","Wind chill","Wind speed","Humidity","Pressure","Visibility","Precipitation","Accident date","Hour","Severity","Sunrise/Sunset","Civil twilight","Nautical twilight","Astronomical twilight"];
     createCriterionOptions(criteria);
     generatePie([]);
-    let errorMessageResult = document.getElementById("error_message_result");
-    errorMessageResult.innerText = "";
+    deleteErrorMessage();
     exportData.style.display = "none";
+    message.innerText = "";
     resetSelectsToDefaultValues();
   });
 
@@ -539,6 +518,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function generateAccidentDateOptions(content) {
+    deleteErrorMessage();
     nextStepFilters();
     radioPie.style.display = "flex";
     const okButton = document.getElementById("select_radio");
@@ -566,6 +546,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function generateValuesList(content, dateField) {
+    deleteErrorMessage();
     nextStepFilters();
     checkboxesButtons.style.display = "flex";
     deleteElementNodes(checkboxPie);
@@ -628,6 +609,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let input = allCheckboxes[i].getElementsByTagName("input");
         input[0].checked = false;
       }
+      generatePie([]);
+      deleteErrorMessage();
+      exportData.style.display = "none";
     });
   }
 
@@ -682,12 +666,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function errorMessage() {
-    let errorMessageResult = document.getElementById("error_message_result");
     errorMessageResult.innerText = "NO DATA FOUND!";
   }
 
   function deleteErrorMessage() {
-    let errorMessageResult = document.getElementById("error_message_result");
     errorMessageResult.innerText = "";
   }
 
@@ -788,6 +770,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let dataPie, infoPie, dataProcentsPie;
 
   function generatePie(dataResponse, dateField) {
+    deleteErrorMessage();
     goOnTop();
     dataResponse.sort(function (a, b) {
       return b.count - a.count;

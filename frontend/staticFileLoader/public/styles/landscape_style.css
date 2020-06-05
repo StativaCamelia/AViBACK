@@ -1,12 +1,5 @@
 /*MOBILE*/
-
-
 @media (orientation: landscape) and (max-width: 800px) {
-
-
-
-
-
     /*FRAME*/
     .main {
         display: flex;
@@ -14,7 +7,7 @@
         height: auto;
         width: auto;
         margin-bottom: 8vh;
-        margin-top: 27vh;
+        margin-top: 36vh;
         align-self: center;
         justify-content: space-between;
     }
@@ -31,18 +24,14 @@
 
     .right_main {
         display: none;
-        width: 30%;
-        height: auto;
-        flex-direction: column;
-        margin: 18vh 0 0 2vw;
     }
 
     .right_main_phone {
         display: flex;
         flex-direction: column;
         align-self: auto;
-        width: 18vw;
-        height: 8vh;
+        width: 12vw;
+        height: 10vh;
         background-color: #041F60;
         color: white;
         box-shadow: 5px 5px 5px grey;
@@ -707,10 +696,8 @@
         width: 80%;
         height: auto;
         justify-content: space-evenly;
-        /*margin-left: 5%;*/
-        /*margin-right: 5%;*/
         align-self: center;
-        margin-top: 22vh;
+        margin-top: 36vh;
     }
 
     .contact_content {
@@ -1093,8 +1080,8 @@
     }
 
     .legend_color {
-        width: 5vw;
-        height: 3vh;
+        width: 4vw;
+        height: 5vh;
         border-radius: 8px;
         padding: 0;
         margin: 0 0 0 1vw;
@@ -1141,7 +1128,7 @@
     }
 
 
-    .right_filtres {
+    .right_filters {
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -1232,8 +1219,9 @@
     .last_set_filters {
         display: flex;
         flex-direction: row;
-        width: 100%;
+        width: 90%;
         align-items: center;
+        margin: 2vh auto 2vh auto;
     }
 
     .road_option,
@@ -1285,9 +1273,9 @@
     .select_criteria {
         display: flex;
         flex-direction: row;
-        width: 100%;
+        width: 70%;
         align-self: center;
-        margin: 2vh 0 2vh 0;
+        margin: 2vh auto 2vh auto;
     }
 
     .criteria_select_label{
@@ -1329,46 +1317,42 @@
         align-self: center;
         display: flex;
         flex-direction: column;
-        width: 35vw;
+        width: 70%;
     }
 
     .slider_container_1 {
         display: flex;
         flex-direction: column;
-        width: 70vw;
+        width: 50%;
         align-self: center;
     }
 
     .slider_container_2 {
         display: flex;
         flex-direction: column;
-        width: 70vw;
+        width: 100%;
         align-self: center;
     }
 
     .range_icons {
         display: inline-flex;
-        width: 70vw;
+        width: 55%;
         align-self: center;
-        padding-left: 5vw;
     }
 
     .slider_container_1>ul {
         list-style-type: none;
         display: flex;
         flex-direction: row;
-        padding-left: 12vw;
-        padding-top: 0px;
+        padding-left: 16vw;
     }
 
     .slider_container_1>ul li {
-        width: 10%;
-        margin-right: 25%;
-        margin-left: 0px;
+        margin-right: 30%;
+        margin-left: 0;
         font-size: small;
-        padding-top: 0ex;
-        margin-top: 0px;
-
+        padding-top: 0;
+        margin-top: 0;
     }
 
     .slider_container_2>ul {
@@ -1390,11 +1374,11 @@
     }
 
     .submit_button {
-        margin: 1vh;
-        width: auto;
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-evenly;
+        margin: 1vh auto 0 auto;
+        width: 50%;
     }
 
     #submit_button[type="submit"], #back_filters[type="button"], #submit_checkboxes[type="submit"],#select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="button"],
@@ -1415,7 +1399,7 @@
         align-self: center;
         display: flex;
         flex-direction: row;
-        margin: 3vw;
+        margin: 0;
     }
 
     #change_button, #update_interval_button{
@@ -1457,11 +1441,6 @@
         align-self: center;
         display: flex;
         flex-direction: row;
-        margin: 0;
-    }
-    
-    #back_filters[type="button"], #submit_checkboxes[type="submit"], #select_all[type="button"],#select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="submit"],
-    #submit_create_accident[type="submit"],#submit_get_accident[type="submit"], #submit_update_accident[type="submit"],#submit_delete_accident[type="submit"],#submit_delete_accidents[type="button"], #submit_get_accidents[type="submit"]{
         margin: 0;
     }
 
@@ -1712,7 +1691,7 @@
         justify-content: space-between;
         height: auto;
         width: 80%;
-        margin: 10vh auto 0 auto;
+        margin: 38vh auto 0 auto;
         align-self: center;
     }
     .control_first_div{
@@ -1729,7 +1708,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-self: center;
-        width: 40%;
+        width: 60%;
         height: auto;
     }
 
@@ -1747,10 +1726,10 @@
 
     .control_second_div{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
         align-self: center;
-        width: 80%;
+        width: 100%;
         height: auto;
         margin: 10vh auto 15vh auto;
     }
@@ -1759,7 +1738,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width: 40%;
+        width: 80%;
         height: auto;
         padding: 10px;
         border: 4px groove #041F60;
@@ -1767,21 +1746,30 @@
         box-shadow: 5px 6px #888888;
     }
 
-    .control_users, .control_accidents{
+    .control_users{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
         width: 100%;
         height: auto;
-        margin: 8vh 0 12vh 0;
+        margin: 5vh 0 12vh 0;
+    }
+    .control_accidents{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        height: auto;
+        margin: 10vh 0 12vh 0;
     }
 
     .first_div_users, .first_div_accidents{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: 30%;
-        height: 60vh;
+        width: 100%;
+        height: auto;
+        margin: 0 0 2vh 0;
     }
     .second_div_users, .second_div_accidents{
         display: flex;
@@ -1795,8 +1783,9 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        width: 70%;
-        height: 10vh;
+        width: auto;
+        height: 100%;
+        text-align: center;
     }
 
     .control_user h3, .control_accident h3{
@@ -1811,11 +1800,25 @@
          border-bottom: 3px solid #041F60;
      }
 
-    .dash_user_form, .dash_accident_form_create, .dash_accident_form{
+    .dash_user_form{
         flex-direction: column;
         justify-content: space-between;
         align-self: center;
-        width: 70%;
+        width: 100%;
+        height: auto;
+    }
+    .dash_accident_form{
+        flex-direction: column;
+        justify-content: space-between;
+        align-self: center;
+        width: 100%;
+        height: auto;
+    }
+    .dash_accident_form_create{
+        flex-direction: column;
+        justify-content: space-between;
+        align-self: center;
+        width: 100%;
         height: auto;
     }
     .dash_accident_form_get{
@@ -1823,7 +1826,7 @@
         justify-content: space-between;
         align-self: center;
         flex-wrap: wrap;
-        width: 80%;
+        width: 100%;
         height: auto;
     }
     .dash_user_all{
@@ -1838,13 +1841,15 @@
         width: 70%;
         height: auto;
         align-self: center;
+        margin: 1vh auto 2vh auto;
     }
     .accident_input{
-        width: 70%;
+        width: 90%;
         height: auto;
         align-self: center;
+        margin: 1vh auto 2vh auto;
     }
-    .user_label, .accident_label, .label_accident{
+    .user_label, .label_accident{
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
@@ -1853,15 +1858,32 @@
         width: 70%;
         align-self: center;
     }
+    .accident_label{
+        font-family: Novecentosanswide;
+        font-size: 1.2rem;
+        color: #041F60;
+        text-align: left;
+        font-weight: bold;
+        width: 90%;
+        align-self: center;
+    }
     .dash_user_button, .dash_accident_button{
         width: 30%;
         align-self: center;
         margin: 1vh 0 0 0;
     }
     .accident_box{
-        width: 48%;
+        width: 100%;
+        align-self: center;
     }
     .accidents_get{
-        width: 40%;
+        width: 45%;
+    }
+    .accident_submit{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        margin: 1vh 0 0 0;
     }
 }

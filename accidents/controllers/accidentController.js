@@ -354,7 +354,7 @@ class AccidentController {
     }
   }
 
-  //returneaza un accidentele cuprinse intr-un interval de timp
+  //returneaza accidentele cuprinse intr-un interval de timp
   async getAccidents(payload) {
     try {
       let filterDate = {};
@@ -416,6 +416,12 @@ class AccidentController {
         } else {
           if (criterion === "Start_Hour") {
             content = await utils.modifyStartHourResult(content);
+          }else{
+            if(criterion === "Wind_Chill(F)" || criterion === "Wind_Speed(mph)" || criterion === "Temperature(F)" || criterion === "Humidity(%)" || criterion === "Pressure(in)" || criterion === "Visibility(mi)" || criterion === "Precipitation(in)"){
+              content.sort(function (a, b) {
+                return a._id - b._id;
+              });
+            }
           }
         }
       }
