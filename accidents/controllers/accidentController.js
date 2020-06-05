@@ -149,11 +149,18 @@ class AccidentController {
   async getMapMarkers(query) {
     try {
       const marker = await this.database.Accident.find(query).limit(1);
-      return {
-        Start_Lat: marker[0].Start_Lat,
-        Start_Lng: marker[0].Start_Lng,
-        State: marker[0].State,
-      };
+      if (marker) {
+        return {
+          Start_Lat: marker[0].Start_Lat,
+          Start_Lng: marker[0].Start_Lng,
+          State: marker[0].State,
+        };
+      } else
+        return {
+          Start_Lat: 0,
+          Start_Lng: 0,
+          State: "OH",
+        };
     } catch (error) {
       throw error;
     }
@@ -240,11 +247,11 @@ class AccidentController {
   }
 
   //returneaza numarul total de accidente
-  async getAccidentsNumber(){
-    try{
+  async getAccidentsNumber() {
+    try {
       const content = await this.database.Accident.find({}).countDocuments();
       return { success: true, data: { content } };
-    }catch (error) {
+    } catch (error) {
       return { success: false, data: { error } };
     }
   }
@@ -272,7 +279,7 @@ class AccidentController {
     try {
       const content = await this.database.Accident.deleteMany({});
       const accidentsNumber = await this.getAccidentsNumber().data.content;
-      for(let i = 0; i < accidentsNumber; i++){
+      for (let i = 0; i < accidentsNumber; i++) {
         const log = new this.database.AccidentsLog({
           method: "delete",
           date: new Date(),
@@ -386,19 +393,25 @@ class AccidentController {
     }
   }
 
-  async getAccidentsGeneralDetails(){
-    try{
+  async getAccidentsGeneralDetails() {
+    try {
       let content = {};
-      const newAccidents = await this.database.AccidentsLog.findByMethod("create");
-      const deletedAccidents = await this.database.AccidentsLog.findByMethod("delete");
-      const updatedAccidents = await this.database.AccidentsLog.findByMethod("update");
+      const newAccidents = await this.database.AccidentsLog.findByMethod(
+        "create"
+      );
+      const deletedAccidents = await this.database.AccidentsLog.findByMethod(
+        "delete"
+      );
+      const updatedAccidents = await this.database.AccidentsLog.findByMethod(
+        "update"
+      );
 
       content.accidentsNumber = this.accidentsNumber;
       content.newAccidentsNumber = newAccidents;
       content.deletedAccidentsNumber = deletedAccidents;
       content.updatedAccidentsNumber = updatedAccidents;
       return { success: true, data: { content } };
-    }catch (error) {
+    } catch (error) {
       return { success: false, data: { error } };
     }
   }
