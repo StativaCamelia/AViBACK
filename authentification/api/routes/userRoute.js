@@ -258,6 +258,23 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
+  } else if (path.endsWith("/confirm") && method === "get") {
+    try {
+      const { token } = parsedReq.queryStringObject;
+      const { success, data } = await userController.confirmEmail(token);
+      res.writeHead(301, {
+        Location: "http://localhost:5002/home",
+      });
+      return res.end();
+    } catch (error) {
+      console.log(error.message);
+      sendAnswerAPI(
+        false,
+        { error: { message: "Internal error" } },
+        res,
+        (statusCode = 501)
+      );
+    }
   } else if (path.endsWith("/general") && method === "get") {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);

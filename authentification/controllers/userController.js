@@ -36,7 +36,7 @@ class UserController {
   async sendMail(data) {
     const { email, field, objectOfInterest } = data;
     var mailOptions = {
-      from: "andreiagronom1@gmail.com",
+      from: process.env.email,
       to: email,
       subject: "AVI: Online services for data visualization",
       text:
@@ -49,9 +49,40 @@ class UserController {
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
-      } else {
       }
     });
+  }
+
+  async sendConfirmationEmail(user) {
+    const { email: emailTo, _id: userId } = user;
+    var emailToken = jwt.sign({ _id: userId }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    var url = `http://localhost:5003/users/confirm?token=${emailToken}`;
+    var mailOptions = {
+      from: process.env.email,
+      to: emailTo,
+      subject: "Avi: Confirm Email",
+      html: `Please click this email to confirm your email: <a href="${url}">${url}</a>`,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  async confirmEmail(token) {
+    try {
+      const userId = jwt.verify(token, process.env.JWT_SECRET)._id;
+      const content = await this.database.User.findOneAndUpdate(
+        { _id: userId },
+        { confirmed: true }
+      );
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
   }
 
   async createUser(data) {
@@ -185,6 +216,7 @@ class UserController {
       username: body.username,
       password: body.password,
       type: body.type,
+      confirmed: false,
     });
     let message = user.validateUserRegister();
     if (message !== "") {
@@ -213,13 +245,14 @@ class UserController {
           user.password = await user.hashPassword();
           try {
             await user.save();
+            this.sendConfirmationEmail(user);
             const log = new this.database.UsersLog({
               method: "create",
               date: new Date(),
             });
             await log.save();
             message =
-              "Succesfully registered! Please sign in and set your profile!";
+              "Succesfully registered! Please  confirm your email, sign in and set your profile!";
             return {
               success: true,
               statusCode: 201,
@@ -253,7 +286,10 @@ class UserController {
         user.username,
         user.password
       );
-      if (message === "Invalid username or password!") {
+      if (
+        message === "Invalid username or password!" ||
+        message === "Please confirm your email"
+      ) {
         return {
           success: false,
           statusCode: 400,
