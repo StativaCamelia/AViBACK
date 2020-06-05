@@ -122,9 +122,9 @@ class UserController {
 
   async deleteAllUsers(req, res) {
     try {
-      const content = await this.database.User.deleteMany({});
-      const usersNumber = await this.getUsersNumber().data.content;
-      for (let i = 0; i < usersNumber; i++) {
+      const content = await this.database.User.deleteMany({type: "user"});
+      const usersDeleted = content.deletedCount;
+      for (let i = 0; i < usersDeleted; i++) {
         const log = new this.database.UsersLog({
           method: "delete",
           date: new Date(),
@@ -168,7 +168,6 @@ class UserController {
     try {
       const content = await this.database.User.find({});
       for (let user of content) {
-        user._id = undefined;
         user.password = undefined;
         user._v = undefined;
         user.auth_tokens = undefined;
@@ -223,7 +222,7 @@ class UserController {
               "Succesfully registered! Please sign in and set your profile!";
             return {
               success: true,
-              statusCode: 200,
+              statusCode: 201,
               content: { message },
             };
           } catch (err) {

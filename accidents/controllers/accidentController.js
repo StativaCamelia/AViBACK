@@ -278,15 +278,14 @@ class AccidentController {
   async deleteAllAccidents(req, res) {
     try {
       const content = await this.database.Accident.deleteMany({});
-      const accidentsNumber = await this.getAccidentsNumber().data.content;
-      for (let i = 0; i < accidentsNumber; i++) {
+      for (let i = 0; i < this.accidentsNumber; i++) {
         const log = new this.database.AccidentsLog({
           method: "delete",
           date: new Date(),
         });
         await log.save();
-        this.accidentsNumber = 0;
       }
+      this.accidentsNumber = 0;
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -316,7 +315,7 @@ class AccidentController {
         {
           _id: accidentId,
         },
-        { newContent },
+        newContent,
         options
       );
       const log = new this.database.AccidentsLog({
@@ -343,6 +342,46 @@ class AccidentController {
       });
       await log.save();
       this.accidentsNumber--;
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  //returneaza un accident dupa id
+  async getAccidentById(payload) {
+    try {
+      const { accidentId } = payload;
+      const content = await this.database.Accident.findOne({
+        _id: accidentId,
+      });
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  //returneaza accidentele cuprinse intr-un interval de timp
+  async getAccidents(payload) {
+    try {
+      let filterDate = {};
+      if (payload.dateOne && payload.dateTwo) {
+        filterDate.Start_Date = {
+          $gte: payload.dateOne,
+          $lte: payload.dateTwo,
+        };
+      } else {
+        if (payload.dateOne) {
+          filterDate.Start_Date = {
+            $gte: payload.dateOne,
+          };
+        } else {
+          filterDate.Start_Date = {
+            $lte: payload.dateTwo,
+          };
+        }
+      }
+      const content = await this.database.Accident.find(filterDate);
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -384,6 +423,20 @@ class AccidentController {
         } else {
           if (criterion === "Start_Hour") {
             content = await utils.modifyStartHourResult(content);
+          } else {
+            if (
+              criterion === "Wind_Chill(F)" ||
+              criterion === "Wind_Speed(mph)" ||
+              criterion === "Temperature(F)" ||
+              criterion === "Humidity(%)" ||
+              criterion === "Pressure(in)" ||
+              criterion === "Visibility(mi)" ||
+              criterion === "Precipitation(in)"
+            ) {
+              content.sort(function (a, b) {
+                return a._id - b._id;
+              });
+            }
           }
         }
       }

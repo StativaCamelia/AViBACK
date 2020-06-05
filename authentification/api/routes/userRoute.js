@@ -31,7 +31,7 @@ function sendAnswer(success, statusCode, content, res, handler) {
 function sendAnswerAPI(success, data, res, statusCode = 401) {
   if (success) {
     const { content } = data;
-    res.writeHead(200, {
+    res.writeHead(statusCode, {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PATCH, PUT, DELETE",
@@ -105,7 +105,7 @@ exports.getRes = async (req, parsedReq, res) => {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
         const { success, data } = await userController.deleteAllUsers();
-        sendAnswerAPI(success, data, res);
+        sendAnswerAPI(success, data, res, (statusCode = 200));
       } else {
         sendAnswerAPI(auth.succes, auth.data, res, (statusCode = 403));
       }
@@ -132,7 +132,7 @@ exports.getRes = async (req, parsedReq, res) => {
 
       if (auth.succes) {
         const { success, data } = await userController.getAllUsers();
-        sendAnswerAPI(success, data, res);
+        sendAnswerAPI(success, data, res, (statusCode = 200));
       } else {
         sendAnswerAPI(auth.succes, auth.data, res, (statusCode = 403));
       }
@@ -144,7 +144,7 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("/users") && method === "patch") {
+  } else if (path.endsWith("/users") && method === "put") {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
@@ -153,7 +153,7 @@ exports.getRes = async (req, parsedReq, res) => {
           userId,
           body,
         });
-        sendAnswerAPI(success, data, res);
+        sendAnswerAPI(success, data, res, (statusCode = 200));
       } else {
         sendAnswerAPI(auth.succes, auth.data, res, (statusCode = 403));
       }
@@ -173,7 +173,7 @@ exports.getRes = async (req, parsedReq, res) => {
         const { success, data } = await userController.deleteUser({
           userId,
         });
-        sendAnswerAPI(success, data, res);
+        sendAnswerAPI(success, data, res, (statusCode = 200));
       } else {
         sendAnswerAPI(auth.succes, auth.data, res, (statusCode = 403));
       }
@@ -193,7 +193,7 @@ exports.getRes = async (req, parsedReq, res) => {
         const { success, data } = await userController.getUserById({
           userId,
         });
-        sendAnswerAPI(success, data, res);
+        sendAnswerAPI(success, data, res, (statusCode = 200));
       } else {
         sendAnswerAPI(auth.succes, auth.data, res, (statusCode = 403));
       }
@@ -263,7 +263,7 @@ exports.getRes = async (req, parsedReq, res) => {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
         const { success, data } = await userController.getUsersGeneralDetails();
-        sendAnswerAPI(success, data, res);
+        sendAnswerAPI(success, data, res, (statusCode = 200));
       } else {
         sendAnswerAPI(auth.succes, auth.data, res, (statusCode = 403));
       }

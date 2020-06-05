@@ -34,7 +34,7 @@ class Utils {
     let queryString = this.getQueryStringFromObject(query);
     try {
       let result = await fetch(
-        `http://localhost:5003/user/send-email?${queryString}`,
+        `http://localhost:5003/users/send-email?${queryString}`,
         {
           method: "get",
         }

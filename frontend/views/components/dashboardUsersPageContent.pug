@@ -21,16 +21,38 @@ block controller_users
     .second_div_users
         form.dash_user_form#user_form_create
             label.user_label(for='create_user_email') Email:
-            input#create_user_email.user_input(type='text' name='user_email' form='user_form_create' value='')
+            input#create_user_email.user_input(type='text' name='create_user_email' form='user_form_create' value='')
             label.user_label(for='create_user_username') Username:
-            input#create_user_username.user_input(type='text' name='user_username' form='user_form_create' value='')
+            input#create_user_username.user_input(type='text' name='create_user_username' form='user_form_create' value='')
             label.user_label(for='create_user_password') Password:
-            input#create_user_password.user_input(type='text' name='user_password' form='user_form_create' value='')
+            input#create_user_password.user_input(type='text' name='create_user_password' form='user_form_create' value='')
+            label.user_label(for='create_user_type') Type:
+            input#create_user_type.user_input(type='text' name='create_user_type' form='user_form_create' value='')
             input.dash_user_button#submit_create_user(form='user_form_create' type='submit' value='Create')
             h3#create_user_message
         form.dash_user_form#user_form_get_user
             label.user_label(for='get_user_id') User id:
-            input#get_user_id.user_input(type='text' name='user_id' form='user_form_get_user' value='')
+            input#get_user_id.user_input(type='text' name='get_user_id' form='user_form_get_user' value='')
             input.dash_user_button#submit_get_user(form='user_form_get_user' type='submit' value='Get user')
         .dash_user_form#get_user_result
         .dash_user_all#get_all_users
+        form.dash_user_form#user_form_update
+            label.user_label(for='update_user_id') User id:
+            input#update_user_id.user_input(type='text' name='update_user_id' form='user_form_update' value='')
+            label.user_label(for='update_user_email') Email:
+            input#update_user_email.user_input(type='text' name='update_user_email' form='user_form_update' value='')
+            label.user_label(for='update_user_username') Username:
+            input#update_user_username.user_input(type='text' name='update_user_username' form='user_form_update' value='')
+            label.user_label(for='update_user_type') Type:
+            input#update_user_type.user_input(type='text' name='update_user_type' form='user_form_update' value='')
+            input.dash_user_button#submit_update_user(form='user_form_update' type='submit' value='Update')
+            h3#update_user_message
+        form.dash_user_form#user_form_delete_user
+            label.user_label(for='delete_user_id') User id:
+            input#delete_user_id.user_input(type='text' name='delete_user_id' form='user_form_delete_user' value='')
+            input.dash_user_button#submit_delete_user(form='user_form_delete_user' type='submit' value='Delete')
+            h3#delete_user_message
+        .dash_user_form#delete_all
+            h3 Are you sure?
+            input.dash_user_button#submit_delete_users(type='button' value='Yes')
+            h3#delete_users_message
