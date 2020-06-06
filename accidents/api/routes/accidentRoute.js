@@ -2,6 +2,8 @@ const { accidentController } = require("../../controllers/index");
 const { filtresController } = require("../../controllers/index");
 const { utils } = require("../../utils/index");
 
+const checkForObjectId = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+
 exports.getRes = async (req, res) => {
   const { fullPath, path, method, body, queryStringObject } = req;
   if (method === "options") {
@@ -93,11 +95,11 @@ exports.getRes = async (req, res) => {
       );
     }
     //PUT(Update) Accident data by ID
-  } else if (path.endsWith("/accidents") && method === "put") {
+  } else if (method === "put") {
     try {
       const auth = await utils.getAuthorization(req);
       if (auth) {
-        const { accidentId } = queryStringObject;
+        const accidentId = path.substring(path.lastIndexOf("/") + 1);
         const { success, data } = await accidentController.updateAccident({
           body,
           accidentId,
@@ -121,11 +123,14 @@ exports.getRes = async (req, res) => {
       );
     }
     //DELETE Accident by ID
-  } else if (path.endsWith("/accidents") && method === "delete") {
+  } else if (
+    checkForObjectId.test(path.substring(path.lastIndexOf("/") + 1)) &&
+    method === "delete"
+  ) {
     try {
       const auth = await utils.getAuthorization(req);
       if (auth) {
-        const { accidentId } = queryStringObject;
+        const accidentId = path.substring(path.lastIndexOf("/") + 1);
         const { success, data } = await accidentController.deleteAccident({
           accidentId,
           res,
@@ -147,11 +152,14 @@ exports.getRes = async (req, res) => {
         (statusCode = 501)
       );
     }
-  }else if(path.endsWith("/accidents") && method === "get" && Object.keys(queryStringObject).indexOf("accidentId") !== -1){
+  } else if (
+    method === "get" &&
+    checkForObjectId.test(path.substring(path.lastIndexOf("/") + 1))
+  ) {
     try {
       const auth = await utils.getAuthorization(req);
       if (auth) {
-        const { accidentId } = queryStringObject;
+        const accidentId = path.substring(path.lastIndexOf("/") + 1);
         const { success, data } = await accidentController.getAccidentById({
           accidentId,
           res,
@@ -159,43 +167,50 @@ exports.getRes = async (req, res) => {
         utils.sendAnswer(success, data, res);
       } else {
         utils.sendAnswer(
-            auth,
-            { error: { message: "Unauthorized" } },
-            res,
-            (statusCode = 403)
+          auth,
+          { error: { message: "Unauthorized" } },
+          res,
+          (statusCode = 403)
         );
       }
     } catch (error) {
       utils.sendAnswer(
-          false,
-          { error: { message: "Internal Error" } },
-          res,
-          (statusCode = 501)
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
       );
     }
-  } else if (path.endsWith("/accidents") && method === "get" && (Object.keys(queryStringObject).indexOf("dateOne") !== -1 || Object.keys(queryStringObject).indexOf("dateTwo") !== -1)){
+  } else if (
+    path.endsWith("/accidents") &&
+    method === "get" &&
+    (Object.keys(queryStringObject).indexOf("dateOne") !== -1 ||
+      Object.keys(queryStringObject).indexOf("dateTwo") !== -1)
+  ) {
     try {
       const auth = await utils.getAuthorization(req);
       if (auth) {
-        const { success, data } = await accidentController.getAccidents(queryStringObject);
+        const { success, data } = await accidentController.getAccidents(
+          queryStringObject
+        );
         utils.sendAnswer(success, data, res);
       } else {
         utils.sendAnswer(
-            auth,
-            { error: { message: "Unauthorized" } },
-            res,
-            (statusCode = 403)
+          auth,
+          { error: { message: "Unauthorized" } },
+          res,
+          (statusCode = 403)
         );
       }
     } catch (error) {
       utils.sendAnswer(
-          false,
-          { error: { message: "Internal Error" } },
-          res,
-          (statusCode = 501)
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
       );
     }
-  }else if (path.endsWith("/accidents") && method === "get") {
+  } else if (path.endsWith("/accidents") && method === "get") {
     try {
       const { query, type, criterion } = await filtresController.editFiltres(
         queryStringObject
@@ -229,26 +244,29 @@ exports.getRes = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-  }else if (path.endsWith("/general") && method === "get") {
+  } else if (path.endsWith("/general") && method === "get") {
     try {
       const auth = await utils.getAuthorization(req);
       if (auth) {
-        const { success, data } = await accidentController.getAccidentsGeneralDetails();
+        const {
+          success,
+          data,
+        } = await accidentController.getAccidentsGeneralDetails();
         utils.sendAnswer(success, data, res);
       } else {
         utils.sendAnswer(
-            auth,
-            { error: { message: "unauthorized" } },
-            res,
-            (statusCode = 403)
+          auth,
+          { error: { message: "unauthorized" } },
+          res,
+          (statusCode = 403)
         );
       }
     } catch (error) {
       utils.sendAnswer(
-          false,
-          { error: { message: "Internal Error" } },
-          res,
-          (statusCode = 501)
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
       );
     }
   }

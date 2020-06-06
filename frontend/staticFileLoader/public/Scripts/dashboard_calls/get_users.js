@@ -1,7 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
   const url = "http://localhost:5003/users";
   const authToken = localStorage.getItem("auth-token");
-  function sendRequestCreate(emailValue, usernameValue, passwordValue, typeValue) {
+  function sendRequestCreate(
+    emailValue,
+    usernameValue,
+    passwordValue,
+    typeValue
+  ) {
     let xhttp = new XMLHttpRequest();
     xhttp.open("post", url, true);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -10,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
       email: emailValue,
       username: usernameValue,
       password: passwordValue,
-      type: typeValue
+      type: typeValue,
     };
     xhttp.send(JSON.stringify(values));
     xhttp.onreadystatechange = function () {
@@ -28,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function sendRequestGetById(userIdValue) {
     let xhttp = new XMLHttpRequest();
-    const urlWithId = url + "?userId=" + userIdValue;
+    const urlWithId = url + "/" + userIdValue;
     xhttp.open("get", urlWithId, true);
     xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
     xhttp.send();
@@ -61,9 +66,9 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  function sendRequestUpdate(userIdValue,user) {
+  function sendRequestUpdate(userIdValue, user) {
     let xhttp = new XMLHttpRequest();
-    const urlWithId = url + "?userId=" + userIdValue;
+    const urlWithId = url + "/" + userIdValue;
     xhttp.open("put", urlWithId, true);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
@@ -83,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function sendRequestDeleteById(userIdValue) {
     let xhttp = new XMLHttpRequest();
-    const urlWithId = url + "?userId=" + userIdValue;
+    const urlWithId = url + "/" + userIdValue;
     xhttp.open("delete", urlWithId, true);
     xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
     xhttp.send();
@@ -158,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
     childReadUsers[0].id = "";
   }
 
-  function resetUpdateUserForm(){
+  function resetUpdateUserForm() {
     updateUserMessage.innerText = "";
     userFormUpdate.style.display = "none";
     childUpdateUser[0].id = "";
@@ -288,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const updateUserType = document.getElementById("update_user_type");
   const submitUpdateUser = document.getElementById("submit_update_user");
   const updateUserMessage = document.getElementById("update_user_message");
-  updateUser.addEventListener("click",() => {
+  updateUser.addEventListener("click", () => {
     resetCreateUserForm();
     resetGetUserForm();
     resetGetAllUsers();
@@ -296,20 +301,20 @@ document.addEventListener("DOMContentLoaded", function () {
     resetDeleteUsersForm();
     childUpdateUser[0].id = "active_user";
     userFormUpdate.style.display = "flex";
-    submitUpdateUser.addEventListener("click",(e) => {
+    submitUpdateUser.addEventListener("click", (e) => {
       e.preventDefault();
       const userIdValue = updateUserId.value;
       const user = {};
-      if(updateUserEmail.value !== ""){
+      if (updateUserEmail.value !== "") {
         user.email = updateUserEmail.value;
       }
-      if(updateUserUsername.value !== ""){
+      if (updateUserUsername.value !== "") {
         user.username = updateUserUsername.value;
       }
-      if(updateUserType.value !== ""){
+      if (updateUserType.value !== "") {
         user.type = updateUserType.value;
       }
-      sendRequestUpdate(userIdValue,user);
+      sendRequestUpdate(userIdValue, user);
     });
   });
 
@@ -318,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const deleteUserId = document.getElementById("delete_user_id");
   const submitDeleteUser = document.getElementById("submit_delete_user");
   const deleteUserMessage = document.getElementById("delete_user_message");
-  deleteUser.addEventListener("click",() => {
+  deleteUser.addEventListener("click", () => {
     resetCreateUserForm();
     resetGetUserForm();
     resetGetAllUsers();
@@ -326,7 +331,7 @@ document.addEventListener("DOMContentLoaded", function () {
     resetDeleteUsersForm();
     childDeleteUser[0].id = "active_user";
     userFormDeleteUser.style.display = "flex";
-    submitDeleteUser.addEventListener("click",(e) => {
+    submitDeleteUser.addEventListener("click", (e) => {
       e.preventDefault();
       const userId = deleteUserId.value;
       sendRequestDeleteById(userId);
@@ -337,7 +342,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const deleteAll = document.getElementById("delete_all");
   const submitDeleteUsers = document.getElementById("submit_delete_users");
   const deleteUsersMessage = document.getElementById("delete_users_message");
-  deleteAllUsers.addEventListener("click",() => {
+  deleteAllUsers.addEventListener("click", () => {
     resetCreateUserForm();
     resetGetUserForm();
     resetGetAllUsers();
@@ -345,7 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
     resetDeleteUserForm();
     childDeleteUsers[0].id = "active_user";
     deleteAll.style.display = "flex";
-    submitDeleteUsers.addEventListener("click",(e) => {
+    submitDeleteUsers.addEventListener("click", (e) => {
       // e.preventDefault();
       sendRequestDeleteAll();
     });
