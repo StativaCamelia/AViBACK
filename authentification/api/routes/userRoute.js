@@ -192,6 +192,19 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
+  } else if (path.endsWith("/users") && method === "get") {
+    try {
+      const { token } = parsedReq.queryStringObject;
+      const { success, data } = await userController.getUserByToken(token);
+      sendAnswerAPI(success, data, res, (statusCode = 200));
+    } catch (error) {
+      sendAnswerAPI(
+        false,
+        { error: { message: "Internal Error" } },
+        res,
+        (statusCode = 501)
+      );
+    }
   } else if (
     checkForObjectId.test(path.substring(path.lastIndexOf("/") + 1)) &&
     method === "get"

@@ -10,8 +10,8 @@ var transporter = nodemailer.createTransport({
     pass: "Alfabet1.",
   },
   tls: {
-    rejectUnauthorized: false
-  }
+    rejectUnauthorized: false,
+  },
 });
 
 class UserController {
@@ -111,6 +111,18 @@ class UserController {
       const content = await this.database.User.findOne({
         _id: mongoose.Types.ObjectId(userId),
       });
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async getUserByToken(token) {
+    try {
+      const userId = jwt.verify(token, process.env.JWT_SECRET)._id;
+      let user = await this.database.User.findOne({ _id: userId });
+      let content = user;
+      content.password = null;
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
@@ -221,7 +233,7 @@ class UserController {
       type: body.type,
       confirmed: false,
     });
-    if(user.type === "admin"){
+    if (user.type === "admin") {
       user.confirmed = true;
     }
     let message = user.validateUserRegister();
