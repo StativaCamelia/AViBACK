@@ -30,11 +30,11 @@ const userSchema = mongoose.Schema({
     type: String,
     required: false,
   },
-  auth_tokens: [
-    {
-      type: String,
-    },
-  ],
+  confirmed: {
+    type: Boolean,
+    defaultValue: false,
+    require: true,
+  },
 });
 
 module.exports = userSchema;

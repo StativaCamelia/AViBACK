@@ -27,6 +27,8 @@ module.exports = function (schema) {
     const user = await this.findOne({ username: username });
     if (!user) {
       message = "Invalid username or password!";
+    } else if (user.confirmed === false) {
+      message = "Please confirm your email";
     } else {
       const validPass = await bcrypt.compare(password, user.password);
       if (!validPass) {
@@ -35,6 +37,7 @@ module.exports = function (schema) {
         message = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
       }
     }
+
     return message;
   };
 };

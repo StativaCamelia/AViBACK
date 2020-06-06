@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 function isEmail(email) {
@@ -53,6 +52,7 @@ module.exports = function (schema) {
     const hashedPassword = await bcrypt.hash(user.password, salt);
     return hashedPassword;
   };
+
   schema.methods.validateUserLogin = function () {
     let message = "";
     const user = this;
