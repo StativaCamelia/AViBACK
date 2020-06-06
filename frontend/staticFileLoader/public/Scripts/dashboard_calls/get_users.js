@@ -190,7 +190,6 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteUsersMessage.innerText = "";
   }
 
-  //CREATE USER
   const userFormCreate = document.getElementById("user_form_create");
   const createUserMessage = document.getElementById("create_user_message");
   const createUserEmail = document.getElementById("create_user_email");
@@ -217,7 +216,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  //GET USER BY ID
   const userFormGetUser = document.getElementById("user_form_get_user");
   const getUserId = document.getElementById("get_user_id");
   const submitGetUser = document.getElementById("submit_get_user");
@@ -252,7 +250,6 @@ document.addEventListener("DOMContentLoaded", function () {
     getUserResult.appendChild(ul);
   }
 
-  //GET ALL USERS
   const getAllUsers = document.getElementById("get_all_users");
   readUsers.addEventListener("click", () => {
     resetCreateUserForm();
@@ -285,7 +282,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  //UPDATE AN USER
   const userFormUpdate = document.getElementById("user_form_update");
   const updateUserId = document.getElementById("update_user_id");
   const updateUserEmail = document.getElementById("update_user_email");
@@ -318,7 +314,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  //DELETE USER BY ID
   const userFormDeleteUser = document.getElementById("user_form_delete_user");
   const deleteUserId = document.getElementById("delete_user_id");
   const submitDeleteUser = document.getElementById("submit_delete_user");
@@ -338,7 +333,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  //DELETE ALL USERS
   const deleteAll = document.getElementById("delete_all");
   const submitDeleteUsers = document.getElementById("submit_delete_users");
   const deleteUsersMessage = document.getElementById("delete_users_message");
@@ -351,7 +345,6 @@ document.addEventListener("DOMContentLoaded", function () {
     childDeleteUsers[0].id = "active_user";
     deleteAll.style.display = "flex";
     submitDeleteUsers.addEventListener("click", (e) => {
-      // e.preventDefault();
       sendRequestDeleteAll();
     });
   });

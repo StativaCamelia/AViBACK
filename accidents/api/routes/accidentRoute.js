@@ -5,7 +5,7 @@ const { utils } = require("../../utils/index");
 const checkForObjectId = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
 exports.getRes = async (req, res) => {
-  const { fullPath, path, method, body, queryStringObject } = req;
+  const { path, method, body, queryStringObject } = req;
   if (method === "options") {
     res.writeHead(200, {
       "Access-Control-Allow-Origin": "*",

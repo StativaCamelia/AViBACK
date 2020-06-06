@@ -140,7 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const deleteAllAccidents = document.getElementById("delete_all_accidents");
   const childDeleteAccidents = deleteAllAccidents.childNodes;
 
-  //RESET
   function resetCreateForm() {
     for (let i = 0; i < createValues.length; i++) {
       createValues[i].value = "";
@@ -187,7 +186,6 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteAccidentsMessage.innerText = "";
   }
 
-  //CREATE AN ACCIDENT
   const accidentFormCreate = document.getElementById("accident_form_create");
   const createAccidentState = document.getElementById("create_accident_state");
   const createAccidentCounty = document.getElementById(
@@ -412,7 +410,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  //GET AN ACCIDENT BY ID
   const accidentFormGetAccident = document.getElementById(
     "accident_form_get_accident"
   );
@@ -450,7 +447,6 @@ document.addEventListener("DOMContentLoaded", function () {
     getAccidentResult.appendChild(ul);
   }
 
-  //GET ACCIDENTS
   const accidentFormGetAccidents = document.getElementById(
     "accident_form_get_accidents"
   );
@@ -496,7 +492,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  //UPDATE AN ACCIDENT
   const accidentFormUpdate = document.getElementById("accident_form_update");
   const updateAccidentId = document.getElementById("update_accident_id");
   const updateAccidentState = document.getElementById("update_accident_state");
@@ -682,7 +677,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  //DELETE AN ACCIDENT
   const accidentFormDeleteAccident = document.getElementById(
     "accident_form_delete_accident"
   );
@@ -708,7 +702,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  //DELETE ALL ACCIDENTS
   const deleteAccidents = document.getElementById("delete_accidents");
   const submitDeleteAccidents = document.getElementById(
     "submit_delete_accidents"

@@ -1,4 +1,3 @@
-const url = require("url");
 const { dashboardPage } = require("../views/index");
 
 class DashboardController {

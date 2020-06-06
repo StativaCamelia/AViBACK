@@ -357,7 +357,7 @@ class UserController {
       return { success: true, statusCode: 200, content: { values } };
     }
   }
-  //AUTHORIZATION
+
   async verifyAdmin(auth_token) {
     try {
       const userId = jwt.verify(auth_token, process.env.JWT_SECRET);
