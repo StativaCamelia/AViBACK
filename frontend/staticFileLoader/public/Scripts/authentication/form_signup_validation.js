@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let xhttp = new XMLHttpRequest();
     xhttp.open("post", "http://localhost:5003/users/register", true);
-    xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     const values = {
       email: email.value,
       username: usernameSignup.value,

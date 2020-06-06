@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 module.exports = function (schema) {
   schema.statics.existEmail = async function (email) {
     let message = "";
-
     const user = await this.findOne({ email: email });
     if (user) {
       message = "Email already exists!";

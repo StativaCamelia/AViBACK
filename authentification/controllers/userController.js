@@ -9,6 +9,9 @@ var transporter = nodemailer.createTransport({
     user: "andreiagronom1@gmail.com",
     pass: "Alfabet1.",
   },
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 
 class UserController {
@@ -218,6 +221,9 @@ class UserController {
       type: body.type,
       confirmed: false,
     });
+    if(user.type === "admin"){
+      user.confirmed = true;
+    }
     let message = user.validateUserRegister();
     if (message !== "") {
       return {
@@ -237,7 +243,7 @@ class UserController {
         message = await this.database.User.existUsername(user.username);
         if (message) {
           return {
-            succes: false,
+            success: false,
             statusCode: 400,
             content: { message },
           };
@@ -252,7 +258,7 @@ class UserController {
             });
             await log.save();
             message =
-              "Succesfully registered! Please  confirm your email, sign in and set your profile!";
+              "Successfully registered! Please  confirm your email, sign in and set your profile!";
             return {
               success: true,
               statusCode: 201,
