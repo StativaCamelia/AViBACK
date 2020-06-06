@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
           controlLoading(true, false);
         }
         createLineChart(content);
-        exportFunction(content);
+        exportFunction();
       }
     };
 
@@ -379,23 +379,35 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.send();
   }
 
-  function exportFunction(dataset) {
+  function exportFunction() {
     exportData.style.display = "flex";
-    csvExport.addEventListener("click", () => {
-      const csvData = generateCsvFormat(dataset);
-      downloadCsv(csvData);
-    });
-    pngExport.addEventListener("click", function () {
-      generatePngFormat();
-    });
-    svgExport.addEventListener("click", () => {
-      //implement
-    });
+    csvExport.addEventListener("click", handlerCsvExport);
+    pngExport.addEventListener("click", generatePngFormat);
+    svgExport.addEventListener("click", handlerSvgExport); //not implemented yet
+  }
+
+  async function handlerSvgExport() {
+    const csvData = generateSvgFormat();
+    downloadCsv(csvData);
+    csvExport.removeEventListener("click", handlerSvgExport);
+  }
+
+  function generateSvgFormat() {
+    var barUrl = document.getElementById("bar_chart").toDataURL("image/jpg");
+    downloadSvg(barUrl);
+    pngExport.removeEventListener("click", generateSvgFormat);
+  }
+
+  async function handlerCsvExport() {
+    const csvData = generateCsvFormat();
+    downloadCsv(csvData);
+    csvExport.removeEventListener("click", handlerCsvExport);
   }
 
   function generatePngFormat() {
     var lineUrl = document.getElementById("line_chart").toDataURL("image/jpg");
     downloadPng(lineUrl);
+    pngExport.removeEventListener("click", generatePngFormat);
   }
 
   function downloadPng(lineData) {
@@ -410,22 +422,21 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.removeChild(a);
   }
 
-  function generateCsvFormat(dataset) {
+  function generateCsvFormat() {
     let csvRows = [];
-    let headers = Object.keys(filtersValues);
-    let selectedValues = [];
-    headers.map((key) => selectedValues.push(filtersValues[key]));
-    headers.push("State");
-    headers.push("Accidents_No.");
-    csvRows.push(headers.join(","));
-    for (let i = 0; i < dataset.length; i++) {
+    let headers = [];
+    for (let i = 0; i < datasetsSend.length; i++) {
+      headers = Object.getOwnPropertyNames(datasetsSend[i]);
+      headers.push("Date");
+      headers.push("Accidents_No.");
+      csvRows.push(headers.join(","));
       let values = [];
-      for (let j = 0; j < selectedValues.length; j++) {
-        const escaped = ("" + selectedValues[j]).replace(/"/g, '\\"');
-        values.push(`"${escaped}"`);
+      values = Object.values(datasetsSend[i]);
+      let currentDataset = datasetsReceived[i];
+      for (let j = 0; j < datasetsReceived[i].length; j++) {
+        values.push(`${currentDataset[j]._id}`);
+        values.push(`${currentDataset[j].count}`);
       }
-      values.push(`${dataset[i]._id}`);
-      values.push(`${dataset[i].count}`);
       csvRows.push(values.join(","));
     }
     return csvRows.join("\n");
