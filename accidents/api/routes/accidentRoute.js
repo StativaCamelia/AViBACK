@@ -3,7 +3,7 @@ const { filtresController } = require("../../controllers/index");
 const { utils } = require("../../utils/index");
 
 exports.getRes = async (req, res) => {
-  const { fullPath, path, method, body, queryStringObject } = req;
+  const { path, method, body, queryStringObject } = req;
   if (method === "options") {
     res.writeHead(200, {
       "Access-Control-Allow-Origin": "*",

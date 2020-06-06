@@ -140,7 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const deleteAllAccidents = document.getElementById("delete_all_accidents");
     const childDeleteAccidents = deleteAllAccidents.childNodes;
 
-    //RESET
     function resetCreateForm() {
         for(let i = 0; i < createValues.length; i++){
             createValues[i].value = "";
@@ -187,7 +186,6 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteAccidentsMessage.innerText = "";
     }
 
-    //CREATE AN ACCIDENT
     const accidentFormCreate = document.getElementById("accident_form_create");
     const createAccidentState = document.getElementById("create_accident_state");
     const createAccidentCounty = document.getElementById("create_accident_county");
@@ -256,7 +254,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    //GET AN ACCIDENT BY ID
     const accidentFormGetAccident = document.getElementById("accident_form_get_accident");
     const getAccidentId = document.getElementById("get_accident_id");
     const submitGetAccident = document.getElementById("submit_get_accident");
@@ -292,7 +289,6 @@ document.addEventListener("DOMContentLoaded", function () {
         getAccidentResult.appendChild(ul);
     }
 
-    //GET ACCIDENTS
     const accidentFormGetAccidents = document.getElementById("accident_form_get_accidents");
     const getAccidentsDate1 = document.getElementById("get_accidents_date1");
     const getAccidentsDate2 = document.getElementById("get_accidents_date2");
@@ -336,7 +332,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    //UPDATE AN ACCIDENT
     const accidentFormUpdate = document.getElementById("accident_form_update");
     const updateAccidentId = document.getElementById("update_accident_id");
     const updateAccidentState = document.getElementById("update_accident_state");
@@ -407,7 +402,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    //DELETE AN ACCIDENT
     const accidentFormDeleteAccident = document.getElementById("accident_form_delete_accident");
     const deleteAccidentId = document.getElementById("delete_accident_id");
     const submitDeleteAccident = document.getElementById("submit_delete_accident");
@@ -427,7 +421,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    //DELETE ALL ACCIDENTS
     const deleteAccidents = document.getElementById("delete_accidents");
     const submitDeleteAccidents = document.getElementById("submit_delete_accidents");
     const deleteAccidentsMessage = document.getElementById("delete_accidents_message");

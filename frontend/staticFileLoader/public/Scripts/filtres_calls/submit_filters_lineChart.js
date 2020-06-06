@@ -518,7 +518,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return { dataString, dataset };
   }
 
-  //Preparare Date query String
   function addTimeInterval(dataset, queryString) {
     for (let i = 0; i < datesFields.length; i++) {
       if (datasetsSend[0][datesFields[i]] !== undefined)
@@ -612,7 +611,6 @@ document.addEventListener("DOMContentLoaded", function () {
     queryString = queryString + key + "=" + value;
     return queryString;
   }
-  // FRONTEND CHECK
 
   function setMessage(component, existsFiltres) {
     if (existsFiltres) {
@@ -626,10 +624,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function verifyIntervalExists(dataset) {
     const existsFiltres =
-      dataset.Start_Date_1 != undefined ||
-      dataset.Start_Date_2 != undefined ||
-      dataset.Start_Hour_1 != undefined ||
-      dataset.Start_Hour_2 != undefined;
+      dataset.Start_Date_1 !== undefined ||
+      dataset.Start_Date_2 !== undefined ||
+      dataset.Start_Hour_1 !== undefined ||
+      dataset.Start_Hour_2 !== undefined;
     if (continueGraph !== "Update") setMessage(message, existsFiltres);
     else {
       setMessage(messageUpper, existsFiltres);
@@ -691,7 +689,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return ok && okDate;
   }
 
-  //Generarea Campului de Group By
   function getNumberOfYears(year1, year2) {
     const boundsYears = [2016, 2019];
     if (year1 && !year2) {

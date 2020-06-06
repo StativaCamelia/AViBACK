@@ -553,7 +553,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return { dataString, dataset };
   }
 
-  //Preparare Date query String
   function addTimeInterval(dataset, queryString) {
     if (datasetsSend[0].Start_Date_1 !== undefined)
       dataset.Start_Date_1 = datasetsSend[0].Start_Date_1;
@@ -651,13 +650,12 @@ document.addEventListener("DOMContentLoaded", function () {
     return queryString;
   }
 
-  // FRONTEND CHECK
   function verifyIntervalExists(dataset) {
     const existsFiltres =
-      dataset.Start_Date_1 != undefined ||
-      dataset.Start_Date_2 != undefined ||
-      dataset.Start_Hour_1 != undefined ||
-      dataset.Start_Hour_2 != undefined;
+      dataset.Start_Date_1 !== undefined ||
+      dataset.Start_Date_2 !== undefined ||
+      dataset.Start_Hour_1 !== undefined ||
+      dataset.Start_Hour_2 !== undefined;
     existsFiltres
       ? (message.innerText = "")
       : (message.innerText = "You should select a time interval");
@@ -698,22 +696,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function existsDate(filtersValues) {
-    let numberOfValues = 0;
-    let existsFiltres = false;
-    const dates = [
-      "Start_Date_1",
-      "Start_Date_2",
-      "Start_Hour_1",
-      "Start_Hour_2",
-    ];
-    for (let i = 0; i < dates.length; i++) {
-      if (filtersValues[dates[i]] !== undefined) numberOfValues++;
-      existsFiltres = existsFiltres || filtersValues[dates[i]] !== undefined;
-    }
-    return { number: numberOfValues, exists: existsFiltres };
-  }
-
   function verifFilters(filtersValues) {
     const ok = verifyWeatherFiltres(filtersValues);
     const okDate = verifyDates(filtersValues);
@@ -721,7 +703,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return ok && okDate;
   }
 
-  //Generarea Campului de Group By
   const filtersForm = document.getElementById("filters_form");
   filtersForm.addEventListener("change", addGroupByOptions);
 

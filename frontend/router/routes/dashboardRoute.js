@@ -1,4 +1,3 @@
-const url = require("url");
 const { dashboardController, dashboardUsersController, dashboardAccidentsController } = require("../../controllers/index");
 
 function sendAnswer(success, data, res, statusCode = 200) {
