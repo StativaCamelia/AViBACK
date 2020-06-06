@@ -42,30 +42,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
   registerButton.addEventListener("click", function (ev) {
     ev.preventDefault();
-    verifEmail(email.value);
-    verifUsername(usernameSignup.value);
-    verifPassword(passwordSignup.value);
+    const okEmail = verifEmail(email.value);
+    const okUsername = verifUsername(usernameSignup.value);
+    const okPassword = verifPassword(passwordSignup.value);
 
-    let xhttp = new XMLHttpRequest();
-    xhttp.open("post", "http://localhost:5003/users/register", true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    const values = {
-      email: email.value,
-      username: usernameSignup.value,
-      password: passwordSignup.value,
-    };
-    xhttp.send(JSON.stringify(values));
-    xhttp.onreadystatechange = function () {
-      if (this.readyState === 4) {
-        const response = JSON.parse(this.responseText);
-        if (this.status === 201 || this.status === 400) {
-          document.getElementById("register_response").innerText =
-            response.content.message;
-        } else {
-          console.log(response.content.message);
+    if(okEmail && okUsername && okPassword){
+      let xhttp = new XMLHttpRequest();
+      xhttp.open("post", "http://localhost:5003/users/register", true);
+      xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      const values = {
+        email: email.value,
+        username: usernameSignup.value,
+        password: passwordSignup.value,
+      };
+      xhttp.send(JSON.stringify(values));
+      xhttp.onreadystatechange = function () {
+        if (this.readyState === 4) {
+          const response = JSON.parse(this.responseText);
+          if (this.status === 201 || this.status === 400) {
+            document.getElementById("register_response").innerText =
+                response.content.message;
+          } else {
+            console.log(response.content.message);
+          }
         }
-      }
-    };
+      };
+    }
   });
 
   function emailSignHandler(e) {
@@ -79,11 +81,14 @@ document.addEventListener("DOMContentLoaded", function () {
   function verifEmail(emailValue) {
     if (emailValue === "") {
       setErrorFor(email, "Email cannot be blank!");
+      return false;
     } else {
       if (!isEmail(emailValue)) {
         setErrorFor(email, "This is not an email address!");
+        return false;
       } else {
         setSuccessFor(email);
+        return true;
       }
     }
   }
@@ -99,14 +104,25 @@ document.addEventListener("DOMContentLoaded", function () {
   function verifUsername(usernameValue) {
     if (usernameValue === "") {
       setErrorFor(usernameSignup, "Username cannot be blank!");
+      return false;
     } else {
       if (usernameValue.length <= 5) {
         setErrorFor(
           usernameSignup,
           "Username must have at least 6 characters!"
         );
+        return false;
       } else {
-        setSuccessFor(usernameSignup);
+        if(isInvalidInput(usernameValue)){
+          setErrorFor(
+              usernameSignup,
+              "Username must contain only letters, digits or symbols like '.', '-' or '_'!"
+          );
+          return false;
+        }else{
+          setSuccessFor(usernameSignup);
+          return true;
+        }
       }
     }
   }
@@ -122,14 +138,25 @@ document.addEventListener("DOMContentLoaded", function () {
   function verifPassword(passwordValue) {
     if (passwordValue === "") {
       setErrorFor(passwordSignup, "Password cannot be blank!");
+      return false;
     } else {
       if (passwordValue.length < 6) {
         setErrorFor(
           passwordSignup,
           "Password must have at least 6 characters!"
         );
+        return false;
       } else {
-        setSuccessFor(passwordSignup);
+        if(isInvalidInput(passwordValue)){
+          setErrorFor(
+              passwordSignup,
+              "Password must contain only letters, digits or symbols like '.', '-' or '_'!"
+        );
+          return false;
+        }else{
+          setSuccessFor(passwordSignup);
+          return true;
+        }
       }
     }
   }
@@ -163,6 +190,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     input.className = "success";
+  }
+
+  function isInvalidInput(input){
+    return /[!$%^@&*()+|~=`{}\[\]:";'<>?,\\/]/.test(input);
   }
 
   function isEmail(email) {

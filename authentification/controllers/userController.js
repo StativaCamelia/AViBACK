@@ -214,6 +214,9 @@ class UserController {
 
   async handlerPostRegister(req, res) {
     const { body } = req;
+    body.email = body.email.toString();
+    body.username = body.username.toString();
+    body.password = body.password.toString();
     let user = new this.database.User({
       email: body.email,
       username: body.username,
@@ -280,6 +283,8 @@ class UserController {
 
   async handlerPostLogin(req, res) {
     const { body } = req;
+    body.username = body.username.toString();
+    body.password = body.password.toString();
     let user = new this.database.User({
       username: body.username,
       password: body.password,
