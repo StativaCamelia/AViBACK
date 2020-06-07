@@ -332,8 +332,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (continueGraph === "Submit") {
       globalReceived = datasetsReceived;
       globalSend = datasetsSend;
-      console.log(globalReceived);
-      console.log(globalSend);
       datasetsReceived = [];
       datasetsSend = [];
       changePanel();
@@ -457,8 +455,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function generateCsvFormat() {
     let csvRows = [];
     let headers = [];
-    console.log(globalReceived);
-    console.log(globalSend);
     for (let i = 0; i < globalSend.length; i++) {
       headers = Object.getOwnPropertyNames(globalSend[i]);
       headers.push("Date");
