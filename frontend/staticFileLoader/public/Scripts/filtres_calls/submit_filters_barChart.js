@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let continueGraph = "Submit";
   let groupByCriterion;
   var barChart;
+  let globalSend = [];
+  let globalReceived = [];
 
   const exportData = document.querySelector(".export");
   const csvExport = document.getElementById("csv_export");
@@ -328,10 +330,15 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
     if (continueGraph === "Submit") {
+      globalReceived = datasetsReceived;
+      globalSend = datasetsSend;
       datasetsReceived = [];
       datasetsSend = [];
       changePanel();
       setDatasetTitle(1);
+    } else {
+      globalReceived = datasetsReceived;
+      globalSend = datasetsSend;
     }
   }
 
@@ -448,15 +455,15 @@ document.addEventListener("DOMContentLoaded", function () {
   function generateCsvFormat() {
     let csvRows = [];
     let headers = [];
-    for (let i = 0; i < datasetsSend.length; i++) {
-      headers = Object.getOwnPropertyNames(datasetsSend[i]);
+    for (let i = 0; i < globalSend.length; i++) {
+      headers = Object.getOwnPropertyNames(globalSend[i]);
       headers.push("Date");
       headers.push("Accidents_No.");
       csvRows.push(headers.join(","));
       let values = [];
-      values = Object.values(datasetsSend[i]);
-      let currentDataset = datasetsReceived[i];
-      for (let j = 0; j < datasetsReceived[i].length; j++) {
+      values = Object.values(globalSend[i]);
+      let currentDataset = globalReceived[i];
+      for (let j = 0; j < globalReceived[i].length; j++) {
         values.push(`${currentDataset[j]._id}`);
         values.push(`${currentDataset[j].count}`);
       }

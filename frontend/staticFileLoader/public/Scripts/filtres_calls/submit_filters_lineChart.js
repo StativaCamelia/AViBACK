@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let groupByCriterion;
   let lineChart;
   let correctChangeInterval = true;
+  let globalSend = [];
+  let globalReceived = [];
 
   let change_interval = document.getElementById("change_button");
   let time_interval = document.querySelector(".time_filtres");
@@ -321,10 +323,15 @@ document.addEventListener("DOMContentLoaded", function () {
       createLineElement([2016, 2017, 2018, 2019], []);
     }
     if (continueGraph === "Submit") {
+      globalReceived = datasetsReceived;
+      globalSend = datasetsSend;
       datasetsReceived = [];
       datasetsSend = [];
       changePanel();
       setDatasetTitle(1);
+    } else {
+      globalReceived = datasetsReceived;
+      globalSend = datasetsSend;
     }
   }
 
@@ -425,15 +432,15 @@ document.addEventListener("DOMContentLoaded", function () {
   function generateCsvFormat() {
     let csvRows = [];
     let headers = [];
-    for (let i = 0; i < datasetsSend.length; i++) {
-      headers = Object.getOwnPropertyNames(datasetsSend[i]);
+    for (let i = 0; i < globalSend.length; i++) {
+      headers = Object.getOwnPropertyNames(globalSend[i]);
       headers.push("Date");
       headers.push("Accidents_No.");
       csvRows.push(headers.join(","));
       let values = [];
-      values = Object.values(datasetsSend[i]);
-      let currentDataset = datasetsReceived[i];
-      for (let j = 0; j < datasetsReceived[i].length; j++) {
+      values = Object.values(globalSend[i]);
+      let currentDataset = globalReceived[i];
+      for (let j = 0; j < globalReceived[i].length; j++) {
         values.push(`${currentDataset[j]._id}`);
         values.push(`${currentDataset[j].count}`);
       }
