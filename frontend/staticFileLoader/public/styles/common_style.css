@@ -290,10 +290,9 @@ a:active {
     width: 60%;
     padding: 2vh 2vh 2vh 2vh;
     border-style: outset;
-    margin-top: 2vh;
     border-radius: 1vh;
     font-size: 2vh;
-    margin: 7vh 0vh 7vh 0vh;
+    margin: 7vh 0 7vh 0;
 }
 
 .box_criterii {
@@ -348,7 +347,6 @@ a:active {
     background-image: linear-gradient(to right, rgb(144, 191, 209), rgba(221, 195, 80, 0.863), rgb(3, 22, 31));
 }
 
-
 .icons {
     margin-left: 5px;
     margin-right: 5px;
@@ -357,40 +355,13 @@ a:active {
     align-self: center;
 }
 
-.slider_container_2 .slider:hover {
-    color: gray;
-}
-
-.slider_container_2 .slider:active+output {
-    display: block;
-    width: 40px;
-    left: 80%;
-    transform: translateX(-50%);
-    transform: translateY(+150%);
-    opacity: 1;
-}
-
-.slider_container_2 output {
-    position: absolute;
-    display: none;
-    width: 50px;
-    height: 24px;
-    border: 1px solid #e2e2e2;
-    background-color: #fff;
-    border-radius: 3px;
-    color: #777;
-    font-size: .8em;
-    line-height: 24px;
-    text-align: center;
-}
-
 .slider_container_1 .slider:hover {
     color: gray;
 }
 
 .slider_container_1 .slider {
     z-index: 0;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     align-self: center;
     width: 100%;
     -webkit-appearance: none;

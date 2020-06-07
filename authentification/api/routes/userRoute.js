@@ -1,4 +1,5 @@
 const { userController } = require("../../controllers/index");
+const checkForObjectId = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
 function sendAnswer(success, statusCode, content, res, handler) {
   if (handler === "register" || handler === "loginGet") {
@@ -144,11 +145,14 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("/users") && method === "put") {
+  } else if (
+    checkForObjectId.test(path.substring(path.lastIndexOf("/") + 1)) &&
+    method === "put"
+  ) {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
-        const { userId } = queryStringObject;
+        const userId = path.substring(path.lastIndexOf("/") + 1);
         const { success, data } = await userController.updateUser({
           userId,
           body,
@@ -165,11 +169,14 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("/users") && method === "delete") {
+  } else if (
+    checkForObjectId.test(path.substring(path.lastIndexOf("/") + 1)) &&
+    method === "delete"
+  ) {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
-        const { userId } = queryStringObject;
+        const userId = path.substring(path.lastIndexOf("/") + 1);
         const { success, data } = await userController.deleteUser({
           userId,
         });
@@ -185,11 +192,14 @@ exports.getRes = async (req, parsedReq, res) => {
         (statusCode = 501)
       );
     }
-  } else if (path.endsWith("/users") && method === "get") {
+  } else if (
+    checkForObjectId.test(path.substring(path.lastIndexOf("/") + 1)) &&
+    method === "get"
+  ) {
     try {
       const auth = await userController.getAuth(req.headers["auth-token"]);
       if (auth.succes) {
-        const { userId } = queryStringObject;
+        const userId = path.substring(path.lastIndexOf("/") + 1);
         const { success, data } = await userController.getUserById({
           userId,
         });

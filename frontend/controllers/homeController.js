@@ -1,4 +1,3 @@
-const url = require("url");
 const { homePage } = require("../views/index");
 
 class HomeController {
