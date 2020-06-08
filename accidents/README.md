@@ -165,10 +165,8 @@ Creates a new accident
   Request body
 ```JSON
 {
-	{
     "State" : "OH",
     "Severity" : 2
-}
 }
 ```
 
