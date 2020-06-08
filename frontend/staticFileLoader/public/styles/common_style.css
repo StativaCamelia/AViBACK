@@ -438,14 +438,14 @@ a:active {
 
 /*Control Panel*/
 
-.first_box_dash h3, .second_box_dash h3, .first_box_dash ul li, .second_box_dash ul li,.dash_user_form h3,.dash_user_form ul li,.dash_user_all ul li, .dash_accident_form_create h3, .dash_accident_form_create ul li, .dash_accident_form h3, .dash_accident_form ul li{
+.first_box_dash h3, .second_box_dash h3, .first_box_dash ul li, .second_box_dash ul li,.dash_user_form h3,.dash_user_form ul li,.dash_user_all ul li, .second_div_users h3, .dash_accident_form_create h3, .dash_accident_form_create ul li, .dash_accident_form h3, .dash_accident_form ul li, .second_div_accidents h3{
     font-family: Novecentosanswide;
     font-size: 1.2rem;
     color: #041F60;
     text-align: left;
     font-weight: bold;
 }
-.dash_user_form h3, .dash_accident_form_create h3, .dash_accident_form h3{
+.dash_user_form h3, .second_div_users h3, .dash_accident_form_create h3, .dash_accident_form h3, .second_div_accidents h3{
     text-align: center;
 }
 .dash_user_form ul,.dash_user_all ul, .dash_accident_form_create ul, .dash_accident_form ul{

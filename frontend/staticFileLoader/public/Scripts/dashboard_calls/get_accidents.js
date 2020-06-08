@@ -1,13 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
   const url = "http://localhost:5004/accidents";
   const authToken = localStorage.getItem("auth-token");
+  const noDataFound = document.getElementById("no_data_found");
 
   function sendRequestCreate(accident) {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("post", url, true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send(JSON.stringify(accident));
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
@@ -19,24 +16,34 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     };
+    xhttp.open("post", url, true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send(JSON.stringify(accident));
   }
 
   function sendRequestGetById(accidentIdValue) {
     let xhttp = new XMLHttpRequest();
     const urlWithId = url + "/" + accidentIdValue;
-    xhttp.open("get", urlWithId, true);
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
         if (this.status === 200) {
-          createGetAccidentResult(response.content);
+          if(response.content){
+            noDataFound.innerText = "";
+            createGetAccidentResult(response.content);
+          }else{
+            resetGetAccidentForm("noData");
+            noDataFound.innerText = "NO DATA FOUND!";
+          }
         } else {
           console.log(response.error);
         }
       }
     };
+    xhttp.open("get", urlWithId, true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
   }
 
   function sendRequestGet(dateOne, dateTwo) {
@@ -55,65 +62,81 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     }
-    xhttp.open("get", urlWithDates, true);
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
         if (this.status === 200) {
-          createGetAccidentsResult(response.content);
+          if(response.content.length > 0){
+            noDataFound.innerText = "";
+            createGetAccidentsResult(response.content);
+          }else{
+            resetGetAccidents("noData");
+            noDataFound.innerText = "NO DATA FOUND!";
+          }
         } else {
           console.log(response.error);
         }
       }
     };
+    xhttp.open("get", urlWithDates, true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
   }
 
   function sendRequestUpdate(accidentIdValue, accident) {
     let xhttp = new XMLHttpRequest();
     const urlWithId = url + "/" + accidentIdValue;
-    xhttp.open("put", urlWithId, true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send(JSON.stringify(accident));
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
         if (this.status === 200) {
-          updateAccidentMessage.innerText = "ACCIDENT UPDATED!";
+          console.log(response.content)
+          if(Object.keys(response.content).length > 0){
+            noDataFound.innerText = "";
+            updateAccidentMessage.innerText = "ACCIDENT UPDATED!";
+          }else{
+            updateAccidentMessage.innerText = "";
+            noDataFound.innerText = "NO DATA FOUND!";
+          }
         } else {
           console.log(response.error);
           updateAccidentMessage.innerText = "ACCIDENT NOT UPDATED!";
         }
       }
     };
+    xhttp.open("put", urlWithId, true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send(JSON.stringify(accident));
   }
 
   function sendRequestDeleteById(accidentIdValue) {
     let xhttp = new XMLHttpRequest();
     const urlWithId = url + "/" + accidentIdValue;
-    xhttp.open("delete", urlWithId, true);
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
         if (this.status === 200) {
-          deleteAccidentMessage.innerText = "ACCIDENT DELETED!";
+          if(response.content){
+            noDataFound.innerText = "";
+            deleteAccidentMessage.innerText = "ACCIDENT DELETED!";
+          }else{
+            deleteAccidentMessage.innerText = "";
+            noDataFound.innerText = "NO DATA FOUND!";
+          }
         } else {
           console.log(response.error);
           deleteAccidentMessage.innerText = "ACCIDENT NOT DELETED!";
         }
       }
     };
+    xhttp.open("delete", urlWithId, true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
   }
 
   function sendRequestDeleteAll() {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("delete", url, true);
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
@@ -125,6 +148,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     };
+    xhttp.open("delete", url, true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
   }
 
   const createAccident = document.getElementById("create_accident");
@@ -147,30 +173,39 @@ document.addEventListener("DOMContentLoaded", function () {
     createAccidentMessage.innerText = "";
     childCreateAccident[0].id = "";
     accidentFormCreate.style.display = "none";
+    noDataFound.innerText = "";
   }
 
-  function resetGetAccidentForm() {
+  function resetGetAccidentForm(text) {
     deleteElementNodes(getAccidentResult);
-    accidentFormGetAccident.style.display = "none";
-    childReadAccident[0].id = "";
-    getAccidentId.value = "";
+    if(!text){
+      accidentFormGetAccident.style.display = "none";
+      childReadAccident[0].id = "";
+      getAccidentId.value = "";
+      noDataFound.innerText = "";
+    }
   }
 
-  function resetGetAccidents() {
+  function resetGetAccidents(text) {
     deleteElementNodes(getAccidentsResult);
-    accidentFormGetAccidents.style.display = "none";
-    childReadAccidents[0].id = "";
-    getAccidentsDate1.value = "";
-    getAccidentsDate2.value = "";
+    if(!text){
+      accidentFormGetAccidents.style.display = "none";
+      childReadAccidents[0].id = "";
+      getAccidentsDate1.value = "";
+      getAccidentsDate2.value = "";
+      noDataFound.innerText = "";
+    }
   }
 
   function resetUpdateForm() {
+    updateAccidentId.value = "";
     for (let i = 0; i < updateValues.length; i++) {
       updateValues[i].value = "";
     }
     updateAccidentMessage.innerText = "";
     childUpdateAccident[0].id = "";
     accidentFormUpdate.style.display = "none";
+    noDataFound.innerText = "";
   }
 
   function resetDeleteAccidentForm() {
@@ -178,12 +213,14 @@ document.addEventListener("DOMContentLoaded", function () {
     childDeleteAccident[0].id = "";
     accidentFormDeleteAccident.style.display = "none";
     deleteAccidentMessage.innerText = "";
+    noDataFound.innerText = "";
   }
 
   function resetDeleteAccidentsForm() {
     childDeleteAccidents[0].id = "";
     deleteAccidents.style.display = "none";
     deleteAccidentsMessage.innerText = "";
+    noDataFound.innerText = "";
   }
 
   const accidentFormCreate = document.getElementById("accident_form_create");

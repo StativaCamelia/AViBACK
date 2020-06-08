@@ -37,13 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const okPassword = verifPasswordLogin(password.value);
     if(okUsername && okPassword){
       let xhttp = new XMLHttpRequest();
-      xhttp.open("post", "http://localhost:5003/users/login", true);
-      xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      const values = {
-        username: username.value,
-        password: password.value,
-      };
-      xhttp.send(JSON.stringify(values));
       xhttp.onreadystatechange = function () {
         if (this.readyState === 4) {
           const response = JSON.parse(this.responseText);
@@ -62,6 +55,13 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
       };
+      xhttp.open("post", "http://localhost:5003/users/login", true);
+      xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      const values = {
+        username: username.value,
+        password: password.value,
+      };
+      xhttp.send(JSON.stringify(values));
     }
   });
 

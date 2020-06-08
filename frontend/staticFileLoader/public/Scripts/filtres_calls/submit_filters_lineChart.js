@@ -400,7 +400,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function generateSvgFormat() {
-    var barUrl = document.getElementById("bar_chart").toDataURL("image/jpg");
+    var barUrl = document.getElementById("line_chart").toDataURL("image/jpg");
     downloadSvg(barUrl);
     pngExport.removeEventListener("click", generateSvgFormat);
   }
@@ -423,7 +423,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var a = document.createElement("a");
     a.setAttribute("hidden", "");
     a.setAttribute("href", lineData);
-    a.setAttribute("download", "AVi-statistics_map.png");
+    a.setAttribute("download", "AVi-statistics_line.png");
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -443,8 +443,9 @@ document.addEventListener("DOMContentLoaded", function () {
       for (let j = 0; j < globalReceived[i].length; j++) {
         values.push(`${currentDataset[j]._id}`);
         values.push(`${currentDataset[j].count}`);
+        csvRows.push(values.join(","));
+        values = Object.values(globalSend[i]);
       }
-      csvRows.push(values.join(","));
     }
     return csvRows.join("\n");
   }

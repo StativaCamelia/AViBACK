@@ -94,7 +94,6 @@ exports.getRes = async (req, res) => {
         (statusCode = 200)
       );
     }
-    //PUT(Update) Accident data by ID
   } else if (method === "put") {
     try {
       const auth = await utils.getAuthorization(req);
@@ -122,7 +121,6 @@ exports.getRes = async (req, res) => {
         (statusCode = 200)
       );
     }
-    //DELETE Accident by ID
   } else if (
     checkForObjectId.test(path.substring(path.lastIndexOf("/") + 1)) &&
     method === "delete"

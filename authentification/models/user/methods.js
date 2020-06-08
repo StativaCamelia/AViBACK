@@ -4,6 +4,10 @@ function isEmail(email) {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
 }
 
+function isInvalidInput(input) {
+  return /[!$%^@&*()+|~=`{}\[\]:";'<>?,\\/]/.test(input);
+}
+
 module.exports = function (schema) {
   const errorMessage = "Incorrect data!";
   schema.methods.validateUserRegister = function () {
@@ -13,35 +17,13 @@ module.exports = function (schema) {
       message = "Blank field(s)!";
     } else {
       if (
-        !isEmail(user.email) &&
-        user.username.length < 6 &&
-        user.password.length < 6
+        !isEmail(user.email) ||
+        user.username.length < 6 ||
+        user.password.length < 6 ||
+        isInvalidInput(user.username) ||
+        isInvalidInput(user.password)
       ) {
         message = errorMessage;
-      } else {
-        if (!isEmail(user.email) && user.username.length < 6) {
-          message = errorMessage;
-        } else {
-          if (!isEmail(user.email) && user.password.length < 6) {
-            message = errorMessage;
-          } else {
-            if (user.username.length < 6 && user.password.length < 6) {
-              message = errorMessage;
-            } else {
-              if (!isEmail(user.email)) {
-                message = errorMessage;
-              } else {
-                if (user.username.length < 6) {
-                  message = errorMessage;
-                } else {
-                  if (user.password.length < 6) {
-                    message = errorMessage;
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     }
     return message;
@@ -59,16 +41,13 @@ module.exports = function (schema) {
     if (user.username === "" || user.password === "") {
       message = "Blank field(s)!";
     } else {
-      if (user.username.length < 6 && user.password.length < 6) {
+      if (
+        user.username.length < 6 ||
+        user.password.length < 6 ||
+        isInvalidInput(user.username) ||
+        isInvalidInput(user.password)
+      ) {
         message = errorMessage;
-      } else {
-        if (user.username.length < 6) {
-          message = errorMessage;
-        } else {
-          if (user.password.length < 6) {
-            message = errorMessage;
-          }
-        }
       }
     }
     return message;

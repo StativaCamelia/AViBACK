@@ -212,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.readyState === 4 && this.status === 200) {
         loadingState(true, false);
         const { content } = JSON.parse(this.responseText);
+        removeExportListeners();
         if (content)
           if (!content.Start_Lat && !content.Start_Lng) {
             resetFiltres();
@@ -226,6 +227,12 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
+  function removeExportListeners() {
+    csvExport.removeEventListener("click",handlerCSVExport);
+    pngExport.removeEventListener("click",generatePngFormat);
+    svgExport.removeEventListener("click",generateSvgFormat);
+  }
+
   function exportFunction(dataset) {
     exportData.style.display = "flex";
     csvExport.addEventListener("click", handlerCSVExport);
@@ -236,18 +243,15 @@ document.addEventListener("DOMContentLoaded", function () {
   function handlerSVGExport() {
     const svgData = generateSvgFormat();
     downloadSvg(svgData);
-    svgExport.removeEventListener("click", handlerSVGExport);
   }
 
   function handlerCSVExport(dataset) {
     const csvData = generateCsvFormat(dataset);
     downloadCsv(csvData);
-    csvExport.removeEventListener("click", handlerCSVExport);
   }
 
   function handlerPngExport() {
     const pngData = generatePngFormat();
-    pngExport.removeEventListener("click", handlerPngExport);
   }
 
   function generatePngFormat() {
