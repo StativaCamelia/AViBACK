@@ -371,6 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     xhttp.onreadystatechange = function () {
       controlLoading(false, true);
+      removeExportListeners();
       if (this.readyState === 4 && this.status === 200) {
         const { content } = JSON.parse(this.responseText);
         if (continueGraph !== "Update") {
@@ -386,35 +387,83 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.send();
   }
 
+  function removeExportListeners() {
+    csvExport.removeEventListener("click", handlerCsvExport);
+    pngExport.removeEventListener("click", generatePngFormat);
+    svgExport.removeEventListener("click", generateSvgFormat);
+  }
+
   function exportFunction() {
     exportData.style.display = "flex";
     csvExport.addEventListener("click", handlerCsvExport);
-    pngExport.addEventListener("click", generatePngFormat);
+    pngExport.addEventListener("click", handlerPngExport);
     svgExport.addEventListener("click", handlerSvgExport); //not implemented yet
   }
 
-  async function handlerSvgExport() {
-    const csvData = generateSvgFormat();
-    downloadCsv(csvData);
-    csvExport.removeEventListener("click", handlerSvgExport);
+  async function handlerPngExport() {
+    generatePngFormat();
   }
 
-  function generateSvgFormat() {
-    var barUrl = document.getElementById("line_chart").toDataURL("image/jpg");
-    downloadSvg(barUrl);
-    pngExport.removeEventListener("click", generateSvgFormat);
+  async function handlerSvgExport() {
+    generateSvgFormat();
   }
 
   async function handlerCsvExport() {
     const csvData = generateCsvFormat();
     downloadCsv(csvData);
-    csvExport.removeEventListener("click", handlerCsvExport);
+  }
+
+  function generateSvgFormat() {
+    var svg = document.querySelector("#line_chart");
+
+    let lineChartDrawn = new C2S(1300, 1000);
+    lineChartDrawn.drawImage(svg, 0, 0);
+    console.log(lineChartDrawn.getSvg());
+
+    svglineChart = lineChartDrawn.getSvg();
+
+    let lineSerializer = new XMLSerializer().serializeToString(svglineChart);
+    if (
+      !lineSerializer.match(
+        /^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/
+      )
+    ) {
+      lineSerializer = lineSerializer.replace(
+        /^<svg/,
+        '<svg xmlns="http://www.w3.org/2000/svg"'
+      );
+    }
+    if (
+      !lineSerializer.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)
+    ) {
+      lineSerializer = lineSerializer.replace(
+        /^<svg/,
+        '<svg xmlns:xlink="http://www.w3.org/1999/xlink"'
+      );
+    }
+    lineSerializer =
+      '<?xml version="1.0" standalone="no"?>\r\n' + lineSerializer;
+    const svgUrl =
+      "data:image/svg+xml;charset=utf-8," + encodeURIComponent(lineSerializer);
+
+    downloadSvg(svgUrl);
+  }
+
+  function downloadSvg(lineData) {
+    const pngimg = document.createElement("img");
+    pngimg.src = lineData;
+    var a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", lineData);
+    a.setAttribute("download", "AVi-statistics_line.svg");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   function generatePngFormat() {
     var lineUrl = document.getElementById("line_chart").toDataURL("image/jpg");
     downloadPng(lineUrl);
-    pngExport.removeEventListener("click", generatePngFormat);
   }
 
   function downloadPng(lineData) {
