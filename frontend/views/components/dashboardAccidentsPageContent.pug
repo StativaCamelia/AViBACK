@@ -45,7 +45,7 @@ block controller_accidents
                 label.accident_label(for='create_accident_start_hour') Start hour:
                 input#create_accident_start_hour.accident_input(type='time' name='create_accident_start_hour' form='accident_form_create' value='')
             .accident_box
-                label.accident_label(for='create_accident_side') Side(L/R)*:
+                label.accident_label(for='create_accident_side') Side(L/R):
                 input#create_accident_side.accident_input(type='text' name='create_accident_side' form='accident_form_create' value='')
             .accident_box
                 label.accident_label(for='create_accident_weather_condition') Weather condition:
@@ -75,7 +75,7 @@ block controller_accidents
                 label.accident_label(for='create_accident_wind_speed') Wind speed(mph):
                 input#create_accident_wind_speed.accident_input(type='number' name='create_accident_wind_speed' form='accident_form_create' value='')
             .accident_box
-                label.accident_label(for='create_accident_severity') Severity(1/2/3)*:
+                label.accident_label(for='create_accident_severity') Severity(1/2/3):
                 input#create_accident_severity.accident_input(type='number' name='create_accident_severity' min='1' max='3' form='accident_form_create' value='')
             .accident_box
                 label.accident_label(for='create_accident_start_lat') Start Lat:
@@ -294,3 +294,4 @@ block controller_accidents
             h3 Are you sure?
             input.dash_accident_button#submit_delete_accidents(type='button' value='Yes')
             h3#delete_accidents_message
+        h3#no_data_found

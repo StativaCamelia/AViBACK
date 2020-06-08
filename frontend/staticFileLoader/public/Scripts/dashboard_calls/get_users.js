@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const url = "http://localhost:5003/users";
   const authToken = localStorage.getItem("auth-token");
+  const noDataFound = document.getElementById("no_data_found");
   function sendRequestCreate(
     emailValue,
     usernameValue,
@@ -8,16 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     typeValue
   ) {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("post", url, true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    const values = {
-      email: emailValue,
-      username: usernameValue,
-      password: passwordValue,
-      type: typeValue,
-    };
-    xhttp.send(JSON.stringify(values));
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
@@ -29,31 +20,44 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     };
+    xhttp.open("post", url, true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    const values = {
+      email: emailValue,
+      username: usernameValue,
+      password: passwordValue,
+      type: typeValue,
+    };
+    xhttp.send(JSON.stringify(values));
   }
 
   function sendRequestGetById(userIdValue) {
     let xhttp = new XMLHttpRequest();
     const urlWithId = url + "/" + userIdValue;
-    xhttp.open("get", urlWithId, true);
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
         if (this.status === 200) {
-          createGetUserResult(response.content);
+          if(response.content){
+            noDataFound.innerText = "";
+            createGetUserResult(response.content);
+          }else{
+            noDataFound.innerText = "NO DATA FOUND!";
+            resetGetUserForm("noData");
+          }
         } else {
           console.log(response.error);
         }
       }
     };
+    xhttp.open("get", urlWithId, true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
   }
 
   function sendRequestGetAll() {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("get", url, true);
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
@@ -64,52 +68,63 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     };
+    xhttp.open("get", url, true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
   }
 
   function sendRequestUpdate(userIdValue, user) {
     let xhttp = new XMLHttpRequest();
     const urlWithId = url + "/" + userIdValue;
-    xhttp.open("put", urlWithId, true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send(JSON.stringify(user));
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
         if (this.status === 200) {
-          updateUserMessage.innerText = "USER UPDATED!";
+          if(response.content){
+            updateUserMessage.innerText = "USER UPDATED!";
+            noDataFound.innerText = "";
+          }else{
+            updateUserMessage.innerText = "";
+            noDataFound.innerText = "NO DATA FOUND!";
+          }
         } else {
           console.log(response.error);
           updateUserMessage.innerText = "USER NOT UPDATED!";
         }
       }
-    };
+    };xhttp.open("put", urlWithId, true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send(JSON.stringify(user));
   }
 
   function sendRequestDeleteById(userIdValue) {
     let xhttp = new XMLHttpRequest();
     const urlWithId = url + "/" + userIdValue;
-    xhttp.open("delete", urlWithId, true);
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
         if (this.status === 200) {
-          deleteUserMessage.innerText = "USER DELETED!";
+          if(response.content){
+            deleteUserMessage.innerText = "USER DELETED!";
+            noDataFound.innerText = "";
+          }else{
+            noDataFound.innerText = "NO DATA FOUND!";
+            deleteUserMessage.innerText = "";
+          }
         } else {
           console.log(response.error);
           deleteUserMessage.innerText = "USER NOT DELETED!";
         }
       }
     };
+    xhttp.open("delete", urlWithId, true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
   }
 
   function sendRequestDeleteAll() {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("delete", url, true);
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         const response = JSON.parse(this.responseText);
@@ -121,6 +136,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     };
+    xhttp.open("delete", url, true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
   }
 
   const createUser = document.getElementById("create_user");
@@ -140,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
     createUserMessage.innerText = "";
     userFormCreate.style.display = "none";
     childCreateUser[0].id = "";
+    noDataFound.innerText = "";
     resetCreateUserFields();
   }
 
@@ -150,23 +169,28 @@ document.addEventListener("DOMContentLoaded", function () {
     createUserType.value = "";
   }
 
-  function resetGetUserForm() {
+  function resetGetUserForm(text) {
     deleteElementNodes(getUserResult);
-    userFormGetUser.style.display = "none";
-    childReadUser[0].id = "";
-    getUserId.value = "";
+    if(!text){
+      userFormGetUser.style.display = "none";
+      childReadUser[0].id = "";
+      getUserId.value = "";
+      noDataFound.innerText = "";
+    }
   }
 
   function resetGetAllUsers() {
     deleteElementNodes(getAllUsers);
     getAllUsers.style.display = "none";
     childReadUsers[0].id = "";
+    noDataFound.innerText = "";
   }
 
   function resetUpdateUserForm() {
     updateUserMessage.innerText = "";
     userFormUpdate.style.display = "none";
     childUpdateUser[0].id = "";
+    noDataFound.innerText = "";
     resetUpdateUserFields();
   }
 
@@ -182,12 +206,14 @@ document.addEventListener("DOMContentLoaded", function () {
     childDeleteUser[0].id = "";
     userFormDeleteUser.style.display = "none";
     deleteUserMessage.innerText = "";
+    noDataFound.innerText = "";
   }
 
   function resetDeleteUsersForm() {
     childDeleteUsers[0].id = "";
     deleteAll.style.display = "none";
     deleteUsersMessage.innerText = "";
+    noDataFound.innerText = "";
   }
 
   const userFormCreate = document.getElementById("user_form_create");

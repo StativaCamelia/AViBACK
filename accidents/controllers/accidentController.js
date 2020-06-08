@@ -124,7 +124,7 @@ class AccidentController {
   async getMapMarkers(query) {
     try {
       const marker = await this.database.Accident.find(query).limit(1);
-      if (marker) {
+      if (marker.length > 0) {
         return {
           Start_Lat: marker[0].Start_Lat,
           Start_Lng: marker[0].Start_Lng,

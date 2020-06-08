@@ -1,9 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("auth-token");
   let xhttp = new XMLHttpRequest();
-  xhttp.open("get", "http://localhost:5003/users/login", true);
-  xhttp.setRequestHeader("auth-token", token ? token : "");
-  xhttp.send();
   xhttp.onreadystatechange = function () {
     if (this.readyState === 4) {
       let profileLog = document.getElementById("button");
@@ -43,4 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   };
+  xhttp.open("get", "http://localhost:5003/users/login", true);
+  xhttp.setRequestHeader("auth-token", token ? token : "");
+  xhttp.send();
 });

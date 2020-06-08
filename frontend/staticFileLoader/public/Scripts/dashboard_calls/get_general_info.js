@@ -13,9 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function sendRequestDashboardUsers() {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("get", usersUrl + "general", true);
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         if (this.status === 200) {
@@ -25,13 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     };
+    xhttp.open("get", usersUrl + "general", true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
   }
 
   function sendRequestDashboardAccidents() {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("get", accidentsUrl + "general", true);
-    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
-    xhttp.send();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {
         if (this.status === 200) {
@@ -41,6 +38,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     };
+    xhttp.open("get", accidentsUrl + "general", true);
+    xhttp.setRequestHeader("auth-token", authToken ? authToken : "");
+    xhttp.send();
   }
 
   function setUsersDetails(users) {

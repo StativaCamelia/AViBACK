@@ -46,8 +46,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const okUsername = verifUsername(usernameSignup.value);
     const okPassword = verifPassword(passwordSignup.value);
 
-    if(okEmail && okUsername && okPassword){
+    if (okEmail && okUsername && okPassword) {
       let xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState === 4) {
+          const response = JSON.parse(this.responseText);
+          if (this.status === 201 || this.status === 400) {
+            document.getElementById("register_response").innerText =
+              response.content.message;
+          } else {
+            console.log(response.content.message);
+          }
+        }
+      };
       xhttp.open("post", "http://localhost:5003/users/register", true);
       xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       const values = {
@@ -56,17 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
         password: passwordSignup.value,
       };
       xhttp.send(JSON.stringify(values));
-      xhttp.onreadystatechange = function () {
-        if (this.readyState === 4) {
-          const response = JSON.parse(this.responseText);
-          if (this.status === 201 || this.status === 400) {
-            document.getElementById("register_response").innerText =
-                response.content.message;
-          } else {
-            console.log(response.content.message);
-          }
-        }
-      };
     }
   });
 
@@ -113,13 +113,13 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         return false;
       } else {
-        if(isInvalidInput(usernameValue)){
+        if (isInvalidInput(usernameValue)) {
           setErrorFor(
-              usernameSignup,
-              "Username must contain only letters, digits or symbols like '.', '-' or '_'!"
+            usernameSignup,
+            "Username must contain only letters, digits or symbols like '.', '-' or '_'!"
           );
           return false;
-        }else{
+        } else {
           setSuccessFor(usernameSignup);
           return true;
         }
@@ -147,13 +147,13 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         return false;
       } else {
-        if(isInvalidInput(passwordValue)){
+        if (isInvalidInput(passwordValue)) {
           setErrorFor(
-              passwordSignup,
-              "Password must contain only letters, digits or symbols like '.', '-' or '_'!"
-        );
+            passwordSignup,
+            "Password must contain only letters, digits or symbols like '.', '-' or '_'!"
+          );
           return false;
-        }else{
+        } else {
           setSuccessFor(passwordSignup);
           return true;
         }
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
     input.className = "success";
   }
 
-  function isInvalidInput(input){
+  function isInvalidInput(input) {
     return /[!$%^@&*()+|~=`{}\[\]:";'<>?,\\/]/.test(input);
   }
 
