@@ -443,8 +443,9 @@ document.addEventListener("DOMContentLoaded", function () {
       for (let j = 0; j < globalReceived[i].length; j++) {
         values.push(`${currentDataset[j]._id}`);
         values.push(`${currentDataset[j].count}`);
+        csvRows.push(values.join(","));
+        values = Object.values(globalSend[i]);
       }
-      csvRows.push(values.join(","));
     }
     return csvRows.join("\n");
   }
