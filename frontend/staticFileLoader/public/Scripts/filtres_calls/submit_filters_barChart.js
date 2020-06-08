@@ -240,9 +240,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const groupBy = document.getElementById("intervalType");
 
   function createBarChart(content) {
+    Chart.defaults.global.defaultFontSize = 12;
     var canvas = document.getElementById("bar_chart");
     var ctx = canvas.getContext("2d");
-    Chart.defaults.global.defaultFontSize = 12;
     if (barChart != undefined) barChart.destroy();
 
     function getRandomColor() {
@@ -294,6 +294,29 @@ document.addEventListener("DOMContentLoaded", function () {
         labels: dateLabels,
         datasets: allDatasets,
       };
+
+      var context = new C2S(500, 500);
+
+      barChart = new Chart(context, {
+        type: "bar",
+        data: data,
+        options: {
+          title: {
+            display: true,
+          },
+          legend: {
+            fontSize: 10,
+            fontFamily: "tamoha",
+            fontColor: "Sienna",
+          },
+        },
+        animation: false,
+        responsive: false,
+      });
+
+      var myRectangle = context.getSerializedSvg(true);
+      console.log(myRectangle);
+
       barChart = new Chart(ctx, {
         type: "bar",
         data: data,
@@ -329,6 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       });
     }
+
     if (continueGraph === "Submit") {
       globalReceived = datasetsReceived;
       globalSend = datasetsSend;
@@ -384,7 +408,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.readyState === 4 && this.status === 200) {
         const { content } = JSON.parse(this.responseText);
         if (continueGraph !== "Update") {
-          console.log(continueGraph);
           setVisible("#loading", false);
           setVisible("#left_cont", true);
         }
@@ -411,9 +434,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function handlerSvgExport() {
-    const csvData = generateSvgFormat();
-    downloadCsv(csvData);
-    csvExport.removeEventListener("click", handlerSvgExport);
+    svgExport.removeEventListener("click", handlerSvgExport);
   }
 
   function generateSvgFormat() {
