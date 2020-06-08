@@ -48,7 +48,7 @@ The structure of the API responses' body is as follows:
   
 **Return codes**:
 
--   200 - OK
+-   201 - Created
 -   400 - There was a problem fetching data
 -   500 -  Internal Server Error
 
@@ -93,11 +93,11 @@ The structure of the API responses' body is as follows:
   }
 }
 ```
-## /authorization
+## users/authorization
 
   ### GET
    **Query parameters**:
-  - token: the 
+  - token: the token we want to check
   Receives a token a verify if the token is associated with an admin account
 
   **Return codes**:
@@ -110,10 +110,65 @@ The structure of the API responses' body is as follows:
     **Returned data example**:
 
   ```JSON
-  {
+ {
+  "content": {
+    "success": true,
+    "data": {
+      "type": "admin",
+      "_id": "5ed657b935168e1968041609",
+      "email": "stativa_geo@gmail.com",
+      "username": "Admiul",
+      "password": "$2b$10$wciYae1dr7HAr77Q5lgLfOgOo4k2yuTTQKba1zMiTbSlWwMZJDNIq",
+      "__v": 7
+    }
+  }
+} {
     "content": null
   }
   ```
+## users/send-email
+
+  ### GET
+   **Query parameters**:
+  - topic : A topic that a user might be interested in
+  Receives a topic and send an email to all the users that are have this criteria on their preferences list. The email will announce them that new data regarding the criteria had been added.
+
+  **Return codes**:
+  -   200 - OK
+  -   400 - There was a problem fetching data
+  -   500 -  Internal Server Error
+
+  **Usage example**:  
+    http://localhost:5003/users/send-email
+
+## users/confirm
+
+  ### GET
+   **Query parameters**:
+  - token : an email token send on email to the user who want to register 
+  Receives an email token associated with an user account, and change the status of the account into a confirmed account, so the user can sign-in into the website.
+
+  **Return codes**:
+  -   200 - OK
+  -   400 - There was a problem fetching data
+  -   500 -  Internal Server Error
+
+  **Usage example**:  
+    http://localhost:5003/users/confirm
+
+  **Returned data example**:
+
+  ```JSON
+  {
+        "type": "user",
+        "_id": "5edbe762600a0c482c334af6",
+        "email": "stativa50@gmail.com",
+        "username": "UserTest",
+        "confirmed": true,
+        "__v": 0
+   }
+  ```
+  
 # Admin
 
   ## /users
@@ -240,7 +295,7 @@ The structure of the API responses' body is as follows:
   Creates a new user.
 
   **Return codes**:
-  -   201 - OK
+  -   201 - Created
   -   400 - There was a problem fetching data
   -   500 -  Internal Server Error
 
@@ -316,6 +371,32 @@ The structure of the API responses' body is as follows:
       "__v": 0
     }
   }
+  ```
+  
+    ## /users/general
+  ### GET
+
+  Get some general data about the actions made on the user database(new users, updated, deleted, etc)
+
+  **Return codes**:
+  -   200 - OK
+  -   400 - There was a problem fetching data
+  -   500 -  Internal Server Error
+
+  **Usage example**:  
+    http://localhost:5003/users/general
+    
+  **Returned data example**:
+
+  ```JSON
+{
+  "content": {
+    "usersNumber": 7,
+    "newUsersNumber": 23,
+    "deletedUsersNumber": 2,
+    "updatedUsersNumber": 70
+  }
+}
   ```
 
 
