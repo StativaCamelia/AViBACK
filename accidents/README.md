@@ -110,7 +110,7 @@ The structure of the API responses' body is as follows:
 
 ```JSON
 {
-	content: Database succesfully updated
+	"content": "Database succesfully updated"
 }
 ```
   # With Authorization(The following can only be done by an admin account)
@@ -130,7 +130,7 @@ The structure of the API responses' body is as follows:
 
 ```JSON
 {
-	content: null
+	"content": "null"
 }
 ```
 
