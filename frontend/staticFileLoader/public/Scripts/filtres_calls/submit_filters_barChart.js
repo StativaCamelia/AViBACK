@@ -383,6 +383,7 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.onreadystatechange = function () {
       setVisible("#left_cont", false);
       setVisible("#loading", true);
+      removeExportListeners();
       if (this.readyState === 4 && this.status === 200) {
         const { content } = JSON.parse(this.responseText);
         if (continueGraph !== "Update") {
@@ -398,28 +399,36 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.send();
   }
 
+  function removeExportListeners() {
+    csvExport.removeEventListener("click", handlerCsvExport);
+    pngExport.removeEventListener("click", generatePngFormat);
+    svgExport.removeEventListener("click", generateSvgFormat);
+  }
+
   function exportFunction() {
     exportData.style.display = "flex";
     csvExport.addEventListener("click", handlerCsvExport);
-    pngExport.addEventListener("click", generatePngFormat);
+    pngExport.addEventListener("click", handlerPngExport);
     svgExport.addEventListener("click", handlerSvgExport);
   }
 
   async function handlerCsvExport() {
     const csvData = generateCsvFormat();
     downloadCsv(csvData);
-    csvExport.removeEventListener("click", handlerCsvExport);
+  }
+
+  async function handlerPngExport() {
+    generatePngFormat();
   }
 
   async function handlerSvgExport() {
     generateSvgFormat();
-    svgExport.removeEventListener("click", handlerSvgExport);
   }
 
   function generateSvgFormat() {
     var svg = document.querySelector("#bar_chart");
 
-    let barChartDrawn = new C2S(1000, 1000);
+    let barChartDrawn = new C2S(1200, 1000);
     barChartDrawn.drawImage(svg, 0, 0);
     console.log(barChartDrawn.getSvg());
 
@@ -448,16 +457,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const svgUrl =
       "data:image/svg+xml;charset=utf-8," + encodeURIComponent(barSerializer);
 
-    console.log(svgUrl);
-
     downloadSvg(svgUrl);
-    pngExport.removeEventListener("click", generateSvgFormat);
   }
 
   function generatePngFormat() {
     var barUrl = document.getElementById("bar_chart").toDataURL("image/png");
     downloadPng(barUrl);
-    pngExport.removeEventListener("click", generatePngFormat);
   }
 
   function downloadSvg(barData) {
