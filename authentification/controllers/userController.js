@@ -129,6 +129,24 @@ class UserController {
     }
   }
 
+  async findAndAddCriterion(token, req, res) {
+    try {
+      let { body } = req;
+      const userId = jwt.verify(token, process.env.JWT_SECRET)._id;
+      let user = await this.database.User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $set: { criteria: body.criterion },
+          $set: { valueOfCriteria: body.valueOfCriterion },
+        }
+      );
+      content = user;
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
   async deleteUser(data) {
     const { userId } = data;
     try {
