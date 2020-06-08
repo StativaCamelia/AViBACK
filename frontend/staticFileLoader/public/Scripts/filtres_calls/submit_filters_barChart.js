@@ -295,28 +295,6 @@ document.addEventListener("DOMContentLoaded", function () {
         datasets: allDatasets,
       };
 
-      var context = new C2S(500, 500);
-
-      barChart = new Chart(context, {
-        type: "bar",
-        data: data,
-        options: {
-          title: {
-            display: true,
-          },
-          legend: {
-            fontSize: 10,
-            fontFamily: "tamoha",
-            fontColor: "Sienna",
-          },
-        },
-        animation: false,
-        responsive: false,
-      });
-
-      var myRectangle = context.getSerializedSvg(true);
-      console.log(myRectangle);
-
       barChart = new Chart(ctx, {
         type: "bar",
         data: data,
@@ -434,12 +412,45 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function handlerSvgExport() {
+    generateSvgFormat();
     svgExport.removeEventListener("click", handlerSvgExport);
   }
 
   function generateSvgFormat() {
-    var barUrl = document.getElementById("bar_chart").toDataURL("image/jpg");
-    downloadSvg(barUrl);
+    var svg = document.querySelector("#bar_chart");
+
+    let barChartDrawn = new C2S(1000, 1000);
+    barChartDrawn.drawImage(svg, 0, 0);
+    console.log(barChartDrawn.getSvg());
+
+    svgBarChart = barChartDrawn.getSvg();
+
+    let barSerializer = new XMLSerializer().serializeToString(svgBarChart);
+    if (
+      !barSerializer.match(
+        /^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/
+      )
+    ) {
+      barSerializer = barSerializer.replace(
+        /^<svg/,
+        '<svg xmlns="http://www.w3.org/2000/svg"'
+      );
+    }
+    if (
+      !barSerializer.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)
+    ) {
+      barSerializer = barSerializer.replace(
+        /^<svg/,
+        '<svg xmlns:xlink="http://www.w3.org/1999/xlink"'
+      );
+    }
+    barSerializer = '<?xml version="1.0" standalone="no"?>\r\n' + barSerializer;
+    const svgUrl =
+      "data:image/svg+xml;charset=utf-8," + encodeURIComponent(barSerializer);
+
+    console.log(svgUrl);
+
+    downloadSvg(svgUrl);
     pngExport.removeEventListener("click", generateSvgFormat);
   }
 
@@ -455,7 +466,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var a = document.createElement("a");
     a.setAttribute("hidden", "");
     a.setAttribute("href", barData);
-    a.setAttribute("download", "AVi-statistics_bar.png");
+    a.setAttribute("download", "AVi-statistics_bar.svg");
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
