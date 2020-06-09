@@ -6,7 +6,7 @@ var transporter = nodemailer.createTransport({
   service: "gmail",
   secure: true,
   auth: {
-    user: "andreiagronom1@gmail.com",
+    user: "AViStatistics@gmail.com",
     pass: "Alfabet1.",
   },
   tls: {
@@ -123,6 +123,24 @@ class UserController {
       let user = await this.database.User.findOne({ _id: userId });
       let content = user;
       content.password = null;
+      return { success: true, data: { content } };
+    } catch (error) {
+      return { success: false, data: { error } };
+    }
+  }
+
+  async findAndAddCriterion(token, req, res) {
+    try {
+      let { body } = req;
+      const userId = jwt.verify(token, process.env.JWT_SECRET)._id;
+      let user = await this.database.User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $set: { criteria: body.criterion },
+          $set: { valueOfCriteria: body.valueOfCriterion },
+        }
+      );
+      content = user;
       return { success: true, data: { content } };
     } catch (error) {
       return { success: false, data: { error } };
