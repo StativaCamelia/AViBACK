@@ -933,9 +933,9 @@
     }
 
     .main_menu a:link,
-    a:visited,
-    a:hover,
-    a:active {
+    .main_menu a:visited,
+    .main_menu a:hover,
+    .main_menu a:active {
         text-decoration: none;
     }
 

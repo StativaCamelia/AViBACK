@@ -7,9 +7,23 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.status === 200 || this.status === 400 || this.status === 401) {
         const response = JSON.parse(this.responseText);
         const values = response.content.values;
-        profileLog.innerText = values.value;
-        profileLog.id = values.id;
-        profileLog.href = values.href;
+        if(values.value === "LOGIN"){
+          profileLog.innerText = values.value;
+          profileLog.id = "button";
+          profileLog.href = "#";
+        }else{
+          if(values.value === "MY PROFILE"){
+            profileLog.innerText = values.value;
+            profileLog.id = "profile";
+            profileLog.href = "http://localhost:5002/profile";
+          }else{
+            if(values.value === "DASHBOARD"){
+              profileLog.innerText = values.value;
+              profileLog.id = "dashboard";
+              profileLog.href = "http://localhost:5002/dashboard";
+            }
+          }
+        }
         profileLog.style.display = "initial";
       }
       if (this.status === 400) {
