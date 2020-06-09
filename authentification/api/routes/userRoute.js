@@ -207,7 +207,6 @@ exports.getRes = async (req, parsedReq, res) => {
     }
   } else if (path.endsWith("/users") && method === "put") {
     try {
-      console.log(parsedReq.queryStringObject);
       const { token } = parsedReq.queryStringObject;
       const { success, data } = await userController.findAndAddCriterion(
         token,
