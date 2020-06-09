@@ -9,9 +9,9 @@
         background-color: white;
         text-align: center;
         cursor: pointer;
-        color: black;
+        color: #041f60;
         font-family: Novecentosanswide;
-        font-size: 13px;
+        font-size: 18px;
         font-weight: bold;
         padding: 7px 25px;
         text-decoration: none;
@@ -19,6 +19,87 @@
     }
 
     /*END PROFILE*/
+
+    /*PROFILE PAGE*/
+
+    .profile_content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        height: auto;
+        border-style: solid;
+        border-top: 0;
+        border-bottom: 0;
+        border-color: grey;
+        padding: 5vh 0 5vh 0;
+        box-shadow: 0 5px 20px grey
+    }
+
+    .profile_content h1 {
+        font-family: Novecentosanswide;
+        font-size: 2rem;
+        color: #041f60;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 60%;
+        padding: 2vh 2vh 2vh 2vh;
+        border-style: outset;
+        margin-top: 2vh;
+        border-radius: 1vh;
+        font-size: 3vh;
+        color: #041f60;
+        font-family: Novecentosanswide;
+        font-weight: bold;
+        margin: 7vh 0 7vh 0
+    }
+
+    .box_criterii {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 60%;
+        padding: 2vh 2vh 2vh 2vh;
+        border-style: outset;
+        border-width: .5vh;
+        border-radius: 1vh;
+        color: #e8e8e8;
+        margin: 7vh 0 1vh 0
+    }
+
+    .box_criterii>select:hover {
+        background-color: #fff;
+        cursor: pointer
+    }
+
+    .box_criterii>select {
+        width: 60%;
+        border-radius: 3px;
+        background-color: #e8e8e8;
+        padding: 2px 2px;
+        font-family: Novecentosanswide;
+        font-size: 1.2rem;
+        color: #041f60;
+        font-weight: bold;
+
+    }
+
+    .box p {
+        margin: auto;
+        padding-left: 1vh
+    }
+
+
+
+    /*END PROFILE PAGE*/
+
 
     /*FRAME*/
     .main {
