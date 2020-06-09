@@ -79,56 +79,48 @@
               the application, then we went to details, on each page.
             </p>
             <div class="slideshow-container">
-
-              <!-- Full-width images with number and caption text -->
-              <div class="mySlides fade">
+              <div class="firstSlider fade">
                 <div class="numbertext">1 / 4</div>
                 <img
-                        src="./frontend/staticFileLoader/public/Images/for_documentation/images/plan_design_1.jpg"
-                        alt="Plan design"
+                  src="./frontend/staticFileLoader/public/Images/for_documentation/images/plan_1.jpg"
+                  alt="Plan design"
                 />
-                <div class="text">Caption Text</div>
               </div>
 
-              <div class="mySlides fade">
+              <div class="firstSlider fade">
                 <div class="numbertext">2 / 4</div>
                 <img
-                        src="./frontend/staticFileLoader/public/Images/for_documentation/images/plan_design_2.jpg"
-                        alt="Plan design"
+                  src="./frontend/staticFileLoader/public/Images/for_documentation/images/plan_2.jpg"
+                  alt="Plan design"
                 />
-                <div class="text">Caption Two</div>
               </div>
 
-              <div class="mySlides fade">
+              <div class="firstSlider fade">
                 <div class="numbertext">3 / 4</div>
                 <img
-                        src="./frontend/staticFileLoader/public/Images/for_documentation/images/plan_design_3.jpg"
-                        alt="Plan design"
+                  src="./frontend/staticFileLoader/public/Images/for_documentation/images/old.jpg"
+                  alt="Plan design"
                 />
-                <div class="text">Caption Three</div>
               </div>
 
-              <div class="mySlides fade">
+              <div class="firstSlider fade">
                 <div class="numbertext">4 / 4</div>
                 <img
-                        src="./frontend/staticFileLoader/public/Images/for_documentation/images/plan_design_4.jpg"
-                        alt="Plan design"
+                  src="./frontend/staticFileLoader/public/Images/for_documentation/images/refactor.jpg"
+                  alt="Plan design"
                 />
-                <div class="text">Caption Four</div>
               </div>
 
-              <!-- Next and previous buttons -->
-              <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-              <a class="next" onclick="plusSlides(1)">&#10095;</a>
+              <a class="prev" onclick="plusSlidesFirst(-1)">&#10094;</a>
+              <a class="next" onclick="plusSlidesFirst(1)">&#10095;</a>
             </div>
-            <br>
+            <br />
 
-            <!-- The dots/circles -->
-            <div style="text-align:center">
-              <span class="dot" onclick="currentSlide(1)"></span>
-              <span class="dot" onclick="currentSlide(2)"></span>
-              <span class="dot" onclick="currentSlide(3)"></span>
-              <span class="dot" onclick="currentSlide(4)"></span>
+            <div style="text-align: center;">
+              <span class="dotFirst" onclick="currentSlideFirst(1)"></span>
+              <span class="dotFirst" onclick="currentSlideFirst(2)"></span>
+              <span class="dotFirst" onclick="currentSlideFirst(3)"></span>
+              <span class="dotFirst" onclick="currentSlideFirst(4)"></span>
             </div>
             <p>
               Along the way we added new elements to improve the visual
@@ -275,26 +267,55 @@
               diagram which provides four different levels of abstraction, each
               of which is relevant to a different audience.
             </p>
-            <p>Level 1 - Context Diagram</p>
-            <img
-              src="./frontend/staticFileLoader/public/Images/for_documentation/c4model/1.C4-CONTEXT.png"
-              alt="C4-CONTEXT"
-            />
-            <p>Level 2 - Container Diagram</p>
-            <img
-              src="./frontend/staticFileLoader/public/Images/for_documentation/c4model/2.C4-CONTAINER.png"
-              alt="C4-CONTAINER"
-            />
-            <p>Level 3 - Component Diagram</p>
-            <img
-              src="./frontend/staticFileLoader/public/Images/for_documentation/c4model/3.C4-COMPONENT.png"
-              alt="C4-COMPONENT"
-            />
-            <p>Level 4 - Code Diagram</p>
-            <img
-              src="./frontend/staticFileLoader/public/Images/for_documentation/c4model/4.C4-CODE.png"
-              alt="C4-CODE"
-            />
+
+            <div class="slideshow-container">
+              <div class="secondSlider fade">
+                <div class="numbertext">1 / 4</div>
+                <img
+                  src="./frontend/staticFileLoader/public/Images/for_documentation/c4model/1.C4-CONTEXT.png"
+                  alt="C4-CONTEXT"
+                />
+                <div class="text">Level 1 - Context Diagram</div>
+              </div>
+
+              <div class="secondSlider fade">
+                <div class="numbertext">2 / 4</div>
+                <img
+                  src="./frontend/staticFileLoader/public/Images/for_documentation/c4model/2.C4-CONTAINER.png"
+                  alt="C4-CONTAINER"
+                />
+                <div class="text">Level 2 - Container Diagram</div>
+              </div>
+
+              <div class="secondSlider fade">
+                <div class="numbertext">3 / 4</div>
+                <img
+                  src="./frontend/staticFileLoader/public/Images/for_documentation/c4model/3.C4-COMPONENT.png"
+                  alt="C4-COMPONENT"
+                />
+                <div class="text">Level 3 - Component Diagram</div>
+              </div>
+
+              <div class="secondSlider fade">
+                <div class="numbertext">4 / 4</div>
+                <img
+                  src="./frontend/staticFileLoader/public/Images/for_documentation/c4model/4.C4-CODE.png"
+                  alt="C4-CODE"
+                />
+                <div class="text">Level 4 - Code Diagram</div>
+              </div>
+
+              <a class="prev" onclick="plusSlidesSecond(-1)">&#10094;</a>
+              <a class="next" onclick="plusSlidesSecond(1)">&#10095;</a>
+            </div>
+            <br />
+
+            <div style="text-align: center;">
+              <span class="dotSecond" onclick="currentSlideSecond(1)"></span>
+              <span class="dotSecond" onclick="currentSlideSecond(2)"></span>
+              <span class="dotSecond" onclick="currentSlideSecond(3)"></span>
+              <span class="dotSecond" onclick="currentSlideSecond(4)"></span>
+            </div>
           </section>
           <section id="data_structure">
             <h3>Data Structure</h3>
@@ -312,10 +333,58 @@
               fields.
             </p>
             <p>The schema structure is:</p>
-            <img
-              src="./frontend/staticFileLoader/public/Images/for_documentation/images/accidents_structure.png"
-              alt="Accidents Collection Structure"
-            />
+            <pre><code class="JSON language-JSON">{
+    _id: ObjectID,
+    Source: String,
+    TMC: String,
+    Severity: Number, enum: [null, 1, 2, 3],
+    End_Time: Date,
+    Start_Lat: Number,
+    Start_Lng: Number,
+    End_Lat: Number,
+    End_Lng: Number,
+    Distance(mi): String,
+    Description: String,
+    Number: String,
+    Street: String,
+    Side: String, enum: ["", "L", "R"],
+    City: String,
+    County: String,
+    State: String,
+    Zipcode: String,
+    Country: String,
+    Timezone: String,
+    Airport_Code: String,
+    Weather_Timestamp: String,
+    Temperature(F): Number,
+    Wind_Chill(F): Number,
+    Humidity(%): Number,
+    Pressure(in): Number,
+    Visibility(mi): Number,
+    Wind_Direction: "SW",
+    Wind_Speed(mph): Number,
+    Weather_Condition: String,
+    Amenity: String,
+    Bump: String,
+    Crossing: String,
+    Give_Way: String,
+    Junction: String,
+    No_Exit: String,
+    Railway: String,
+    Roundabout: String,
+    Station: String,
+    Stop: String,
+    Traffic_Calming: String,
+    Traffic_Signal: String,
+    Turning_Loop: String,
+    Sunrise_Sunset: String,
+    Civil_Twilight: String,
+    Nautical_Twilight: String,
+    Astronomical_Twilight: String,
+    Start_Date: String,
+    Start_Hour: String
+}
+</code></pre>
             <p>
               Another important collection is the users collection, which we
               created in order to store the users registered in the application.
@@ -323,10 +392,14 @@
               checks are made within the service that deals with this.
             </p>
             <p>The schema structure is:</p>
-            <img
-              src="./frontend/staticFileLoader/public/Images/for_documentation/images/users_structure.png"
-              alt="Users Collection Structure"
-            />
+<pre><code class="JSON language-JSON">{
+    _id: ObjectID,
+    type: String,
+    email: String,
+    username: String,
+    password: String
+}
+</code></pre>
           </section>
           <section id="management">
             <h3>Management</h3>
@@ -351,7 +424,7 @@
               implementations of the established tasks, respecting the
               deadlines. The final form of the project, where you can also see
               the progress, can be found at:
-              https://github.com/StativaCamelia/AViBACK. The repository contains
+              <span><a href="https://github.com/StativaCamelia/AViBACK"></a></span>. The repository contains
               three directories that represent the entire application: the
               frontend directory that contains the files corresponding to the
               interface, the authentication directory that contains the
@@ -370,39 +443,47 @@
               The accidents directory contains files for api routes,
               controllers, util functions, models and api tests.
             </p>
-            <h3>Stativa Camelia-Georgiana</h3>
-            <p>Application design</p>
-            <p>Creating project structure</p>
-            <p>Project restructure</p>
-            <p>Database structure</p>
-            <p>Project documentation</p>
-            <p>Map page and line chart page</p>
-            <p>Export for map page</p>
-            <p>Multi-criteria filters</p>
-            <p>Authorization for admin and routes</p>
-            <p>Email system integration</p>
-            <p>Converting CSV format to JSON format for accidents collection</p>
-            <p>API tests</p>
-            <h3>Zanceanu Ana-Maria</h3>
-            <p>Application design</p>
-            <p>Project restructure</p>
-            <p>Database structure</p>
-            <p>Project documentation</p>
-            <p>Pie chart page</p>
-            <p>Export for pie page</p>
-            <p>Multi-criteria filters</p>
-            <p>Dashboard</p>
-            <p>Refactoring application design</p>
-            <p>Register, login and logout</p>
-            <h3>Tipa Adrian-Ionut</h3>
-            <p>Application design</p>
-            <p>Home page calls</p>
-            <p>Project restructure</p>
-            <p>Database structure</p>
-            <p>Project documentation</p>
-            <p>Profile page</p>
-            <p>Bar chart page</p>
-            <p>Export for bar chart and line chart pages</p>
+            <div class="code_management">
+              <div class="div_code_management">
+                <h3>Stativă Camelia-Georgiana</h3>
+                <p>Application design</p>
+                <p>Creating project structure</p>
+                <p>Project restructure</p>
+                <p>Database structure</p>
+                <p>Project documentation</p>
+                <p>Map page and line chart page</p>
+                <p>Export for map page</p>
+                <p>Multi-criteria filters</p>
+                <p>Authorization for admin and routes</p>
+                <p>Email system integration</p>
+                <p>Converting CSV format to JSON format for accidents collection</p>
+                <p>API tests</p>
+              </div>
+              <div class="div_code_management">
+                <h3>Zănceanu Ana-Maria</h3>
+                <p>Application design</p>
+                <p>Project restructure</p>
+                <p>Database structure</p>
+                <p>Project documentation</p>
+                <p>Pie chart page</p>
+                <p>Export for pie page</p>
+                <p>Multi-criteria filters</p>
+                <p>Dashboard</p>
+                <p>Refactoring application design</p>
+                <p>Register, login and logout</p>
+              </div>
+              <div class="div_code_management">
+                <h3>Tipa Adrian-Ionuț</h3>
+                <p>Application design</p>
+                <p>Home page calls</p>
+                <p>Project restructure</p>
+                <p>Database structure</p>
+                <p>Project documentation</p>
+                <p>Profile page</p>
+                <p>Bar chart page</p>
+                <p>Export for bar chart and line chart pages</p>
+              </div>
+            </div>
           </section>
         </section>
       </div>
@@ -1257,35 +1338,69 @@
 </code></pre>
       </div>
     </div>
-  <script>
-    let slideIndex = 1;
-    showSlides(slideIndex);
+    <script>
+      let slideIndexFirst = 1;
+      showSlidesFirst(slideIndexFirst);
 
-    // Next/previous controls
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
-
-    // Thumbnail image controls
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-      let i;
-      let slides = document.getElementsByClassName("mySlides");
-      let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
+      function plusSlidesFirst(n) {
+        showSlidesFirst((slideIndexFirst += n));
       }
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" activeSlide", "");
+
+      function currentSlideFirst(n) {
+        showSlidesFirst((slideIndexFirst = n));
       }
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " activeSlide";
-    }
-  </script>
+
+      function showSlidesFirst(n) {
+        let i;
+        let slides = document.getElementsByClassName("firstSlider");
+        let dots = document.getElementsByClassName("dotFirst");
+        if (n > slides.length) {
+          slideIndexFirst = 1;
+        }
+        if (n < 1) {
+          slideIndexFirst = slides.length;
+        }
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndexFirst - 1].style.display = "block";
+        dots[slideIndexFirst - 1].className += " active";
+      }
+    </script>
+    <script>
+      let slideIndexSecond = 1;
+      showSlidesSecond(slideIndexSecond);
+
+      function plusSlidesSecond(n) {
+        showSlidesSecond((slideIndexSecond += n));
+      }
+
+      function currentSlideSecond(n) {
+        showSlidesSecond((slideIndexSecond = n));
+      }
+
+      function showSlidesSecond(n) {
+        let i;
+        let slides = document.getElementsByClassName("secondSlider");
+        let dots = document.getElementsByClassName("dotSecond");
+        if (n > slides.length) {
+          slideIndexSecond = 1;
+        }
+        if (n < 1) {
+          slideIndexSecond = slides.length;
+        }
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndexSecond - 1].style.display = "block";
+        dots[slideIndexSecond - 1].className += " active";
+      }
+    </script>
   </body>
 </html>
