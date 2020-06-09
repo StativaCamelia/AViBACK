@@ -3,6 +3,35 @@
 
 @media only screen and (max-width: 800px) {
 
+
+    /*PROFILE*/
+    .submit_criteria {
+        width: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    #submit_criteria[type="submit"] {
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: whitesmoke;
+        text-align: center;
+        cursor: pointer;
+        color: black;
+        font-family: Novecentosanswide;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 7px 25px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #e1e2ed;
+        width: auto;
+        align-self: center;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+    }
+
+    /*END PROFILE*/
     /*FRAME*/
     .main {
         display: flex;
@@ -1345,8 +1374,18 @@
     #back_filters[type="button"],
     #submit_checkboxes[type="submit"],
     #select_all[type="button"],
-    #select_radio[type="button"],#reset_all[type="button"],#submit_create_user[type="submit"],#submit_get_user[type="submit"],#submit_update_user[type="submit"],#submit_delete_user[type="submit"],#submit_delete_users[type="button"],
-    #submit_create_accident[type="submit"],#submit_get_accident[type="submit"],#submit_delete_accident[type="submit"],#submit_delete_accidents[type="button"], #submit_get_accidents[type="submit"]{
+    #select_radio[type="button"],
+    #reset_all[type="button"],
+    #submit_create_user[type="submit"],
+    #submit_get_user[type="submit"],
+    #submit_update_user[type="submit"],
+    #submit_delete_user[type="submit"],
+    #submit_delete_users[type="button"],
+    #submit_create_accident[type="submit"],
+    #submit_get_accident[type="submit"],
+    #submit_delete_accident[type="submit"],
+    #submit_delete_accidents[type="button"],
+    #submit_get_accidents[type="submit"] {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 15px;
@@ -1417,7 +1456,7 @@
         margin: 0;
     }
 
-    #save_dataset{
+    #save_dataset {
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: whitesmoke;
         border-radius: 10px;
@@ -1566,7 +1605,7 @@
 
     /*END POP-MAP*/
     /* EXPORT DATA */
-    .export{
+    .export {
         display: none;
         flex-direction: row;
         justify-content: space-between;
@@ -1575,7 +1614,9 @@
         margin: 5vh 0 0 0;
     }
 
-    .csv_class, .png_class, .svg_class{
+    .csv_class,
+    .png_class,
+    .svg_class {
         display: flex;
         flex-direction: row;
         align-self: center;
@@ -1585,34 +1626,44 @@
         border-radius: 10px;
     }
 
-    .csv_class:hover, .png_class:hover, .svg_class:hover{
+    .csv_class:hover,
+    .png_class:hover,
+    .svg_class:hover {
         opacity: 0.5;
         cursor: pointer;
     }
 
-    .csv_icon, .png_icon, .svg_icon{
+    .csv_icon,
+    .png_icon,
+    .svg_icon {
         width: 42%;
         height: 4.5vh;
         align-self: center;
         margin: 0 0 0 0.3vw;
     }
 
-    .csv_icon>img, .png_icon>img, .svg_icon>img{
+    .csv_icon>img,
+    .png_icon>img,
+    .svg_icon>img {
         width: 7vw;
     }
 
-    .csv_text, .png_text, .svg_text{
+    .csv_text,
+    .png_text,
+    .svg_text {
         width: 42%;
         align-self: center;
     }
 
-    .csv_text>p, .png_text>p, .svg_text>p{
+    .csv_text>p,
+    .png_text>p,
+    .svg_text>p {
         margin: 0;
         font-size: 0.7rem;
         font-family: Novecentosanswide;
     }
 
-    .plus{
+    .plus {
         display: flex;
         flex-direction: row;
         width: 16%;
@@ -1622,7 +1673,7 @@
         border-radius: 0 8px 8px 0;
     }
 
-    .plus>p{
+    .plus>p {
         margin: 0;
         font-weight: bold;
         font-size: 1rem;
@@ -1630,10 +1681,11 @@
         align-self: center;
         font-family: Novecentosanswide;
     }
+
     /*END EXPORT*/
 
     /*CONTROL PANEL*/
-    .dash_container{
+    .dash_container {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1642,7 +1694,8 @@
         margin: 22vh 0 0 0;
         align-self: center;
     }
-    .control_first_div{
+
+    .control_first_div {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -1652,7 +1705,8 @@
         margin: 5vh auto 0 auto;
         border-bottom: solid #041F60;
     }
-    .button_box{
+
+    .button_box {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -1661,19 +1715,21 @@
         height: auto;
     }
 
-    a.control_button{
+    a.control_button {
         text-decoration: none;
-        font-family:  Novecentosanswide;
+        font-family: Novecentosanswide;
         font-weight: 800;
         color: #041F60;
         text-align: center;
         margin: 0 0 2vh 0;
     }
-    a.control_button:hover,#active_dash{
+
+    a.control_button:hover,
+    #active_dash {
         opacity: 0.7;
     }
 
-    .control_second_div{
+    .control_second_div {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1683,7 +1739,8 @@
         margin: 10vh auto 5vh auto;
     }
 
-    .first_box_dash, .second_box_dash{
+    .first_box_dash,
+    .second_box_dash {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1697,7 +1754,7 @@
         margin: 0 0 10vh 0;
     }
 
-    .control_users{
+    .control_users {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1705,7 +1762,8 @@
         height: auto;
         margin: 5vh 0 12vh 0;
     }
-    .control_accidents{
+
+    .control_accidents {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1714,7 +1772,8 @@
         margin: 10vh 0 12vh 0;
     }
 
-    .first_div_users, .first_div_accidents{
+    .first_div_users,
+    .first_div_accidents {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1723,7 +1782,8 @@
         margin: 0 0 2vh 0;
     }
 
-    .second_div_users, .second_div_accidents{
+    .second_div_users,
+    .second_div_accidents {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -1732,7 +1792,8 @@
         margin: 0 auto 0 auto;
     }
 
-    .control_user, .control_accident{
+    .control_user,
+    .control_accident {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -1740,38 +1801,46 @@
         height: 100%;
         text-align: center;
     }
-    .control_user h3, .control_accident h3{
+
+    .control_user h3,
+    .control_accident h3 {
         font-family: Novecentosanswide;
         font-size: 0.9rem;
         color: #041F60;
         font-weight: bold;
     }
-    h3#active_user, h3#active_accident{
+
+    h3#active_user,
+    h3#active_accident {
         margin-bottom: 1vh;
         border-bottom: 3px solid #041F60;
     }
-    .dash_user_form{
+
+    .dash_user_form {
         flex-direction: column;
         justify-content: space-between;
         align-self: center;
         width: 70%;
         height: auto;
     }
-    .dash_accident_form{
+
+    .dash_accident_form {
         flex-direction: column;
         justify-content: space-between;
         align-self: center;
         width: 70%;
         height: auto;
     }
-    .dash_accident_form_create{
+
+    .dash_accident_form_create {
         flex-direction: column;
         justify-content: space-between;
         align-self: center;
         width: 100%;
         height: auto;
     }
-    .dash_accident_form_get{
+
+    .dash_accident_form_get {
         flex-direction: row;
         justify-content: space-between;
         align-self: center;
@@ -1779,7 +1848,8 @@
         width: 90%;
         height: auto;
     }
-    .dash_user_all{
+
+    .dash_user_all {
         flex-direction: row;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -1787,17 +1857,22 @@
         width: 70%;
         height: auto;
     }
-    .user_input, .input_accident{
+
+    .user_input,
+    .input_accident {
         width: 70%;
         height: auto;
         align-self: center;
     }
-    .accident_input{
+
+    .accident_input {
         width: 90%;
         height: auto;
         align-self: center;
     }
-    .user_label, .label_accident{
+
+    .user_label,
+    .label_accident {
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
@@ -1806,7 +1881,8 @@
         width: 70%;
         align-self: center;
     }
-    .accident_label{
+
+    .accident_label {
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
@@ -1815,19 +1891,24 @@
         width: 90%;
         align-self: center;
     }
-    .dash_user_button, .dash_accident_button{
+
+    .dash_user_button,
+    .dash_accident_button {
         width: 30%;
         align-self: center;
         margin: 1vh 0 0 0;
     }
-    .accident_box{
+
+    .accident_box {
         width: 70%;
         align-self: center;
     }
-    .accidents_get{
+
+    .accidents_get {
         width: 40%;
     }
-    .accident_submit{
+
+    .accident_submit {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
