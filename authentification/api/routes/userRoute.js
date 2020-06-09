@@ -207,10 +207,11 @@ exports.getRes = async (req, parsedReq, res) => {
     }
   } else if (path.endsWith("/users") && method === "patch") {
     try {
+      console.log(parsedReq.queryStringObject);
       const { token } = parsedReq.queryStringObject;
       const { success, data } = await userController.findAndAddCriterion(
         token,
-        parsedReq,
+        parsedReq.queryStringObject,
         res
       );
       sendAnswerAPI(success, data, res, (statusCode = 201));

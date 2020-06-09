@@ -11,12 +11,9 @@ function concatQueryString(queryString, key, value) {
 }
 
 function prepareQueryString() {
-  const pageTypeIndex = window.location.href.lastIndexOf("/");
-  const pageType = window.location.href.substring(pageTypeIndex + 1);
   let queryString = "";
-  queryString = concatQueryString(queryString, "Type", pageType);
   queryString += concatQueryString("", "criterii", criteria);
-  queryString += concatQueryString("", "optiune", valueOfCriteria);
+  queryString += concatQueryString(queryString, "optiune", valueOfCriteria);
   postUserOption(queryString.substring(1));
 }
 
