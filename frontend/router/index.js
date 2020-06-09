@@ -37,7 +37,8 @@ exports.getRes = async (req, res) => {
       parsedReq.path.includes(".png") ||
       parsedReq.path.includes(".css") ||
       parsedReq.path.includes(".js") ||
-      parsedReq.path.includes(".jpg")
+      parsedReq.path.includes(".jpg") ||
+      parsedReq.path.includes(".ico")
     ) {
       try {
         staticFilesController.getRes(parsedReq, res);
