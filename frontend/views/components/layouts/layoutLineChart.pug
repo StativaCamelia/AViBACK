@@ -1,22 +1,20 @@
 doctype html
 html(lang='en')
-
-include ./layoutComponents/headStatistics.pug
-head
-    script(src='./Scripts/line_chart.js')
-    script(src='./Scripts/filtres_calls/submit_filters_lineChart.js')
-// POP UP LOGIN
-include ./layoutComponents/login.pug
-#main_all.body_all
-    include ./layoutComponents/header.pug
-    #container
-        #left_cont
-            block left_content
-        #loading
-            block loading
-        #right_cont
-            block right_content
-
-    button#top_button(title='Go to top') Top
-    // FOOTER
-    include ./layoutComponents/footer.pug
+    include ./layoutComponents/headStatistics.pug
+    head
+        script(src='./Scripts/line_chart.js')
+        script(src='./Scripts/filtres_calls/submit_filters_lineChart.js')
+body
+    include ./layoutComponents/login.pug
+    #main_all.body_all
+        include ./layoutComponents/header.pug
+        #container
+            #left_cont
+                block left_content
+            #loading
+                block loading
+            #right_cont
+                block right_content
+        button#top_button(title='Go to top') Top
+        // FOOTER
+        include ./layoutComponents/footer.pug
