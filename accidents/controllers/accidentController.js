@@ -357,6 +357,7 @@ class AccidentController {
             content = await utils.modifyStartHourResult(content);
           } else {
             if (
+              criterion === "Severity" ||
               criterion === "Wind_Chill(F)" ||
               criterion === "Wind_Speed(mph)" ||
               criterion === "Temperature(F)" ||

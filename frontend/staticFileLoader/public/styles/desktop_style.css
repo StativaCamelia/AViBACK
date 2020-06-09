@@ -2,7 +2,23 @@
 @media only screen and (min-width:800px) {
 
 
+    /*PROFILE*/
+    #submit_criteria[type="submit"] {
+        z-index: 0;
+        box-shadow: 3px 4px 0px 0px #899599;
+        background-color: white;
+        text-align: center;
+        cursor: pointer;
+        color: black;
+        font-family: Novecentosanswide;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 7px 25px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #e1e2ed;
+    }
 
+    /*END PROFILE*/
 
     /*FRAME*/
     .main {
@@ -1021,7 +1037,7 @@
         margin: 3vh;
     }
 
-    .pie{
+    .pie {
         display: flex;
         align-self: auto;
         flex-direction: column;
@@ -1389,7 +1405,8 @@
         cursor: pointer;
     }
 
-    h2#filter_message, h2#time_message {
+    h2#filter_message,
+    h2#time_message {
         font-family: Novecentosanswide;
         font-size: 1rem;
         color: red;
@@ -1510,7 +1527,7 @@
     }
 
     #change_button,
-    #update_interval_button{
+    #update_interval_button {
         display: none;
         text-align: center;
         z-index: 0;
@@ -1535,7 +1552,7 @@
         background-color: white;
         border-radius: 10px;
         padding-left: 20px;
-    padding-right: 20px;
+        padding-right: 20px;
         text-align: center;
         cursor: pointer;
         color: black;
@@ -1580,7 +1597,7 @@
     #submit_update_accident[type="submit"],
     #submit_delete_accident[type="submit"],
     #submit_delete_accidents[type="button"],
-    #submit_get_accidents[type="submit"]{
+    #submit_get_accidents[type="submit"] {
         z-index: 0;
         box-shadow: 3px 4px 0px 0px #899599;
         background-color: white;
@@ -1612,7 +1629,7 @@
     #submit_update_accident[type="submit"],
     #submit_delete_accident[type="submit"],
     #submit_delete_accidents[type="button"],
-    #submit_get_accidents[type="submit"]{
+    #submit_get_accidents[type="submit"] {
         margin: 0;
     }
 
@@ -1720,7 +1737,7 @@
     /*END POP-MAP*/
 
     /* EXPORT DATA */
-    .export{
+    .export {
         display: none;
         flex-direction: row;
         justify-content: space-between;
@@ -1729,7 +1746,9 @@
         margin: 3vh 0 0 0;
     }
 
-    .csv_class, .png_class, .svg_class{
+    .csv_class,
+    .png_class,
+    .svg_class {
         display: flex;
         flex-direction: row;
         align-self: center;
@@ -1739,34 +1758,44 @@
         border-radius: 10px;
     }
 
-    .csv_class:hover, .png_class:hover, .svg_class:hover{
+    .csv_class:hover,
+    .png_class:hover,
+    .svg_class:hover {
         opacity: 0.5;
         cursor: pointer;
     }
 
-    .csv_icon, .png_icon, .svg_icon{
+    .csv_icon,
+    .png_icon,
+    .svg_icon {
         width: 42%;
         height: 4.5vh;
         align-self: center;
         margin: 0 0 0 0.3vw;
     }
 
-    .csv_icon>img, .png_icon>img, .svg_icon>img{
+    .csv_icon>img,
+    .png_icon>img,
+    .svg_icon>img {
         width: 2vw;
     }
 
-    .csv_text, .png_text, .svg_text{
+    .csv_text,
+    .png_text,
+    .svg_text {
         width: 42%;
         align-self: center;
     }
 
-    .csv_text>p, .png_text>p, .svg_text>p{
+    .csv_text>p,
+    .png_text>p,
+    .svg_text>p {
         margin: 0;
         font-size: 0.8rem;
         font-family: Novecentosanswide;
     }
 
-    .plus{
+    .plus {
         display: flex;
         flex-direction: row;
         width: 16%;
@@ -1776,7 +1805,7 @@
         border-radius: 0 8px 8px 0;
     }
 
-    .plus>p{
+    .plus>p {
         margin: 0;
         font-weight: bold;
         font-size: 1rem;
@@ -1784,10 +1813,11 @@
         align-self: center;
         font-family: Novecentosanswide;
     }
+
     /*END EXPORT*/
 
     /*CONTROL PANEL*/
-    .dash_container{
+    .dash_container {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1796,7 +1826,8 @@
         margin: 10vh auto 0 auto;
         align-self: center;
     }
-    .control_first_div{
+
+    .control_first_div {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -1805,7 +1836,8 @@
         margin: 5vh 0 5vh 0;
         border-bottom: solid #041F60;
     }
-    .button_box{
+
+    .button_box {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -1814,19 +1846,21 @@
         height: auto;
     }
 
-    a.control_button{
+    a.control_button {
         text-decoration: none;
-        font-family:  Novecentosanswide;
+        font-family: Novecentosanswide;
         font-weight: 800;
         color: #041F60;
         text-align: center;
         margin: 0 0 2vh 0;
     }
-    a.control_button:hover,#active_dash{
+
+    a.control_button:hover,
+    #active_dash {
         opacity: 0.7;
     }
 
-    .control_second_div{
+    .control_second_div {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -1836,7 +1870,8 @@
         margin: 10vh auto 15vh auto;
     }
 
-    .first_box_dash, .second_box_dash{
+    .first_box_dash,
+    .second_box_dash {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1848,7 +1883,7 @@
         box-shadow: 5px 6px #888888;
     }
 
-    .control_users{
+    .control_users {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -1856,7 +1891,8 @@
         height: auto;
         margin: 8vh auto 12vh auto;
     }
-    .control_accidents{
+
+    .control_accidents {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -1865,7 +1901,7 @@
         margin: 8vh auto 12vh auto;
     }
 
-    .first_div_users{
+    .first_div_users {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1873,7 +1909,7 @@
         height: 60vh;
     }
 
-    .first_div_accidents{
+    .first_div_accidents {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1881,7 +1917,8 @@
         height: 60vh;
     }
 
-    .second_div_users, .second_div_accidents{
+    .second_div_users,
+    .second_div_accidents {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -1890,7 +1927,8 @@
         margin: 1em 0 0 0;
     }
 
-    .control_user, .control_accident{
+    .control_user,
+    .control_accident {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -1898,26 +1936,32 @@
         height: 10vh;
     }
 
-    .control_user h3, .control_accident h3{
+    .control_user h3,
+    .control_accident h3 {
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
         font-weight: bold;
     }
 
-    .control_user h3:hover, h3#active_user, .control_accident h3:hover, h3#active_accident{
+    .control_user h3:hover,
+    h3#active_user,
+    .control_accident h3:hover,
+    h3#active_accident {
         cursor: pointer;
         border-bottom: 3px solid #041F60;
     }
 
-    .dash_user_form, .dash_accident_form{
+    .dash_user_form,
+    .dash_accident_form {
         flex-direction: column;
         justify-content: space-between;
         align-self: center;
         width: 70%;
         height: auto;
     }
-    .dash_accident_form_create{
+
+    .dash_accident_form_create {
         flex-direction: row;
         justify-content: space-between;
         align-self: center;
@@ -1925,7 +1969,8 @@
         width: 100%;
         height: auto;
     }
-    .dash_accident_form_get{
+
+    .dash_accident_form_get {
         flex-direction: row;
         justify-content: space-between;
         align-self: center;
@@ -1933,7 +1978,8 @@
         width: 80%;
         height: auto;
     }
-    .dash_user_all{
+
+    .dash_user_all {
         flex-direction: row;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -1941,17 +1987,22 @@
         width: 70%;
         height: auto;
     }
-    .user_input, .input_accident{
+
+    .user_input,
+    .input_accident {
         width: 70%;
         height: auto;
         align-self: center;
     }
-    .accident_input{
+
+    .accident_input {
         width: 80%;
         height: auto;
         align-self: center;
     }
-    .user_label, .label_accident{
+
+    .user_label,
+    .label_accident {
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
@@ -1960,7 +2011,8 @@
         width: 70%;
         align-self: center;
     }
-    .accident_label{
+
+    .accident_label {
         font-family: Novecentosanswide;
         font-size: 1.2rem;
         color: #041F60;
@@ -1969,22 +2021,28 @@
         width: 80%;
         align-self: center;
     }
-    .dash_user_button, .dash_accident_button{
+
+    .dash_user_button,
+    .dash_accident_button {
         width: 30%;
         align-self: center;
         margin: 1vh 0 0 0;
     }
-    .dash_accident_button_create{
+
+    .dash_accident_button_create {
         width: 15%;
         align-self: center;
     }
-    .accident_box{
+
+    .accident_box {
         width: 48%;
     }
-    .accidents_get{
+
+    .accidents_get {
         width: 40%;
     }
-    .accident_submit{
+
+    .accident_submit {
         display: flex;
         flex-direction: column;
         justify-content: space-between;

@@ -188,7 +188,8 @@ a:active {
     text-decoration: none;
 }
 
-.contact_info ul, .contact_info ul li {
+.contact_info ul,
+.contact_info ul li {
     list-style-type: none;
     text-decoration: none;
     padding: 0;
@@ -216,7 +217,7 @@ a:active {
     background-color: #174ea6;
 }
 
-#medium1{
+#medium1 {
     background-color: #899cb9;
 }
 
@@ -402,7 +403,8 @@ a:active {
     font-size: 1rem;
 }
 
-#accident_date_start, #accident_date_end {
+#accident_date_start,
+#accident_date_end {
     z-index: 0;
     background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
     border: 2px solid black;
@@ -415,21 +417,42 @@ a:active {
     color: white;
 }
 
-#accident_date_start[type="date"]::-webkit-inner-spin-button, #accident_date_end[type="date"]::-webkit-inner-spin-button {
+#accident_date_start[type="date"]::-webkit-inner-spin-button,
+#accident_date_end[type="date"]::-webkit-inner-spin-button {
     display: none;
 }
 
-#accident_date_start[type="date"]::-webkit-calendar-picker-indicator, #accident_date_end[type="date"]::-webkit-calendar-picker-indicator {
+#accident_date_start[type="date"]::-webkit-calendar-picker-indicator,
+#accident_date_end[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 
-#submit_button:hover, #back_filters:hover, #submit_checkboxes:hover, #select_all:hover, #reset_all:hover, #select_radio:hover,#submit_create_user:hover,#submit_get_user:hover,#submit_update_user:hover,#submit_delete_user:hover,#submit_delete_users:hover,
-#submit_create_accident:hover, #submit_get_accident:hover, #submit_update_accident:hover,#submit_delete_accident:hover,#submit_delete_accidents:hover, #submit_get_accidents:hover{
+#submit_button:hover,
+#submit_criteria:hover,
+#back_filters:hover,
+#submit_checkboxes:hover,
+#select_all:hover,
+#reset_all:hover,
+#select_radio:hover,
+#submit_create_user:hover,
+#submit_get_user:hover,
+#submit_update_user:hover,
+#submit_delete_user:hover,
+#submit_delete_users:hover,
+#submit_create_accident:hover,
+#submit_get_accident:hover,
+#submit_update_accident:hover,
+#submit_delete_accident:hover,
+#submit_delete_accidents:hover,
+#submit_get_accidents:hover {
     background-color: #041F60;
     color: white;
 }
 
-#reset_button:hover, #next_button:hover, #remove_button:hover, #update_button:hover {
+#reset_button:hover,
+#next_button:hover,
+#remove_button:hover,
+#update_button:hover {
     background-color: #041F60;
     color: white;
 }
@@ -438,58 +461,107 @@ a:active {
 
 /*Control Panel*/
 
-.first_box_dash h3, .second_box_dash h3, .first_box_dash ul li, .second_box_dash ul li,.dash_user_form h3,.dash_user_form ul li,.dash_user_all ul li, .second_div_users h3, .dash_accident_form_create h3, .dash_accident_form_create ul li, .dash_accident_form h3, .dash_accident_form ul li, .second_div_accidents h3{
+.first_box_dash h3,
+.second_box_dash h3,
+.first_box_dash ul li,
+.second_box_dash ul li,
+.dash_user_form h3,
+.dash_user_form ul li,
+.dash_user_all ul li,
+.second_div_users h3,
+.dash_accident_form_create h3,
+.dash_accident_form_create ul li,
+.dash_accident_form h3,
+.dash_accident_form ul li,
+.second_div_accidents h3 {
     font-family: Novecentosanswide;
     font-size: 1.2rem;
     color: #041F60;
     text-align: left;
     font-weight: bold;
 }
-.dash_user_form h3, .second_div_users h3, .dash_accident_form_create h3, .dash_accident_form h3, .second_div_accidents h3{
+
+.dash_user_form h3,
+.second_div_users h3,
+.dash_accident_form_create h3,
+.dash_accident_form h3,
+.second_div_accidents h3 {
     text-align: center;
 }
-.dash_user_form ul,.dash_user_all ul, .dash_accident_form_create ul, .dash_accident_form ul{
+
+.dash_user_form ul,
+.dash_user_all ul,
+.dash_accident_form_create ul,
+.dash_accident_form ul {
     padding: 0;
 }
 
-#user_form_create,#user_form_get_user,#get_all_users,#user_form_update,#user_form_delete_user,#delete_all{
+#user_form_create,
+#user_form_get_user,
+#get_all_users,
+#user_form_update,
+#user_form_delete_user,
+#delete_all {
     display: none;
 }
-#create_user_message, #update_user_message, #delete_users_message, #delete_user_message, #create_accident_message, #update_accident_message, #delete_accident_message, #delete_accidents_message{
+
+#create_user_message,
+#update_user_message,
+#delete_users_message,
+#delete_user_message,
+#create_accident_message,
+#update_accident_message,
+#delete_accident_message,
+#delete_accidents_message {
     text-align: center;
 }
 
-#accident_form_create, #accident_form_get_accident, #accident_form_update, #accident_form_delete_accident, #delete_accidents,#accident_form_get_accidents{
+#accident_form_create,
+#accident_form_get_accident,
+#accident_form_update,
+#accident_form_delete_accident,
+#delete_accidents,
+#accident_form_get_accidents {
     display: none;
 }
 
 /*OTHER*/
-#button, #logout{
+#button,
+#logout {
     display: none;
 }
 
-#profile.active, #dashboard.active, #logout.active{
+#profile.active,
+#dashboard.active,
+#logout.active {
     color: white;
     text-decoration: none;
     border-bottom: 4px solid white;
 }
 
-.info_pie h2,#left_cont h2, #filters_pie_new h2,.first_box_dash h2, .second_box_dash h2{
+.info_pie h2,
+#left_cont h2,
+#filters_pie_new h2,
+.first_box_dash h2,
+.second_box_dash h2 {
     font-family: Novecentosanswide;
     font-size: 1.3rem;
     color: #041F60;
     text-align: center;
     text-transform: uppercase;
 }
-#left_cont h2{
+
+#left_cont h2 {
     margin-top: 5vh;
 }
+
 /*SECOND STEP FOR PIE*/
-#filters_pie_down{
+#filters_pie_down {
     display: flex;
     flex-direction: column;
 }
-.radio_pie{
+
+.radio_pie {
     display: none;
     flex-direction: row;
     flex-wrap: wrap;
@@ -499,7 +571,8 @@ a:active {
     align-self: center;
     margin: 0 0 2vh 0;
 }
-.checkbox_pie{
+
+.checkbox_pie {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -508,9 +581,12 @@ a:active {
     height: auto;
     align-self: center;
 }
-.checkbox_pie_element,.radio_pie_element{
+
+.checkbox_pie_element,
+.radio_pie_element {
     margin: 0 1vw 1vh 0;
 }
+
 /*TOP BUTTON*/
 #top_button {
     display: none;
@@ -533,4 +609,536 @@ a:active {
 
 #top_button:hover {
     opacity: 0.7;
-}html{width:100%;height:100%}body{width:100%;height:auto;background-color:#fff;margin:0}.body_all{display:flex;flex-direction:column;width:auto;height:auto;justify-content:space-between;margin:0}.main p{margin:0}.success{border-color:green}.error{border-color:red}.logo{text-decoration:none;align-self:center}.logo a:link,a:active,a:hover,a:visited{text-decoration:none;cursor:pointer}.logo a:hover{opacity:.5}.footer{display:flex;flex-direction:row;background-color:#041f60;height:auto;width:auto;align-self:auto;justify-content:center;margin:0;clear:both}.footer_content{width:80%;margin:auto;display:flex}.left_footer{align-self:center;color:#fff;height:90%;width:48%;margin:auto;text-align:left}.right_footer{text-align:end;align-self:center;color:#fff;width:48%;margin:auto;height:100%}.inline_list{display:inline;text-decoration:none;margin-left:2vw}.inline_list a,.inline_list ul,.inline_list ul li{text-decoration:none}.inline_list a:hover{opacity:.5}.forimg{width:3vh;height:auto;text-decoration:none}.forimg:hover{opacity:.4;transition:opacity .55s ease-in-out;-moz-transition:opacity .55s ease-in-out;-webkit-transition:opacity .55s ease-in-out;text-decoration:none}.contact_info a{text-decoration:none}.contact_info a:link,a:active,a:visited{opacity:1;text-decoration:none}.contact_info a:hover{opacity:.4;text-decoration:none;transition:opacity .55s ease-in-out;-moz-transition:opacity .55s ease-in-out;-webkit-transition:opacity .55s ease-in-out}.for_ul{display:flex;flex-direction:column;justify-content:space-around;list-style-type:none;text-align:center;text-decoration:none}.for_ul li{margin:0;list-style-type:none;text-decoration:none}.contact_info{width:auto;height:auto;text-align:center;align-self:center;padding:1vh 0 1vh 0;text-decoration:none}.contact_info ul,.contact_info ul li{list-style-type:none;text-decoration:none;padding:0}#svg_map>path{fill:#84b18f}#high{background-color:#0f115c}#medium{background-color:#174ea6}#medium1{background-color:#899cb9}#low{background-color:#edeff1}.high_s:hover{fill:#030e1f}.medium_s:hover{fill:#0f3674}.medium1_s:hover{fill:#356ec9}.low_s:hover{fill:#a4abb6}#states{stroke:#000;stroke-width:1.5}.history_line{display:flex;flex-direction:row;align-items:baseline;justify-content:space-evenly}.cbox{border:2px solid #000;width:4vw;height:2vh;border-radius:10%}.history_line>p{font-family:'Bahnschrift SemiBold',serif}.profile_content{display:flex;flex-direction:column;width:100%;align-items:center;justify-content:space-between;height:auto;border-style:solid;border-top:0;border-bottom:0;border-color:grey;padding:5vh 0 5vh 0;box-shadow:0 5px 20px grey}.box{display:flex;flex-direction:row;justify-content:space-evenly;width:60%;padding:2vh 2vh 2vh 2vh;border-style:outset;margin-top:2vh;border-radius:1vh;font-size:2vh;margin:7vh 0 7vh 0}.box_criterii{display:flex;flex-direction:row;justify-content:space-evenly;width:60%;padding:2vh 2vh 2vh 2vh;border-style:outset;border-width:.5vh;border-radius:1vh;color:#e8e8e8;margin:7vh 0 7vh 0}.box_criterii>select:hover{background-color:#fff;cursor:pointer}.box_criterii>select{width:60%;border-radius:3px;background-color:#e8e8e8;padding:2px 2px;font-family:'Bahnschrift SemiBold',serif;font-size:1rem}.box p{margin:auto;padding-left:1vh}.slider_container_2 .slider{z-index:0;margin-bottom:0;align-self:center;width:60%;-webkit-appearance:none;height:1vh;border-radius:2px;border-color:#000;background-image:linear-gradient(to right,#90bfd1,rgba(221,195,80,.863),#03161f)}.icons{margin-left:5px;margin-right:5px;width:20px;height:20px;align-self:center}.slider_container_2 .slider:hover{color:gray}.slider_container_2 .slider:active+output{display:block;width:40px;left:80%;transform:translateX(-50%);transform:translateY(+150%);opacity:1}.slider_container_2 output{position:absolute;display:none;width:50px;height:24px;border:1px solid #e2e2e2;background-color:#fff;border-radius:3px;color:#777;font-size:.8em;line-height:24px;text-align:center}.slider_container_1 .slider:hover{color:gray}.slider_container_1 .slider{z-index:0;margin-bottom:0;align-self:center;width:100%;-webkit-appearance:none;height:1vh;border-radius:2px;border-color:#000;background-image:linear-gradient(to right,#174ea6,#4285f4,#d2e3fc)}.slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:5px;background-color:#000;overflow:visible;cursor:pointer;box-shadow:4px 1px}.slider_label{align-self:center;font-family:Novecentosanswide;font-size:1rem}.slider_container_1 .slider:hover{color:gray}.label_calendar{align-self:center;font-family:Novecentosanswide;font-size:1rem}#accident_date_end,#accident_date_start{z-index:0;background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;border:2px solid #000;align-self:center;border-radius:3px;padding:3px 5px;background-color:#174ea6;font-size:.9rem;font-weight:700;color:#fff}#accident_date_end[type=date]::-webkit-inner-spin-button,#accident_date_start[type=date]::-webkit-inner-spin-button{display:none}#accident_date_end[type=date]::-webkit-calendar-picker-indicator,#accident_date_start[type=date]::-webkit-calendar-picker-indicator{opacity:0}#back_filters:hover,#reset_all:hover,#select_all:hover,#select_radio:hover,#submit_button:hover,#submit_checkboxes:hover,#submit_create_user:hover,#submit_get_user:hover{background-color:#041f60;color:#fff}#next_button:hover,#remove_button:hover,#reset_button:hover,#update_button:hover{background-color:#041f60;color:#fff}.dash_user_all ul li,.dash_user_form h3,.dash_user_form ul li,.first_box_dash h3,.first_box_dash ul li,.second_box_dash h3,.second_box_dash ul li{font-family:Novecentosanswide;font-size:1.2rem;color:#041f60;text-align:left;font-weight:700}.dash_user_all ul,.dash_user_form ul{padding:0}#get_all_users,#user_form_create,#user_form_get_user{display:none}#create_user_message{text-align:center}#button,#logout{display:none}#dashboard.active,#logout.active,#profile.active{color:#fff;text-decoration:none;border-bottom:4px solid #fff}#filters_pie_new h2,#left_cont h2,.first_box_dash h2,.info_pie h2,.second_box_dash h2{font-family:Novecentosanswide;font-size:1.3rem;color:#041f60;text-align:center;text-transform:uppercase}#left_cont h2{margin-top:5vh}#filters_pie_down{display:flex;flex-direction:column}.radio_pie{display:none;flex-direction:row;flex-wrap:wrap;justify-content:center;width:100%;height:auto;align-self:center;margin:0 0 2vh 0}.checkbox_pie{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;width:100%;height:auto;align-self:center}.checkbox_pie_element,.radio_pie_element{margin:0 1vw 1vh 0}#top_button{display:none;position:fixed;bottom:80px;right:4px;z-index:99;border:none;outline:0;background-color:#041f60;color:#fff;cursor:pointer;padding:10px;border-radius:10px;font-size:18px;text-align:center;width:55px;height:45px}#top_button:hover{opacity:.7}
+}
+
+html {
+    width: 100%;
+    height: 100%
+}
+
+body {
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    margin: 0
+}
+
+.body_all {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    justify-content: space-between;
+    margin: 0
+}
+
+.main p {
+    margin: 0
+}
+
+.success {
+    border-color: green
+}
+
+.error {
+    border-color: red
+}
+
+.logo {
+    text-decoration: none;
+    align-self: center
+}
+
+.logo a:link,
+a:active,
+a:hover,
+a:visited {
+    text-decoration: none;
+    cursor: pointer
+}
+
+.logo a:hover {
+    opacity: .5
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    background-color: #041f60;
+    height: auto;
+    width: auto;
+    align-self: auto;
+    justify-content: center;
+    margin: 0;
+    clear: both
+}
+
+.footer_content {
+    width: 80%;
+    margin: auto;
+    display: flex
+}
+
+.left_footer {
+    align-self: center;
+    color: #fff;
+    height: 90%;
+    width: 48%;
+    margin: auto;
+    text-align: left
+}
+
+.right_footer {
+    text-align: end;
+    align-self: center;
+    color: #fff;
+    width: 48%;
+    margin: auto;
+    height: 100%
+}
+
+.inline_list {
+    display: inline;
+    text-decoration: none;
+    margin-left: 2vw
+}
+
+.inline_list a,
+.inline_list ul,
+.inline_list ul li {
+    text-decoration: none
+}
+
+.inline_list a:hover {
+    opacity: .5
+}
+
+.forimg {
+    width: 3vh;
+    height: auto;
+    text-decoration: none
+}
+
+.forimg:hover {
+    opacity: .4;
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out;
+    text-decoration: none
+}
+
+.contact_info a {
+    text-decoration: none
+}
+
+.contact_info a:link,
+a:active,
+a:visited {
+    opacity: 1;
+    text-decoration: none
+}
+
+.contact_info a:hover {
+    opacity: .4;
+    text-decoration: none;
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out
+}
+
+.for_ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    list-style-type: none;
+    text-align: center;
+    text-decoration: none
+}
+
+.for_ul li {
+    margin: 0;
+    list-style-type: none;
+    text-decoration: none
+}
+
+.contact_info {
+    width: auto;
+    height: auto;
+    text-align: center;
+    align-self: center;
+    padding: 1vh 0 1vh 0;
+    text-decoration: none
+}
+
+.contact_info ul,
+.contact_info ul li {
+    list-style-type: none;
+    text-decoration: none;
+    padding: 0
+}
+
+#svg_map>path {
+    fill: #84b18f
+}
+
+#high {
+    background-color: #0f115c
+}
+
+#medium {
+    background-color: #174ea6
+}
+
+#medium1 {
+    background-color: #899cb9
+}
+
+#low {
+    background-color: #edeff1
+}
+
+.high_s:hover {
+    fill: #030e1f
+}
+
+.medium_s:hover {
+    fill: #0f3674
+}
+
+.medium1_s:hover {
+    fill: #356ec9
+}
+
+.low_s:hover {
+    fill: #a4abb6
+}
+
+#states {
+    stroke: #000;
+    stroke-width: 1.5
+}
+
+.history_line {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-evenly
+}
+
+.cbox {
+    border: 2px solid #000;
+    width: 4vw;
+    height: 2vh;
+    border-radius: 10%
+}
+
+.history_line>p {
+    font-family: 'Bahnschrift SemiBold', serif
+}
+
+.profile_content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    border-style: solid;
+    border-top: 0;
+    border-bottom: 0;
+    border-color: grey;
+    padding: 5vh 0 5vh 0;
+    box-shadow: 0 5px 20px grey
+}
+
+.box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 60%;
+    padding: 2vh 2vh 2vh 2vh;
+    border-style: outset;
+    margin-top: 2vh;
+    border-radius: 1vh;
+    font-size: 2vh;
+    margin: 7vh 0 7vh 0
+}
+
+.box_criterii {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 60%;
+    padding: 2vh 2vh 2vh 2vh;
+    border-style: outset;
+    border-width: .5vh;
+    border-radius: 1vh;
+    color: #e8e8e8;
+    margin: 7vh 0 7vh 0
+}
+
+.box_criterii>select:hover {
+    background-color: #fff;
+    cursor: pointer
+}
+
+.box_criterii>select {
+    width: 60%;
+    border-radius: 3px;
+    background-color: #e8e8e8;
+    padding: 2px 2px;
+    font-family: 'Bahnschrift SemiBold', serif;
+    font-size: 1rem
+}
+
+.box p {
+    margin: auto;
+    padding-left: 1vh
+}
+
+.slider_container_2 .slider {
+    z-index: 0;
+    margin-bottom: 0;
+    align-self: center;
+    width: 60%;
+    -webkit-appearance: none;
+    height: 1vh;
+    border-radius: 2px;
+    border-color: #000;
+    background-image: linear-gradient(to right, #90bfd1, rgba(221, 195, 80, .863), #03161f)
+}
+
+.icons {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+    align-self: center
+}
+
+.slider_container_2 .slider:hover {
+    color: gray
+}
+
+.slider_container_2 .slider:active+output {
+    display: block;
+    width: 40px;
+    left: 80%;
+    transform: translateX(-50%);
+    transform: translateY(+150%);
+    opacity: 1
+}
+
+.slider_container_2 output {
+    position: absolute;
+    display: none;
+    width: 50px;
+    height: 24px;
+    border: 1px solid #e2e2e2;
+    background-color: #fff;
+    border-radius: 3px;
+    color: #777;
+    font-size: .8em;
+    line-height: 24px;
+    text-align: center
+}
+
+.slider_container_1 .slider:hover {
+    color: gray
+}
+
+.slider_container_1 .slider {
+    z-index: 0;
+    margin-bottom: 0;
+    align-self: center;
+    width: 100%;
+    -webkit-appearance: none;
+    height: 1vh;
+    border-radius: 2px;
+    border-color: #000;
+    background-image: linear-gradient(to right, #174ea6, #4285f4, #d2e3fc)
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background-color: #000;
+    overflow: visible;
+    cursor: pointer;
+    box-shadow: 4px 1px
+}
+
+.slider_label {
+    align-self: center;
+    font-family: Novecentosanswide;
+    font-size: 1rem
+}
+
+.slider_container_1 .slider:hover {
+    color: gray
+}
+
+.label_calendar {
+    align-self: center;
+    font-family: Novecentosanswide;
+    font-size: 1rem
+}
+
+#accident_date_end,
+#accident_date_start {
+    z-index: 0;
+    background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
+    border: 2px solid #000;
+    align-self: center;
+    border-radius: 3px;
+    padding: 3px 5px;
+    background-color: #174ea6;
+    font-size: .9rem;
+    font-weight: 700;
+    color: #fff
+}
+
+#accident_date_end[type=date]::-webkit-inner-spin-button,
+#accident_date_start[type=date]::-webkit-inner-spin-button {
+    display: none
+}
+
+#accident_date_end[type=date]::-webkit-calendar-picker-indicator,
+#accident_date_start[type=date]::-webkit-calendar-picker-indicator {
+    opacity: 0
+}
+
+#back_filters:hover,
+#reset_all:hover,
+#select_all:hover,
+#select_radio:hover,
+#submit_button:hover,
+#submit_criteria:hover,
+#submit_checkboxes:hover,
+#submit_create_user:hover,
+#submit_get_user:hover {
+    background-color: #041f60;
+    color: #fff
+}
+
+#next_button:hover,
+#remove_button:hover,
+#reset_button:hover,
+#update_button:hover {
+    background-color: #041f60;
+    color: #fff
+}
+
+.dash_user_all ul li,
+.dash_user_form h3,
+.dash_user_form ul li,
+.first_box_dash h3,
+.first_box_dash ul li,
+.second_box_dash h3,
+.second_box_dash ul li {
+    font-family: Novecentosanswide;
+    font-size: 1.2rem;
+    color: #041f60;
+    text-align: left;
+    font-weight: 700
+}
+
+.dash_user_all ul,
+.dash_user_form ul {
+    padding: 0
+}
+
+#get_all_users,
+#user_form_create,
+#user_form_get_user {
+    display: none
+}
+
+#create_user_message {
+    text-align: center
+}
+
+#button,
+#logout {
+    display: none
+}
+
+#dashboard.active,
+#logout.active,
+#profile.active {
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 4px solid #fff
+}
+
+#filters_pie_new h2,
+#left_cont h2,
+.first_box_dash h2,
+.info_pie h2,
+.second_box_dash h2 {
+    font-family: Novecentosanswide;
+    font-size: 1.3rem;
+    color: #041f60;
+    text-align: center;
+    text-transform: uppercase
+}
+
+#left_cont h2 {
+    margin-top: 5vh
+}
+
+#filters_pie_down {
+    display: flex;
+    flex-direction: column
+}
+
+.radio_pie {
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    align-self: center;
+    margin: 0 0 2vh 0
+}
+
+.checkbox_pie {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    align-self: center
+}
+
+.checkbox_pie_element,
+.radio_pie_element {
+    margin: 0 1vw 1vh 0
+}
+
+#top_button {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 4px;
+    z-index: 99;
+    border: none;
+    outline: 0;
+    background-color: #041f60;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 18px;
+    text-align: center;
+    width: 55px;
+    height: 45px
+}
+
+#top_button:hover {
+    opacity: .7
+}

@@ -1,4 +1,4 @@
-extends ./layouts/layoutProfile.pug
+extends ./layouts/profileLayout.pug
 block profile_content
     .profile_content
       div
@@ -15,9 +15,12 @@ block profile_content
           option#State(value='State') State
           option#County(value='County') County
           option#City(value='City') City
-          option#City(value='Street') Street
+          option#Street(value='Street') Street
           option#Timezone(value='Timezone') Timezone
         select#optiune
           option(selected='' hidden='') Optiune
+      .submit_criteria
+          input#submit_criteria(type='submit' value='Submit')
+
       
 

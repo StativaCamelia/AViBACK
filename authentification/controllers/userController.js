@@ -131,17 +131,21 @@ class UserController {
 
   async findAndAddCriterion(token, req, res) {
     try {
-      let { body } = req;
+      let { criterii, optiune } = req;
       const userId = jwt.verify(token, process.env.JWT_SECRET)._id;
-      let user = await this.database.User.findOneAndUpdate(
+      await this.database.User.findOneAndUpdate(
         { _id: userId },
         {
-          $set: { criteria: body.criterion },
-          $set: { valueOfCriteria: body.valueOfCriterion },
+          $set: { criteria: criterii },
         }
       );
-      content = user;
-      return { success: true, data: { content } };
+      await this.database.User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $set: { valueOfCriteria: optiune },
+        }
+      );
+      return { success: true, data: "updated" };
     } catch (error) {
       return { success: false, data: { error } };
     }

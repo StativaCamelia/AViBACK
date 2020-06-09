@@ -1,14 +1,12 @@
 doctype html
 html(lang='en')
-
-include ./layoutComponents/headContact.pug
-// POP UP LOGIN
-include ./layoutComponents/login.pug
-#main_all.body_all
-  include ./layoutComponents/header.pug
-  .content
-    block contact_content
-    block documentation
-  button#top_button(title='Go to top') Top
-  // FOOTER
-  include ./layoutComponents/footer.pug
+  include ./layoutComponents/headContact.pug
+body
+  include ./layoutComponents/login.pug
+  #main_all.body_all
+    include ./layoutComponents/header.pug
+    .content
+      block contact_content
+      block documentation
+    button#top_button(title='Go to top') Top
+    include ./layoutComponents/footer.pug

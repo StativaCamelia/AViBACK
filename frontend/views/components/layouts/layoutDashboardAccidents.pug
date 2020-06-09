@@ -1,14 +1,14 @@
 doctype html
 html(lang='en')
-
-include ./layoutComponents/headDashboardAccidents.pug
-#main_all.body_all
-    include ./layoutComponents/header.pug
-    .dash_container
-        .control_first_div
-            block controller_first_div
-        .control_accidents
-            block controller_accidents
-    button#top_button(title='Go to top') Top
-    // FOOTER
-    include ./layoutComponents/footer.pug
+    include ./layoutComponents/headDashboardAccidents.pug
+body
+    #main_all.body_all
+        include ./layoutComponents/header.pug
+        .dash_container
+            .control_first_div
+                block controller_first_div
+            .control_accidents
+                block controller_accidents
+        button#top_button(title='Go to top') Top
+        // FOOTER
+        include ./layoutComponents/footer.pug
