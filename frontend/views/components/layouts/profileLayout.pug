@@ -1,0 +1,12 @@
+doctype html
+html(lang='en')
+    include ./layoutComponents/headProfile.pug
+body
+    #main_all.body_all
+        // HEADER
+        include ./layoutComponents/header.pug
+        .content
+            block profile_content
+        button#top_button(title='Go to top') Top
+        // FOOTER
+        include ./layoutComponents/footer.pug
