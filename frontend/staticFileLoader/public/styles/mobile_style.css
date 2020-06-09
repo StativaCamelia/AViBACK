@@ -50,7 +50,7 @@
         box-shadow: 0 5px 20px grey
     }
 
-    .profile_content h1 {
+    .profile_content h1, .documentation h1 {
         font-family: Novecentosanswide;
         font-size: 2rem;
         color: #041f60;
@@ -1995,5 +1995,10 @@
         justify-content: space-between;
         width: 100%;
         margin: 1vh 0 0 0;
+    }
+
+    /*DOCUMENTATION*/
+    #content {
+        padding: 0px 20px 20px 20px !important;
     }
 }
