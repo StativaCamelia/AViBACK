@@ -145,8 +145,7 @@ class UserController {
           $set: { valueOfCriteria: optiune },
         }
       );
-      content = "updated";
-      return { success: true, data: { content } };
+      return { success: true, data: "updated" };
     } catch (error) {
       return { success: false, data: { error } };
     }
