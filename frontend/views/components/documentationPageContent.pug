@@ -153,6 +153,12 @@ block documentation
                         | injection, in which malicious scripts are injected into otherwise benign and trusted websites), 
                         | more precisely we cleaned the input entered by the user to ensure that it does not contain tags that may
                         | have malicious code inside them
+                    p
+                        | As a final step we added tests for the API endpoints, the tests were added using the Supertest module 
+                        | together with Mocha. The motivation with Supertest is to provide a high-level abstraction for HTTP testing. 
+                        | Thus we compared the answers we expect to receive with those we returned.
+                        | With the help of tests in case there are changes in the answers provided by the API or in the name of the endpoints
+                        | we can check where the problems come from.
         #app_architecture
             h3 I.3. Application Architecture
             section
