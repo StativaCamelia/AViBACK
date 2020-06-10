@@ -87,9 +87,7 @@ The structure of the API responses' body is as follows:
 ```JSON
 {
   "content": {
-          "id": "button",
           "value": "Profile",
-          "href": "#",
   }
 }
 ```
@@ -300,8 +298,15 @@ The structure of the API responses' body is as follows:
   -   500 -  Internal Server Error
 
   **Usage example**:  
-    http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
-    
+    http://localhost:5003/users
+  ```JSON
+    {
+      "email" : "user123@gmail.com",
+      "username" : "User123",
+      "password" : "parola123",
+      "type" : "user"
+  }
+  ```
   **Returned data example**:
 
   ```JSON

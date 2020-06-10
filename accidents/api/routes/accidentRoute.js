@@ -39,7 +39,7 @@ exports.getRes = async (req, res) => {
         false,
         { error: { message: "Internal Error" } },
         res,
-        (statusCode = 501)
+        (statusCode = 200)
       );
     }
   } else if (path.endsWith("filtres") && method === "get") {
@@ -68,7 +68,7 @@ exports.getRes = async (req, res) => {
         false,
         { error: { message: "Internal Error" } },
         res,
-        (statusCode = 501)
+        (statusCode = 200)
       );
     }
   } else if (path.endsWith("/accidents") && method === "post") {
@@ -91,7 +91,7 @@ exports.getRes = async (req, res) => {
         false,
         { error: { message: "Internal Error" } },
         res,
-        (statusCode = 501)
+        (statusCode = 200)
       );
     }
   } else if (method === "put") {
@@ -118,7 +118,7 @@ exports.getRes = async (req, res) => {
         false,
         { error: { message: "Internal Error" } },
         res,
-        (statusCode = 501)
+        (statusCode = 200)
       );
     }
   } else if (
@@ -147,7 +147,7 @@ exports.getRes = async (req, res) => {
         false,
         { error: { message: "Internal Error" } },
         res,
-        (statusCode = 501)
+        (statusCode = 200)
       );
     }
   } else if (
@@ -176,7 +176,7 @@ exports.getRes = async (req, res) => {
         false,
         { error: { message: "Internal Error" } },
         res,
-        (statusCode = 501)
+        (statusCode = 200)
       );
     }
   } else if (
@@ -205,7 +205,7 @@ exports.getRes = async (req, res) => {
         false,
         { error: { message: "Internal Error" } },
         res,
-        (statusCode = 501)
+        (statusCode = 500)
       );
     }
   } else if (path.endsWith("/accidents") && method === "get") {
@@ -225,7 +225,7 @@ exports.getRes = async (req, res) => {
         false,
         { error: { message: "Internal Error" } },
         res,
-        (statusCode = 501)
+        (statusCode = 200)
       );
     }
   } else if (path.endsWith("byDate") && method === "get") {
@@ -264,7 +264,7 @@ exports.getRes = async (req, res) => {
         false,
         { error: { message: "Internal Error" } },
         res,
-        (statusCode = 501)
+        (statusCode = 200)
       );
     }
   }
