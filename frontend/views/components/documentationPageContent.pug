@@ -159,6 +159,12 @@ block documentation
                         | Thus we compared the answers we expect to receive with those we returned.
                         | With the help of tests in case there are changes in the answers provided by the API or in the name of the endpoints
                         | we can check where the problems come from.
+                    p
+                        | In the end we deployed both the application and the two services. We hosted the application using Heroku, 
+                        | and MongoDb Atlas (because the accident database contained too much data, in the hosted application are 
+                        | only some of all the data). The application can be accessed at the link: https://avi-app.herokuapp.com/home, 
+                        | the authentificatio service can be found here: https://dashboard.heroku.com/apps, 
+                        | and the accident service here: https://accidents-api.herokuapp.com/accidents
         #app_architecture
             h3 I.3. Application Architecture
             section
@@ -464,7 +470,8 @@ block documentation
                     | the user selects the desired criteria and in response the map will be
                     | colored according to the states in which accidents occurred with those
                     | specifications sent (he will not be able to select criteria related to
-                    | location - state, county, city, street).
+                    | location - state, county, city, street), instead for this he can see 
+                    | the actual location he selected with the help of Google Maps API
                 p
                     | In the case of the pie page, the user will choose the criteria for
                     | selecting the accidents as well as the criterion according to which the
@@ -478,6 +485,9 @@ block documentation
                     | will choose the accident selection criteria. Can compose several
                     | datasets that will be displayed on the chart, in different colors, based
                     | on the chosen time interval.
+                    | He can also change the time interval and see the graph transforming according
+                    | with the new time interval, but also see already used datasets and modify
+                    | them.
                 p
                     | After the desired statistics are created, each page allows their
                     | download in three formats - CSV, PNG and SVG.
