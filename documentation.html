@@ -617,10 +617,14 @@
             </ul>
           </li>
         </ul>
-            <h2 id="without-authorization">Without Authorization</h2>
-            <p><strong>/accidents<br>
-            GET<br>
-            Query parameters:</strong></p>
+        <h2 id="without-authorization">Without Authorization</h2>
+        <p>
+          <strong
+            >/accidents<br />
+            GET<br />
+            Query parameters:</strong
+          >
+        </p>
         <ul>
           <li>
             <p>
@@ -637,12 +641,12 @@
             </p>
           </li>
         </ul>
-          <p><strong>Return codes</strong>:</p>
-          <ul>
+        <p><strong>Return codes</strong>:</p>
+        <ul>
           <li>200 - OK</li>
           <li>400 - There was a problem fetching data</li>
           <li>500 - Internal Server Error</li>
-          </ul>
+        </ul>
         <p>
           <strong>Usage example</strong>: <br />
           http://localhost:5004/accidents?Type=pie&amp;Pie_Criterion=Severity
@@ -707,7 +711,7 @@
         </ul>
         <p>
           <strong>Usage example</strong>: <br />
-          http://localhost:5004/accidents/byDate
+          http://localhost:5004/accidents/byDetails
         </p>
         <p><strong>Returned data example</strong>:</p>
         <pre><code class="JSON language-JSON">{
@@ -735,7 +739,7 @@
         </p>
         <p><strong>Returned data example</strong>:</p>
         <pre><code class="JSON language-JSON">{
-    "content": "Database succesfully updated"
+    "content": "Database successfully updated"
 }
 </code></pre>
         <p>
@@ -1157,9 +1161,7 @@
       "__v": 7
     }
   }
-} {
-    "content": null
-  }
+}
 </code></pre>
         <p>
           <strong
@@ -1188,16 +1190,20 @@
             </p>
           </li>
         </ul>
-        <p><strong>users/confirm<br>
-        GET<br>
-          Query parameters</strong>:
+        <p>
+          <strong
+            >users/confirm<br />
+            GET<br />
+            Query parameters</strong
+          >:
         </p>
         <ul>
-          <li>token : an email token send on email to the user who want to
-              register <br />
-              Receives an email token associated with a user account, and
-              change the status of the account into a confirmed account, so the
-              user can sign-in into the website.
+          <li>
+            token : an email token send on email to the user who want to
+            register <br />
+            Receives an email token associated with a user account, and change
+            the status of the account into a confirmed account, so the user can
+            sign-in into the website.
           </li>
         </ul>
         <p><strong>Return codes</strong>:</p>
@@ -1206,11 +1212,11 @@
           <li>400 - There was a problem fetching data</li>
           <li>500 - Internal Server Error</li>
         </ul>
-            <p>
-              <strong>Usage example</strong>: <br />
-              http://localhost:5003/users/confirm
-            </p>
-            <p><strong>Returned data example</strong>:</p>
+        <p>
+          <strong>Usage example</strong>: <br />
+          http://localhost:5003/users/confirm
+        </p>
+        <p><strong>Returned data example</strong>:</p>
         <pre><code class="JSON language-JSON">  {
         "type": "user",
         "_id": "5edbe762600a0c482c334af6",
@@ -1221,8 +1227,12 @@
    }
 </code></pre>
         <h2 id="admin">Admin</h2>
-        <p><strong>/users<br>
-        DELETE</strong></p>
+        <p>
+          <strong
+            >/users<br />
+            DELETE</strong
+          >
+        </p>
         <p>Delete all the users from the database.</p>
         <p><strong>Return codes</strong>:</p>
         <ul>
@@ -1442,8 +1452,12 @@
     }
   }
 </code></pre>
-        <p><strong>/users/general<br>
-        GET</strong></p>
+        <p>
+          <strong
+            >/users/general<br />
+            GET</strong
+          >
+        </p>
         <p>
           Get some general data about the actions made on the user database(new
           users, updated, deleted, etc)

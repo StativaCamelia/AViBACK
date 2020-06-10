@@ -3,6 +3,7 @@ const {
   dashboardRoute,
   homeRoute,
   contactRoute,
+  documentationRoute,
   mapRoute,
   pieRoute,
   profileRoute,
@@ -57,10 +58,17 @@ exports.getRes = async (req, res) => {
       contactRoute.getRes(parsedReq, res);
       return;
     }
+
+    if (parsedReq.path.indexOf("documentation") !== -1) {
+      documentationRoute.getRes(parsedReq, res);
+      return;
+    }
+
     if (parsedReq.path.indexOf("map") !== -1) {
       mapRoute.getRes(parsedReq, res);
       return;
     }
+
     if (parsedReq.path.indexOf("pie") !== -1) {
       pieRoute.getRes(parsedReq, res);
       return;
@@ -70,14 +78,17 @@ exports.getRes = async (req, res) => {
       chartRoute.getRes(parsedReq, res);
       return;
     }
+
     if (parsedReq.path.indexOf("profile") !== -1) {
       profileRoute.getRes(req, parsedReq, res);
       return;
     }
+
     if (parsedReq.path.indexOf("dashboard") !== -1) {
       dashboardRoute.getRes(parsedReq, res);
       return;
     }
+
     if (parsedReq.path.indexOf("line") !== -1) {
       lineRoute.getRes(parsedReq, res);
       return;

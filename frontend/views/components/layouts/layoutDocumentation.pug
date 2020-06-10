@@ -1,0 +1,11 @@
+doctype html
+html(lang='en')
+    include ./layoutComponents/headDocumentation.pug
+body
+    include ./layoutComponents/login.pug
+    #main_all.body_all
+        include ./layoutComponents/header.pug
+        .content
+            block documentation
+        button#top_button(title='Go to top') Top
+        include ./layoutComponents/footer.pug

@@ -1,6 +1,7 @@
 const HomeController = require("./homeController.js");
 const StaticFilesController = require("./staticFilesController");
 const ContactController = require("./contactController");
+const DocumentationController = require("./documentationController");
 const MapController = require("./mapController");
 const PieController = require("./pieController");
 const ChartController = require("./chartController");
@@ -11,6 +12,7 @@ const DashboardUsersController = require("./dashboardUsersController");
 const DashboardAccidentsController = require("./dashboardAccidentsController");
 
 const contactController = new ContactController();
+const documentationController = new DocumentationController();
 const homeController = new HomeController();
 const staticFilesController = new StaticFilesController();
 const mapController = new MapController();
@@ -27,6 +29,7 @@ module.exports = {
   homeController,
   staticFilesController,
   contactController,
+  documentationController,
   pieController,
   chartController,
   profileController,

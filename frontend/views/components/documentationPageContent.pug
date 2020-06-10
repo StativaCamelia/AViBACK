@@ -1,0 +1,1513 @@
+extends ./layouts/layoutDocumentation.pug
+block documentation
+    .documentation
+        h1 Documentation
+        .documentation_content
+            h2#general_documentation I. General Documentation
+            ol
+                li
+                    a(href='#introduction') Introduction
+                li
+                    a(href='#app_progress') Application Progress
+                li
+                    a(href='#app_architecture') Application Architecture
+                li
+                    a(href='#ui_ux') UI and UX
+            h2#user_guide II. User Guide
+            ol
+                li
+                    a(href='#api_accidents') API Accidents
+                li
+                    a(href='#api_auth') API Authentication and Authorization
+        #introduction
+            h2 I.1. Introduction
+            section
+                p
+                    | US Accidents Smart Visualizer(AVi) is a web application for flexible
+                    | visualization of US accident data, based on our REST API. The system
+                    | provides support for multi-criteria search for reported incidents,
+                    | creating chart statistics in 3 manners - pie chart, bar chart and line
+                    | chart - and a cartographic rendering. These statistics can be exported
+                    | in CSV, PNG and SVG formats.
+                p
+                    | The application also provides an authentication system, as well as a
+                    | module for managing the entire system. A user subscribes to the
+                    | newsletter based on the chosen criterion, thus receiving emails about
+                    | his topic of interest. An admin can monitor and modify the databases of
+                    | the two services exposed through the administration module.
+        #app_progress
+            h2 I.2. Application Progress
+            section
+                ol
+                    li
+                        a(href='#app_progress_1') First steps
+                    li
+                        a(href='#app_progress_2') Getting faster better stronger
+                section#app_progress_1
+                    h3 First steps
+                    p
+                        | In the first weeks we outlined the design of the user interface,
+                        | sketching the structure of the pages, and then we started working on
+                        | the application.
+                    p
+                        | The first elements created were the menu and the general layout of the
+                        | application, then we moved on details, on each page.
+                    .slideshow-container
+                        .firstSlider.fade
+                            .numberTextFirst 1 / 4
+                            img(src='./Images/for_documentation/images/plan_1.jpg' alt='Plan design')
+                        .firstSlider.fade
+                            .numberTextFirst 2 / 4
+                            img(src='./Images/for_documentation/images/plan_2.jpg' alt='Plan design')
+                        .firstSlider.fade
+                            .numberTextFirst 3 / 4
+                            img(src='./Images/for_documentation/images/old.jpg' alt='Plan design')
+                        .firstSlider.fade
+                            .numberTextFirst 4 / 4
+                            img(src='./Images/for_documentation/images/refactor.jpg' alt='Plan design')
+                        a.prev(onclick='plusSlidesFirst(-1)') &#x276E;
+                        a.next(onclick='plusSlidesFirst(1)') &#x276F;
+                    br
+                    div(style='text-align: center;')
+                        span.dotFirst(onclick='currentSlideFirst(1)')
+                        span.dotFirst(onclick='currentSlideFirst(2)')
+                        span.dotFirst(onclick='currentSlideFirst(3)')
+                        span.dotFirst(onclick='currentSlideFirst(4)')
+                    p
+                        | Along the way we added new elements to improve the visual experience
+                        | of the user as well as elements that lead to the interaction with the
+                        | services created later.
+                    p
+                        strong Technologies
+                    p
+                        | The technologies used are HTML, CSS and JavaScript, these being the
+                        | basis of the presented interface. HTML was used in order to mark and
+                        | structure the content of the pages, CSS has the role of stylizing this
+                        | content and JavaScript gives dynamism to the pages.
+                    p
+                        | For the representation of the statistics we used the libraries D3.js
+                        | (for pie chart) and Chart.js (for bar chart and line chart). D3.js is
+                        | a JavaScript library for producing dynamic, interactive data
+                        | visualizations in web browsers. It makes use of SVG, HTML5 and CSS
+                        | standards. Chart.js is a free open-source JavaScript library for data
+                        | visualization. It&apos;s tooltip and legends features are useful to add the
+                        | extra details on charts. Works very well on modern browsers and charts
+                        | are cross browser and cross platform compatible.
+                section#app_progress_2
+                    h3 Getting faster better stronger
+                    p
+                        | After we finished the frontend part of the project, we started
+                        | thinking about the implementation of the functionalities and how we
+                        | will integrate them in the backend part of the application.
+                    p
+                        strong Technologies
+                    p
+                        | Initially we established the technologies we will use. On the frontend
+                        | side we migrated to Pug technology instead of HTML and on the backend
+                        | side we chose Node.JS as the technology because we were easily
+                        | familiar with JavaScript because we used it in the scripts on the
+                        | frontend. For data storage, we chose to use MongoDB because it&apos;s a
+                        | document database, which means it stores data in JSON-like documents.
+                    p
+                        | Pug is a template engine for Node and for the browser. It compiles to
+                        | HTML and has a simplified syntax, which can make you more productive
+                        | and your code more readable. Pug makes it easy both to write reusable
+                        | HTML, as well as to render data pulled from a database or API.
+                    p
+                        | Node.js is an open-source, cross-platform, JavaScript runtime
+                        | environment that executes JavaScript code outside a web browser.
+                        | Node.js lets developers use JavaScript to write command line tools and
+                        | for server-side scripting.
+                    p
+                        | MongoDB is a rich and expressive query language that allows you to
+                        | filter and sort by any field, no matter how nested it may be within a
+                        | document. Supports arrays and nested objects as values and allows for
+                        | flexible and dynamic schemas.
+                    p
+                        | The next step was to establish the application architecture. initially
+                        | we developed a single project based on the MVC architecture, later
+                        | translating the whole into 3 separate projects - the application
+                        | interface, the authentication-authorization service and the accident
+                        | service - where the services have REST architecture.
+        #app_architecture
+            h3 I.3. Application Architecture
+            section
+                ol
+                    li
+                        a(href='#about_architecture') About Application Architecture
+                    li
+                        a(href='#c4_model') C4 Model Diagram
+                    li
+                        a(href='#data_structure') Data Structure
+                    li
+                        a(href='#management') Management
+                section#about_architecture
+                    h3 About Application Architecture
+                    p
+                        | As we mentioned, the project includes two REST services and the entire
+                        | system interface.
+                    p
+                        | Regarding the interface, we designed a simple, flexible and easy to
+                        | use structure, in order to facilitate the user experience on the web
+                        | site. The logic underlying the architecture consists in: the user
+                        | interacts with the interface, the interface exposes the representation
+                        | of the data and the offered functionalities (view), his requests are
+                        | sent both to the internal routing to navigate between the web pages of
+                        | the application (router and controller) and to the two exposed
+                        | services - for registration, authentication and authorization the
+                        | authentication-authorization service is called and for the
+                        | representation of the charts the accident service is called.
+                    p
+                        | Regarding our services, they are RESTful Web services that allow the
+                        | requesting systems to access and manipulate textual representations of
+                        | Web resources by using a uniform and predefined set of stateless
+                        | operations. Requests made to URIs of exposed resources will elicit a
+                        | response with a payload formatted in JSON. Using HTTP, the operations
+                        | (HTTP methods) available are GET, POST, PUT and DELETE (and OPTIONS
+                        | for preflight request in CORS).
+                    p
+                        | Both services present the following logic: the received requests are
+                        | routed, according to the resource to be called (router), after
+                        | routing, the corresponding controller will try to answer the request
+                        | by querying the database through the model; the model will respond to
+                        | the controller and it will send the final response to the client.
+                    p
+                        | The authentication-authorization service exposes the functionality of
+                        | registering a new account within the application as well as the
+                        | authentication functionality with an already created account. In
+                        | addition, the service authorizes the admin (requests from an admin)
+                        | giving him access to direct manipulation of the database - in the case
+                        | of this service is exposed the users collection, a collection that
+                        | stores registered users.
+                    p
+                        | The accident service responds to requests for information about
+                        | accidents stored in the database (accidents registered in the USA
+                        | during 2016-2019). Through this service, the secondary collections are
+                        | created that help to display the filters (states, counties, cities,
+                        | streets), and after the authorization (calling the
+                        | authentication-authorization service) an admin will be able to produce
+                        | changes and take information from the database - in the case of this
+                        | service, the accident collection is exposed.
+                section#c4_model
+                    h3 C4 Model Diagram
+                    p
+                        | To present the overall architecture, we will use the C4 Model diagram
+                        | which provides four different levels of abstraction, each of which is
+                        | relevant to a different audience.
+                    .slideshow-container
+                        .secondSlider.fade
+                            .numberTextSecond 1 / 4
+                            img(src='./Images/for_documentation/c4model/1.C4-CONTEXT.png' alt='C4-CONTEXT')
+                            .text Level 1 - Context Diagram
+                        .secondSlider.fade
+                            .numberTextSecond 2 / 4
+                            img(src='./Images/for_documentation/c4model/2.C4-CONTAINER.png' alt='C4-CONTAINER')
+                            .text Level 2 - Container Diagram
+                        .secondSlider.fade
+                            .numberTextSecond 3 / 4
+                            img(src='./Images/for_documentation/c4model/3.C4-COMPONENT.png' alt='C4-COMPONENT')
+                            .text Level 3 - Component Diagram
+                        .secondSlider.fade
+                            .numberTextSecond 4 / 4
+                            img(src='./Images/for_documentation/c4model/4.C4-CODE.png' alt='C4-CODE')
+                            .text Level 4 - Code Diagram
+                        a.prev(onclick='plusSlidesSecond(-1)') &#x276E;
+                        a.next(onclick='plusSlidesSecond(1)') &#x276F;
+                    br
+                    div(style='text-align: center;')
+                        span.dotSecond(onclick='currentSlideSecond(1)')
+                        span.dotSecond(onclick='currentSlideSecond(2)')
+                        span.dotSecond(onclick='currentSlideSecond(3)')
+                        span.dotSecond(onclick='currentSlideSecond(4)')
+                section#data_structure
+                    h3 Data Structure
+                    p
+                        | The main collection used is the accident collection, its source being:
+                        span.documentation_links
+                            a(href='https://smoosavi.org/datasets/us_accidents' target='_blank') https://smoosavi.org/datasets/us_accidents
+                        | . This collection contains accident data that are collected from
+                        |           February 2016 to December 2019 for the Contiguous United States.
+                    p
+                        | Initially this data was found in CSV format, but to facilitate mapping
+                        | to the collection created in MongoDB we converted the dataset to JSON
+                        | format. Also, to reduce the search time in the entire collection, we
+                        | created local indexes on the document fields.
+                    p The schema structure is:
+                    pre.
+                        {
+                            _id: ObjectID,
+                            Source: String,
+                            TMC: String,
+                            Severity: Number, enum: [null, 1, 2, 3],
+                            End_Time: Date,
+                            Start_Lat: Number,
+                            Start_Lng: Number,
+                            End_Lat: Number,
+                            End_Lng: Number,
+                            Distance(mi): String,
+                            Description: String,
+                            Number: String,
+                            Street: String,
+                            Side: String, enum: ["", "L", "R"],
+                            City: String,
+                            County: String,
+                            State: String,
+                            Zipcode: String,
+                            Country: String,
+                            Timezone: String,
+                            Airport_Code: String,
+                            Weather_Timestamp: String,
+                            Temperature(F): Number,
+                            Wind_Chill(F): Number,
+                            Humidity(%): Number,
+                            Pressure(in): Number,
+                            Visibility(mi): Number,
+                            Wind_Direction: "SW",
+                            Wind_Speed(mph): Number,
+                            Weather_Condition: String,
+                            Amenity: String,
+                            Bump: String,
+                            Crossing: String,
+                            Give_Way: String,
+                            Junction: String,
+                            No_Exit: String,
+                            Railway: String,
+                            Roundabout: String,
+                            Station: String,
+                            Stop: String,
+                            Traffic_Calming: String,
+                            Traffic_Signal: String,
+                            Turning_Loop: String,
+                            Sunrise_Sunset: String,
+                            Civil_Twilight: String,
+                            Nautical_Twilight: String,
+                            Astronomical_Twilight: String,
+                            Start_Date: String,
+                            Start_Hour: String
+                        }
+                    p
+                        | Another important collection is the users collection, which we created
+                        | in order to store the users registered in the application. Based on
+                        | this collection, the authentication and authorization checks are made
+                        | within the service that deals with this.
+                    p The schema structure is:
+                    pre.
+                        {
+                            _id: ObjectID,
+                            type: String,
+                            email: String,
+                            username: String,
+                            password: String
+                        }
+                section#management
+                    h3 Management
+                    p
+                        | For task management we used a board in Trello where we posted and
+                        | assigned all the tasks identified by us, and for code management we
+                        | used a GitHub repository where everyone uploaded his contribution to
+                        | the project.
+                    p
+                        | On the trello board, in the TO DO section we wrote down the tasks we
+                        | set together and assigned them together with a deadline, in the DOING
+                        | section we moved the tasks when we were dealing with them and in the
+                        | DONE section we moved them when they were completed.
+                    img(src='./Images/for_documentation/images/trello_board.png' alt='Trello Board')
+                    p
+                        | Regarding the code management, each of us pushed the implementations
+                        | of the established tasks, respecting the deadlines. The final form of
+                        | the project, where you can also see the progress, can be found at:
+                        span.documentation_links
+                            a(href='https://github.com/StativaCamelia/AViBACK' target='_blank') https://github.com/StativaCamelia/AViBACK
+                        | . The repository contains three directories that represent the entire
+                        |           application: the frontend directory that contains the files
+                        |           corresponding to the interface, the authentication directory that
+                        |           contains the authentication-authorization API files, and the accidents
+                        |           directory that contains the accidents API files.
+                    p
+                        | The frontend directory contains files for router, controllers, views
+                        | and static files loader.
+                    p
+                        | The authentication directory contains files for api routes,
+                        | controllers, models and api tests.
+                    p
+                        | The accidents directory contains files for api routes, controllers,
+                        | util functions, models and api tests.
+                    .code_management
+                        .div_code_management
+                            h3 Stativ&abreve; Camelia-Georgiana
+                            p Application design
+                            p Creating project structure
+                            p Project restructure
+                            p Database structure
+                            p Project documentation
+                            p Map page and line chart page
+                            p Export for map page
+                            p Multi-criteria filters
+                            p Authorization for admin and routes
+                            p Email system integration
+                            p
+                                | Converting CSV format to JSON format for accidents collection
+                            p API tests
+                        .div_code_management
+                            h3 Z&abreve;nceanu Ana-Maria
+                            p Application design
+                            p Project restructure
+                            p Database structure
+                            p Project documentation
+                            p Pie chart page
+                            p Export for pie page
+                            p Multi-criteria filters
+                            p Dashboard
+                            p Refactoring application design
+                            p Register, login and logout
+                        .div_code_management
+                            h3 Tipa Adrian-Ionu&#x21B;
+                            p Application design
+                            p Home page calls
+                            p Project restructure
+                            p Database structure
+                            p Project documentation
+                            p Profile page
+                            p Bar chart page
+                            p Export for bar chart and line chart pages
+        #ui_ux
+            h3 I.4. UI and UX
+            section
+                p
+                    | In this chapter we thought of offering a pleasant user experience on our
+                    | site, so we looked subjectively and thought what we would like, as
+                    | users, to see on a website with these specifications. So we decided on a
+                    | simple design, with warm colors in blue and white, with subtle
+                    | animations and an easy-to-view structure, which easily adapts to the
+                    | mobile version.
+                p
+                    | First of all, we considered that the main page should reflect the
+                    | purpose of the application so that the home page contains a counter that
+                    | will increase to the number of accidents in the current day but totaled
+                    | from 2016-2019 (according to accidents recorded in the database). Next
+                    | to the counter we also have a news section where random descriptions of
+                    | accidents appear in the database. Below is information on the source
+                    | dataset as well as some tips on driving safety.
+                p
+                    | Within the application you can find the related documentation as well as
+                    | our contact details. We also have the registration and authentication
+                    | section, and after that the corresponding page is rendered - if the
+                    | authentication credentials belong to a user then he will be given the
+                    | profile page, and if they belong to an admin he will be given the
+                    | dashboard. In case of a user, after registration, he will receive an
+                    | account confirmation email, by which he agrees to subscribe to the
+                    | newsletter.
+                p
+                    | On the profile page a user will be able to see the data retained in the
+                    | account, except for the password. He can select a certain criterion, and
+                    | it will be retained in the database, and he will be notified when a new
+                    | accident occurs or an existing accident is updated that presents the
+                    | criterion chosen by him.
+                p
+                    | On the dashboard page an admin will be able to see general data about
+                    | the two large exposed collections of services - users and accidents -
+                    | and can interact directly with them through the exposed methods. In the
+                    | case of the users collection, an admin will be able to create a new
+                    | user, will be able to see all existing users or only a certain user by
+                    | id, will be able to update a user or will be able to delete users (one
+                    | user by id or all existing users).
+                p
+                    | The main part of the website is given by the pages with statistics,
+                    | pages delimited according to the way of viewing the chart. More
+                    | precisely, the following pages can be found: map page for cartographic
+                    | rendering, pie chart page for pie view, bar chart page for bar view as
+                    | well as line chart page for line view. On each page are exposed
+                    | selection criteria after which the user will be able to create his
+                    | statistics, respectively to create the chosen chart.
+                p
+                    | On the map page, the cartographic rendering consists in the fact that
+                    | the user selects the desired criteria and in response the map will be
+                    | colored according to the states in which accidents occurred with those
+                    | specifications sent (he will not be able to select criteria related to
+                    | location - state, county, city, street).
+                p
+                    | In the case of the pie page, the user will choose the criteria for
+                    | selecting the accidents as well as the criterion according to which the
+                    | pie will be formed. If the answer received will contain more than two
+                    | entities, then a list will be displayed from which he will be able to
+                    | choose what to represent on the pie.
+                p
+                    | For bar chart and line chart pages, the logic of the representation is
+                    | the same. More precisely, the user will choose the time interval and
+                    | after he wants to group this interval (years, months, days) and then he
+                    | will choose the accident selection criteria. Can compose several
+                    | datasets that will be displayed on the chart, in different colors, based
+                    | on the chosen time interval.
+                p
+                    | After the desired statistics are created, each page allows their
+                    | download in three formats - CSV, PNG and SVG.
+        #content
+            h3#api_accidents II.1. API Accidents
+            h2 Response structure
+            p The structure of the API responses&apos; body is as follows:
+            ul
+                li
+                    p
+                        | for successful responses, a JSON object containing the properties:
+                    ul
+                        li
+                            code success
+                            | :
+                            code true
+                        li
+                            code data
+                            | : An object, structure detailed for each route
+                            |             below.
+                li
+                    p
+                        | for unsuccessful responses, a JSON object containing the
+                        br
+                        |           properties:
+                    ul
+                        li
+                            code success
+                            | :
+                            code false
+                        li
+                            code error
+                            | : An object containing a
+                            code message
+                            |  property, and
+                            br
+                            |             sometimes additional helpful properties.
+            h2#without-authorization Without Authorization
+            p
+                strong
+                    | /accidents
+                    br
+                    |         GET
+                    br
+                    |         Query parameters:
+            ul
+                li
+                    p
+                        | type - the type of representation the returned data will be used
+                        | for(map, pie, line or bar)
+                li
+                    p
+                        | any criteria the user wants his data to be filtered by and the value
+                        | of the criteria
+                        br
+                        |           Get the accidents that meet the conditions in an appropriate format
+                        |           for the type of representation they will be used for
+            p
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5004/accidents?Type=pie&amp;Pie_Criterion=Severity
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                  "content": [
+                    {
+                      "_id": 2,
+                      "count": 1993409
+                    },
+                    {
+                      "_id": 3,
+                      "count": 887619
+                    },
+                    {
+                      "_id": 4,
+                      "count": 92337
+                    },
+                    {
+                      "_id": 1,
+                      "count": 970
+                    }
+                  ]
+                }
+            p
+                strong
+                    | /accidents/byDate
+                    br
+                    |         GET
+                br
+                |       Get the number of accidents that happened on this day in any given year
+                br
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5004/accidents/byDate
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                  "content": 6793
+                }
+            p
+                strong
+                    | /accidents/details
+                    br
+                    |         GET
+                br
+                |       Get the details of some accidents for a news feed purpose
+                br
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5004/accidents/byDetails
+            p
+                strong Returned data example
+                | :
+            - let accidents1 = "<accidents>";
+            - let accidents2 = "</accidents>";
+            - let accident = "</accident>";
+            - let accident1 = "<accident id= '1'>";
+            - let accident2 = "<accident id= '2'>";
+            - let accident3 = "<accident id= '3'>";
+            - let accident4 = "<accident id= '4'>";
+            - let accident5 = "<accident id= '5'>";
+            - let accident6 = "<accident id= '6'>";
+            - let accident7 = "<accident id= '7'>";
+            - let accident8 = "<accident id= '8'>";
+            - let accident9 = "<accident id= '9'>";
+            - let accident10 = "<accident id= '10'>";
+            pre.
+                {
+                  "content": "#{accidents1}
+                  #{accident1} Accident on OH-32 State Route 32 Westbound at Dela Palma Rd. Expect delays.#{accident}
+                  #{accident2}Accident on I-75 Southbound at Exits 52 52B US-35. Expect delays.#{accident}
+                  #{accident3}Accident on McEwen Rd at OH-725 Miamisburg Centerville Rd. Expect delays.#{accident}
+                  #{accident4}Accident on I-270 Outerbelt Northbound near Exit 29 OH-3 State St. Expect delays.#{accident}
+                  #{accident5}Accident on Oakridge Dr at Woodward Ave. Expect delays.#{accident}
+                  #{accident6}Accident on I-75 Southbound at Exit 54B Grand Ave. Expect delays.#{accident}
+                  #{accident7}Accident on Notre Dame Ave at Warner Ave. Expect delays.#{accident}
+                  #{accident8}Right hand shoulder blocked due to accident on I-270 Outerbelt Westbound at Exit 29 OH-3 State St.#{accident}
+                  #{accident9}Accident on I-270 Outerbelt Northbound at Exits 7 7A 7B US-40 Broad St. Expect delays.#{accident}
+                  #{accident10}One lane blocked due to accident on I-70 Westbound at Exits 110 110A 110B Brice Rd. Expect delays.#{accident}
+                #{accidents2}"
+                }
+            p
+                strong
+                    | /accidents/filters
+                    br
+                    |         GET
+                br
+                |       Create a database with the location filters and the relationships between
+                |       them, so the data will correspond with the actual data from the accidents
+                |       database
+                br
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5004/accidents/filters
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                    "content": "Database successfully updated"
+                }
+            p
+                strong
+                    | With Authorization(The following can only be done by an admin
+                    | account)
+                    br
+                    |         /accidents
+                    br
+                    |         DELETE
+                br
+                |       Delets all the accidents
+                br
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5004/accidents
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                    "content": "null"
+                }
+            p
+                strong
+                    | /accidents
+                    br
+                    |         GET
+                br
+                |       Returns all the accidents from the database
+                br
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5004/accidents
+            p
+                strong Returned data example
+                | :
+                br
+                |       The content is to large to be displayed
+            p
+                strong
+                    | /accidents
+                    br
+                    |         POST
+            p Creates a new accident
+            p
+                strong Return codes
+                | :
+            ul
+                li 201 - Created
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5004/accidents
+            p Request body
+            pre.
+                {
+                    "State" : "OH",
+                    "Severity" : 2
+                }
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                  "content": {
+                    "_id": "5ede3061cec18d11c82748d8",
+                    "State": "OH",
+                    "Severity": 2,
+                    "__v": 0
+                  }
+                }
+            p
+                strong
+                    | /accidents/{accidentId}
+                    br
+                    |         PUT
+                br
+                |       Update an accident from the database
+                br
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5004/accidents/5ec65d04607fb826d4b69279
+                br
+                |       Request body
+            pre.
+                {
+                    "State" : "OH",
+                    "Severity" : 2
+                }
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                  "content": {
+                    "_id": "5ec65d04607fb826d4b69279",
+                    "ID": "A-3",
+                    "Source": "MapQuest",
+                    "TMC": "201.0",
+                    "Severity": 2,
+                    "End_Time": "2016-02-08T05:19:27.000Z",
+                    "Start_Lat": 39.063148,
+                    "Start_Lng": -84.032608,
+                    "End_Lat": null,
+                    "End_Lng": null,
+                    "Distance(mi)": "0.01",
+                    "Description": "Accident on OH-32 State Route 32 Westbound at Dela Palma Rd. Expect delays.",
+                    "Number": "",
+                    "Street": "State Route 32",
+                    "Side": "R",
+                    "City": "Williamsburg",
+                    "County": "Clermont",
+                    "State": "OH",
+                    "Zipcode": "45176",
+                    "Country": "US",
+                    "Timezone": "US/Eastern",
+                    "Airport_Code": "KI69",
+                    "Weather_Timestamp": "2016-02-08 06:56:00",
+                    "Temperature(F)": 36,
+                    "Wind_Chill(F)": 33.3,
+                    "Humidity(%)": 100,
+                    "Pressure(in)": 29.67,
+                    "Visibility(mi)": 10,
+                    "Wind_Direction": "SW",
+                    "Wind_Speed(mph)": 3.5,
+                    "Weather_Condition": "Overcast",
+                    "Amenity": "False",
+                    "Bump": "False",
+                    "Crossing": "False",
+                    "Give_Way": "False",
+                    "Junction": "False",
+                    "No_Exit": "False",
+                    "Railway": "False",
+                    "Roundabout": "False",
+                    "Station": "False",
+                    "Stop": "False",
+                    "Traffic_Calming": "False",
+                    "Traffic_Signal": "True",
+                    "Turning_Loop": "False",
+                    "Sunrise_Sunset": "Night",
+                    "Civil_Twilight": "Night",
+                    "Nautical_Twilight": "Day",
+                    "Astronomical_Twilight": "Day",
+                    "Start_Date": "2016-02-08",
+                    "Start_Hour": "06:49:27"
+                  }
+                }
+            p
+                strong
+                    | /accidents/{accidentId}
+                    br
+                    |         DELETE
+                br
+                |       Delete an accident by id
+                br
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5004/accidents/5ec65d04607fb826d4b69279
+                br
+                strong Returned data example
+                | :
+            pre.
+                {
+                  "content": {
+                    "_id": "5ec65d04607fb826d4b69279",
+                    "ID": "A-3",
+                    "Source": "MapQuest",
+                    "TMC": "201.0",
+                    "Severity": 2,
+                    "End_Time": "2016-02-08T05:19:27.000Z",
+                    "Start_Lat": 39.063148,
+                    "Start_Lng": -84.032608,
+                    "End_Lat": null,
+                    "End_Lng": null,
+                    "Distance(mi)": "0.01",
+                    "Description": "Accident on OH-32 State Route 32 Westbound at Dela Palma Rd. Expect delays.",
+                    "Number": "",
+                    "Street": "State Route 32",
+                    "Side": "R",
+                    "City": "Williamsburg",
+                    "County": "Clermont",
+                    "State": "OH",
+                    "Zipcode": "45176",
+                    "Country": "US",
+                    "Timezone": "US/Eastern",
+                    "Airport_Code": "KI69",
+                    "Weather_Timestamp": "2016-02-08 06:56:00",
+                    "Temperature(F)": 36,
+                    "Wind_Chill(F)": 33.3,
+                    "Humidity(%)": 100,
+                    "Pressure(in)": 29.67,
+                    "Visibility(mi)": 10,
+                    "Wind_Direction": "SW",
+                    "Wind_Speed(mph)": 3.5,
+                    "Weather_Condition": "Overcast",
+                    "Amenity": "False",
+                    "Bump": "False",
+                    "Crossing": "False",
+                    "Give_Way": "False",
+                    "Junction": "False",
+                    "No_Exit": "False",
+                    "Railway": "False",
+                    "Roundabout": "False",
+                    "Station": "False",
+                    "Stop": "False",
+                    "Traffic_Calming": "False",
+                    "Traffic_Signal": "True",
+                    "Turning_Loop": "False",
+                    "Sunrise_Sunset": "Night",
+                    "Civil_Twilight": "Night",
+                    "Nautical_Twilight": "Day",
+                    "Astronomical_Twilight": "Day",
+                    "Start_Date": "2016-02-08",
+                    "Start_Hour": "06:49:27"
+                  }
+                }
+            p
+                strong
+                    | /accidents/general
+                    br
+                    |         GET
+                    br
+                |       Get some general data about the change made on the accidents database
+                br
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5004/accidents/general
+                br
+                strong Returned data example
+                | :
+            pre.
+                {
+                  "content": {
+                    "accidentsNumber": 2974335,
+                    "newAccidentsNumber": 3,
+                    "deletedAccidentsNumber": 3,
+                    "updatedAccidentsNumber": 7
+                  }
+                }
+        #content_auth
+            h3#api_auth II.2. API Authentication and Authorization
+            h3#response-structure Response structure
+            p The structure of the API responses&apos; body is as follows:
+            ul
+                li
+                    p
+                        | for successful responses, a JSON object containing the properties:
+                    ul
+                        li
+                            code success
+                            | :
+                            code true
+                        li
+                            code data
+                            | : An object, structure detailed for each route
+                            |             below.
+                li
+                    p
+                        | for unsuccessful responses, a JSON object containing the
+                        br
+                        |           properties:
+                    ul
+                        li
+                            code success
+                            | :
+                            code false
+                        li
+                            code error
+                            | : An object containing a
+                            code message
+                            |  property, and
+                            br
+                            |             sometimes additional helpful properties.
+            p
+                strong
+                    | /users/register
+                    br
+                    |         POST
+            p Creates a new user if the provided data is valid.
+            p
+                strong Return codes
+                | :
+            ul
+                li 201 - Created
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5003/users/register
+                br
+                |       Request Body
+            pre.
+                {
+                    "email"  : "exemplu123@gmail.com",
+                    "password" : "exemplu123",
+                    "username" : "Exemplu123"
+                }
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                  "content": {
+                    "message": "Successfully registered! Please  confirm your email, sign in and set your profile!"
+                  }
+                }
+            p
+                strong
+                    | /users/login
+                    br
+                    |         POST
+                br
+                |       Creates a new session for a user by providing him an authorization token.
+            p
+                strong Return codes
+                | :
+            ul
+                li 201 - Created
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5003/users/login
+                br
+                |       Request Body
+            pre.
+                {
+                    "email"  : "exemplu123@gmail.com",
+                    "username" : "Exemplu123"
+                }
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                  "content": {
+                    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWQ2NTdiOTM1MTY4ZTE5NjgwNDE2MDkiLCJpYXQiOjE1OTE1OTIzOTV9.SZbK9j8b4i1pSXVSLAtSGBgu7dYiAFeTk3zzrjDKZ1s"
+                  }
+                }
+            p
+                strong
+                    | /users/login
+                    br
+                    |         GET
+                br
+                |       Verify if the user has a valid authorization token in the request header
+                |       and change the content of the page according with his curent state.
+            p
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5003/users/login
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                  "content": {
+                          "value": "PROFILE",
+                  }
+                }
+            p
+                strong
+                    | users/authorization
+                    br
+                    |         GET
+                    br
+                    |         Query parameters
+                | :
+            ul
+                li
+                    p
+                        | token: the token we want to check
+                        br
+                        |           Receives a token a verify if the token is associated with an admin
+                        |           account
+                    p
+                        strong Return codes
+                        | :
+                li
+                    p 200 - OK
+                li
+                    p 400 - There was a problem fetching data
+                li
+                    p 500 - Internal Server Error
+                    p
+                        strong Usage example
+                        | :
+                        br
+                        |           http://localhost:5003/users/authorization
+                        br
+                        strong Returned data example
+                        | :
+            pre.
+                {
+                  "content": {
+                    "success": true,
+                    "data": {
+                      "type": "admin",
+                      "_id": "5ed657b935168e1968041609",
+                      "email": "stativa_geo@gmail.com",
+                      "username": "Admiul",
+                      "password": "$2b$10$wciYae1dr7HAr77Q5lgLfOgOo4k2yuTTQKba1zMiTbSlWwMZJDNIq",
+                      "__v": 7
+                    }
+                  }
+                }
+            p
+                strong
+                    | users/send-email
+                    br
+                    |         GET
+                    br
+                    |         Query parameters
+                | :
+            ul
+                li
+                    p
+                        | topic : A topic that a user might be interested in
+                        br
+                        |           Receives a topic and send an email to all the users that are have this
+                        |           criteria on their preferences list. The email will announce them that
+                        |           new data regarding the criteria had been added.
+                    p
+                        strong Return codes
+                        | :
+                li
+                    p 200 - OK
+                li
+                    p 400 - There was a problem fetching data
+                li
+                    p 500 - Internal Server Error
+                    p
+                        strong Usage example
+                        | :
+                        br
+                        |           http://localhost:5003/users/send-email
+            p
+                strong
+                    | users/confirm
+                    br
+                    |         GET
+                    br
+                    |         Query parameters
+                | :
+            ul
+                li
+                    | token : an email token send on email to the user who want to register
+                    br
+                    |         Receives an email token associated with a user account, and change the
+                    |         status of the account into a confirmed account, so the user can sign-in
+                    |         into the website.
+            p
+                strong Return codes
+                | :
+            ul
+                li 200 - OK
+                li 400 - There was a problem fetching data
+                li 500 - Internal Server Error
+            p
+                strong Usage example
+                | :
+                br
+                |       http://localhost:5003/users/confirm
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                        "type": "user",
+                        "_id": "5edbe762600a0c482c334af6",
+                        "email": "stativa50@gmail.com",
+                        "username": "UserTest",
+                        "confirmed": true,
+                        "__v": 0
+                   }
+            h2#admin Admin
+            p
+                strong
+                    | /users
+                    br
+                    |         DELETE
+            p Delete all the users from the database.
+            p
+                strong Return codes
+                | :
+            ul
+                li
+                    p 200 - OK
+                li
+                    p 400 - There was a problem fetching data
+                li
+                    p 500 - Internal Server Error
+                    p
+                        strong Usage example
+                        | :
+                        br
+                        |           http://localhost:5003/users
+                        br
+                        strong Returned data example
+                        | :
+            pre.
+                {
+                    "content": null
+                  }
+            p
+                strong
+                    | /users
+                    br
+                    |         GET
+            p Get all the users from the database.
+            p
+                strong Return codes
+                | :
+            ul
+                li
+                    p 200 - OK
+                li
+                    p 400 - There was a problem fetching data
+                li
+                    p 500 - Internal Server Error
+                    p
+                        strong Usage example
+                        | :
+                        br
+                        |           http://localhost:5003/users
+                    p
+                        strong Returned data example
+                        | :
+            pre.
+                {
+                    "content": [
+                      {
+                        "type": "admin",
+                        "_id": "5ed657b935168e1968041609",
+                        "email": "stativa_geo@gmail.com",
+                        "username": "Admiul",
+                        "__v": 7
+                      },
+                      {
+                        "type": "user",
+                        "_id": "5edbe762600a0c482c334af6",
+                        "email": "stativa50@gmail.com",
+                        "username": "UserTest",
+                        "confirmed": true,
+                        "__v": 0
+                      }
+                    ]
+                  }
+            p
+                strong
+                    | /users/{userId}
+                    br
+                    |         PUT
+            p Update a user.
+            p
+                strong Return codes
+                | :
+            ul
+                li
+                    p 200 - OK
+                li
+                    p 400 - There was a problem fetching data
+                li
+                    p 500 - Internal Server Error
+                    p
+                        strong Usage example
+                        | :
+                        br
+                        |           http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
+            pre.
+                {
+                      "type" : "admin"
+                  }
+            p
+                strong Returned data example
+                | :
+            pre.
+                {
+                    "content": {
+                      "type": "admin",
+                      "_id": "5ede3a7d0ff94b173c4a92f0",
+                      "email": "stativa123@gmail.com",
+                      "username": "Stativa123",
+                      "password": "$2b$10$t7q6M8e3aDHSeXkJD1eK5OUtIoVwL7rIQ4y4whHSnHSHEsxEyDURG",
+                      "confirmed": false,
+                      "__v": 0
+                    }
+                  }
+            p
+                strong
+                    | /users/{userId}
+                    br
+                    |         DELETE
+                br
+                |       Delete a user.
+            p
+                strong Return codes
+                | :
+            ul
+                li
+                    p 200 - OK
+                li
+                    p 400 - There was a problem fetching data
+                li
+                    p 500 - Internal Server Error
+                    p
+                        strong Usage example
+                        | :
+                        br
+                        |           http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
+                    p
+                        strong Returned data example
+                        | :
+            pre.
+                {
+                    "content": {
+                      "type": "admin",
+                      "_id": "5ede3a7d0ff94b173c4a92f0",
+                      "email": "stativa123@gmail.com",
+                      "username": "Stativa123",
+                      "password": "$2b$10$t7q6M8e3aDHSeXkJD1eK5OUtIoVwL7rIQ4y4whHSnHSHEsxEyDURG",
+                      "confirmed": false,
+                      "__v": 0
+                    }
+                  }
+            p
+                strong
+                    | /users
+                    br
+                    |         POST
+            p Creates a new user.
+            p
+                strong Return codes
+                | :
+            ul
+                li
+                    p 201 - Created
+                li
+                    p 400 - There was a problem fetching data
+                li
+                    p 500 - Internal Server Error
+                    p
+                        strong Usage example
+                        | :
+                        br
+                        |           http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
+                    p
+                        strong Returned data example
+                        | :
+            pre.
+                {
+                    "content": {
+                      "email" : "user123@gmail.com",
+                      "username" : "User123",
+                      "password" : "parola123",
+                      "type" : "user"
+                  }
+                  }
+            p
+                strong
+                    | /users/{userId}
+                    br
+                    |         GET
+            p Get a user by id.
+            p
+                strong Return codes
+                | :
+            ul
+                li
+                    p 200 - OK
+                li
+                    p 400 - There was a problem fetching data
+                li
+                    p 500 - Internal Server Error
+                    p
+                        strong Usage example
+                        | :
+                        br
+                        |           http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
+                    p
+                        strong Returned data example
+                        | :
+            pre.
+                {
+                  "content": {
+                      "type": "admin",
+                      "_id": "5ede3a7d0ff94b173c4a92f0",
+                      "email": "stativa123@gmail.com",
+                      "username": "Stativa123",
+                      "password": "$2b$10$t7q6M8e3aDHSeXkJD1eK5OUtIoVwL7rIQ4y4whHSnHSHEsxEyDURG",
+                      "confirmed": false,
+                      "__v": 0
+                    }
+                  }
+            p
+                strong
+                    | /users/{userId}
+                    br
+                    |         GET
+            p Get a user by id.
+            p
+                strong Return codes
+                | :
+            ul
+                li
+                    p 201 - OK
+                li
+                    p 400 - There was a problem fetching data
+                li
+                    p 500 - Internal Server Error
+                    p
+                        strong Usage example
+                        | :
+                        br
+                        |           http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
+                    p
+                        strong Returned data example
+                        | :
+            pre.
+                {
+                  "content": {
+                      "type": "admin",
+                      "_id": "5ede3a7d0ff94b173c4a92f0",
+                      "email": "stativa123@gmail.com",
+                      "username": "Stativa123",
+                      "password": "$2b$10$t7q6M8e3aDHSeXkJD1eK5OUtIoVwL7rIQ4y4whHSnHSHEsxEyDURG",
+                      "confirmed": false,
+                      "__v": 0
+                    }
+                  }
+            p
+                strong
+                    | /users/general
+                    br
+                    |         GET
+            p
+                | Get some general data about the actions made on the user database(new
+                | users, updated, deleted, etc)
+            p
+                strong Return codes
+                | :
+            ul
+                li
+                    p 200 - OK
+                li
+                    p 400 - There was a problem fetching data
+                li
+                    p 500 - Internal Server Error
+                    p
+                        strong Usage example
+                        | :
+                        br
+                        |           http://localhost:5003/users/general
+                    p
+                        strong Returned data example
+                        | :
+            pre.
+                {
+                  "content": {
+                    "usersNumber": 7,
+                    "newUsersNumber": 23,
+                    "deletedUsersNumber": 2,
+                    "updatedUsersNumber": 70
+                  }
+                }
+    script.
+        let slideIndexFirst = 1;
+        showSlidesFirst(slideIndexFirst);
+        function plusSlidesFirst(n) {
+            showSlidesFirst((slideIndexFirst += n));
+        }
+        function currentSlideFirst(n) {
+            showSlidesFirst((slideIndexFirst = n));
+        }
+        function showSlidesFirst(n) {
+            let i;
+            let slides = document.getElementsByClassName("firstSlider");
+            let dots = document.getElementsByClassName("dotFirst");
+            if (n > slides.length) {
+                slideIndexFirst = 1;
+            }
+            if (n < 1) {
+                slideIndexFirst = slides.length;
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndexFirst - 1].style.display = "block";
+            dots[slideIndexFirst - 1].className += " active";
+        }
+    script.
+        let slideIndexSecond = 1;
+        showSlidesSecond(slideIndexSecond);
+        function plusSlidesSecond(n) {
+            showSlidesSecond((slideIndexSecond += n));
+        }
+        function currentSlideSecond(n) {
+            showSlidesSecond((slideIndexSecond = n));
+        }
+        function showSlidesSecond(n) {
+            let i;
+            let slides = document.getElementsByClassName("secondSlider");
+            let dots = document.getElementsByClassName("dotSecond");
+            if (n > slides.length) {
+                slideIndexSecond = 1;
+            }
+            if (n < 1) {
+                slideIndexSecond = slides.length;
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndexSecond - 1].style.display = "block";
+            dots[slideIndexSecond - 1].className += " active";
+        }
+
