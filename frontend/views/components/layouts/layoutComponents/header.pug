@@ -9,20 +9,23 @@
         - let valuesIds = JSON.parse(keyIds.activeIds)
         - let home = valuesIds[0]
         - let contact = valuesIds[1]
-        - let profile = valuesIds[2]
-        - let logout = valuesIds[3]
-        - let map = valuesIds[4]
-        - let pie = valuesIds[5]
-        - let barChart = valuesIds[6]
-        - let lineChart = valuesIds[7]
+        - let documentation = valuesIds[2]
+        - let profile = valuesIds[3]
+        - let logout = valuesIds[4]
+        - let map = valuesIds[5]
+        - let pie = valuesIds[6]
+        - let barChart = valuesIds[7]
+        - let lineChart = valuesIds[8]
         ul
           li
-            a.logo(href='home')
+            a.logo(href='http://localhost:5002/home')
               img.effect3(src='Images/logo_renew.png' alt='AVi')
           li
             a.myButton(id=home href='http://localhost:5002/home') HOME
           li
             a.myButton(id=contact href='http://localhost:5002/contact') CONTACT
+          li
+            a.myButton(id=documentation href='http://localhost:5002/documentation') DOCUMENTATION
           li
             a.myButton#button(class=profile)
           li

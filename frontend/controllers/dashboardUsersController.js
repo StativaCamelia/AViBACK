@@ -5,7 +5,7 @@ class DashboardUsersController {
 
     getDashboardUsersPage(req, res) {
         try {
-            const ids = ["", "", "active", "", "", "", "", ""];
+            const ids = ["", "", "", "active", "", "", "", "", ""];
             const { content, contentType } = dashboardUsersPage.getPage(ids);
             return { success: true, data: { content, contentType } };
         } catch (erorr) {

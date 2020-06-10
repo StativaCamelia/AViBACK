@@ -176,7 +176,7 @@ class ChartController {
         "WSW",
         "West",
       ];
-      const ids = ["", "", "", "", "", "", "active",""];
+      const ids = ["", "", "", "", "", "", "", "active",""];
       const { content, contentType } = chartPage.getChartPage(
         statesValues,
         countiesValues,

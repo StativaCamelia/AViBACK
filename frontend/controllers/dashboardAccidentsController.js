@@ -5,7 +5,7 @@ class DashboardAccidentsController {
 
     getDashboardAccidentsPage(req, res) {
         try {
-            const ids = ["", "", "active", "", "", "", "", ""];
+            const ids = ["", "", "", "active", "", "", "", "", ""];
             const { content, contentType } = dashboardAccidentsPage.getPage(ids);
             return { success: true, data: { content, contentType } };
         } catch (erorr) {

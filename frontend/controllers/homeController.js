@@ -5,7 +5,7 @@ class HomeController {
 
   getHomePage(req, res) {
     try {
-      const ids = ["active", "", "", "", "", "", "",""];
+      const ids = ["active", "", "", "", "", "", "", "",""];
       const { content, contentType } = homePage.getPage(ids);
       return { success: true, data: { content, contentType } };
     } catch (erorr) {
