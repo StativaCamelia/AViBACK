@@ -129,6 +129,30 @@ block documentation
                         | translating the whole into 3 separate projects - the application
                         | interface, the authentication-authorization service and the accident
                         | service - where the services have REST architecture.
+                    p   
+                        | Later we added the functionalities for REST APIs. Each REST API includes the 
+                        | CRUD operations on the data, only the data reading operation can be performed 
+                        | by any type of IP user, for the others because it is necessary to authenticate 
+                        | as admin.
+                    p
+                        | In the case of the accident API, we have added the necessary services for compiling
+                        | the statistics, but also various functionalities based on the data from the accident 
+                        | collection, which may be necessary for the API user.
+                    p
+                        | We did the same in the case of the authentication API, for which we added functionalities 
+                        | related to a regular user (registration and login), but also for monitoring and / or sending 
+                        | emails for the users of the application.
+                    p
+                        | After implementing these functionalities and respectively the connection between them and the 
+                        | application interface, we focused on the security side.
+                    p
+                        | To protect the application against sql injection we escaped user-entered inputs before executing them,
+                        | to avoid entering malicious code in them.
+                    p
+                        | We had the same approach for Cross Site Scripting (Cross-Site Scripting (XSS) attacks are a type of 
+                        | injection, in which malicious scripts are injected into otherwise benign and trusted websites), 
+                        | more precisely we cleaned the input entered by the user to ensure that it does not contain tags that may
+                        | have malicious code inside them
         #app_architecture
             h3 I.3. Application Architecture
             section
@@ -188,6 +212,16 @@ block documentation
                         | authentication-authorization service) an admin will be able to produce
                         | changes and take information from the database - in the case of this
                         | service, the accident collection is exposed.
+                    p    
+                        | Because the functionalities are spread accross multiple files and multiple
+                        | classes we used the dependency injection tehnique to make the communication
+                        | between them much easier, the class that calls another services should not 
+                        | have to know how to construct those services  
+                        | so we created the index files(a index files acts like an injector), whose 
+                        | functionality is to make available to the classes in the current folder the 
+                        | services they need, 
+                        | but also to further export the services / functionalities offered by them, 
+                        | in order to be used by other injectors.
                 section#c4_model
                     h3 C4 Model Diagram
                     p
