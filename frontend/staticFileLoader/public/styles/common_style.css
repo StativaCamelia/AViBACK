@@ -52,9 +52,9 @@ body {
 }
 
 .logo a:link,
-a:visited,
-a:active,
-a:hover {
+.logo a:visited,
+.logo a:active,
+.logo a:hover {
     text-decoration: none;
     cursor: pointer;
 }
@@ -584,9 +584,9 @@ body {
 }
 
 .logo a:link,
-a:active,
-a:hover,
-a:visited {
+.logo a:active,
+.logo a:hover,
+.logo a:visited {
     text-decoration: none;
     cursor: pointer
 }
@@ -1113,8 +1113,11 @@ blockquote * {
     font-size: 1.4rem;
     color: #041f60;
 }
-.documentation a:visited, a:hover, a:focus{
+.documentation a:visited, .documentation a:focus{
     color: #041f60;
+}
+.documentation a:hover{
+    opacity: 0.5;
 }
 .documentation h2{
     font-family: Novecentosanswide;
@@ -1190,12 +1193,17 @@ blockquote * {
     text-align: center;
 }
 
-.numbertext {
-    color: #041f60;
+.numberTextFirst, .numberTextSecond {
     font-size: 12px;
     padding: 8px 12px;
     position: absolute;
     top: 0;
+}
+.numberTextFirst{
+    color: white;
+}
+.numberTextSecond{
+    color: #041f60;
 }
 
 .dotFirst, .dotSecond {
@@ -1237,4 +1245,11 @@ blockquote * {
 }
 .div_code_management{
     width: 30%;
+}
+.documentation_links a{
+    font-size: 1.1rem;
+    color: black;
+}
+.documentation_links a:visited, .documentation_links a:focus{
+    color: black;
 }

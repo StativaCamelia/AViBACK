@@ -1013,8 +1013,8 @@
     }
 
     .statistics a:link,
-    a:visited,
-    a:active {
+    .statistics a:visited,
+    .statistics a:active {
         text-decoration: none;
     }
 

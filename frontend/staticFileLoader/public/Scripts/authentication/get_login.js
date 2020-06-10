@@ -8,17 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = JSON.parse(this.responseText);
         const values = response.content.values;
         if(values.value === "LOGIN"){
-          profileLog.innerText = values.value;
+          profileLog.innerText = "LOGIN";
           profileLog.id = "button";
           profileLog.href = "#";
         }else{
-          if(values.value === "MY PROFILE"){
-            profileLog.innerText = values.value;
+          if(values.value === "PROFILE"){
+            profileLog.innerText = "MY PROFILE";
             profileLog.id = "profile";
             profileLog.href = "http://localhost:5002/profile";
           }else{
             if(values.value === "DASHBOARD"){
-              profileLog.innerText = values.value;
+              profileLog.innerText = "DASHBOARD";
               profileLog.id = "dashboard";
               profileLog.href = "http://localhost:5002/dashboard";
             }

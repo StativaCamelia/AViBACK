@@ -367,7 +367,7 @@ class UserController {
           };
         } else {
           values = {
-            value: "MY PROFILE",
+            value: "PROFILE",
           };
         }
         return { success: true, statusCode: 200, content: { values } };
