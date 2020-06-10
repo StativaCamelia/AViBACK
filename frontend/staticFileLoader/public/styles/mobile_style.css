@@ -1996,7 +1996,7 @@
     /*DOCUMENTATION*/
     .content_doc {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         width: 80%;
         height: auto;
         justify-content: space-evenly;
@@ -2207,5 +2207,35 @@
     }
     .documentation_links a:visited, .documentation_links a:focus{
         color: black;
+    }
+    .resources{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 90%;
+        border: 1px solid #041f60;
+        padding: 10px 15px 20px 15px;
+        border-radius: 8px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 5vh;
+    }
+    .links_resources{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-shrink: 1;
+        width: 100%;
+    }
+    .div_link{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        font-size: 0.8rem;
+        padding: 0;
+        word-wrap: break-word;
+    }
+    .div_link li{
+        list-style-type: none;
     }
 }
