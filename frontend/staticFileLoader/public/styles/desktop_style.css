@@ -37,7 +37,7 @@
         box-shadow: 0 5px 20px grey
     }
 
-    .profile_content h1 {
+    .profile_content h1, .documentation h1{
         font-family: Novecentosanswide;
         font-size: 2rem;
         color: #041f60;
@@ -933,9 +933,9 @@
     }
 
     .main_menu a:link,
-    a:visited,
-    a:hover,
-    a:active {
+    .main_menu a:visited,
+    .main_menu a:hover,
+    .main_menu a:active {
         text-decoration: none;
     }
 
@@ -1013,8 +1013,8 @@
     }
 
     .statistics a:link,
-    a:visited,
-    a:active {
+    .statistics a:visited,
+    .statistics a:active {
         text-decoration: none;
     }
 

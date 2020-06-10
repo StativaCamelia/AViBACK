@@ -363,23 +363,17 @@ class UserController {
         const isAdmin = await this.verifyAdmin(token.auth_token);
         if (isAdmin.success) {
           values = {
-            id: "dashboard",
             value: "DASHBOARD",
-            href: "http://localhost:5002/dashboard",
           };
         } else {
           values = {
-            id: "profile",
-            value: "MY PROFILE",
-            href: "http://localhost:5002/profile",
+            value: "PROFILE",
           };
         }
         return { success: true, statusCode: 200, content: { values } };
       } catch (err) {
         values = {
-          id: "button",
           value: "LOGIN",
-          href: "#",
         };
         return {
           success: false,
@@ -389,9 +383,7 @@ class UserController {
       }
     } else {
       values = {
-        id: "button",
         value: "LOGIN",
-        href: "#",
       };
       return { success: true, statusCode: 200, content: { values } };
     }

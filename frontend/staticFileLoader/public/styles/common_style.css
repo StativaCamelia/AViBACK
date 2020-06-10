@@ -52,9 +52,9 @@ body {
 }
 
 .logo a:link,
-a:visited,
-a:active,
-a:hover {
+.logo a:visited,
+.logo a:active,
+.logo a:hover {
     text-decoration: none;
     cursor: pointer;
 }
@@ -584,9 +584,9 @@ body {
 }
 
 .logo a:link,
-a:active,
-a:hover,
-a:visited {
+.logo a:active,
+.logo a:hover,
+.logo a:visited {
     text-decoration: none;
     cursor: pointer
 }
@@ -1016,4 +1016,240 @@ a:visited {
 
 #top_button:hover {
     opacity: .7
+}
+
+/*DOCUMENTATION*/
+#content, #content_auth, #introduction, #app_progress, #app_architecture, #ui_ux {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #041f60;
+    padding: 10px 40px 20px 40px;
+    border-radius: 8px;
+    margin-left: 6vw;
+    margin-right: auto;
+    margin-bottom: 5vh;
+    width: 80%;
+}
+
+hr {
+    color: #bbb;
+    background-color: #bbb;
+    height: 1px;
+    flex: 0 1 auto;
+    margin: 1em 0;
+    padding: 0;
+    border: none;
+}
+
+pre {
+    background-color: #f6f8fa;
+    border-radius: 3px;
+    font-size: 85%;
+    line-height: 1.45;
+    overflow: auto;
+    padding: 16px;
+}
+
+code {
+    background-color: rgba(27,31,35,.05);
+    border-radius: 3px;
+    font-size: 85%;
+    margin: 0;
+    word-wrap: break-word;
+    padding: .2em .4em;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+}
+
+pre > code {
+    background-color: transparent;
+    border: 0;
+    display: inline;
+    line-height: inherit;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+    word-wrap: normal;
+    font-size: 100%;
+}
+
+blockquote {
+    margin-left: 30px;
+    margin-top: 0px;
+    margin-bottom: 16px;
+    border-left-width: 3px;
+    padding: 0 1em;
+    color: #828282;
+    border-left: 4px solid #e8e8e8;
+    padding-left: 15px;
+    font-size: 18px;
+    letter-spacing: -1px;
+    font-style: italic;
+}
+blockquote * {
+    font-style: normal !important;
+    letter-spacing: 0;
+    color: #6a737d !important;
+}
+
+.documentation{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: Novecentosanswide;
+}
+.documentation_content ul{
+    list-style: none;
+}
+.documentation ol{
+    font-size: 1.2rem;
+    color: #041f60;
+}
+.documentation_content ol{
+    margin-left: 10vw;
+}
+.documentation a{
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: #041f60;
+}
+.documentation a:visited, .documentation a:focus{
+    color: #041f60;
+}
+.documentation a:hover{
+    opacity: 0.5;
+}
+.documentation h2{
+    font-family: Novecentosanswide;
+    font-size: 1.5rem;
+    color: #041f60;
+}
+.documentation_content h2{
+    margin-left: 6vw;
+}
+.documentation h3{
+    font-family: Novecentosanswide;
+    font-size: 1.3rem;
+    color: #041f60;
+}
+.documentation p{
+    font-size: 1.1rem;
+}
+
+.slideshow-container {
+    width: 60vw;
+    position: relative;
+    margin: auto;
+}
+
+.slideshow-container img, .documentation img{
+    width: 60vw;
+    height: 70vh;
+}
+
+#management{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#management img{
+    align-self: center;
+}
+
+.firstSlider, .secondSlider {
+    display: none;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white!important;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.text {
+    color: #041f60;
+    font-size: 15px;
+    padding: 0 12px 0 12px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.numberTextFirst, .numberTextSecond {
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+.numberTextFirst{
+    color: white;
+}
+.numberTextSecond{
+    color: #041f60;
+}
+
+.dotFirst, .dotSecond {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.activeSlide, .dot:hover {
+    background-color: #717171;
+}
+
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+.code_management{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+.div_code_management{
+    width: 30%;
+}
+.documentation_links a{
+    font-size: 1.1rem;
+    color: black;
+}
+.documentation_links a:visited, .documentation_links a:focus{
+    color: black;
 }
