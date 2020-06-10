@@ -270,7 +270,7 @@ block documentation
                     p
                         | The main collection used is the accident collection, its source being:
                         span.documentation_links
-                            a(href='https://smoosavi.org/datasets/us_accidents' target='_blank') https://smoosavi.org/datasets/us_accidents
+                            a(href='https://smoosavi.org/datasets/us_accidents' target='_blank') dataset
                         | . This collection contains accident data that are collected from
                         |           February 2016 to December 2019 for the Contiguous United States.
                     p
@@ -363,7 +363,7 @@ block documentation
                         | of the established tasks, respecting the deadlines. The final form of
                         | the project, where you can also see the progress, can be found at:
                         span.documentation_links
-                            a(href='https://github.com/StativaCamelia/AViBACK' target='_blank') https://github.com/StativaCamelia/AViBACK
+                            a(href='https://github.com/StativaCamelia/AViBACK' target='_blank') https://github.com
                         | . The repository contains three directories that represent the entire
                         |           application: the frontend directory that contains the files
                         |           corresponding to the interface, the authentication directory that
@@ -380,42 +380,74 @@ block documentation
                         | util functions, models and api tests.
                     .code_management
                         .div_code_management
-                            h3 Stativ&abreve; Camelia-Georgiana
-                            p Application design
-                            p Creating project structure
-                            p Project restructure
-                            p Database structure
-                            p Project documentation
-                            p Map page and line chart page
-                            p Export for map page
-                            p Multi-criteria filters
-                            p Authorization for admin and routes
-                            p Email system integration
+                            h3
+                                | Stativ&abreve; Camelia-Georgiana
+                            p
+                                | Application design
+                            p
+                                | Creating project structure
+                            p
+                                | Project restructure
+                            p
+                                | Database structure
+                            p
+                                | Project documentation
+                            p
+                                | Map page and line chart page
+                            p
+                                | Export for map page
+                            p
+                                | Multi-criteria filters
+                            p
+                                | Authorization for admin and routes
+                            p
+                                | Email system integration
                             p
                                 | Converting CSV format to JSON format for accidents collection
-                            p API tests
+                            p
+                                | API tests
                         .div_code_management
-                            h3 Z&abreve;nceanu Ana-Maria
-                            p Application design
-                            p Project restructure
-                            p Database structure
-                            p Project documentation
-                            p Pie chart page
-                            p Export for pie page
-                            p Multi-criteria filters
-                            p Dashboard
-                            p Refactoring application design
-                            p Register, login and logout
+                            h3
+                                | Z&abreve;nceanu Ana-Maria
+                            p
+                                | Application design
+                            p
+                                | Project restructure
+                            p
+                                | Database structure
+                            p
+                                | Project documentation
+                            p
+                                | Pie chart page
+                            p
+                                | Export for pie page
+                            p
+                                | Multi-criteria filters
+                            p
+                                | Dashboard
+                            p
+                                | Refactoring application design
+                            p
+                                | Register, login and logout
                         .div_code_management
-                            h3 Tipa Adrian-Ionu&#x21B;
-                            p Application design
-                            p Home page calls
-                            p Project restructure
-                            p Database structure
-                            p Project documentation
-                            p Profile page
-                            p Bar chart page
-                            p Export for bar chart and line chart pages
+                            h3
+                                | Tipa Adrian-Ionu&#x21B;
+                            p
+                                | Application design
+                            p
+                                | Home page calls
+                            p
+                                | Project restructure
+                            p
+                                | Database structure
+                            p
+                                | Project documentation
+                            p
+                                | Profile page
+                            p
+                                | Bar chart page
+                            p
+                                | Export for bar chart and line chart pages
         #ui_ux
             h3 I.4. UI and UX
             section
@@ -792,7 +824,8 @@ block documentation
                 strong Usage example
                 | :
                 br
-                |       http://localhost:5004/accidents/5ec65d04607fb826d4b69279
+                |       http://localhost:5004/accidents
+                |        /5ec65d04607fb826d4b69279
                 br
                 |       Request body
             pre.
@@ -876,7 +909,8 @@ block documentation
                 strong Usage example
                 | :
                 br
-                |       http://localhost:5004/accidents/5ec65d04607fb826d4b69279
+                |       http://localhost:5004/accidents
+                |       /5ec65d04607fb826d4b69279
                 br
                 strong Returned data example
                 | :
@@ -1127,7 +1161,8 @@ block documentation
                         strong Usage example
                         | :
                         br
-                        |           http://localhost:5003/users/authorization
+                        |  http://localhost:5003/users
+                        |  /authorization
                         br
                         strong Returned data example
                         | :
@@ -1307,7 +1342,8 @@ block documentation
                         strong Usage example
                         | :
                         br
-                        |           http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
+                        |           http://localhost:5003/users
+                        |           /5ede3a7d0ff94b173c4a92f0
             pre.
                 {
                       "type" : "admin"
@@ -1348,7 +1384,8 @@ block documentation
                         strong Usage example
                         | :
                         br
-                        |           http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
+                        |           http://localhost:5003/users
+                        |           /5ede3a7d0ff94b173c4a92f0
                     p
                         strong Returned data example
                         | :
@@ -1384,7 +1421,16 @@ block documentation
                         strong Usage example
                         | :
                         br
-                        |           http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
+                        |           http://localhost:5003/users
+                        br
+                        |       Request Body
+                        pre.
+                            {
+                                "email" : "user123@gmail.com",
+                                "username" : "User123",
+                                "password" : "parola123",
+                                "type" : "user"
+                            }
                     p
                         strong Returned data example
                         | :
@@ -1417,7 +1463,8 @@ block documentation
                         strong Usage example
                         | :
                         br
-                        |           http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
+                        |           http://localhost:5003/users
+                        |           /5ede3a7d0ff94b173c4a92f0
                     p
                         strong Returned data example
                         | :
@@ -1453,7 +1500,8 @@ block documentation
                         strong Usage example
                         | :
                         br
-                        |           http://localhost:5003/users/5ede3a7d0ff94b173c4a92f0
+                        |           http://localhost:5003/users
+                        |           /5ede3a7d0ff94b173c4a92f0
                     p
                         strong Returned data example
                         | :
