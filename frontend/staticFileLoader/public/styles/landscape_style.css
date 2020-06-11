@@ -1,6 +1,14 @@
 /*MOBILE*/
 @media (orientation: landscape) and (max-width: 800px) {
 
+    /**/
+    iframe {
+        width: 55vw;
+        height: 45vh;
+    }
+
+    /**/
+
     /*PROFILE*/
     .submit_criteria {
         width: auto;
@@ -47,7 +55,8 @@
         box-shadow: 0 5px 20px grey
     }
 
-    .profile_content h1, .documentation h1 {
+    .profile_content h1,
+    .documentation h1 {
         font-family: Novecentosanswide;
         font-size: 2rem;
         color: #041f60;
@@ -2081,7 +2090,13 @@
         align-self: auto;
         clear: both;
     }
-    #content, #content_auth, #introduction, #app_progress, #app_architecture, #ui_ux {
+
+    #content,
+    #content_auth,
+    #introduction,
+    #app_progress,
+    #app_architecture,
+    #ui_ux {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -2104,16 +2119,16 @@
     }
 
     code {
-        background-color: rgba(27,31,35,.05);
+        background-color: rgba(27, 31, 35, .05);
         border-radius: 3px;
         font-size: 85%;
         margin: 0;
         word-wrap: break-word;
         padding: .2em .4em;
-        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
     }
 
-    pre > code {
+    pre>code {
         background-color: transparent;
         border: 0;
         display: inline;
@@ -2125,47 +2140,58 @@
         font-size: 100%;
     }
 
-    .documentation{
+    .documentation {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         font-family: Novecentosanswide;
     }
-    .documentation_content ul{
+
+    .documentation_content ul {
         list-style: none;
     }
-    .documentation ol{
+
+    .documentation ol {
         font-size: 1.2rem;
         color: #041f60;
     }
-    .documentation_content ol{
+
+    .documentation_content ol {
         margin-left: 10vw;
     }
-    .documentation a{
+
+    .documentation a {
         text-decoration: none;
         font-size: 1.4rem;
         color: #041f60;
     }
-    .documentation a:visited, .documentation a:focus{
+
+    .documentation a:visited,
+    .documentation a:focus {
         color: #041f60;
     }
-    .documentation a:hover{
+
+    .documentation a:hover {
         opacity: 0.5;
     }
-    .documentation h2{
+
+    .documentation h2 {
         font-family: Novecentosanswide;
         font-size: 1.5rem;
         color: #041f60;
     }
-    .documentation_content h2{
+
+    .documentation_content h2 {
         margin-left: 6vw;
     }
-    .documentation h3{
+
+    .documentation h3 {
         font-family: Novecentosanswide;
         font-size: 1.3rem;
         color: #041f60;
     }
-    .documentation p{
+
+    .documentation p {
         font-size: 1.1rem;
     }
 
@@ -2175,32 +2201,36 @@
         margin: auto;
     }
 
-    .slideshow-container img, .documentation img{
+    .slideshow-container img,
+    .documentation img {
         width: 60vw;
         height: 70vh;
     }
 
-    #management{
+    #management {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
-    #management img{
+
+    #management img {
         align-self: center;
     }
 
-    .firstSlider, .secondSlider {
+    .firstSlider,
+    .secondSlider {
         display: none;
     }
 
-    .prev, .next {
+    .prev,
+    .next {
         cursor: pointer;
         position: absolute;
         top: 50%;
         width: auto;
         margin-top: -22px;
         padding: 16px;
-        color: white!important;
+        color: white !important;
         font-weight: bold;
         font-size: 18px;
         transition: 0.6s ease;
@@ -2213,8 +2243,9 @@
         border-radius: 3px 0 0 3px;
     }
 
-    .prev:hover, .next:hover {
-        background-color: rgba(0,0,0,0.8);
+    .prev:hover,
+    .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
     }
 
     .text {
@@ -2226,20 +2257,24 @@
         text-align: center;
     }
 
-    .numberTextFirst, .numberTextSecond {
+    .numberTextFirst,
+    .numberTextSecond {
         font-size: 12px;
         padding: 8px 12px;
         position: absolute;
         top: 0;
     }
-    .numberTextFirst{
+
+    .numberTextFirst {
         color: white;
     }
-    .numberTextSecond{
+
+    .numberTextSecond {
         color: #041f60;
     }
 
-    .dotFirst, .dotSecond {
+    .dotFirst,
+    .dotSecond {
         cursor: pointer;
         height: 15px;
         width: 15px;
@@ -2250,7 +2285,8 @@
         transition: background-color 0.6s ease;
     }
 
-    .activeSlide, .dot:hover {
+    .activeSlide,
+    .dot:hover {
         background-color: #717171;
     }
 
@@ -2262,31 +2298,47 @@
     }
 
     @-webkit-keyframes fade {
-        from {opacity: .4}
-        to {opacity: 1}
+        from {
+            opacity: .4
+        }
+
+        to {
+            opacity: 1
+        }
     }
 
     @keyframes fade {
-        from {opacity: .4}
-        to {opacity: 1}
+        from {
+            opacity: .4
+        }
+
+        to {
+            opacity: 1
+        }
     }
-    .code_management{
+
+    .code_management {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
     }
-    .div_code_management{
+
+    .div_code_management {
         width: 30%;
     }
-    .documentation_links a{
+
+    .documentation_links a {
         font-size: 1.1rem;
         color: black;
     }
-    .documentation_links a:visited, .documentation_links a:focus{
+
+    .documentation_links a:visited,
+    .documentation_links a:focus {
         color: black;
     }
-    .resources{
+
+    .resources {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -2298,21 +2350,24 @@
         margin-right: auto;
         margin-bottom: 5vh;
     }
-    .links_resources{
+
+    .links_resources {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         flex-shrink: 1;
         width: 100%;
     }
-    .div_link{
+
+    .div_link {
         display: flex;
         flex-direction: column;
         width: 40%;
         padding: 0;
         font-size: 0.8rem;
     }
-    .div_link li{
+
+    .div_link li {
         list-style-type: none;
     }
 }
