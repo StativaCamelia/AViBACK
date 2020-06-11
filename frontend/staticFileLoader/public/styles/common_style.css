@@ -420,7 +420,7 @@ a:active {
 .dash_accident_form_create h3,
 .dash_accident_form h3,
 .second_div_accidents h3 {
-    text-align: center;
+    text-align: center!important;
 }
 
 .dash_user_form ul,
