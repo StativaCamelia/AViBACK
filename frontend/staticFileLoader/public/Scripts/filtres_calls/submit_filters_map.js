@@ -220,10 +220,20 @@ document.addEventListener("DOMContentLoaded", function () {
           exportFunction(content.dataset);
         } else {
           resetFiltres();
+          color_light();
           open_map(content);
         }
       }
     }
+  }
+
+  function color_light(){
+    var levels = ["high_s", "medium_s", "low_s"];
+  var svgStates = document.querySelectorAll("#states > *");
+  svgStates.forEach(function (el) {
+    setAttributesPath(el, "#edeff1", levels[3]);
+    el.setAttribute("count", 0);
+  });
   }
 
   function removeExportListeners() {
@@ -579,7 +589,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let noResponse = {};
         noResponse._id = el.id;
         noResponse.count = 0;
-        setAttributesPath(el, "class", levels[3]);
+        setAttributesPath(el, "#edeff1", levels[3]);
         el.setAttribute("count", 0);
       } else {
         el.setAttribute("count", state.count);
