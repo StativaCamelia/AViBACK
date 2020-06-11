@@ -2,7 +2,7 @@ const request = require("supertest");
 const router = require("../index");
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWQ2NTdiOTM1MTY4ZTE5NjgwNDE2MDkiLCJpYXQiOjE1OTExMDU1MjJ9.OIUA8ToDjS7AFpcF7l6DcRia3hfPYxEUozHr2QTuyjE";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWUxNGRkY2RkZTZlMjNhMDQ5NmJkMDAiLCJpYXQiOjE1OTE4NzA1ODJ9.jbJbC99Lk_y7ZJiyH1s7TUii4-xO7mOk0ydLB7OwCXQ";
 describe("GET /accidents", function () {
   it("respond with json containing a list of all accidents", function (done) {
     request(router)
@@ -32,18 +32,33 @@ describe("POST /accidents", function () {
   });
 });
 
-describe("PATCH /accidents?accidentId = 5ec65d04607fb826d4b69277", function () {
+describe("GET /accidents/5ecf9cca18d29a0ba86a9f07", function () {
+  it("respond with 200 updated", function (done) {
+    request(router)
+      .get("/accidents")
+      .set("auth-token", token)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+});
+
+describe("PUT /accidents/5ecf9cca18d29a0ba86a9f07", function () {
   let data = {
     State: "HI",
   };
-  it("respond with 204 updated", function (done) {
+  it("respond with 200 updated", function (done) {
     request(router)
-      .patch("/accidents")
+      .put("/accidents")
       .set("auth-token", token)
       .send(data)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
-      .expect(204)
+      .expect(200)
       .end((err) => {
         if (err) return done(err);
         done();
