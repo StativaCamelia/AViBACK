@@ -639,9 +639,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function addDatasetToSelect() {
     let datasetsSelect = document.getElementById("list_datasets");
     let option = document.createElement("option");
+if(datasetsSend.length > 0){
     option.value = datasetsSend.length;
     option.innerText = "Dataset" + datasetsSend.length;
     datasetsSelect.appendChild(option);
+}
   }
 
   function setDatasetTitle(index) {
