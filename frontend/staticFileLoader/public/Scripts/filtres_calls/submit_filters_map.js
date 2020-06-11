@@ -211,17 +211,19 @@ document.addEventListener("DOMContentLoaded", function () {
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
         loadingState(true, false);
-        const { content } = JSON.parse(this.responseText);
+        const {content} = JSON.parse(this.responseText);
         removeExportListeners();
-          if (content.boudaries) {
-            resetFiltres();
-            history(content.boudaries);
-            color_map(content.dataset, content.boudaries);
-            exportFunction(content.dataset);
-          } else {
-            resetFiltres();
-            open_map(content);
-          }
+        if (content.boudaries) {
+          resetFiltres();
+          history(content.boudaries);
+          color_map(content.dataset, content.boudaries);
+          exportFunction(content.dataset);
+        } else {
+          resetFiltres();
+          open_map(content);
+        }
+      }
+    }
   }
 
   function removeExportListeners() {
@@ -554,13 +556,13 @@ document.addEventListener("DOMContentLoaded", function () {
     var el = document.querySelectorAll("#states > #" + content.State)[0];
     pop.style.display = "flex";
     pop.style.top = window.scrollY + 140 + "px";
-    left.innerText =
+    left.innerHTML =
       '<div class = "pop_text"><p>' +
       dict_names[el.getAttribute("id")] +
       "</p>";
     if (el.hasAttribute("count"))
-      left.innerText += "<p>" + el.getAttribute("count") + "</p></div>";
-    left.innerText +=
+      left.innerHTML += "<p>" + el.getAttribute("count") + "</p></div>";
+    left.innerHTML +=
       '<div class = "pop_img"><img src="' +
       dict_img[el.getAttribute("id")] +
       '"></div>';
