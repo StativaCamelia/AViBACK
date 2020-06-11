@@ -657,9 +657,16 @@ document.addEventListener("DOMContentLoaded", function () {
     addDatasetToSelect(datasetsSend.length);
   }
 
-  function handlerSubmitFilters(e) {
+ function handlerSubmitFilters(e) {
     e.preventDefault();
     prepareQueryString("Submit");
+    document.getElementById("list_datasets").options.length = 0;
+    let option = document.createElement("option");
+    option.value = "";
+    option.selected = "";
+    option.hidden = " ";
+    option.innerText = "Datasets";
+    document.getElementById("list_datasets").appendChild(option);
     continueGraph = "Submit";
   }
 

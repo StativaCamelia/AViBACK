@@ -682,12 +682,16 @@ document.addEventListener("DOMContentLoaded", function () {
     setDatasetTitle(datasetsSend.length);
     addDatasetToSelect(datasetsSend.length);
   }
-
-  function handlerSubmitFilters(e) {
+    function handlerSubmitFilters(e) {
     e.preventDefault();
     prepareQueryString("Submit");
-    let datasetsSelect = document.getElementById("list_datasets");
-    datasetsSelect.options.length = 0;
+    document.getElementById("list_datasets").options.length = 0;
+    let option = document.createElement("option");
+    option.value = "";
+    option.selected = "";
+    option.hidden = " ";
+    option.innerText = "Datasets";
+    document.getElementById("list_datasets").appendChild(option);
     continueGraph = "Submit";
   }
 
