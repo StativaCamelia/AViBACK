@@ -718,7 +718,6 @@
         height: auto;
         justify-content: space-evenly;
         align-self: center;
-        margin-top: 16vh;
     }
 
     .contact_content {
@@ -975,7 +974,7 @@
 
     /*LEFT AND RIGHT CONTENT FOR CHART PAGES*/
     #container {
-        margin: 16vh 0 10vh 0;
+        margin: 0 0 10vh 0;
         display: flex;
         flex-direction: column;
         height: auto;
@@ -1768,7 +1767,7 @@
         justify-content: space-between;
         height: auto;
         width: 100%;
-        margin: 22vh 0 0 0;
+        margin: 0;
         align-self: center;
     }
 

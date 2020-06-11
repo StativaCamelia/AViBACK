@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
   criteria: {
     type: String,
     required: false,
-    enum: [],
+    enum: ["", "State", "County", "City", "Street", "Timezone"],
   },
   valueOfCriteria: {
     type: String,

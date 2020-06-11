@@ -807,7 +807,6 @@
         height: auto;
         justify-content: space-evenly;
         align-self: center;
-        margin-top: 36vh;
     }
 
     .contact_content {
@@ -1844,7 +1843,7 @@
         justify-content: space-between;
         height: auto;
         width: 80%;
-        margin: 38vh auto 0 auto;
+        margin: 0 auto 0 auto;
         align-self: center;
     }
 

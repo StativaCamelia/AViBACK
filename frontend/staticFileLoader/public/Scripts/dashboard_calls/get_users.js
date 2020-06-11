@@ -268,6 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
     userDetails.push("Type " + user.type);
     userDetails.push("Email: " + user.email);
     userDetails.push("Username: " + user.username);
+    userDetails.push("Selected criterion: " + user.criteria + "-" + user.valueOfCriteria);
     for (let i = 0; i < userDetails.length; i++) {
       let li = document.createElement("li");
       li.innerText = userDetails[i];
@@ -297,6 +298,7 @@ document.addEventListener("DOMContentLoaded", function () {
       user.push("Type: " + users[i].type);
       user.push("Email: " + users[i].email);
       user.push("Username: " + users[i].username);
+      user.push("Selected criterion: " + users[i].criteria + "-" + users[i].valueOfCriteria);
       const ul = document.createElement("ul");
       for (let j = 0; j < user.length; j++) {
         let li = document.createElement("li");

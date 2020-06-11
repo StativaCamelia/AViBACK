@@ -72,7 +72,7 @@ function createOptions(options, value) {
   let option = document.createElement("option");
   option.setAttribute("selected", "");
   option.setAttribute("hidden", "");
-  option.textContent = "Optiune";
+  option.textContent = "Option";
   valueOfCriteria.appendChild(option);
   for (let i = 0; i < options.length; i++) {
     let option = document.createElement("option");
