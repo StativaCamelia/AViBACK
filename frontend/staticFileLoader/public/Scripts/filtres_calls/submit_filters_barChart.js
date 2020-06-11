@@ -686,6 +686,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function handlerSubmitFilters(e) {
     e.preventDefault();
     prepareQueryString("Submit");
+    let datasetsSelect = document.getElementById("list_datasets");
+    datasetsSelect.options.length = 0;
     continueGraph = "Submit";
   }
 
