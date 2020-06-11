@@ -53,7 +53,7 @@ describe("PUT /accidents/5ecf9cca18d29a0ba86a9f07", function () {
   };
   it("respond with 200 updated", function (done) {
     request(router)
-      .put("/accidents")
+      .put("/accidents/5ecf9cca18d29a0ba86a9f07")
       .set("auth-token", token)
       .send(data)
       .set("Accept", "application/json")
