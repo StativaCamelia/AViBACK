@@ -1,8 +1,8 @@
 const request = require("supertest");
 const router = require("../index");
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWQ2NTdiOTM1MTY4ZTE5NjgwNDE2MDkiLCJpYXQiOjE1OTExMDU1MjJ9.OIUA8ToDjS7AFpcF7l6DcRia3hfPYxEUozHr2QTuyjE";
-userId = "5ed666f034703128206b0c35";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWUxNGRkY2RkZTZlMjNhMDQ5NmJkMDAiLCJpYXQiOjE1OTE4NzA1ODJ9.jbJbC99Lk_y7ZJiyH1s7TUii4-xO7mOk0ydLB7OwCXQ";
+userId = "5ed277c10138791960261824";
 let userData = {
   email: "test@gmail.com",
   username: "teste",
@@ -31,10 +31,10 @@ describe("GET users/general", function () {
   });
 });
 
-describe(`GET /users?userId=${userId}`, function () {
+describe(`GET /users/${userId}`, function () {
   it("respond with json containing a list of all users", function (done) {
     request(router)
-      .get(`/users?userId=${userId}`)
+      .get(`/users/${userId}`)
       .set("Accept", "application/json")
       .set("auth-token", token)
       .expect("Content-Type", /json/)
@@ -52,13 +52,13 @@ describe(`GET /users/authorization?token=${token}`, function () {
   });
 });
 
-describe(`PATCH /users?userId = ${userId}`, function () {
+describe(`PUT /users/${userId}`, function () {
   let data = {
     email: "stativa1999@gmail.com",
   };
   it("respond with 200 updated", function (done) {
     request(router)
-      .patch(`/users?userId = ${userId}`)
+      .put(`/users/${userId}`)
       .set("auth-token", token)
       .send(data)
       .set("Accept", "application/json")
@@ -71,10 +71,10 @@ describe(`PATCH /users?userId = ${userId}`, function () {
   });
 });
 
-describe(`DELETE /users?userId = ${userId}`, function () {
+describe(`DELETE /users/${userId}`, function () {
   it("respond with 204 deleted", function (done) {
     request(router)
-      .patch(`/users?userId = ${userId}`)
+      .delete(`/users/${userId}`)
       .set("auth-token", token)
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
