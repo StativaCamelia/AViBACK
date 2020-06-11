@@ -213,8 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
         loadingState(true, false);
         const { content } = JSON.parse(this.responseText);
         removeExportListeners();
-        if (content)
-          if (!content.Start_Lat && !content.Start_Lng) {
+          if (content.boudaries) {
             resetFiltres();
             history(content.boudaries);
             color_map(content.dataset, content.boudaries);
@@ -223,14 +222,12 @@ document.addEventListener("DOMContentLoaded", function () {
             resetFiltres();
             open_map(content);
           }
-      }
-    };
   }
 
   function removeExportListeners() {
-    csvExport.removeEventListener("click",handlerCSVExport);
-    pngExport.removeEventListener("click",generatePngFormat);
-    svgExport.removeEventListener("click",generateSvgFormat);
+    csvExport.removeEventListener("click", handlerCSVExport);
+    pngExport.removeEventListener("click", generatePngFormat);
+    svgExport.removeEventListener("click", generateSvgFormat);
   }
 
   function exportFunction(dataset) {
@@ -426,11 +423,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     if (severity.value !== "0") {
       filtersValues.Severity = severity.value;
-      queryString = concatQueryString(
-        queryString,
-        "Severity",
-        severity.value
-      );
+      queryString = concatQueryString(queryString, "Severity", severity.value);
     }
     for (let i = 0; i < valuesDayComponents.length; i++) {
       if (valuesDayComponents[i].checked) {
@@ -515,7 +508,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "City",
       "Street",
       "Number",
-      "Temperature",
+      "Timezone",
     ];
     for (let i = 0; i < locations.length; i++) {
       if (filtersValues[locations[i]]) {
@@ -540,13 +533,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const medium = document.querySelector("p.medium");
     const medium1 = document.querySelector("p.medium1");
     const high = document.querySelector("p.high");
-    low.innerText = boudaries.first[0] + "-" + Math.round(boudaries.first[1]);
-    medium.innerText =
-      Math.round(boudaries.second[0]) + "-" + Math.round(boudaries.second[1]);
-    medium1.innerText =
-      Math.round(boudaries.third[0]) + "-" + Math.round(boudaries.third[1]);
-    high.innerText =
-      Math.round(boudaries.fourth[0]) + "-" + Math.round(boudaries.fourth[1]);
+    if (boudaries) {
+      low.innerText = boudaries.first[0] + "-" + Math.round(boudaries.first[1]);
+      medium.innerText =
+        Math.round(boudaries.second[0]) + "-" + Math.round(boudaries.second[1]);
+      medium1.innerText =
+        Math.round(boudaries.third[0]) + "-" + Math.round(boudaries.third[1]);
+      high.innerText =
+        Math.round(boudaries.fourth[0]) + "-" + Math.round(boudaries.fourth[1]);
+    }
   }
 
   function open_map(content) {
