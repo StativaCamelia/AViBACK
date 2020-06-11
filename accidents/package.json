@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "mathjs": "^7.0.0",
+    "mocha": "^8.0.1",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.3"
   },
