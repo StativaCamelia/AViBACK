@@ -233,7 +233,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const submitFilters = document.getElementById("submit_button");
   let message = document.getElementById("filter_message");
-  let filtersValues = {};
   submitFilters.addEventListener("click", handlerSubmitFilters);
   const addFiltres = document.getElementById("next_button");
   addFiltres.addEventListener("click", handlerAddFiltres);
@@ -665,11 +664,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function addDatasetToSelect() {
     let datasetsSelect = document.getElementById("list_datasets");
     let option = document.createElement("option");
-if(datasetsSend.length > 0){
-    option.value = datasetsSend.length;
-    option.innerText = "Dataset" + datasetsSend.length;
-    datasetsSelect.appendChild(option);
-}
+    if (datasetsSend.length > 0) {
+      option.value = datasetsSend.length;
+      option.innerText = "Dataset" + datasetsSend.length;
+      datasetsSelect.appendChild(option);
+    }
   }
 
   function setDatasetTitle(index) {
@@ -684,7 +683,7 @@ if(datasetsSend.length > 0){
     setDatasetTitle(datasetsSend.length);
     addDatasetToSelect(datasetsSend.length);
   }
-    function handlerSubmitFilters(e) {
+  function handlerSubmitFilters(e) {
     e.preventDefault();
     prepareQueryString("Submit");
     document.getElementById("list_datasets").options.length = 0;

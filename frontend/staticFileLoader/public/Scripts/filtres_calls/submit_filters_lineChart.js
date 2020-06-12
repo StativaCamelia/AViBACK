@@ -242,7 +242,6 @@ document.addEventListener("DOMContentLoaded", function () {
     "Night",
   ];
   let message = document.getElementById("filter_message");
-  let filtersValues = {};
   const groupBy = document.getElementById("intervalType");
 
   function createLineChart(content) {
@@ -639,11 +638,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function addDatasetToSelect() {
     let datasetsSelect = document.getElementById("list_datasets");
     let option = document.createElement("option");
-if(datasetsSend.length > 0){
-    option.value = datasetsSend.length;
-    option.innerText = "Dataset" + datasetsSend.length;
-    datasetsSelect.appendChild(option);
-}
+    if (datasetsSend.length > 0) {
+      option.value = datasetsSend.length;
+      option.innerText = "Dataset" + datasetsSend.length;
+      datasetsSelect.appendChild(option);
+    }
   }
 
   function setDatasetTitle(index) {
@@ -659,7 +658,7 @@ if(datasetsSend.length > 0){
     addDatasetToSelect(datasetsSend.length);
   }
 
- function handlerSubmitFilters(e) {
+  function handlerSubmitFilters(e) {
     e.preventDefault();
     prepareQueryString("Submit");
     document.getElementById("list_datasets").options.length = 0;
